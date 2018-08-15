@@ -43,7 +43,7 @@
     function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
         console.log('id_token: ' + googleUser.getAuthResponse().id_token);
-        var redirectUrl = 'loginGoogle'
+        var redirectUrl = 'LoginGoogle'
         var form = $('<form action="' + redirectUrl + '" method="post">' +
                 '<input type="text" name="id_token" value="' +
                 googleUser.getAuthResponse().id_token + '" />' +

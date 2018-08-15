@@ -25,8 +25,8 @@ import java.util.logging.Logger;
  *
  * @author onurb
  */
-@WebServlet(name = "loginGoogle", urlPatterns = {"/loginGoogle"})
-public class loginGoogle extends HttpServlet {
+@WebServlet(name = "LoginGoogle", urlPatterns = {"/LoginGoogle"})
+public class LoginGoogle extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -69,7 +69,7 @@ public class loginGoogle extends HttpServlet {
             request.getServletContext()
                     .getRequestDispatcher("/home.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(loginGoogle.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoginGoogle.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
