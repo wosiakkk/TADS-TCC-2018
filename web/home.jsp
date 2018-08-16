@@ -27,7 +27,7 @@
                     <a class="list-group-item" href="#">Opção4</a>
                 </c:if>
                 <c:if test="${user.getTipoUsuario()== 2}">
-                    <a class="list-group-item" href="escolhaAnuncio.jsp">Meus anuncios</a> 
+                    <a class="list-group-item" href="tiposAnunciosUsuario.jsp">Meus anuncios</a> 
                     <a class="list-group-item" href="escolhaAnuncio.jsp">Área de vendas</a>  
                     <a class="list-group-item" href="UserServlet?action=SEARCH">Editar Perfil</a>
                     <a class="list-group-item" href="escolhaAnuncio.jsp">Realizar um Anuncio</a>           

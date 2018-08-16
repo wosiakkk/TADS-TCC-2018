@@ -271,7 +271,7 @@ public class AnuncioServlet extends HttpServlet {
                     AnuncioFacade.alterarStatus(status, idImv);
                     response.sendRedirect("escolhaPendente.jsp");
                     break;
-                
+                    
                 case "BUSCAAPROVADOS":
                     List<Anuncio> anunciosAprovados = AnuncioFacade.buscarAnuncioAprovado();
                     String HTMLResponse = "";

@@ -16,6 +16,7 @@ import java.io.Serializable;
 public class Anuncio implements Serializable {
     private Anunciavel obj;
     private int idAnuncio;
+    private int idUsuario;
     private String titulo;
     private float valor;
     private String descricao;
@@ -32,6 +33,14 @@ public class Anuncio implements Serializable {
         this.idAnuncio = idAnuncio;
     }
 
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+    
     public String getTitulo() {
         return titulo;
     }

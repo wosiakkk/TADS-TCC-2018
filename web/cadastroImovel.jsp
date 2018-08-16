@@ -11,11 +11,11 @@
         <c:param name="msg" value="Faça login para acessar esta página!"></c:param>
     </c:redirect>
 </c:if>
-
+<div class="col-sm-3"></div>
 <form class="form-horizontal"  action="AnuncioServlet?action=ADDIMV"  method="POST" role="form" enctype="multipart/form-data">
     <h2>Cadastro de Anuncio: Imóvel</h2>
     <div class="form-group">
-        <label for="select" class="col-sm-3 control-label">Qual a categoria do seu Imovel ?:</label>
+        <label for="select" class="col-sm-9 control-label">Qual a categoria do seu Imovel ?:</label>
         <div class="col-sm-9">
             <c:set var="lista" value="${listaCatImovel}"/>
             <select class="selectpicker" name="catImovel" id="select">
@@ -33,27 +33,29 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="descricao" class="col-sm-3 control-label">Descrição:</label>
+        <label for="descricao" class="col-sm-9 control-label">Descrição:</label>
         <div class="col-sm-9">
             <input type="text" name="descricao" id="descricao" placeholder="" class="form-control" autofocus required> 
             <span class="help-block">Descreva seu anuncio</span>
         </div>
     </div>
     <div class="form-group">
-        <label for="quantidade" class="col-sm-3 control-label">Quantidade de pessoas que podem dividr:</label>
+        <label for="quantidade" class="col-sm-10 control-label">Quantidade de pessoas que podem dividr:</label>
         <div class="col-sm-2">
             <input type="text" name="quantidade" id="quantidade" placeholder="" class="form-control" autofocus required>
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-sm-3 control-label">É autorizado pets na residencia?:</label>   
-        <label class="radio-inline"><input type="radio" name="optpet" value="1">Sim</label>
-        <label class="radio-inline"><input type="radio" name="optpet" value="0">Não</label>
+        <label for="opcoes" class="col-sm-10 control-label">É autorizado pets na residencia?:</label>
+        <div id="opcoes"
+            <label class="radio-inline"><input type="radio" name="optpet" value="1">Sim</label>
+            <label class="radio-inline"><input type="radio" name="optpet" value="0">Não</label>
+        </div>
     </div>
     <div class="form-group">
         <label for="valor" class="col-sm-3 control-label">Preço:</label>
         <div class="col-sm-6">
-            <input type="number" name="valor" id="valor" placeholder="" class="form-control" min="0" autofocus>
+            <input type="number" name="valor" id="valor" placeholder="" class="form-control" step="0.01" autofocus>
             <span class="help-block">Insira um valor caso deseje.</span>
         </div>
     </div>
@@ -94,7 +96,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="file" class="col-sm-3 control-label">Selecione uma Imagem</label>
+        <label for="file" class="col-sm-9 control-label">Selecione uma Imagem</label>
         <div class="col-sm-9">
             <input type="file" name="file" id="file" placeholder="" class="form-control" autofocus required>
         </div>
@@ -143,6 +145,6 @@
         }
     </script>
 </form>   <!-- /form -->
-
+<div class="col-sm-3"></div>
 <!-- Rodapé -->
 <%@include file="footer.jsp" %>
