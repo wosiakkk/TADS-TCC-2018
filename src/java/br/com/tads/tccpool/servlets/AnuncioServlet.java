@@ -299,6 +299,34 @@ public class AnuncioServlet extends HttpServlet {
                         out.write("Falha ao buscar an&uacute;ncios");
                     }
                     break;
+                    
+                    //buscar anuncios de determinado usuario para mostrar no botão ''mues anuncios"
+                case "BUSCAANUNCIOUSER":
+                    int idUser = Integer.parseInt(request.getParameter("idUsr"));
+                     List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(idUser);
+                    session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
+                    rd = request.getRequestDispatcher("resumo.jsp");
+                    rd.forward(request, response);   
+                    break;
+                    
+                     //exibir página de anuncio
+                case "EXIBIRANUNCIO":
+                    int idAnuncio = Integer.parseInt(request.getParameter("idAnuncio"));
+                    int t = AnuncioFacade.verifcaTipoAnuncio(idAnuncio);
+                    if (t == 1) {
+                        Imovel i = new Imovel();
+                        int idImovel = AnuncioFacade.retornoIdImovel(idAnuncio);
+                        i = AnuncioFacade.buscarImovelPorId(idImovel);
+                      //  i = AnuncioFacade.exibirImovel(idAnuncio);
+                        session.setAttribute("imovelExibir", i);
+                        rd = request.getRequestDispatcher("anuncio.jsp");
+                        rd.forward(request, response);
+                    } else if (t == 2) {
+
+                    } else if (t == 3) {
+
+                    }
+                    break;
             }
         }
     }

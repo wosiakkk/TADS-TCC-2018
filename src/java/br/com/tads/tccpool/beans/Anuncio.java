@@ -17,11 +17,17 @@ public class Anuncio implements Serializable {
     private Anunciavel obj;
     private int idAnuncio;
     private int idUsuario;
+    private int idCategoria;
+    private int IdImovel;
+    private int IdMovel;
+    private int IdMaterial;
     private String titulo;
     private float valor;
     private String descricao;
     private String categoria;
     private String caminhoFoto;
+    private String statusAnuncio;
+    
 
     public Anuncio() {}
 
@@ -88,4 +94,46 @@ public class Anuncio implements Serializable {
     public void setCaminhoFoto(String caminhoFoto) {
         this.caminhoFoto = caminhoFoto;
     }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public int getIdImovel() {
+        return IdImovel;
+    }
+
+    public void setIdImovel(int IdImovel) {
+        this.IdImovel = IdImovel;
+    }
+
+    public int getIdMovel() {
+        return IdMovel;
+    }
+
+    public void setIdMovel(int IdMovel) {
+        this.IdMovel = IdMovel;
+    }
+
+    public int getIdMaterial() {
+        return IdMaterial;
+    }
+
+    public void setIdMaterial(int IdMaterial) {
+        this.IdMaterial = IdMaterial;
+    }
+
+    public String getStatusAnuncio() {
+        return statusAnuncio;
+    }
+
+    public void setStatusAnuncio(String statusAnuncio) {
+        this.statusAnuncio = statusAnuncio;
+    }
+    
+    
 }

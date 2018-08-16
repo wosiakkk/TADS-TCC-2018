@@ -12,7 +12,7 @@
     </c:redirect>
 </c:if>
 <div class="list-group">
-    <a class="list-group-item" href="MainPageServlet?action=ANUNCIO&tipo=imovel">Imóvel</a>
+    <a class="list-group-item" href="AnuncioServlet?action=BUSCAANUNCIOUSER">Imóvel</a>
     <a class="list-group-item" href="#">Móvel</a>
     <a class="list-group-item" href="#">Material</a>
 </div>

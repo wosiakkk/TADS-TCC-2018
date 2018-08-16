@@ -147,4 +147,17 @@
 </form>   <!-- /form -->
 <div class="col-sm-3"></div>
 <!-- Rodapé -->
-<%@include file="footer.jsp" %>
+</div> <!-- ./row -->
+</div> <!-- ./container -->
+!-- Importando: 1-Bootstrap -->
+<script src="assets/bootstrap/js/bootstrap.bundle.js" type="text/javascript"></script>
+<script src="assets/js/comentario.js" type="text/javascript" charset="UTF-8"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        setCopyright();
+    });
+</script>
+</body>
+</html>
+

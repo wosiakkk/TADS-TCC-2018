@@ -74,4 +74,25 @@ public class AnuncioFacade {
         
         return anunciosAprovados;
     }
+    
+    public static List<Anuncio> buscarAnuncioDoUsuario(int id) throws SQLException{
+       AnuncioDAO dao = new AnuncioDAO();
+       List<Anuncio> anunciosDoUsuario = null;
+       anunciosDoUsuario = dao.buscarAnunciosDoUsuario(id);
+       return anunciosDoUsuario;
+   }
+   
+   public static int verifcaTipoAnuncio(int idAnuncio) throws SQLException{
+       AnuncioDAO dao = new AnuncioDAO();
+       return dao.verificaTipoAnuncio(idAnuncio);
+   }
+   
+   public static Imovel exibirImovel(int idAnuncio) throws SQLException{
+       AnuncioDAO dao = new AnuncioDAO();
+       return dao.exibirImovel(idAnuncio);
+   }
+   public static int retornoIdImovel(int id) throws SQLException{
+       AnuncioDAO dao = new AnuncioDAO();
+       return dao.retornoIdImovelPorIdAnuncio(id);
+   }
 }

@@ -119,6 +119,57 @@ public class AnuncioDAO {
                                                            "WHERE\n" +
                                                            "	TB_STATUS_ID_STATUS = 2\n"+
                                                            "    GROUP BY ANUNCIO.ID_ANUNCIO";
+    
+    //query para buscar anuncios do usuario apos pressiona o botão ''meus nuancios'' na home
+    private final String QUERY_BUCASR_ANUNCIOS_DO_USUARIO = "SELECT\n"
+                                                            + " tb_anuncio.TB_USUARIO_NR_SEQ,"
+                                                            + " tb_anuncio.DS_DESCRICAO,"
+                                                            + " tb_anuncio.TB_CATEGORIA_ID_CATEGORIA,"
+                                                            + " tb_anuncio.ID_ANUNCIO,"
+                                                            + " tb_status.DS_DESCRICAO as ESTADO,"
+                                                            + " tb_categoria_anuncio.DS_DESCRICAO as DS_CAT\n"
+                                                            + " FROM\n"
+                                                            + " tb_anuncio\n"
+                                                            + " INNER JOIN tb_categoria_anuncio on ID_CATEGORIA = TB_CATEGORIA_ID_CATEGORIA\n"
+                                                            + " INNER JOIN tb_status on ID_STATUS = TB_STATUS_ID_STATUS"
+                                                            + " WHERE\n"
+                                                            + " TB_USUARIO_NR_SEQ = ?";
+    
+    //query para descobrir o tipo de anuncio
+    private final String QUERY_TIPO_ANUNCIO="SELECT tb_anuncio.TB_IMOVEL_idTB_IMOVEL, tb_anuncio.TB_MATERIAL_ID_MATERIAL, "
+                                                         + "tb_anuncio.TB_MOVEL_ID_MOVEL from tb_anuncio"
+                                                            + " where tb_anuncio.ID_ANUNCIO = ?";
+    
+    //query para pegar um imovel de um anuncio    
+    private final String QUERY_IMOVEL_POR_ANUNCIO = "SELECT tb_imovel.ID_IMOVEL,tb_imovel.NR_PET,tb_imovel.NR_QNT_PESSOAS,tb_categoria_imovel.DS_DESCRICAO AS DESC_TIPO,TB_ANUNCIO.ID_ANUNCIO,TB_ANUNCIO.DS_DESCRICAO,\n"
+            + "				TB_ANUNCIO.NR_VALOR,\n"
+            + "				TB_ANUNCIO.TB_CATEGORIA_ID_CATEGORIA,\n"
+            + "				TB_ANUNCIO.TB_STATUS_ID_STATUS,\n"
+            + "				TB_ANUNCIO.TB_ENDERECO_ID_ENDERECO,\n"
+            + "				TB_ANUNCIO.DS_TITULO,\n"
+            + "				tb_anuncio.TB_IMOVEL_idTB_IMOVEL,\n"
+            + "				tb_endereco_anuncio.ID_ENDERECO,\n"
+            + "				tb_endereco_anuncio.DS_RUA,\n"
+            + "				tb_endereco_anuncio.DS_ESTADO,\n"
+            + "				tb_endereco_anuncio.NR_NUMERO,\n"
+            + "				tb_endereco_anuncio.NR_CEP,\n"
+            + "				tb_endereco_anuncio.DS_COMPLEMENTO,\n"
+            + "				tb_endereco_anuncio.DS_CIDADE\n"
+            + "		FROM\n"
+            + "			tb_anuncio\n"
+            + "		INNER JOIN\n"
+            + "            tb_endereco_anuncio ON ID_ENDERECO = TB_ENDERECO_ID_ENDERECO\n"
+            + "		INNER JOIN\n"
+            + "			tb_imovel ON ID_IMOVEL = TB_IMOVEL_idTB_IMOVEL\n"
+            + "		INNER JOIN\n"
+            + "			tb_categoria_imovel ON TB_CATEGORIA_IMOVEL_ID_CATEGORIA_IMOVEL = ID_CATEGORIA_IMOVEL\n"
+            + "		WHERE\n"
+            + "			tb_anuncio.ID_ANUNCIO = ?";
+    
+      //query para retornar o id de um imovel de um anuncio
+    private final String QUERY_RETORNO_ID_IMOVEL_POR_IDANUNCIO = "SELECT tb_anuncio.TB_IMOVEL_idTB_IMOVEL "
+            + "from tb_anuncio where tb_anuncio.ID_ANUNCIO = ?";
+    
 
     private Connection con = null;
     private PreparedStatement stmt = null;
@@ -349,6 +400,80 @@ public class AnuncioDAO {
             lista.add(anuncio);
         }
         return lista;
+    }
+    
+    public List<Anuncio> buscarAnunciosDoUsuario(int idUsuario) throws SQLException {
+        List<Anuncio> lista = new ArrayList<Anuncio>();
+        stmt = con.prepareStatement(QUERY_BUCASR_ANUNCIOS_DO_USUARIO);
+        stmt.setInt(1, idUsuario);
+        rs =stmt.executeQuery();
+        while(rs.next()){
+            Anuncio anuncio = new Anuncio();
+            anuncio.setIdUsuario(rs.getInt("TB_USUARIO_NR_SEQ"));
+            anuncio.setDescricao(rs.getString("DS_DESCRICAO"));
+            anuncio.setIdCategoria(rs.getInt("TB_CATEGORIA_ID_CATEGORIA"));
+            anuncio.setIdAnuncio(rs.getInt("ID_ANUNCIO"));
+            anuncio.setCategoria(rs.getString("DS_CAT"));
+            anuncio.setStatusAnuncio(rs.getString("ESTADO"));
+            lista.add(anuncio);
+        }
+        return lista;
+    }
+    
+    public int verificaTipoAnuncio (int idAnuncio) throws SQLException{
+        int retorno=0;
+        Anuncio anuncio = new Anuncio();
+        stmt = con.prepareStatement(QUERY_TIPO_ANUNCIO);
+        stmt.setInt(1, idAnuncio);
+        rs = stmt.executeQuery();
+        if(rs.next()){
+            anuncio.setIdImovel(rs.getInt("TB_IMOVEL_idTB_IMOVEL"));
+            anuncio.setIdMaterial(rs.getInt("TB_MATERIAL_ID_MATERIAL"));
+            anuncio.setIdMovel(rs.getInt("TB_MOVEL_ID_MOVEL"));
+        }
+        
+        if(anuncio.getIdMovel()>0){
+            retorno = 2;
+        }else if(anuncio.getIdMaterial()>0){
+            retorno = 3;
+        }else if (anuncio.getIdImovel()>0){
+            retorno = 1;
+        }
+        return retorno;
+    }
+    
+    public Imovel exibirImovel(int idAnuncio) throws SQLException{
+        Imovel i = new Imovel();
+        stmt = con.prepareStatement(QUERY_IMOVEL_POR_ANUNCIO);
+        stmt.setInt(1, idAnuncio);
+        rs = stmt.executeQuery();
+        if(rs.next()){
+            i.setId(rs.getInt("ID_ANUNCIO"));
+            i.setBoolean_pet(rs.getInt("NR_PET"));
+            i.setQuantidade_pessoas(rs.getInt("NR_QNT_PESSOAS"));
+            i.setTipoDesc(rs.getString("DESC_TIPO"));
+            i.setDescricao(rs.getString("DS_DESCRICAO"));
+            i.setPreco(rs.getFloat("NR_VALOR"));
+            i.setRua(rs.getString("DS_RUA"));
+            i.setNumero(rs.getInt("NR_NUMERO"));
+            i.setTitulo(rs.getString("DS_TITULO"));
+            i.setEstado(rs.getString("DS_ESTADO"));
+            i.setCidade(rs.getString("DS_CIDADE"));
+            i.setCep(rs.getString("NR_CEP"));
+            i.setComplemento(rs.getString("DS_COMPLEMENTO"));
+        }
+        return i;
+    }
+    
+    public int retornoIdImovelPorIdAnuncio(int idAnuncio) throws SQLException{
+        int id=0;
+        stmt = con.prepareStatement(QUERY_RETORNO_ID_IMOVEL_POR_IDANUNCIO);
+        stmt.setInt(1, idAnuncio);
+        rs = stmt.executeQuery();
+        if(rs.next()){
+            id = rs.getInt("TB_IMOVEL_idTB_IMOVEL");
+        }
+        return id;
     }
     
 }
