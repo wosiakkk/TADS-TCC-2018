@@ -27,7 +27,27 @@ public class ComentarioDAO {
     private Connection con = null;
     private PreparedStatement stmt = null;
     private ResultSet rs = null;
-    private final String QUERY_SELECT = "SELECT * FROM TB_COMENTARIO WHERE TB_ANUNCIO_ID_ANUNCIO = ? AND ID_PAI = 0 ORDER BY VL_LIKE DESC";
+    /*
+    SELECT
+  TB_COMENTARIO.*,
+  TB_USUARIO.NM_NOME
+FROM
+  TB_COMENTARIO
+  INNER JOIN TB_USUARIO
+  ON TB_COMENTARIO.ID_ORIGEM = TB_USUARIO.NR_SEQ
+    */
+    private final String QUERY_SELECT = "SELECT\n"
+                                      + "  TB_COMENTARIO.*,\n"
+                                      + "  TB_USUARIO.NM_NOME\n"
+                                      + "FROM\n"
+                                      + "  TB_COMENTARIO\n"
+                                      + "  INNER JOIN TB_USUARIO\n"
+                                      + "  ON TB_COMENTARIO.ID_ORIGEM = TB_USUARIO.NR_SEQ\n"
+                                      + "WHERE\n"
+                                      + "      TB_ANUNCIO_ID_ANUNCIO = ?\n"
+                                      + "  AND ID_PAI = 0\n"
+                                      + "ORDER BY\n"
+                                      + "  VL_LIKE DESC";
     private final String QUERY_INSERT = "INSERT INTO TB_COMENTARIO (\n" +
                                         "   TB_ANUNCIO_ID_ANUNCIO,\n" +
                                         "   DS_CONTEUDO,\n" +
@@ -38,7 +58,18 @@ public class ComentarioDAO {
     private final String QUERY_LIKE = "UPDATE tb_comentario SET VL_LIKE = (SELECT VL_LIKE + 1) WHERE NR_SEQ = ?";
     private final String QUERY_UNLIKE = "UPDATE tb_comentario SET VL_UNLIKE = (SELECT VL_UNLIKE + 1) WHERE NR_SEQ = ?";
     private final String QUERY_VALIDA_REPLY = "SELECT 1 FROM TB_COMENTARIO WHERE ID_PAI = ?";
-    private final String QUERY_SELECT_REPLY = "SELECT * FROM TB_COMENTARIO WHERE TB_ANUNCIO_ID_ANUNCIO = ? AND ID_PAI = ? ORDER BY VL_LIKE DESC";
+    private final String QUERY_SELECT_REPLY = "SELECT\n"
+                                            + "  TB_COMENTARIO.*,\n"
+                                            + "  TB_USUARIO.NM_NOME\n"
+                                            + "FROM\n"
+                                            + "  TB_COMENTARIO\n"
+                                            + "  INNER JOIN TB_USUARIO\n"
+                                            + "  ON TB_COMENTARIO.ID_ORIGEM = TB_USUARIO.NR_SEQ\n"
+                                            + "WHERE\n"
+                                            + "      TB_ANUNCIO_ID_ANUNCIO = ?\n"
+                                            + "  AND ID_PAI = ?\n"
+                                            + "ORDER BY\n"
+                                            + "  VL_LIKE DESC";
 
     public ComentarioDAO() {
         ConnectionFactory cf = new ConnectionFactory();
@@ -64,20 +95,21 @@ public class ComentarioDAO {
         rs = stmt.executeQuery();
         
         while(rs.next()) {
-            Comentario m = new Comentario();
-            m.setIdComentario(rs.getInt("NR_SEQ"));
-            m.setIdAnuncio(rs.getInt("TB_ANUNCIO_ID_ANUNCIO"));
-            m.setConteudo(rs.getString("DS_CONTEUDO"));
-            m.setIdOrigem(rs.getInt("ID_ORIGEM"));
-            m.setQtdeLikes(rs.getInt("VL_LIKE"));
-            m.setQtdeUnlikes(rs.getInt("VL_UNLIKE"));
+            Comentario c = new Comentario();
+            c.setIdComentario(rs.getInt("NR_SEQ"));
+            c.setIdAnuncio(rs.getInt("TB_ANUNCIO_ID_ANUNCIO"));
+            c.setConteudo(rs.getString("DS_CONTEUDO"));
+            c.setNmUser(rs.getString("NM_NOME"));
+            c.setIdOrigem(rs.getInt("ID_ORIGEM"));
+            c.setQtdeLikes(rs.getInt("VL_LIKE"));
+            c.setQtdeUnlikes(rs.getInt("VL_UNLIKE"));
             
             /*SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Calendar cal = Calendar.getInstance();
             cal.setTime(format.parse(rs.getString("DT_DATA")));
-            m.setData(cal);*/
+            c.setData(cal);*/
             
-            comentarios.add(m);
+            comentarios.add(c);
         }
         
         return comentarios;
@@ -101,20 +133,21 @@ public class ComentarioDAO {
         rs = stmt.executeQuery();
         
         while(rs.next()) {
-            Comentario m = new Comentario();
-            m.setIdComentario(rs.getInt("NR_SEQ"));
-            m.setIdAnuncio(rs.getInt("TB_ANUNCIO_ID_ANUNCIO"));
-            m.setConteudo(rs.getString("DS_CONTEUDO"));
-            m.setIdOrigem(rs.getInt("ID_ORIGEM"));
-            m.setQtdeLikes(rs.getInt("VL_LIKE"));
-            m.setQtdeUnlikes(rs.getInt("VL_UNLIKE"));
+            Comentario c = new Comentario();
+            c.setIdComentario(rs.getInt("NR_SEQ"));
+            c.setIdAnuncio(rs.getInt("TB_ANUNCIO_ID_ANUNCIO"));
+            c.setConteudo(rs.getString("DS_CONTEUDO"));
+            c.setNmUser(rs.getString("NM_NOME"));
+            c.setIdOrigem(rs.getInt("ID_ORIGEM"));
+            c.setQtdeLikes(rs.getInt("VL_LIKE"));
+            c.setQtdeUnlikes(rs.getInt("VL_UNLIKE"));
             
             /*SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Calendar cal = Calendar.getInstance();
             cal.setTime(format.parse(rs.getString("DT_DATA")));
-            m.setData(cal);*/
+            c.setData(cal);*/
             
-            comentarios.add(m);
+            comentarios.add(c);
         }
         
         return comentarios;

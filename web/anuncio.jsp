@@ -140,4 +140,5 @@
 </form>   <!-- /form -->
 
 <!-- Rodapé -->
-<%@include file="footer.jsp" %>
+
+<%@include file="comentario.jsp" %>

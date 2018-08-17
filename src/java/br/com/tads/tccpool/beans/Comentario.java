@@ -10,6 +10,7 @@ import java.util.Calendar;
 public class Comentario implements Serializable {
     private int idComentario;
     private String conteudo;
+    private String nmUser;
     private int idOrigem;
     private int idAnuncio;
     private int idPai;
@@ -81,6 +82,14 @@ public class Comentario implements Serializable {
 
     public void setIdPai(int idPai) {
         this.idPai = idPai;
+    }
+
+    public String getNmUser() {
+        return nmUser;
+    }
+
+    public void setNmUser(String nmUser) {
+        this.nmUser = nmUser;
     }
             
 }

@@ -12,7 +12,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="google-signin-client_id" content="416664861929-ceaen1jvonlg3vecdhpmnks7029a2gnd.apps.googleusercontent.com">
         <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script-->
+        <!-- Adicionando jQuery para ser utilizado nas funções -->
+        <script src="assets/jquery/jquery.min.js" type="text/javascript"></script>
         <script src="https://apis.google.com/js/platform.js" async defer></script>
 
         <c:choose>
@@ -106,8 +108,9 @@
             </div>
         </nav>
 
-        <!-- Adicionando jQuery para ser utilizado nas funções -->
-        <script src="assets/jquery/jquery.min.js" type="text/javascript"></script>
+        
+        <!-- Adicionando Bootstrap -->
+        <script src="assets/bootstrap/js/bootstrap.bundle.js" type="text/javascript"></script>
         <!-- Importa funções padrão -->
         <script src="assets/js/helperFunctions.js" type="text/javascript"></script>
 

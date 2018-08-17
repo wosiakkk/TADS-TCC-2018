@@ -13,10 +13,6 @@
     </div>
 </footer>
 
-<!-- Importando: 1-Bootstrap -->
-<script src="assets/bootstrap/js/bootstrap.bundle.js" type="text/javascript"></script>
-<script src="assets/js/comentario.js" type="text/javascript" charset="UTF-8"></script>
-
 <script type="text/javascript">
     $(document).ready(function () {
         setCopyright();

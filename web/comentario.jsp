@@ -10,11 +10,11 @@
 <div class="col-lg-10">
     <form id="comentarioAjax">
         <input name="action" value="ADD" type="hidden">
-        <input name="ID_ANUNCIO" value="4" type="hidden">
+        <input name="ID_ANUNCIO" value="${imovelExibir.getId()}" type="hidden">
         <input name="ID_USUARIO" value="<c:out value="${user.getId()}"/>" type="hidden">
         <input name="ID_REPLY" value="" type="hidden">
         <div class="form-group">
-            <label for="DS_MSG">Mensagem:</label>
+            <label for="DS_MSG">Deixe aqui seu coment&aacute;rio:</label>
             <textarea id="DS_MSG" name="DS_MSG" class="form-control" cols="25" rows="5"></textarea>
         </div>
         <div class="form-group send-icon">
@@ -32,3 +32,4 @@
     </ul>
 </div> <!-- fim #respostaAjax -->
 <!-- Rodapé -->
+<script src="assets/js/comentario.js" type="text/javascript" charset="UTF-8"></script>
