@@ -66,7 +66,7 @@ public class ComentarioServlet extends HttpServlet {
                     
                 case "LIST":
                     String comentarios;
-                    int anuncio = Integer.parseInt(request.getParameter("anuncio"));
+                   int anuncio = Integer.parseInt(request.getParameter("anuncio"));
                     comentarios = ComentarioFacade.listarComentarios(anuncio);
                     out.write(comentarios);
                     out.flush();

@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * @author onurb
  */
 public class UserDAO {
-    private static final String QUERY_LOGIN = "SELECT NR_SEQ, DS_EMAIL, NM_NOME, TP_USUARIO FROM TB_USUARIO WHERE DS_EMAIL = ? AND DS_SENHA = ?";
+    private static final String QUERY_LOGIN = "SELECT NR_SEQ, DS_EMAIL, NM_NOME, TP_USUARIO, DS_FOTO FROM TB_USUARIO WHERE DS_EMAIL = ? AND DS_SENHA = ?";
     private static final String QUERY_LOGIN_GOOGLE = "SELECT NR_SEQ, NM_NOME, DS_EMAIL, DS_FOTO,TP_USUARIO FROM TB_USUARIO WHERE DS_EMAIL = ?";
     private static final String QUERY_SIMPLE_INSERT_USR = "INSERT INTO TB_USUARIO"
             + " (NM_NOME,DS_EMAIL,DS_SENHA,TP_USUARIO)"
@@ -166,6 +166,7 @@ public class UserDAO {
                 u.setId(rs.getInt("NR_SEQ"));
                 u.setEmail(rs.getString("DS_EMAIL"));
                 u.setNome(rs.getString("NM_NOME"));
+                u.setFoto(rs.getString("DS_FOTO"));
                 u.setTipoUsuario(rs.getInt("TP_USUARIO"));
             }
         }catch(SQLException e){

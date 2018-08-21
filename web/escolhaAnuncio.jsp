@@ -11,10 +11,37 @@
         <c:param name="msg" value="Faça login para acessar esta página!"></c:param>
     </c:redirect>
 </c:if>
-<div class="list-group">
-    <a class="list-group-item" href="MainPageServlet?action=ANUNCIO&tipo=imovel">Imóvel</a>
-    <a class="list-group-item" href="MainPageServlet?action=ANUNCIO&tipo=movel">Móvel</a>
-    <a class="list-group-item" href="MainPageServlet?action=ANUNCIO&tipo=material">Material</a>
+
+<div class="col-sm-4" style="padding-top: 5%">
+    <h4>Escolha uma categoria:</h4>
+    <hr>
 </div>
+
+<div class="col-sm-8">
+    <div class="container">
+        <div class="row" style="padding-top:50px">
+            <div class="col-sm-4 text-center">
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <a  href="MainPageServlet?action=ANUNCIO&tipo=imovel">
+                            <img class="d-block img-fluid" src="img\icones\house.png">Imóvel
+                        </a>
+                    </div>
+                    <div class="list-group-item">
+                        <a  href="MainPageServlet?action=ANUNCIO&tipo=movel">
+                            <img class="d-block img-fluid" src="img\icones\chair.png">Móvel    
+                        </a>
+                    </div>
+                    <div class="list-group-item">
+                        <a  href="MainPageServlet?action=ANUNCIO&tipo=material">
+                            <img class="d-block img-fluid" src="img\icones\books.png">Material
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Rodapé -->
 <%@include file="footer.jsp" %>

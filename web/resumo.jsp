@@ -11,21 +11,30 @@
     </c:redirect>
 </c:if>
 <div class="col-sm-12">
-    <h1>Auncios do usuário: </h1>
+    <h2>Anúncios de ${user.nome}: </h2>
+    <hr>
 </div>
-<c:set var="listaDoUsuario" value="${ListaAunciosDoUusario}"/>
-<c:forEach var="listaDoUsuario" items="${listaDoUsuario}">
-    <div class="card">
-        <h3 class="card-header primary-color white-text">Anuncio Pendente</h3>
-        <div class="card-body">
-            <h4 class="card-title">Descrição: ${listaDoUsuario.descricao}</h4>
-            <p class="card-text">Categoria :${listaDoUsuario.categoria}</p>
-            <p class="card-text">Status do Anúncio :${listaDoUsuario.statusAnuncio}</p>
-          
-            <a href="AnuncioServlet?action=EXIBIRANUNCIO&idAnuncio=${listaDoUsuario.idAnuncio}" class="btn btn-primary">Ver Anúncio</a>
-        </div>
-    </div>
-</c:forEach>
+    
+<div class="col-sm-12 list-inline">
+    <img class="list-inline-item " src="img\icones\house.png">
+    <img class="list-inline-item" src="img\icones\chair.png">
+    <img class="list-inline-item" src="img\icones\books.png"> 
+    <hr>
+</div>
+<div class="jumbotron col-sm-12" >
+    <c:set var="listaDoUsuario" value="${ListaAunciosDoUusario}"/>
+    <c:forEach var="listaDoUsuario" items="${listaDoUsuario}">
+        <div class="card">
+            <h3 class="card-header primary-color white-text">Anuncio Pendente</h3>
+            <div class="card-body">
+                <h4 class="card-title">Descrição: ${listaDoUsuario.descricao}</h4>
+                <p class="card-text">Categoria :${listaDoUsuario.categoria}</p>
+                <p class="card-text">Status do Anúncio :${listaDoUsuario.statusAnuncio}</p>
 
+                <a href="AnuncioServlet?action=EXIBIRANUNCIO&idAnuncio=${listaDoUsuario.idAnuncio}" class="btn btn-primary">Ver Anúncio</a>
+            </div>
+        </div>
+    </c:forEach>
+</div>
 <!-- Rodapé -->
 <%@include file="footer.jsp" %>
