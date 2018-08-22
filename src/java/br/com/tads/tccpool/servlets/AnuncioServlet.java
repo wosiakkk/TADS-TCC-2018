@@ -391,7 +391,7 @@ public class AnuncioServlet extends HttpServlet {
                         rd.forward(request, response);
                     }
                     break;
-                    
+                    //case para excluir um anuncio
                     case "EXCLUIRANUNCIO":
                         try{
                      if(session.getAttribute("imovelExibir") != null){
