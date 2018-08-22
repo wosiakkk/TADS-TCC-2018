@@ -7,6 +7,7 @@ package br.com.tads.tccpool.beans;
  
 import br.com.tads.tccpool.interfaces.Anunciavel;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -17,6 +18,29 @@ public class Movel implements Serializable {
     private String descricao;
     private Float preco;
     private int tipo;
+    private int id;
+    private List<String> fotos;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
+
+    public List<String> getFotos() {
+        return fotos;
+    }
+
+    public void setFotos(List<String> fotos) {
+        this.fotos = fotos;
+    }
+    
+    
+    
 
     public Movel() {}
     
