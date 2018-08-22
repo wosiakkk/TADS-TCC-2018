@@ -18,6 +18,39 @@ public class Material implements Anunciavel, Serializable {
     private String descricao;
     private float preco;
     private int tipo;
+    private int status;
+    private int id;
+    private List<String> fotos;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<String> getFotos() {
+        return fotos;
+    }
+
+    public void setFotos(List<String> fotos) {
+        this.fotos = fotos;
+    }
+    
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
+    
+    
+    
+    
 
     public String getTitulo() {
         return titulo;
@@ -49,26 +82,6 @@ public class Material implements Anunciavel, Serializable {
 
     public void setTipo(int tipo) {
         this.tipo = tipo;
-    }
-
-    @Override
-    public List<String> getFotos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setFotos(List<String> fotos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -115,6 +128,11 @@ public class Material implements Anunciavel, Serializable {
     public String getCep() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
+    
+
+   
 
     
 
