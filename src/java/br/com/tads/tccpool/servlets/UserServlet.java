@@ -157,6 +157,15 @@ public class UserServlet extends HttpServlet {
                 case "REMOVE":{
                     break;
                 }
+                case "PERFIL":{
+                    User perfil = new User();
+                    int id = Integer.parseInt(request.getParameter("idUser"));
+                    perfil = UserFacade.geraPerfilUser(id);
+                    session.setAttribute("perfil", perfil);
+                    RequestDispatcher rd = request.getRequestDispatcher("perfil.jsp");
+                    rd.forward(request, response);
+                    break;
+                }
             }
             
             

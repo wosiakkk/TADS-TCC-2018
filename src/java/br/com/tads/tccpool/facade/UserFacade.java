@@ -99,4 +99,14 @@ public class UserFacade {
             return false;
         }
     }
+    public static User geraPerfilUser(int idUser){
+        UserDAO dao = new  UserDAO();
+        User u = new User();
+        try {
+            u = dao.gerarPerfil(idUser);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return u;
+    }
 }
