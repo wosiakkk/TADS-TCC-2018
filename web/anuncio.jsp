@@ -19,6 +19,8 @@
     <input type="hidden" name="idAnuncioImovel"  value="${imovelAlterar.id}" >
     <input type="hidden" name="tipoAnuncio"  value="imovel" >
     <h2>Anuncio: ${imovelAlterar.id} </h2>
+    <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+    <hr>
     <h2> Fotos:</h2></br></br>
 <div class="col-md-12"></div>
 

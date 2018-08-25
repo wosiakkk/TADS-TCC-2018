@@ -27,20 +27,7 @@
 </div> <!-- End col-lg-9 -->
 
 <script type="text/javascript" lang="UTF-8">
-    $(document).ready(function() {
-        $.ajax({
-            url : "AnuncioServlet?action=BUSCAAPROVADOS",
-            method : "POST",
-            dataType : "html",
-            success : function(resp) {
-                $("#pageContent").html(resp);
-            },
-            error : function(resp) {
-                console.log(resp);
-                $("#pageContent").html(resp);
-            }
-        });        
-    });
+    buscarAnunciosAprovados("#pageContent");
 </script>
 
 <!-- Rodapé -->
