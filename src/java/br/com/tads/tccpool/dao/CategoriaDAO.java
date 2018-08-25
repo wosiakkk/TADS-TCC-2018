@@ -64,8 +64,9 @@ public class CategoriaDAO {
           //  throw new AcessoBdException("erro dao instituicao", e);
           System.out.println(e.getMessage());
         }
-        stmt=null;
         con.close();
+        stmt.close();
+        rs.close();
        return list;
     }
     
@@ -86,8 +87,9 @@ public class CategoriaDAO {
           //  throw new AcessoBdException("erro dao instituicao", e);
           System.out.println(e.getMessage());
         }
-        stmt=null;
         con.close();
+        stmt.close();
+        rs.close();
        return list;
     }
 }

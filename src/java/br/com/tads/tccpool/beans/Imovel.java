@@ -25,11 +25,20 @@ public class Imovel implements Anunciavel, Serializable {
     private float preco;
     private String rua;
     private int numero;
+    private int enderecoId;
     private String estado;
     private String cidade;
     private String cep;
     private String complemento = "";
     private List<String> fotos;
+
+    public int getEnderecoId() {
+        return enderecoId;
+    }
+
+    public void setEnderecoId(int enderecoId) {
+        this.enderecoId = enderecoId;
+    }
 
     
     public String getTipoDesc() {
