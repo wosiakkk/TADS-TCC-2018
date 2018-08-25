@@ -88,5 +88,15 @@ public class UserFacade {
             return false;
         }
     }
-        
+    
+    public static Boolean editarPerfil(User u){
+        UserDAO dao = new UserDAO();
+        try {
+            dao.editarPerfil(u);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
 }

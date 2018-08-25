@@ -86,7 +86,17 @@ public class UserServlet extends HttpServlet {
                     break;
                 }
                 case "EDIT":{
-                    User userSearch = (User) session.getAttribute("userSearch");
+                    
+                    u.setId(Integer.parseInt(request.getParameter("idUser")));
+                    u.setNome(request.getParameter("nome"));
+                    u.setDescricao(request.getParameter("descricao"));
+                    u.setInteresses(request.getParameter("interesses"));
+                    
+                    if(UserFacade.editarPerfil(u)){
+                        response.sendRedirect("home.jsp");
+                    }
+                    
+                    /*User userSearch = (User) session.getAttribute("userSearch");
                     
                     u.setId(userSearch.getId());
                     u.setNome(request.getParameter("nome"));

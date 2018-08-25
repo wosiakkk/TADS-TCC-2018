@@ -30,7 +30,7 @@
             <h3>Informações do perfil</h3>
 
             <form id="formEditar" class="form-horizontal" action="UserServlet?action=EDIT"  method="POST" role="form">
-                <input id="cdEndereco" type="hidden" name="cdEndereco" value="<c:out value="${userSearch.getCdEndereco()}"/>">
+                <input id="idUser" type="hidden" name="idUser" value="<c:out value="${user.getId()}"/>">
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Nome Completo:</label>
                     <div class="col-lg-8">
@@ -38,12 +38,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="comment">Uma breve descrição sobre você:</label>
-                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                    <label for="descricao">Uma breve descrição sobre você:</label>
+                    <textarea class="form-control" rows="5" id="descricao" name="descricao"></textarea>
                 </div>
                    <div class="form-group">
-                    <label for="comment">Interesses ou qualquer outra coisa relacionada a perfil:</label>
-                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                    <label for="interesses">Interesses ou qualquer outra coisa relacionada a perfil:</label>
+                    <textarea class="form-control" rows="5" id="interesses" name="interesses"></textarea>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-9 col-lg-9 col-md-9 col-xs-9 col-sm-offset-3">
@@ -78,5 +78,15 @@
         });
     });
 </script> -->
-<%@include file="footer.jsp" %>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        setCopyright();
+    });
+</script>
+</body>
+</html>
+
 

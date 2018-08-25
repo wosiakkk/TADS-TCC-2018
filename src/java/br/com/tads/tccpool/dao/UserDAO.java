@@ -49,6 +49,14 @@ public class UserDAO {
                                                     "INNER JOIN tcc1.tb_endereco AS endr ON user.CD_ENDERECO = endr.NR_SEQ \n" +
                                                     "WHERE \n" +
                                                         "user.NR_SEQ = ? AND user.TP_USUARIO = 2";
+    
+    private static final String QUERY_EDIT_PERFIL = "UPDATE tb_usuario SET\n"
+                                                        + " NM_NOME = ?,"
+                                                        + " DS_DESCRICAO_USER = ?,"
+                                                        + " DS_INTERESSES= ?"
+                                                  + " WHERE"
+                                                        + " NR_SEQ = ?";
+    
     private static final String QUERY_EDIT_USR = "UPDATE tb_usuario SET\n" +
                                                       "NR_CPF = ?," +
                                                       "NM_NOME = ?," +
@@ -219,6 +227,16 @@ public class UserDAO {
         }
     }
 
+    
+    public void editarPerfil(User u) throws SQLException{
+       stmt = con.prepareStatement(QUERY_EDIT_PERFIL);
+       stmt.setString(1, u.getNome());
+       stmt.setString(2, u.getDescricao());
+       stmt.setString(3, u.getInteresses());
+       stmt.setInt(4, u.getId());
+       stmt.executeUpdate();         
+    }
+    
     public void editarUser(User u, String CPFUser) {
         try{
             stmt = con.prepareStatement(QUERY_EDIT_END);
