@@ -16,11 +16,21 @@ import java.util.List;
 public class Material implements Anunciavel, Serializable {
     private String titulo;
     private String descricao;
+    private String tipoDesc;
     private float preco;
     private int tipo;
     private int status;
     private int id;
     private List<String> fotos;
+
+    public String getTipoDesc() {
+        return tipoDesc;
+    }
+
+    public void setTipoDesc(String tipoDesc) {
+        this.tipoDesc = tipoDesc;
+    }
+    
 
     public int getId() {
         return id;

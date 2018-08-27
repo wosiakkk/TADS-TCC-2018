@@ -12,37 +12,43 @@
     </c:redirect>
 </c:if>
 
-<c:if test="${imovelAlterar != null}">   
+<c:if test="${imovelAlterar != null}"> 
+    <div class="row">
+<div class="col-md-12">
+        
     <div class="form-group">
 <form class="form"  action="AnuncioServlet"  method="POST" role="form">
     <input type="hidden" name="action"  value="ALTERARANUNCIOID" >
     <input type="hidden" name="idAnuncioImovel"  value="${imovelAlterar.id}" >
     <input type="hidden" name="tipoAnuncio"  value="imovel" >
-    <h2>Anuncio: ${imovelAlterar.id} </h2>
-    <h2> Fotos:</h2></br></br>
+    <h2>Anuncio: ${idExibirAnuncio} </h2><br>
+    <h2> Fotos:</h2></br>
 <div class="col-md-12"></div>
+<div class="col-md-12">
 
-
+<div class="col-sm-2"></div>
+        <div class="col-md-8">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
 
         
         <!-- Wrapper for slides -->
+        
         <div class="carousel-inner">
             <c:set var="counter" value="0" />
             <c:forEach var="lista" items="${imovelAlterar.fotos}">
                 <c:choose>
                     <c:when test="${counter == 0}">
 
-                        <div class="item active">
-                            <img src="${lista}" alt="Fotos do anuncio">
-                            <input type="hidden" name="idFoto"  value="" >
+                        <div class="carousel-item active">
+                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
+                            
                         </div>
                     </c:when> 
                     <c:otherwise>
-                        <div class="item">
-                            <img src="${lista}" alt="Fotos do anuncio">
-                            <input type="hidden" name="idFoto"  value="" >
+                        <div class="carousel-item">
+                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
+                            
                         </div>
                     </c:otherwise>
 
@@ -51,6 +57,11 @@
             </c:forEach>
 
         </div>
+        </div>
+        </div>
+        </div>
+        
+        
         </br>
         </br>
         <!-- Left and right controls -->
@@ -114,7 +125,7 @@
     <div class="form-group">
         <label for="valor" class="col-sm-3 control-label">Preço:</label>
         <div class="col-sm-6">
-            <input type="number" name="valor" id="valor" value="${imovelAlterar.preco}" class="form-control" min="0" step="any" >
+            <input type="number" name="valor" id="valor" value="${imovelAlterar.preco}" class="form-control" min="0" step="any" />
 
         </div>
     </div>
@@ -154,33 +165,36 @@
             <input type="text" name="comple" id="comple" value="${imovelAlterar.complemento}" class="form-control"  >
         </div>
     </div>
-<div class="form-group col-md-2">
+<div class="form-group col-md-12">
    <input type="submit" value="Alterar"  class="form-control btn-primary" />
 </div>
 
 </form>   <!-- /form -->
 
-<div class="form-group col-md-2">
+<div class="form-group col-md-12">
     <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
         <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
         <input type="submit" value="Cancelar"  class="form-control btn-primary" />
     </form>
 </div>
-
+</div>
 </div>
 <div class="col-md-12"></div>
 </c:if>
 
 <c:if test="${imovelExibir != null}">   
 
-    <h2>Anuncio: ${imovelExibir.id} </h2><br>
+    <h2>Anuncio: ${idExibirAnuncio} </h2><br>
     <h2> Fotos:</h2></br></br>
 <div class="col-md-12"></div>
 
 
+    
+    
+        <div class="col-sm-2"></div>
+        <div class="col-md-8">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
-
         
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
@@ -189,13 +203,15 @@
                 <c:choose>
                     <c:when test="${counter == 0}">
 
-                        <div class="item active">
-                                <img src="${lista}" alt="Fotos do anuncio">
+                        <div class="carousel-item active">
+                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
+                            
                         </div>
                     </c:when> 
                     <c:otherwise>
-                        <div class="item">
-                            <img src="${lista}" alt="Fotos do anuncio">
+                        <div class="carousel-item">
+                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
+                            
                         </div>
                     </c:otherwise>
 
@@ -215,7 +231,10 @@
             <span class="glyphicon glyphicon-chevron-right"></span>
             <span class="sr-only">Next</span>
         </a>
+            </div>
     </div>
+    
+            
             <div class="col-md-12"></div>
         <div class="col-sm-9">
         <label for="titulo">Titulo:</label>
@@ -312,6 +331,8 @@
         <br><input type="submit" value="Excluir"  class="form-control btn-primary" />
     </form>
 </div>
+
+            
 <div class="col-md-12"></div>
 </c:if>
 
@@ -334,13 +355,15 @@
                 <c:choose>
                     <c:when test="${counter == 0}">
 
-                        <div class="item active">
-                            <img src="${lista}" alt="Fotos do anuncio">
+                        <div class="carousel-item active">
+                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
+                            
                         </div>
                     </c:when> 
                     <c:otherwise>
-                        <div class="item">
-                            <img src="${lista}" alt="Fotos do anuncio">
+                        <div class="carousel-item">
+                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
+                            
                         </div>
                     </c:otherwise>
 
@@ -417,7 +440,7 @@
     <input type="hidden" name="action"  value="ALTERARANUNCIOID" >
     <input type="hidden" name="idAnuncioMovel"  value="${movelAlterar.id}" >
     <input type="hidden" name="tipoAnuncio"  value="movel" >
-    <h2>Anuncio: ${movelAlterar.id} </h2>
+    <h2>Anuncio: ${idExibirAnuncio} </h2><br>
     <h2> Fotos:</h2></br></br>
     <div class="col-md-12"></div>
 
@@ -434,15 +457,15 @@
                 <c:choose>
                     <c:when test="${counter == 0}">
 
-                        <div class="item active">
-                            <img src="${lista}" alt="Fotos do anuncio">
-                            <input type="hidden" name="idFoto"  value="" >
+                        <div class="carousel-item active">
+                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
+                            
                         </div>
                     </c:when> 
                     <c:otherwise>
-                        <div class="item">
-                            <img src="${lista}" alt="Fotos do anuncio">
-                            <input type="hidden" name="idFoto"  value="" >
+                        <div class="carousel-item">
+                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
+                            
                         </div>
                     </c:otherwise>
 
@@ -523,13 +546,15 @@
                 <c:choose>
                     <c:when test="${counter == 0}">
 
-                        <div class="item active">
-                            <img src="${lista}" alt="Fotos do anuncio">
+                        <div class="carousel-item active">
+                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
+                            
                         </div>
                     </c:when> 
                     <c:otherwise>
-                        <div class="item">
-                            <img src="${lista}" alt="Fotos do anuncio">
+                        <div class="carousel-item">
+                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
+                            
                         </div>
                     </c:otherwise>
 
@@ -554,6 +579,10 @@
         <div class="col-sm-9">
         <label for="titulo">Titulo:</label>
             ${materialExibir.titulo}
+        </div>
+        <div class="col-sm-9">
+        <label for="categoria">Categoria:</label>
+            ${materialExibir.tipoDesc}
         </div>
     
         
@@ -604,9 +633,9 @@
     <div class="form-group">
 <form class="form"  action="AnuncioServlet"  method="POST" role="form">
     <input type="hidden" name="action"  value="ALTERARANUNCIOID" >
-    <input type="hidden" name="idAnuncioMovel"  value="${movelAlterar.id}" >
-    <input type="hidden" name="tipoAnuncio"  value="movel" >
-    <h2>Anuncio: ${movelAlterar.id} </h2>
+    <input type="hidden" name="idAnuncioMaterial"  value="${materialAlterar.id}" >
+    <input type="hidden" name="tipoAnuncio"  value="material" >
+    <h2>Anuncio: ${idExibirAnuncio} </h2><br>
     <h2> Fotos:</h2></br></br>
     <div class="col-md-12"></div>
 
@@ -623,15 +652,15 @@
                 <c:choose>
                     <c:when test="${counter == 0}">
 
-                        <div class="item active">
-                            <img src="${lista}" alt="Fotos do anuncio">
-                            <input type="hidden" name="idFoto"  value="" >
+                        <div class="carousel-item active">
+                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
+                            
                         </div>
                     </c:when> 
                     <c:otherwise>
-                        <div class="item">
-                            <img src="${lista}" alt="Fotos do anuncio">
-                            <input type="hidden" name="idFoto"  value="" >
+                        <div class="carousel-item">
+                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
+                            
                         </div>
                     </c:otherwise>
 
@@ -653,6 +682,17 @@
         </a>
     </div>
     
+            <div class="col-sm-9">
+            <select class="selectpicker" name="tipo" id="tipo">
+                <option value="0">SELECIONE</option>
+
+                <option value="1" <c:if test="${materialAlterar.tipo == 1}">selected</c:if> >Livros Didáticos</option>
+                <option value="2" <c:if test="${materialAlterar.tipo == 2}">selected</c:if> >Livros de Literatura</option>
+                <option value="3" <c:if test="${materialAlterar.tipo == 3}">selected</c:if> >Apostilas</option>
+                <option value="4" <c:if test="${materialAlterar.tipo == 4}">selected</c:if> >Outros</option>
+            </select>
+        </div>
+            
     <div class="form-group">
         <label for=titulo class="col-sm-3 control-label">Titulo:</label>
         <div class="col-sm-9">
