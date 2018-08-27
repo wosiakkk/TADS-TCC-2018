@@ -146,5 +146,11 @@ public class AnuncioFacade {
         dao.close();
         
     }
+   public static void updateMaterial(Material m, int idAnuncio) throws AcessoBdException, SQLException{
+        AnuncioDAO dao = new AnuncioDAO();
+        dao.updateMaterial(m, idAnuncio);
+        dao.close();
+        
+    }
    
 }

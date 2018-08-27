@@ -391,6 +391,13 @@ public class AnuncioServlet extends HttpServlet {
                      User u = (User)session.getAttribute("user");
                      List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
                     session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
+                     }else if(session.getAttribute("materialExibir") != null){
+                         int idAnuncioExcluir = (int)session.getAttribute("idExibirAnuncio");
+                     Material materialExcluir = (Material)session.getAttribute("materialExibir");
+                     AnuncioFacade.deletarAnuncio(idAnuncioExcluir);
+                     User u = (User)session.getAttribute("user");
+                     List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                    session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                      }
                     rd = request.getRequestDispatcher("resumo.jsp");
                     rd.forward(request, response); 
@@ -417,6 +424,13 @@ public class AnuncioServlet extends HttpServlet {
                      session.setAttribute("movelAlterar", movelAlterar);
                         session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
                         session.removeAttribute("movelExibir");
+                        
+                     }else if(session.getAttribute("materialExibir") != null){
+                         int idAnuncioAlterar = (int)session.getAttribute("idExibirAnuncio");
+                     Material materialAlterar = (Material)session.getAttribute("materialExibir");
+                     session.setAttribute("materialAlterar", materialAlterar);
+                        session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
+                        session.removeAttribute("materialExibir");
                         
                      }
                         rd = request.getRequestDispatcher("anuncio.jsp");
@@ -504,6 +518,31 @@ public class AnuncioServlet extends HttpServlet {
                                session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
                                session.setAttribute("movelExibir", mov);
                         session.removeAttribute("movelAlterar");
+                        }else if(request.getParameter("tipoAnuncio").equals("material")){
+                                 Material m = new Material();
+                           if(request.getParameter("idAnuncioMaterial")!= null && !request.getParameter("idAnuncioMaterial").equals("")){
+                               m.setId(Integer.parseInt(request.getParameter("idAnuncioMaterial")));
+                           }
+                           if(request.getParameter("tipo")!= null && !request.getParameter("tipo").equals("")){
+                               m.setTipo(Integer.parseInt(request.getParameter("tipo")));
+                           }
+                           
+                           if(request.getParameter("titulo")!= null && !request.getParameter("titulo").equals("")){
+                               m.setTitulo(request.getParameter("titulo"));
+                           }
+                           if(request.getParameter("descricao")!= null && !request.getParameter("descricao").equals("")){
+                               m.setDescricao(request.getParameter("descricao"));
+                           }
+                           
+                           if(request.getParameter("valor")!= null && !request.getParameter("valor").equals("")){
+                               m.setPreco(Float.parseFloat(request.getParameter("valor")));
+                           }
+                           int idAnuncioAlterar = (int)session.getAttribute("idExibirAnuncio");
+                               AnuncioFacade.updateMaterial(m, idAnuncioAlterar);
+                               Material mat = AnuncioFacade.buscarMaterialPorId(idAnuncioAlterar);
+                               session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
+                               session.setAttribute("materialExibir", mat);
+                        session.removeAttribute("materialAlterar");
                         }
                         rd = request.getRequestDispatcher("anuncio.jsp");
                         rd.forward(request, response);
