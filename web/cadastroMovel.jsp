@@ -40,10 +40,43 @@
         </div>
     </div>
 
+    <div class="form-group" id="1" style="display:none;">
+        <label for="file" class="col-sm-3 control-label"></label> 
+        <div class="col-sm-9" >
+            <input type="file" name="file"  placeholder="" class="form-control" autofocus >
+        </div>
+    </div>
+    <div class="form-group" id="2" style="display:none;">
+        <label for="file" class="col-sm-3 control-label"></label> 
+        <div class="col-sm-9" >
+            <input type="file" name="file"  placeholder="" class="form-control" autofocus >
+        </div>
+    </div>
+    <div class="form-group" id="3" style="display:none;">
+        <label for="file" class="col-sm-3 control-label"></label> 
+        <div class="col-sm-9" >
+            <input type="file" name="file"  placeholder="" class="form-control" autofocus >
+        </div>
+    </div>
+    <div class="form-group" id="4" style="display:none;">
+        <label for="file" class="col-sm-3 control-label"></label> 
+        <div class="col-sm-9" >
+            <input type="file" name="file"  placeholder="" class="form-control" autofocus >
+        </div>
+    </div>
+    <script>
+        i = 1;
+        function myFunction() {
+            var x = document.getElementById(i);
+            x.style.display = 'inline'
+            i++;
+        }
+    </script>
+    
     <div class="form-group">
-        <label for="file" class="col-sm-3 control-label">Selecione uma Imagem</label>
+        <label for="file" class="col-sm-3 control-label"></label>
         <div class="col-sm-9">
-            <input type="file" name="file" id="file" placeholder="" class="form-control" autofocus required>
+            <button type="button" name="button" id="button" class="form-control" onclick="myFunction()">Adicionar Imagem</button>
         </div>
     </div>
 
@@ -52,6 +85,7 @@
             <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
         </div>
     </div>
+    <br><br><br>
 </form>   <!-- /form -->
 <!-- Rodapé -->
 <%@include file="footer.jsp" %>
