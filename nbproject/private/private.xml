@@ -4,13 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/dao/AnuncioDAO.java</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/facade/AnuncioFacade.java</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/servlets/AnuncioServlet.java</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/web/tiposAnunciosUsuario.jsp</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/servlets/ComentarioServlet.java</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/web/cadastroImovel.jsp</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/web/footer.jsp</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/web/cadastroAnuncio.jsp</file>
+            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/dao/UserDAO.java</file>
+            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/dao/ComentarioDAO.java</file>
+            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/dao/InstituicaoDAO.java</file>
+            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/dao/MensagemDAO.java</file>
+            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/dao/CategoriaDAO.java</file>
         </group>
     </open-files>
 </project-private>

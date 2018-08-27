@@ -49,6 +49,19 @@ public class UserDAO {
                                                     "INNER JOIN tcc1.tb_endereco AS endr ON user.CD_ENDERECO = endr.NR_SEQ \n" +
                                                     "WHERE \n" +
                                                         "user.NR_SEQ = ? AND user.TP_USUARIO = 2";
+    
+    private static final String QUERY_EDIT_PERFIL = "UPDATE tb_usuario SET\n"
+                                                        + " NM_NOME = ?,"
+                                                        + " DS_DESCRICAO_USER = ?,"
+                                                        + " DS_INTERESSES= ?"
+                                                  + " WHERE"
+                                                        + " NR_SEQ = ?";
+    
+    private static final String QUERY_GERAR_PERFIL =" SELECT tb_usuario.NM_NOME, "
+                                                        + "tb_usuario.DS_FOTO, tb_usuario.DS_DESCRICAO_USER,\n" +
+                                                        " tb_usuario.DS_INTERESSES FROM tcc1.tb_usuario "
+                                                        + "WHERE tb_usuario.NR_SEQ = ?";
+    
     private static final String QUERY_EDIT_USR = "UPDATE tb_usuario SET\n" +
                                                       "NR_CPF = ?," +
                                                       "NM_NOME = ?," +
@@ -102,10 +115,11 @@ public class UserDAO {
                 stmt.setString(3, u.getSenha());
                 stmt.setInt(4, u.getTipoUsuario());
                 stmt.executeUpdate();
-                con.close();
-                stmt.close();
         }catch(SQLException e){
             throw new RuntimeException(e);
+        }finally{
+            stmt.close();
+            con.close();
         }
     }
     
@@ -121,6 +135,9 @@ public class UserDAO {
                 stmt.close();
         }catch(SQLException e){
             throw new RuntimeException(e);
+        }finally{
+            stmt.close();
+            con.close();
         }
     }
     
@@ -142,6 +159,10 @@ public class UserDAO {
         }catch(SQLException e){
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, e);
             u = null;
+        }finally{
+            stmt.close();
+            rs.close();
+            con.close();
         }
         return u;
     }
@@ -169,9 +190,14 @@ public class UserDAO {
                 u.setFoto(rs.getString("DS_FOTO"));
                 u.setTipoUsuario(rs.getInt("TP_USUARIO"));
             }
+            
         }catch(SQLException e){
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, e);
             u = null;
+        }finally{
+            stmt.close();
+            rs.close();
+            con.close();
         }
         return u;
     }
@@ -213,12 +239,48 @@ public class UserDAO {
             try {
                 con.close();
                 stmt.close();
+                rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
+    
+    public void editarPerfil(User u) throws SQLException{
+       stmt = con.prepareStatement(QUERY_EDIT_PERFIL);
+       stmt.setString(1, u.getNome());
+       stmt.setString(2, u.getDescricao());
+       stmt.setString(3, u.getInteresses());
+       stmt.setInt(4, u.getId());
+       stmt.executeUpdate();
+       stmt.close();
+       rs.close();
+       con.close();
+    }
+    
+    public User gerarPerfil(int idUser) throws SQLException{
+        User u = new User();
+        stmt = con.prepareStatement(QUERY_GERAR_PERFIL);
+        stmt.setInt(1, idUser);
+        rs = stmt.executeQuery();
+        if(rs.next()){
+            u.setNome(rs.getString("NM_NOME"));
+            u.setFoto(rs.getString("DS_FOTO"));
+            u.setDescricao(rs.getString("DS_DESCRICAO_USER"));
+            u.setInteresses(rs.getString("DS_INTERESSES"));
+            stmt.close();
+            rs.close();
+            con.close();
+            return u;
+        }else{
+            stmt.close();
+            rs.close();
+            con.close();
+            return u;
+        }
+    }
+    
     public void editarUser(User u, String CPFUser) {
         try{
             stmt = con.prepareStatement(QUERY_EDIT_END);

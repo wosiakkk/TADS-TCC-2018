@@ -19,6 +19,8 @@ public class User implements Serializable {
     private String GoogleToken; //Token de login Google
     private String foto;        //Caminho da foto do usuario
     private String senha;       //Senha do usuário
+    private String descricao;   //Descrição do usuário que via no perfil
+    private String interesses;  //Iinteresses do usuário que vai no perfil
     private String tel;         //Número de telefone do usuário
     private String cel;         //Número de telefone celular do usuário
     private int cdEndereco;     //Número identificador do endereço do usuário
@@ -83,6 +85,22 @@ public class User implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+    
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getInteresses() {
+        return interesses;
+    }
+
+    public void setInteresses(String interesses) {
+        this.interesses = interesses;
     }
 
     public String getTel() {
