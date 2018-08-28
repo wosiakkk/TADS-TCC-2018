@@ -4,11 +4,11 @@
     Author     : onurb
 --%>
 
-<!-- Cabeçalho -->
+<!-- CabeÃ§alho -->
 <%@include file="head.jsp" %>
 <c:if test="${(empty(user))}">
     <c:redirect url="index.jsp">
-        <c:param name="msg" value="Faça login para acessar esta página!"></c:param>
+        <c:param name="msg" value="FaÃ§a login para acessar esta pÃ¡gina!"></c:param>
     </c:redirect>
 </c:if>
 
@@ -21,7 +21,10 @@
     <input type="hidden" name="action"  value="ALTERARANUNCIOID" >
     <input type="hidden" name="idAnuncioImovel"  value="${imovelAlterar.id}" >
     <input type="hidden" name="tipoAnuncio"  value="imovel" >
-    <h2>Anuncio: ${idExibirAnuncio} </h2><br>
+
+    <h2>Anuncio: ${imovelAlterar.id} </h2>
+    <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+    <hr>
     <h2> Fotos:</h2></br>
 <div class="col-md-12"></div>
 <div class="col-md-12">
@@ -93,7 +96,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="descricao" class="col-sm-3 control-label">Descrição:</label>
+        <label for="descricao" class="col-sm-3 control-label">DescriÃ§Ã£o:</label>
         <div class="col-sm-9">
             <input type="text" name="descricao" id="descricao" value="${imovelAlterar.descricao}" class="form-control"  > 
             <span class="help-block">Descreva seu anuncio</span>
@@ -109,13 +112,13 @@
     <div class="form-group">
         <label for="descricao" class="col-sm-3 control-label">Pet:</label>
         <div class="col-sm-9">
-             <label for="opcoes" class="col-sm-10 control-label">É autorizado pets na residencia?:</label>
+             <label for="opcoes" class="col-sm-10 control-label">Ã‰ autorizado pets na residencia?:</label>
         <div id="opcoes">
             <label class="radio-inline"><input type="radio" <c:if test="${imovelAlterar.boolean_pet == 1}">checked</c:if> name="descricaoPet" value="1">Sim</label>
-            <label class="radio-inline"><input  type="radio" <c:if test="${imovelAlterar.boolean_pet < 1}">checked</c:if>  name="descricaoPet" value="0">Não</label>
+            <label class="radio-inline"><input  type="radio" <c:if test="${imovelAlterar.boolean_pet < 1}">checked</c:if>  name="descricaoPet" value="0">NÃ£o</label>
         </div>
            <!-- <c:if test="${imovelAlterar.boolean_pet < 1}">
-                <input type="text" name="descricaoPet" id="descricao" placeholder="Não" value="0" class="form-control"  >
+                <input type="text" name="descricaoPet" id="descricao" placeholder="NÃ£o" value="0" class="form-control"  >
             </c:if>
             <c:if test="${imovelAlterar.boolean_pet == 1}">
                 <input type="text" name="descricaoPet" id="descricao" placeholder="Sim" value="1" class="form-control"  >
@@ -123,7 +126,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="valor" class="col-sm-3 control-label">Preço:</label>
+        <label for="valor" class="col-sm-3 control-label">PreÃ§o:</label>
         <div class="col-sm-6">
             <input type="number" name="valor" id="valor" value="${imovelAlterar.preco}" class="form-control" min="0" step="any" />
 
@@ -136,7 +139,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="num" class="col-sm-3 control-label">Número:</label>
+        <label for="num" class="col-sm-3 control-label">NÃºmero:</label>
         <div class="col-sm-2">
             <input type="text" name="num" id="num" value="${imovelAlterar.numero}" class="form-control"  >
         </div>
@@ -249,7 +252,7 @@
    
    
         <div class="col-sm-9">
-        <label for="descricao">Descrição:</label>
+        <label for="descricao">DescriÃ§Ã£o:</label>
             ${imovelExibir.descricao}
             
         </div>
@@ -265,7 +268,7 @@
         <div class="col-sm-9">
         <label for="descricao">Pet:</label>
             <c:if test="${imovelExibir.boolean_pet < 1}">
-                Não
+                NÃ£o
             </c:if>
             <c:if test="${imovelExibir.boolean_pet == 1}">
                 Sim
@@ -274,7 +277,7 @@
    
     
         <div class="col-sm-9">
-        <label for="valor" >Preço:</label>
+        <label for="valor" >PreÃ§o:</label>
         <fmt:formatNumber value="${imovelExibir.preco}" type="currency"/>
 
         </div>
@@ -287,7 +290,7 @@
     
     
         <div class="col-sm-3">
-        <label for="num">Número:</label>
+        <label for="num">NÃºmero:</label>
             ${imovelExibir.numero}
         </div>
     
@@ -395,7 +398,7 @@
    
    
         <div class="col-sm-9">
-        <label for="descricao">Descrição:</label>
+        <label for="descricao">DescriÃ§Ã£o:</label>
             ${movelExibir.descricao}
             
         </div>
@@ -407,7 +410,7 @@
         
     
         <div class="col-sm-9">
-        <label for="valor" >Preço:</label>
+        <label for="valor" >PreÃ§o:</label>
         <fmt:formatNumber value="${movelExibir.preco}" type="currency"/>
 
         </div>
@@ -494,7 +497,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="descricao" class="col-sm-3 control-label">Descrição:</label>
+        <label for="descricao" class="col-sm-3 control-label">DescriÃ§Ã£o:</label>
         <div class="col-sm-9">
             <input type="text" name="descricao" id="descricao" value="${movelAlterar.descricao}" class="form-control"  > 
             <span class="help-block">Descreva seu anuncio</span>
@@ -502,7 +505,7 @@
     </div>
     
     <div class="form-group">
-        <label for="valor" class="col-sm-3 control-label">Preço:</label>
+        <label for="valor" class="col-sm-3 control-label">PreÃ§o:</label>
         <div class="col-sm-6">
             <input type="number" name="valor" id="valor" value="${movelAlterar.preco}" class="form-control" min="0" step="any" >
 
@@ -590,7 +593,7 @@
    
    
         <div class="col-sm-9">
-        <label for="descricao">Descrição:</label>
+        <label for="descricao">DescriÃ§Ã£o:</label>
             ${materialExibir.descricao}
             
         </div>
@@ -602,7 +605,7 @@
         
     
         <div class="col-sm-9">
-        <label for="valor" >Preço:</label>
+        <label for="valor" >PreÃ§o:</label>
         <fmt:formatNumber value="${materialExibir.preco}" type="currency"/>
 
         </div>
@@ -686,7 +689,7 @@
             <select class="selectpicker" name="tipo" id="tipo">
                 <option value="0">SELECIONE</option>
 
-                <option value="1" <c:if test="${materialAlterar.tipo == 1}">selected</c:if> >Livros Didáticos</option>
+                <option value="1" <c:if test="${materialAlterar.tipo == 1}">selected</c:if> >Livros DidÃ¡ticos</option>
                 <option value="2" <c:if test="${materialAlterar.tipo == 2}">selected</c:if> >Livros de Literatura</option>
                 <option value="3" <c:if test="${materialAlterar.tipo == 3}">selected</c:if> >Apostilas</option>
                 <option value="4" <c:if test="${materialAlterar.tipo == 4}">selected</c:if> >Outros</option>
@@ -700,7 +703,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="descricao" class="col-sm-3 control-label">Descrição:</label>
+        <label for="descricao" class="col-sm-3 control-label">DescriÃ§Ã£o:</label>
         <div class="col-sm-9">
             <input type="text" name="descricao" id="descricao" value="${materialAlterar.descricao}" class="form-control"  > 
             <span class="help-block">Descreva seu anuncio</span>
@@ -708,7 +711,7 @@
     </div>
     
     <div class="form-group">
-        <label for="valor" class="col-sm-3 control-label">Preço:</label>
+        <label for="valor" class="col-sm-3 control-label">PreÃ§o:</label>
         <div class="col-sm-6">
             <input type="number" name="valor" id="valor" value="${materialAlterar.preco}" class="form-control" min="0" step="any" >
 
@@ -736,6 +739,6 @@
 
 
 
-<!-- Rodapé -->
+<!-- RodapÃ© -->
 <%@include file="comentario.jsp" %>
 <%@include file="footer.jsp" %>

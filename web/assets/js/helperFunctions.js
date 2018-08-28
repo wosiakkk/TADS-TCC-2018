@@ -71,3 +71,19 @@ function setCopyright() {
         return true;
     }
 }
+
+function buscarAnunciosAprovados(HTMLDestino){
+
+    $.ajax({
+        url : "AnuncioServlet?action=BUSCAAPROVADOS",
+        method : "POST",
+        dataType : "html",
+        success : function(resp) {
+            $(HTMLDestino).html(resp);
+        },
+        error : function(resp) {
+            console.log(resp);
+            $(HTMLDestino).html(resp);
+        }
+    });        
+}
