@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/dao/AnuncioDAO.java</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/dao/UserDAO.java</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/dao/ComentarioDAO.java</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/dao/InstituicaoDAO.java</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/dao/MensagemDAO.java</file>
+            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/web/home.jsp</file>
             <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/dao/CategoriaDAO.java</file>
+            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/servlets/MainPageServlet.java</file>
+            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/facade/MainPageFacade.java</file>
+            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/web/escolhaAnuncio.jsp</file>
         </group>
     </open-files>
 </project-private>
