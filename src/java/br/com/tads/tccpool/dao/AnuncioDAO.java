@@ -75,31 +75,36 @@ public class AnuncioDAO {
 
     private final String QUERY_CONSULTA_MOVEL_ID = "select DS_DESCRICAO, DS_TITULO, NR_VALOR, TB_STATUS_ID_STATUS from tb_anuncio WHERE ID_ANUNCIO = ?";
     private final String QUERY_CONSULTA_MATERIAL_ID = "select a.DS_DESCRICAO, a.DS_TITULO, a.NR_VALOR, a.TB_STATUS_ID_STATUS, a.TB_MATERIAL_ID_MATERIAL, M.TB_CATEGORIA_MATERIAL_ID_CATEGORIA_MATERIAL, cm.DS_DESCRICAO as TIPO_DESC  from tb_anuncio A left JOIN tb_material M ON A.TB_MATERIAL_ID_MATERIAL = M.ID_MATERIAL left join tb_categoria_material cm on m.TB_CATEGORIA_MATERIAL_ID_CATEGORIA_MATERIAL = cm.ID_CATEGORIA_MATERIAL WHERE ID_ANUNCIO = ?";
-    private final String QUERY_CONSULTA_IMOVEL_ID = "SELECT "
-            + "tb_imovel.NR_PET, "
-            + "tb_imovel.NR_QNT_PESSOAS, "
-            + "tb_categoria_imovel.DS_DESCRICAO AS DESC_TIPO, "
-            + "TB_ANUNCIO.DS_DESCRICAO, "
-            + "TB_ANUNCIO.NR_VALOR, "
-            + "TB_ANUNCIO.DS_TITULO, "
-            + "TB_ANUNCIO.ID_ANUNCIO, "
-            + "TB_ENDERECO_ID_ENDERECO, "
-            + "tb_endereco_anuncio.DS_RUA, "
-            + "tb_endereco_anuncio.DS_ESTADO, "
-            + "tb_endereco_anuncio.NR_NUMERO, "
-            + "tb_endereco_anuncio.NR_CEP, "
-            + "tb_endereco_anuncio.DS_COMPLEMENTO, "
-            + "tb_endereco_anuncio.DS_CIDADE "
-            + "FROM "
-            + "tb_anuncio "
-            + "INNER JOIN "
-            + "tb_endereco_anuncio ON ID_ENDERECO = TB_ENDERECO_ID_ENDERECO "
-            + "INNER JOIN "
-            + "tb_imovel ON ID_IMOVEL = TB_IMOVEL_idTB_IMOVEL "
-            + "INNER JOIN "
-            + "tb_categoria_imovel ON TB_CATEGORIA_IMOVEL_ID_CATEGORIA_IMOVEL = ID_CATEGORIA_IMOVEL "
-            + "WHERE "
-            + "tb_anuncio.ID_ANUNCIO = ?";
+    private final String QUERY_CONSULTA_IMOVEL_ID = "SELECT \n" +
+            "		tb_imovel.NR_PET, \n" +
+            "		tb_imovel.NR_QNT_PESSOAS, \n" +
+            "           tb_categoria_imovel.DS_DESCRICAO AS DESC_TIPO, \n" +
+            "           TB_ANUNCIO.DS_DESCRICAO, \n" +
+            "           TB_ANUNCIO.NR_VALOR, \n" +
+            "           TB_ANUNCIO.DS_TITULO, \n" +
+            "           TB_ANUNCIO.ID_ANUNCIO, \n" +
+            "           TB_ENDERECO_ID_ENDERECO, \n" +
+            "           tb_endereco_anuncio.DS_RUA, \n" +
+            "           tb_endereco_anuncio.DS_ESTADO, \n" +
+            "           tb_endereco_anuncio.NR_NUMERO, \n" +
+            "           tb_endereco_anuncio.NR_CEP, \n" +
+            "           tb_endereco_anuncio.DS_COMPLEMENTO, \n" +
+            "           tb_endereco_anuncio.DS_CIDADE, \n" +
+            "           TB_ANUNCIO.TB_USUARIO_NR_SEQ, \n" +
+            "           tb_usuario.NM_NOME\n" +
+            "          FROM \n" +
+            "           tb_anuncio \n" +
+            "          INNER JOIN\n" +
+            "           tb_endereco_anuncio ON ID_ENDERECO = TB_ENDERECO_ID_ENDERECO \n" +
+            "          INNER JOIN \n" +
+            "           tb_imovel ON ID_IMOVEL = TB_IMOVEL_idTB_IMOVEL \n" +
+            "          INNER JOIN \n" +
+            "           tb_categoria_imovel ON TB_CATEGORIA_IMOVEL_ID_CATEGORIA_IMOVEL = ID_CATEGORIA_IMOVEL \n" +
+            "          INNER JOIN \n" +
+            "           tb_usuario ON TB_ANUNCIO.TB_USUARIO_NR_SEQ = NR_SEQ\n" +
+            "          WHERE \n" +
+            "           tb_anuncio.ID_ANUNCIO = ?";
+
 
     private static final String QUERY_INSERT_CAMINHO = "INSERT INTO tb_fotos(ds_caminho,tb_anuncio_id_anuncio)VALUES(?,?)";
 
@@ -377,6 +382,8 @@ public class AnuncioDAO {
         Imovel i = new Imovel();
         if (rs.next()) {
             i.setId(rs.getInt("ID_ANUNCIO"));
+            i.setIdAnunciante(rs.getInt("TB_USUARIO_NR_SEQ"));
+            i.setNomeAnunciante(rs.getString("NM_NOME"));
             i.setBoolean_pet(rs.getInt("NR_PET"));
             i.setQuantidade_pessoas(rs.getInt("NR_QNT_PESSOAS"));
             i.setTipoDesc(rs.getString("DESC_TIPO"));

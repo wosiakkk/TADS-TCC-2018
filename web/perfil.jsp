@@ -19,7 +19,7 @@
 
             <h3>Informações do perfil</h3>
 
-            <form id="formEditar" class="form-horizontal" action="UserServlet?action=EDIT"  method="POST" role="form">
+            <form id="formEditar" class="form-horizontal" action="#"  method="POST" role="form">
                 
                 
                 <div class="form-group">
@@ -30,14 +30,18 @@
                     <label for="interessesPerfil">Interesses:</label>
                     <textarea class="form-control" rows="5" id="interessesPerfil">${perfil.interesses}</textarea>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-9 col-lg-9 col-md-9 col-xs-9 col-sm-offset-3">
-                        <h5>botões apenas para visualização, depois faremos algo para integrar mensagens e pedidos de amizade</h5>
-                        <button type="submit" class="btn btn-primary btn-block">Enviar mensagens</button>
-                        <button type="submit" class="btn btn-primary btn-block">Pedido de amizade</button>
+               <c:if test="${perfil.id != user.id}">
+                    <div class="form-group">
+                        <div class="col-sm-9 col-lg-9 col-md-9 col-xs-9 col-sm-offset-3">
+                            <a type="btn" href="#"> Enviar mensagens</a> <br><hr>
+                             <a type="btn" href="UserServlet?action=AMIZADE&idSolicitante=${user.id}&idSolicitado=${perfil.id}"> Enviar Pedido de Amizade</a>
+                        </div>
                     </div>
-                </div>
+                </c:if>
+                    <input type="text" value="${perfil.id}" id="idJs" name="idJs" hidden="">
             </form>
+                
+            
         </div>
     </div>
 </div>
@@ -46,6 +50,7 @@
     $(document).ready(function () {
         setCopyright();
     });
+    
 </script>
 </body>
 </html>

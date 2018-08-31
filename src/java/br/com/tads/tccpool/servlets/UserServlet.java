@@ -9,6 +9,7 @@ import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.exception.AcessoBdException;
 import br.com.tads.tccpool.facade.UserFacade;
 import br.com.tads.tccpool.utils.MD5;
+import com.sun.corba.se.impl.naming.cosnaming.InterOperableNamingImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -44,7 +45,7 @@ public class UserServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
-            String action = request.getParameter("action");
+            String action = request.getParameter("action");         
             User u = new User();
             switch(action){
                 case "ADD":{
@@ -164,6 +165,13 @@ public class UserServlet extends HttpServlet {
                     session.setAttribute("perfil", perfil);
                     RequestDispatcher rd = request.getRequestDispatcher("perfil.jsp");
                     rd.forward(request, response);
+                    break;
+                }
+                
+                case "AMIZADE":{
+                    int idSolicitante = Integer.parseInt(request.getParameter("idSolicitante"));
+                    int idSolicitado = Integer.parseInt(request.getParameter("idSolicitado"));
+                    
                     break;
                 }
             }

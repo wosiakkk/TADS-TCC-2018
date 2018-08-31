@@ -265,6 +265,7 @@ public class UserDAO {
         stmt.setInt(1, idUser);
         rs = stmt.executeQuery();
         if(rs.next()){
+            u.setId(idUser);
             u.setNome(rs.getString("NM_NOME"));
             u.setFoto(rs.getString("DS_FOTO"));
             u.setDescricao(rs.getString("DS_DESCRICAO_USER"));
