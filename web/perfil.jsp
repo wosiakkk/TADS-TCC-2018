@@ -20,28 +20,40 @@
             <h3>Informações do perfil</h3>
 
             <form id="formEditar" class="form-horizontal" action="#"  method="POST" role="form">
-                
-                
+
+
                 <div class="form-group">
                     <label for="descricaoPerfil">Descrição sobre você:</label>
                     <textarea class="form-control" rows="5" id="descricaoPerfil">${perfil.descricao}</textarea>
                 </div>
-                   <div class="form-group">
+                <div class="form-group">
                     <label for="interessesPerfil">Interesses:</label>
                     <textarea class="form-control" rows="5" id="interessesPerfil">${perfil.interesses}</textarea>
                 </div>
-               <c:if test="${perfil.id != user.id}">
+                <c:if test="${perfil.id != user.id}">
                     <div class="form-group">
                         <div class="col-sm-9 col-lg-9 col-md-9 col-xs-9 col-sm-offset-3">
                             <a type="btn" href="#"> Enviar mensagens</a> <br><hr>
-                             <a type="btn" href="UserServlet?action=AMIZADE&idSolicitante=${user.id}&idSolicitado=${perfil.id}"> Enviar Pedido de Amizade</a>
+
+                            <c:if test="${amizade == 0}">
+                                <a type="btn" href="UserServlet?action=AMIZADE&idSolicitante=${user.id}&idSolicitado=${perfil.id}&acao=SOLICITAR"> Enviar Pedido de Amizade</a>
+                            </c:if>
+
+                            <c:if test="${amizade == 1}">
+                                <a href="#">Pedido de amizade enviado.</a>   
+                            </c:if>    
+                            
+                            <c:if test="${amizade == 2}">
+                                <a href="UserServlet?action=AMIZADE&idSolicitante=${user.id}&idSolicitado=${perfil.id}&acao=ACEITAR">Aceitar perdido de amizade.</a>   
+                            </c:if>   
+                                    
                         </div>
                     </div>
                 </c:if>
-                    <input type="text" value="${perfil.id}" id="idJs" name="idJs" hidden="">
+                <input type="text" value="${perfil.id}" id="idJs" name="idJs" hidden="">
             </form>
-                
-            
+
+
         </div>
     </div>
 </div>
@@ -50,7 +62,7 @@
     $(document).ready(function () {
         setCopyright();
     });
-    
+
 </script>
 </body>
 </html>

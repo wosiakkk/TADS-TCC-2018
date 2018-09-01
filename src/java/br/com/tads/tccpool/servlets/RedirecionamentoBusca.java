@@ -6,12 +6,9 @@
 package br.com.tads.tccpool.servlets;
 
 import br.com.tads.tccpool.beans.User;
-import br.com.tads.tccpool.exception.AcessoBdException;
-import br.com.tads.tccpool.facade.LoginFacade;
-import br.com.tads.tccpool.utils.MD5;
+import br.com.tads.tccpool.facade.UserFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +21,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author onurb
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "RedirecionamentoBusca", urlPatterns = {"/RedirecionamentoBusca"})
+public class RedirecionamentoBusca extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,47 +37,19 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String action = (String) request.getParameter("action");
-            if("LOGOUT".equals(action)) {
-                HttpSession session = request.getSession();
-                if(session != null){
-                    session.invalidate();
-                    
-                    RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-                    request.setAttribute("title", "Inicio");
-                    request.setAttribute("msg", "Faça login para acessar esta página!");
-                    rd.forward(request, response);
-                }
-            }
-            else {
-                String email = request.getParameter("login");
-                String senha = MD5.criptografar(request.getParameter("senha"));
+            HttpSession session = request.getSession();
+            String teste = request.getParameter("search");
+            int idBusca = UserFacade.buscarIdPorNomeDoUsuario(teste);
+            int idSessao =(int) session.getAttribute("idUserSessao");
+            User perfilBusca = new User();
+            perfilBusca = UserFacade.geraPerfilUser(idBusca);
+            int amizade = UserFacade.checandoAmizade(idSessao, idBusca);
+            session.setAttribute("perfil", perfilBusca);
+             session.setAttribute("amizade", amizade);
 
-                try{
-                    User u = LoginFacade.verificaLogin(email, senha);
-                    //se houver algum retorno
-                    if(u != null){
-                        HttpSession session = request.getSession();
-                        //este dado na sessão indica que o usuário está logado
-                        session.setAttribute("user", u);
-                        session.setAttribute("idUserSessao", u.getId());
-                        //redireciona para a página inicial
-                        request.setAttribute("title", "Home");
-                        RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
-                        rd.forward(request, response);
-                    }else{
-                        // redireciona para login passando mensagem
-                        String param = URLEncoder.encode("Login ou Senha inválidos.", "UTF-8");
-                        response.sendRedirect("index.jsp?msg=" + param);
-                        return;
-                    }
-                }catch(AcessoBdException e){
-                     // para passar o parâmetro para o sendRedirect do jeito certo
-                    String param = URLEncoder.encode("Erro efetuando login [" + e.getMessage() + " - " + e.getCause().getMessage() + "]", "UTF-8");
-                    response.sendRedirect("index.jsp?msg=" + param);
-                    return;
-                }
-            }
+            RequestDispatcher rd1 = request.getRequestDispatcher("perfil.jsp");
+            rd1.forward(request, response);
+
         }
     }
 
