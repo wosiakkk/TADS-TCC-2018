@@ -9,8 +9,6 @@ import br.com.tads.tccpool.beans.Mensagem;
 import br.com.tads.tccpool.facade.MensagemFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,25 +38,25 @@ public class MensagemServlet extends HttpServlet {
             String action = (String) request.getParameter("action").trim();
             
             switch(action) {
-                case "ADD":
-                    String msg = (String) request.getParameter("DS_MSG").trim();
-                    int idUsario = Integer.parseInt(request.getParameter("ID_USUARIO"));
-                    int idAnuncio = Integer.parseInt(request.getParameter("ID_ANUNCIO"));
+                case "ADD_MENSAGEM":
                     Mensagem mensagem = new Mensagem();
-                    mensagem.setIdAnuncio(idAnuncio);
-                    mensagem.setIdOrigem(idUsario);
-                    mensagem.setConteudo(msg);
-                    mensagem.setData(Calendar.getInstance());
+                    mensagem.setIdOrigem(Integer.parseInt(request.getParameter("ID_ORIGEM")));
+                    mensagem.setIdDestino(Integer.parseInt(request.getParameter("ID_DESTINO")));
+                    mensagem.setConteudo((String) request.getParameter("DS_MSG"));
                     
-                    String retorno = MensagemFacade.insereComentario(mensagem);
-                    //Escreve o retorno da execução na resposta da requisição e limpa o stream
-                    out.write(retorno);
-                    out.flush();
+                    String retornoInserir = MensagemFacade.inserir(mensagem);
+                    
+                    out.write(retornoInserir);
+                    out.flush();                    
                     break;
                     
-                case "LIST":
-                    /*ArrayList<Mensagem> mensagemList = new ArrayList<Mensagem>();
-                    mensagemList = MensagemFacade.listarComentarios();*/
+                case "LIST_MENSAGEM":
+                    int idOrigem = Integer.parseInt(request.getParameter("ID_ORIGEM"));
+                    int idDestino = Integer.parseInt(request.getParameter("ID_DESTINO"));
+                    String retornoListar = MensagemFacade.listar(idOrigem, idDestino);
+                    
+                    out.write(retornoListar);
+                    out.flush();
                     break;
             }
             
