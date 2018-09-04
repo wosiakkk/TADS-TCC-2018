@@ -4,3 +4,5 @@
 *.properties
 nbproject/private/private.properties
 nbproject/private/private.xml
+nbproject/build-impl.xml
+nbproject/genfiles.properties
