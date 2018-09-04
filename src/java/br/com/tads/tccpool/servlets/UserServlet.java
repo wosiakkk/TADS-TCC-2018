@@ -96,8 +96,22 @@ public class UserServlet extends HttpServlet {
                     break;
                 }
                 case "EDIT":{
+<<<<<<< HEAD
                     /*
                     User userSearch = (User) session.getAttribute("userSearch");
+=======
+                    
+                    u.setId(Integer.parseInt(request.getParameter("idUser")));
+                    u.setNome(request.getParameter("nome"));
+                    u.setDescricao(request.getParameter("descricao"));
+                    u.setInteresses(request.getParameter("interesses"));
+                    
+                    if(UserFacade.editarPerfil(u)){
+                        response.sendRedirect("home.jsp");
+                    }
+                    
+                    /*User userSearch = (User) session.getAttribute("userSearch");
+>>>>>>> 86d1e4d230a7c4c9bcf456a1f611f8e36cec3b92
                     
                     u.setId(userSearch.getId());
                     u.setNome(request.getParameter("nome"));
@@ -258,6 +272,15 @@ public class UserServlet extends HttpServlet {
                     break;
                 }
                 case "REMOVE":{
+                    break;
+                }
+                case "PERFIL":{
+                    User perfil = new User();
+                    int id = Integer.parseInt(request.getParameter("idUser"));
+                    perfil = UserFacade.geraPerfilUser(id);
+                    session.setAttribute("perfil", perfil);
+                    RequestDispatcher rd = request.getRequestDispatcher("perfil.jsp");
+                    rd.forward(request, response);
                     break;
                 }
             }
