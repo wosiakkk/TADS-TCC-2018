@@ -15,28 +15,22 @@
     <hr>
     <div class="row">
         <!-- left column -->
-        <div class="col-md-9 personal-info">
-            <form id="formEditar" class="form-horizontal" action="UserServlet?action=EDIT"  method="POST" role="form" enctype="multipart/form-data">
         <div class="col-md-3">
             <div class="text-center">
-                <img src="${userSearch.getFoto()}" class="avatar img-circle" alt="avatar" style="width: 200px; height: 200px">
+                <img src="${user.getFoto()}" class="avatar img-circle" alt="avatar">
                 <h6>Carregar uma foto nova...</h6>
 
-                <input type="file" name="foto" id="foto" class="form-control">
+                <input type="file" class="form-control">
             </div>
         </div>
 
         <!-- edit form column -->
+        <div class="col-md-9 personal-info">
 
             <h3>Informações do perfil</h3>
 
-<<<<<<< HEAD
-                <input id="idUser" type="hidden" name="idUser" value="${userSearch.id}"/>
-                <input id="cdEndereco" type="hidden" name="cdEndereco" value="<c:out value="${userSearch.getCdEndereco()}"/>">
-=======
             <form id="formEditar" class="form-horizontal" action="UserServlet?action=EDIT"  method="POST" role="form">
                 <input id="idUser" type="hidden" name="idUser" value="<c:out value="${user.getId()}"/>">
->>>>>>> 86d1e4d230a7c4c9bcf456a1f611f8e36cec3b92
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Nome Completo:</label>
                     <div class="col-lg-8">
@@ -59,7 +53,6 @@
             </form>
         </div>
     </div>
-<br><br><br>
 </div>
 <!-- <script type="text/javascript">
     $(document).ready(function () {

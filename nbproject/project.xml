@@ -15,151 +15,175 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.commons-logging-1.1.1.jar-1}</file>
+                    <file>${file.reference.commons-fileupload-1.3.2.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-api-client-1.23.0.jar-1}</file>
+                    <file>${file.reference.commons-io-2.5.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-api-client-android-1.23.0.jar-1}</file>
+                    <file>${file.reference.jstl-api.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-api-client-appengine-1.23.0.jar-1}</file>
+                    <file>${file.reference.jstl-impl.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-api-client-gson-1.23.0.jar-1}</file>
+                    <file>${file.reference.mysql-connector-java-5.1.23-bin.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-api-client-jackson2-1.23.0.jar-1}</file>
+                    <file>${file.reference.Documents-TADS}</file>
+                    <path-in-war>WEB-INF/classes</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.commons-logging-1.1.1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-api-client-java6-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-api-client-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-api-client-protobuf-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-api-client-android-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-api-client-servlet-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-api-client-appengine-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-api-client-xml-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-api-client-gson-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-http-client-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-api-client-jackson2-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-http-client-android-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-api-client-java6-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-http-client-appengine-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-api-client-protobuf-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-http-client-gson-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-api-client-servlet-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-http-client-jackson-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-api-client-xml-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-http-client-jackson2-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-http-client-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-http-client-jdo-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-http-client-android-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-http-client-protobuf-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-http-client-appengine-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-http-client-xml-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-http-client-gson-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-oauth-client-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-http-client-jackson-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-oauth-client-appengine-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-http-client-jackson2-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-oauth-client-java6-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-http-client-jdo-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-oauth-client-jetty-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-http-client-protobuf-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.google-oauth-client-servlet-1.23.0.jar-1}</file>
+                    <file>${file.reference.google-http-client-xml-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.gson-2.1.jar-1}</file>
+                    <file>${file.reference.google-oauth-client-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.guava-jdk5-17.0.jar-1}</file>
+                    <file>${file.reference.google-oauth-client-appengine-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.httpclient-4.0.1.jar-1}</file>
+                    <file>${file.reference.google-oauth-client-java6-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.httpcore-4.0.1.jar-1}</file>
+                    <file>${file.reference.google-oauth-client-jetty-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.jackson-core-2.1.3.jar-1}</file>
+                    <file>${file.reference.google-oauth-client-servlet-1.23.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.jackson-core-asl-1.9.11.jar-1}</file>
+                    <file>${file.reference.gson-2.1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.jdo2-api-2.3-eb.jar-1}</file>
+                    <file>${file.reference.guava-jdk5-17.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.jetty-6.1.26.jar-1}</file>
+                    <file>${file.reference.httpclient-4.0.1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.jetty-util-6.1.26.jar-1}</file>
+                    <file>${file.reference.httpcore-4.0.1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.jsr305-1.3.9.jar-1}</file>
+                    <file>${file.reference.jackson-core-2.1.3.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.protobuf-java-2.6.1.jar-1}</file>
+                    <file>${file.reference.jackson-core-asl-1.9.11.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.transaction-api-1.1.jar-1}</file>
+                    <file>${file.reference.jdo2-api-2.3-eb.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.xpp3-1.1.4c.jar-1}</file>
+                    <file>${file.reference.jetty-6.1.26.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.jetty-util-6.1.26.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.jsr305-1.3.9.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.protobuf-java-2.6.1.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.transaction-api-1.1.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.xpp3-1.1.4c.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
@@ -304,26 +328,6 @@
                 </library>
                 <library dirs="200">
                     <file>${file.reference.xpp3-1.1.4c-sources.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.gson-2.8.2-javadoc.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.gson-2.8.2-sources.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.gson-2.8.2.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.commons-fileupload-1.3.2.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.commons-io-2.5.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
