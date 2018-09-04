@@ -70,18 +70,39 @@ public class AnuncioFacade {
         dao.aprovarAnuncio(status, id);
     }
     
-    public static List<Anuncio> buscarAnuncioAprovado() {
+    public static String buscarAnuncioAprovado() {
         AnuncioDAO dao = new AnuncioDAO();
+        String HTMLResponse = "";
         List<Anuncio> anunciosAprovados = null;
         
         try {
             anunciosAprovados = dao.buscarAnuncioAprovado();
+            if(anunciosAprovados != null) {
+                for (Anuncio anuncio : anunciosAprovados) {
+                    HTMLResponse += "<div class=\"col-lg-4 col-md-6 mb-4\">\n" +
+                                    "    <div class=\"card h-100\">\n" +
+                                    "        <a href=\"AnuncioServlet?action=EXIBIRANUNCIO&idAnuncio=" + anuncio.getIdAnuncio() + "\"><img class=\"card-img-top\" src=\"" + anuncio.getCaminhoFoto() + "\" alt=\"\"></a>\n" +
+                                    "        <div class=\"card-body\">\n" +
+                                    "            <h4 class=\"card-title\">\n" +
+                                    "                <a href=\"AnuncioServlet?action=EXIBIRANUNCIO&idAnuncio=" + anuncio.getIdAnuncio() + "\">" + anuncio.getTitulo() + "</a>\n" +
+                                    "            </h4>\n" +
+                                    "            <h5>$" + String.valueOf(anuncio.getValor()) + "</h5>\n" +
+                                    "            <p class=\"card-text\">" + anuncio.getDescricao() + "</p>\n" +
+                                    "        </div>\n" +
+                                    "        <div class=\"card-footer\">\n" +
+                                    "            <a href=\"AnuncioServlet?action=EXIBIRANUNCIO&idAnuncio=" + anuncio.getIdAnuncio() + "\">veja mais</a>\n" +
+                                    "        </div>\n" +
+                                    "    </div>\n" +
+                                    "</div>";
+                }
+                
+            }
         }
         catch (SQLException ex) {
             Logger.getLogger(AnuncioFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return anunciosAprovados;
+        return HTMLResponse;
     }
     
     public static List<Anuncio> buscarAnuncioDoUsuario(int id) throws SQLException{

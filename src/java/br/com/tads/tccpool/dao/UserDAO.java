@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,6 +75,28 @@ public class UserDAO {
                                                     "DS_COMPLEMENTO = ?," +
                                                     "NM_CIDADE = ?\n" +
                                                 "WHERE NR_SEQ = ?";
+    
+    private static final String QUERY_SOLICITAR_AMIZADE ="INSERT into tb_amizade (tb_amizade.id_solicitante, "
+                                              + "tb_amizade.id_solicitado, tb_status_amizade_NR_STATUS_AMIGO, "
+                                              + "tb_amizade.tb_usuario_NR_SEQ) VALUES (?,?,?,?)";
+    
+    private static final String QUERY_ACEITAR_AMIZADE ="UPDATE tb_amizade SET "
+            + "tb_status_amizade_NR_STATUS_AMIGO = 2 WHERE "
+            + "id_solicitado = ? AND id_solicitante = ? "
+            + "and tb_status_amizade_NR_STATUS_AMIGO = 1";
+    
+    private static final String QUERY_BUSCAR_USUARIOS ="SELECT * FROM tb_usuario WHERE NM_NOME LIKE ?";
+    
+    private static final String QUERY_SELECIONAR_IDS_AMIZADE ="SELECT tb_amizade.id_solicitado, tb_amizade.id_solicitante,"
+            + " tb_amizade.tb_status_amizade_NR_STATUS_AMIGO "
+            + "from tb_amizade where tb_amizade.tb_usuario_NR_SEQ = ?";
+    
+    //******************************
+     // implementado apenas para finalizar a sprint da lista de amigos, pois os nomes do user podem ser iguais
+     // futuramente a busca será aprimorada
+    private static final String QUERY_BUSCAR_ID_POR_NOME ="select tb_usuario.NR_SEQ FROM tb_usuario where tb_usuario.NM_NOME = ?";
+    //***************************************************
+    //***************************************************
     
     private Connection con = null;
     private PreparedStatement stmt = null;
@@ -283,6 +306,7 @@ public class UserDAO {
         stmt.setInt(1, idUser);
         rs = stmt.executeQuery();
         if(rs.next()){
+            u.setId(idUser);
             u.setNome(rs.getString("NM_NOME"));
             u.setFoto(rs.getString("DS_FOTO"));
             u.setDescricao(rs.getString("DS_DESCRICAO_USER"));
@@ -340,5 +364,130 @@ public class UserDAO {
             }
         }
     }
+    
+    public Boolean solicitarAmizade(int idSolicitante, int idSolicitado){
+        //alterando para o solicitante:
+        try {           
+            stmt= con.prepareStatement(QUERY_SOLICITAR_AMIZADE);
+            stmt.setInt(1, idSolicitante);
+            stmt.setInt(2, idSolicitado);
+            stmt.setInt(3, 1);
+            stmt.setInt(4, idSolicitante);
+            stmt.executeUpdate();
+            
+            stmt.close();
+            con.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }       
+        return true;
+    }
+    
+     public Boolean solicitarAmizade2(int idSolicitante, int idSolicitado){             
+        //ALTERANDO PARA O SOLICITADO
+        try {           
+            stmt= con.prepareStatement(QUERY_SOLICITAR_AMIZADE);
+            stmt.setInt(1, idSolicitante);
+            stmt.setInt(2, idSolicitado);
+            stmt.setInt(3, 1);
+            stmt.setInt(4, idSolicitado);
+            stmt.executeUpdate();
+          
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {          
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
+    }
+     
+     public ArrayList buscarUsuariosDinamicamente(String s){
+         ArrayList usuariosAchados = new ArrayList();
+         
+        try {
+            stmt = con.prepareStatement(QUERY_BUSCAR_USUARIOS);
+            stmt.setString(1, "%"+s+"%");
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                User u = new User();
+                u.setId(rs.getInt("NR_SEQ"));
+                u.setNome(rs.getString("NM_NOME"));
+                usuariosAchados.add(u);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return usuariosAchados;
+     }
+     
+     public int checarAmizade(int idSessao, int idPerfil){
+         
+        try {
+         int statusAmizade;
+         int idSolicitante;
+         int idSolicitado;
+            stmt = con.prepareStatement(QUERY_SELECIONAR_IDS_AMIZADE);
+            stmt.setInt(1, idSessao);
+            rs = stmt.executeQuery();
+            while(rs.next()){                
+                    idSolicitante = rs.getInt("id_solicitante");
+                    idSolicitado = rs.getInt("id_solicitado");
+                    statusAmizade= rs.getInt("tb_status_amizade_NR_STATUS_AMIGO");
+                    if(idPerfil==idSolicitante || idPerfil == idSolicitado){
+                        if(idSessao == idSolicitante && idPerfil == idSolicitado && statusAmizade == 1){
+                            return 1; //solicitação enviada
+                        }else if(idSessao == idSolicitado && idPerfil== idSolicitante && statusAmizade == 1){
+                            return 2;//aceitar solicitação
+                        }else if( statusAmizade == 2){
+                            return 3;//vocês já são amigos
+                        }
+                    }
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+         return 0; //nenhuma ação de amizade
+     }
+     
+     
+     public void aceitarAmizade(int idSolicitante,int idSolicitado ){
+         
+        try {
+            stmt = con.prepareStatement(QUERY_ACEITAR_AMIZADE);
+            stmt.setInt(1, idSolicitado);
+            stmt.setInt(2, idSolicitante);
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+     }
+     
+     
+     
+     //******************************
+     // implementado apenas para finalizar a sprint da lista de amigos, pois os nomes do user podem ser iguais
+     // futuramente a busca será aprimorada
+     public int buscarIdPorNome(String nome){
+         int id=-1;
+        try {
+            stmt = con.prepareStatement(QUERY_BUSCAR_ID_POR_NOME);
+            stmt.setString(1, nome);
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                id = rs.getInt("NR_SEQ");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return id;
+     }
+     //***************************************
+     //***************************************
             
 }

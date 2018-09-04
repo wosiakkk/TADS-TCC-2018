@@ -72,15 +72,7 @@ public class MainPageServlet extends HttpServlet {
                             
                     break;
                 case "ANUNCIO":
-                    List<Categoria> listaCategoria = new ArrayList<Categoria>();
-                    try{
-                        listaCategoria = MainPageFacade.listaCategorias();
-                    }catch(AcessoBdException e){
-                        e.printStackTrace();
-                        String param = URLEncoder.encode("Erro na servlet cadastro " + e.getMessage() + " - " + e.getCause().getMessage() + "]", "UTF-8");
-                        response.sendRedirect("index.jsp?msg=" + param);
-                    }
-                    session.setAttribute("listaCat", listaCategoria);
+                  
                     RequestDispatcher rd2;
                             
                       switch(tipo){

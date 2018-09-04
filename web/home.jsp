@@ -29,11 +29,11 @@
                 <c:if test="${user.getTipoUsuario()== 2}">
                     <a class="list-group-item" href="UserServlet?action=PERFIL&idUser=${user.getId()}">Visualizar Meu Perfil</a>
                     <a class="list-group-item" href="AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr=${user.getId()}">Meus anuncios</a> 
-                    <a class="list-group-item" href="escolhaAnuncio.jsp">Área de vendas</a>  
+                    <a class="list-group-item" href="escolhaAmigo.jsp">Meus Amigos</a>  
+                    <a class="list-group-item" href="vendas.jsp">Área de vendas</a>                      
                     <a class="list-group-item" href="UserServlet?action=SEARCH">Editar Perfil</a>
                     <a class="list-group-item" href="escolhaAnuncio.jsp">Realizar um Anuncio</a>           
-                    <a class="list-group-item" href="#">Preferências</a>
-                    <a class="list-group-item" href="#">Opção4</a>
+                    <a class="list-group-item" href="#">Preferências</a>              
                 </c:if>
                 <c:if test="${user.getTipoUsuario()== 3}">
                     <a class="list-group-item" href="#">Cadastrar um moderador</a>
@@ -146,21 +146,24 @@
 </div> <!-- fim .col-lg-6 -->
 <div class="col-3 panel panel-primary menu-fixed-right">
     <div class="panel-heading">
-        <h4>Atualiza&ccedil;&otilde;es de Amigos</h4>
-    </div>
-    <div class="panel-body">
-        <div class="well well-sm">
-            <p>aqui fica amigo1.</p>
-        </div>
-        <div class="well well-sm">
-            <p>aqui fica amigo2.</p>
-        </div>
-        <div class="well well-sm">
-            <p>aqui fica amigo1.</p>
+        <h4>Procurar Usuários</h4>
+    </div>  
+    <script src="assets/js/procuraDinamica.js" type="text/javascript" charset="UTF-8"></script>
+    <div class="container">
+        <div class="instruction">
+            <div class="search-container">
+                <div class="ui-widget">
+                    <form class="form"  action="RedirecionamentoBusca"  method="POST" role="form">
+                    <input type="text" id="search" name="search" class="search" placeholder="Procure aqui"/>
+                    <button type="submit">Ver Perfil</button>
+                      
+                    </form>
+                </div>   
         </div>
     </div>
 </div>
 
+            </div>
 <!-- Rodapé -->
 <%-- 
     Document   : footer
