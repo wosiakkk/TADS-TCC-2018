@@ -284,9 +284,8 @@ public class UserDAO {
         }
     }
 
-<<<<<<< HEAD
-    public void editarUser(User u) {
-=======
+
+
     
     public void editarPerfil(User u) throws SQLException{
        stmt = con.prepareStatement(QUERY_EDIT_PERFIL);
@@ -323,8 +322,9 @@ public class UserDAO {
         }
     }
     
-    public void editarUser(User u, String CPFUser) {
->>>>>>> 86d1e4d230a7c4c9bcf456a1f611f8e36cec3b92
+
+
+    public void editarUser(User u) {
         try{
             /*stmt = con.prepareStatement(QUERY_EDIT_END);
             stmt.setString(1, u.getLogradouro());
