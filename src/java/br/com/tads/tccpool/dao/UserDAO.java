@@ -31,14 +31,13 @@ public class UserDAO {
             + " values(?,?,?,?,?,?)";
     private static final String QUERY_SELECT_USR = "SELECT\n" +
                                                         "user.NR_SEQ,\n" +
-                                                        "user.NR_CPF,\n" +
                                                         "user.NM_NOME,\n" +
                                                         "user.DS_EMAIL,\n" +
                                                         "user.NR_TELEFONE, \n" +
                                                         "user.NR_CELULAR,\n" +
                                                         "user.DS_SENHA, \n" +
-                                                        "user.CD_INST, \n" +
                                                         "user.CD_ENDERECO, \n" +
+                                                        "user.DS_FOTO, \n" +
                                                         "endr.NM_RUA,\n" +
                                                         "endr.NM_ESTADO,\n" +
                                                         "endr.NR_RUA,\n" +
@@ -46,20 +45,13 @@ public class UserDAO {
                                                         "endr.DS_COMPLEMENTO,\n" +
                                                         "endr.NM_CIDADE\n" +
                                                     "FROM tcc1.tb_usuario AS user \n" +
-                                                    "INNER JOIN tcc1.tb_endereco AS endr ON user.CD_ENDERECO = endr.NR_SEQ \n" +
+                                                    "left JOIN tcc1.tb_endereco AS endr ON user.CD_ENDERECO = endr.NR_SEQ \n" +
                                                     "WHERE \n" +
                                                         "user.NR_SEQ = ? AND user.TP_USUARIO = 2";
     private static final String QUERY_EDIT_USR = "UPDATE tb_usuario SET\n" +
-                                                      "NR_CPF = ?," +
-                                                      "NM_NOME = ?," +
-                                                      "DS_EMAIL = ?," +
-                                                      "NR_TELEFONE = ?," +
-                                                      "NR_CELULAR = ?," +
-                                                      "CD_INST = ?," +
-                                                      "DS_SENHA = ?" +
-                                                 "WHERE\n" +
-                                                          "NR_SEQ = ?\n" +
-                                                      "AND NR_CPF = ?";
+                                                      "DS_FOTO = ?" +
+                                                      "WHERE\n" +
+                                                      "NR_SEQ = ?";
     
     private static final String QUERY_EDIT_END = "UPDATE tb_endereco SET\n" +
                                                     "NM_RUA = ?," +
@@ -183,21 +175,44 @@ public class UserDAO {
             rs = stmt.executeQuery();
             if(rs.next()) {
                 User u = new User();
-                u.setId(rs.getInt("NR_SEQ"));
+                u.setId(idUser);
              //   u.setCpf(rs.getString("NR_CPF"));
+             if(rs.getString("NM_NOME") != null){
                 u.setNome(rs.getString("NM_NOME"));
+             }
+             if(rs.getString("DS_EMAIL") != null){
                 u.setEmail(rs.getString("DS_EMAIL"));
+             }
+             if(rs.getString("DS_SENHA") != null){
                 u.setSenha(rs.getString("DS_SENHA"));
+             }
+             if(rs.getString("NR_TELEFONE") != null){
                 u.setTel(rs.getString("NR_TELEFONE"));
+             }
+             if(rs.getString("NR_CELULAR") != null){
                 u.setCel(rs.getString("NR_CELULAR"));
+             }
+             if(rs.getString("NR_CEP") != null){
                 u.setCep(rs.getString("NR_CEP"));
+             }
                 u.setNumero(rs.getInt("NR_RUA"));
+             if(rs.getString("NM_RUA") != null){
                 u.setLogradouro(rs.getString("NM_RUA"));
+             }
+             if(rs.getString("DS_COMPLEMENTO") != null){
                 u.setComplemento(rs.getString("DS_COMPLEMENTO"));
+             }
+             if(rs.getString("NM_ESTADO") != null){
                 u.setEstado(rs.getString("NM_ESTADO"));
+             }
+             if(rs.getString("NM_CIDADE") != null){
                 u.setCidade(rs.getString("NM_CIDADE"));
+             }
              //   u.setInstituicao(rs.getInt("CD_INST"));
                 u.setCdEndereco(rs.getInt("CD_ENDERECO"));
+             if(rs.getString("DS_FOTO") != null){
+                u.setFoto(rs.getString("DS_FOTO"));
+             }
                 
                 return u;
             }
@@ -219,9 +234,9 @@ public class UserDAO {
         }
     }
 
-    public void editarUser(User u, String CPFUser) {
+    public void editarUser(User u) {
         try{
-            stmt = con.prepareStatement(QUERY_EDIT_END);
+            /*stmt = con.prepareStatement(QUERY_EDIT_END);
             stmt.setString(1, u.getLogradouro());
             stmt.setString(2, u.getEstado());
             stmt.setInt(3, u.getNumero());
@@ -231,18 +246,19 @@ public class UserDAO {
             stmt.setInt(7, u.getCdEndereco());
             stmt.executeUpdate();
             
-            int editEndOK = stmt.executeUpdate();
+            int editEndOK = stmt.executeUpdate();*/
             
             stmt = con.prepareStatement(QUERY_EDIT_USR);
            // stmt.setString(1, u.getCpf());
-            stmt.setString(2, u.getNome());
-            stmt.setString(3, u.getEmail());
-            stmt.setString(4, u.getTel());
-            stmt.setString(5, u.getCel());
+            //stmt.setString(2, u.getNome());
+            //stmt.setString(3, u.getEmail());
+            //stmt.setString(4, u.getTel());
+            //stmt.setString(5, u.getCel());
           //  stmt.setInt(6, u.getInstituicao());
-            stmt.setString(7, u.getSenha());
-            stmt.setInt(8, u.getId());
-            stmt.setString(9, CPFUser);
+            //stmt.setString(7, u.getSenha());
+            stmt.setString(1, u.getFoto());
+            stmt.setInt(2, u.getId());
+            //stmt.setString(9, CPFUser);
             int editUsrOK = stmt.executeUpdate();            
             
         }

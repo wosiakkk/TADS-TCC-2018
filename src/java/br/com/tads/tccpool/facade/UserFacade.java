@@ -77,10 +77,10 @@ public class UserFacade {
      * @param CPFUser CPF do usuário para identificar o registro no banco de dados
      * @return 
      */
-    public static Boolean editarUsuario(User u, String CPFUser) {
+    public static Boolean editarUsuario(User u) {
         UserDAO dao = new UserDAO();
         try {
-            dao.editarUser(u, CPFUser);
+            dao.editarUser(u);
             return true;
         }
         catch (Exception e) {

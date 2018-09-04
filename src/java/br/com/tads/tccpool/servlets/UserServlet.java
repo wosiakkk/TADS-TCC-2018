@@ -5,13 +5,20 @@
  */
 package br.com.tads.tccpool.servlets;
 
+import br.com.tads.tccpool.beans.Anuncio;
+import br.com.tads.tccpool.beans.Imovel;
 import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.exception.AcessoBdException;
+import br.com.tads.tccpool.facade.AnuncioFacade;
 import br.com.tads.tccpool.facade.UserFacade;
 import br.com.tads.tccpool.utils.MD5;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -21,6 +28,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -86,6 +96,7 @@ public class UserServlet extends HttpServlet {
                     break;
                 }
                 case "EDIT":{
+                    /*
                     User userSearch = (User) session.getAttribute("userSearch");
                     
                     u.setId(userSearch.getId());
@@ -122,7 +133,7 @@ public class UserServlet extends HttpServlet {
                         u.setComplemento(request.getParameter("comple"));
                     else
                         u.setComplemento(null);
-                    
+                    */
                    // Boolean editOK = UserFacade.editarUsuario(u, userSearch.getCpf());
                     
                    /* if(editOK) {
@@ -133,6 +144,108 @@ public class UserServlet extends HttpServlet {
                     else {
                         response.sendRedirect("UserServlet?action=SEARCH");
                     }*/
+                   
+                   
+                   User alterar = new User();
+                   String caminhoFoto = new String();
+
+                    try {
+                       
+                        /*Faz o parse do request*/
+                        List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+                        
+                        /*Escreve a o arquivo na pasta img*/
+                        for (FileItem item : multiparts) {
+                            if (item.isFormField()) {
+                                if (item.getFieldName().equals("idUser")) {
+                                    alterar.setId(Integer.parseInt(item.getString()));
+                                }
+                                /*
+                                if (item.getFieldName().equals("")) {
+                                    alterar.(item.getString());
+
+                                }
+                                if (item.getFieldName().equals("")) {
+                                    alterar.(item.getString());
+
+                                }
+                                if (item.getFieldName().equals("")) {
+                                    alterar.(Integer.parseInt(item.getString()));
+                                }
+                                if (item.getFieldName().equals("")) {
+                                    alterar.(Integer.parseInt(item.getString()));
+                                }
+                                if (item.getFieldName().equals("")) {
+                                    alterar.(Float.parseFloat(item.getString()));
+
+                                }
+                                if (item.getFieldName().equals("")) {
+                                    alterar.(item.getString());
+
+                                }
+                                if (item.getFieldName().equals("")) {
+                                    alterar.(Integer.parseInt(item.getString()));
+
+                                }
+                                if (item.getFieldName().equals("")) {
+                                    alterar.(item.getString());
+
+                                }
+                                if (item.getFieldName().equals("")) {
+                                    alterar.(item.getString());
+
+                                }
+                                if (item.getFieldName().equals("")) {
+                                    alterar.(item.getString());
+
+                                }
+                                if (item.getFieldName().equals("")) {
+                                    alterar.(item.getString());
+
+                                }
+                                */
+
+                            } else {
+                               
+                                Random rand = new Random();
+                                String nomeString = String.valueOf(rand.nextInt()) + ".jpg";
+                                if (!item.getName().equals("")) {
+                                    item.write(new File(request.getServletContext().getRealPath("img/fotosPerfil") + File.separator + nomeString));
+
+                                    caminhoFoto = "img/fotosPerfil" + File.separator + nomeString;
+                                    alterar.setFoto(caminhoFoto);
+                                }
+                                
+
+                            }
+                            
+                        }
+                        request.setAttribute("message", "Arquivo carregado com sucesso");
+                    } catch (Exception ex) {
+                        request.setAttribute("message", "Upload de arquivo falhou devido a " + ex);
+                    }
+                    try {
+                        
+                        boolean edit = UserFacade.editarUsuario(alterar);
+                        if(edit){
+                            alterar = UserFacade.buscarUsuario(alterar.getId());
+                            session.setAttribute("userSearch", alterar);
+                            User us = (User)session.getAttribute("user");
+                            us.setFoto(alterar.getFoto());
+                            session.setAttribute("user", us);
+                        }else{
+                            
+                        }
+                     
+                     
+                    } catch (Exception ex) {
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        request.setAttribute("msg", "Falha ao Realizar Anuncio: " + ex);
+                    } finally {
+                    request.getRequestDispatcher("editarPerfil.jsp").forward(request, response);
+                    }
+                   
+                   
                     
                     break;
                 }

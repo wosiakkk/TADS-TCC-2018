@@ -15,21 +15,22 @@
     <hr>
     <div class="row">
         <!-- left column -->
+        <div class="col-md-9 personal-info">
+            <form id="formEditar" class="form-horizontal" action="UserServlet?action=EDIT"  method="POST" role="form" enctype="multipart/form-data">
         <div class="col-md-3">
             <div class="text-center">
-                <img src="${user.getFoto()}" class="avatar img-circle" alt="avatar">
+                <img src="${userSearch.getFoto()}" class="avatar img-circle" alt="avatar" style="width: 200px; height: 200px">
                 <h6>Carregar uma foto nova...</h6>
 
-                <input type="file" class="form-control">
+                <input type="file" name="foto" id="foto" class="form-control">
             </div>
         </div>
 
         <!-- edit form column -->
-        <div class="col-md-9 personal-info">
 
             <h3>Informações do perfil</h3>
 
-            <form id="formEditar" class="form-horizontal" action="UserServlet?action=EDIT"  method="POST" role="form">
+                <input id="idUser" type="hidden" name="idUser" value="${userSearch.id}"/>
                 <input id="cdEndereco" type="hidden" name="cdEndereco" value="<c:out value="${userSearch.getCdEndereco()}"/>">
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Nome Completo:</label>
@@ -53,6 +54,7 @@
             </form>
         </div>
     </div>
+<br><br><br>
 </div>
 <!-- <script type="text/javascript">
     $(document).ready(function () {
