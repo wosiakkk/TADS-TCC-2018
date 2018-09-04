@@ -14,7 +14,9 @@ import java.util.List;
  * @author onurb
  */
 public class Imovel implements Anunciavel, Serializable {
-
+    
+    private int idAnunciante;
+    private String nomeAnunciante;
     private int id;
     private int tipo;
     private String tipoDesc;
@@ -31,6 +33,22 @@ public class Imovel implements Anunciavel, Serializable {
     private String cep;
     private String complemento = "";
     private List<String> fotos;
+
+    public int getIdAnunciante() {
+        return idAnunciante;
+    }
+
+    public void setIdAnunciante(int idAnunciante) {
+        this.idAnunciante = idAnunciante;
+    }
+
+    public String getNomeAnunciante() {
+        return nomeAnunciante;
+    }
+
+    public void setNomeAnunciante(String nomeAnunciante) {
+        this.nomeAnunciante = nomeAnunciante;
+    }
 
     public int getEnderecoId() {
         return enderecoId;

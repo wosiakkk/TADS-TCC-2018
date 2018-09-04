@@ -306,30 +306,13 @@ public class AnuncioServlet extends HttpServlet {
                     break;
                     
                 case "BUSCAAPROVADOS":
-                    List<Anuncio> anunciosAprovados = AnuncioFacade.buscarAnuncioAprovado();
-                    String HTMLResponse = "";
-                    if(anunciosAprovados != null) {
-                        for (Anuncio anuncio : anunciosAprovados) {
-                            HTMLResponse += "<div class=\"col-lg-4 col-md-6 mb-4\">\n" +
-                                            "    <div class=\"card h-100\">\n" +
-                                            "        <a href=\"#\"><img class=\"card-img-top\" src=\"" + anuncio.getCaminhoFoto() + "\" alt=\"\"></a>\n" +
-                                            "        <div class=\"card-body\">\n" +
-                                            "            <h4 class=\"card-title\">\n" +
-                                            "                <a href=\"#\">" + anuncio.getTitulo() + "</a>\n" +
-                                            "            </h4>\n" +
-                                            "            <h5>$" + String.valueOf(anuncio.getValor()) + "</h5>\n" +
-                                            "            <p class=\"card-text\">" + anuncio.getDescricao() + "</p>\n" +
-                                            "        </div>\n" +
-                                            "        <div class=\"card-footer\">\n" +
-                                            "            <a href=\"#\">veja mais</a>\n" +
-                                            "        </div>\n" +
-                                            "    </div>\n" +
-                                            "</div>";
-                        }
+                    String HTMLResponse = AnuncioFacade.buscarAnuncioAprovado();
+                    
+                    if(HTMLResponse != null) {
                         out.write(HTMLResponse);
                     }
                     else {
-                        out.write("Falha ao buscar an&uacute;ncios");
+                        out.write("Falha ao buscar an&uacute;ncios. Tente novamente mais tarde.");
                     }
                     break;
                     

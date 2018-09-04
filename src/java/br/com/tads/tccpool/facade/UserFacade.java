@@ -109,4 +109,42 @@ public class UserFacade {
         }
         return u;
     }
+    public static Boolean solicitarAmizade(int idSolicitante, int idSolicitado){
+        UserDAO dao = new UserDAO();
+        if(dao.solicitarAmizade(idSolicitante, idSolicitado)){
+            return true;
+        }else{
+             return false;
+        }
+    }
+    public static Boolean solicitarAmizade2(int idSolicitante, int idSolicitado){
+        UserDAO dao = new UserDAO();
+        if(dao.solicitarAmizade2(idSolicitante, idSolicitado)){
+            return true;
+        }else{
+             return false;
+        }
+    }
+    
+    public static int checandoAmizade(int idSessao, int idPerfil){
+        UserDAO dao = new UserDAO();
+        return dao.checarAmizade(idSessao, idPerfil);
+    }
+    
+    public static void aceitarAmizade(int idSolicitante, int idSolicitado){
+        UserDAO dao = new UserDAO();
+        dao.aceitarAmizade(idSolicitado, idSolicitante);
+    }
+    
+    
+     //******************************
+            // implementado apenas para finalizar a sprint da lista de amigos, pois os nomes do user podem ser iguais
+            // futuramente a busca será aprimorada
+    public static int buscarIdPorNomeDoUsuario(String nome){
+        UserDAO dao = new UserDAO();
+        return dao.buscarIdPorNome(nome);
+    }
+     //******************************
+     //******************************
+            
 }

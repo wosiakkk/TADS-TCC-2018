@@ -12,7 +12,9 @@ import br.com.tads.tccpool.exception.AcessoBdException;
 import br.com.tads.tccpool.facade.AnuncioFacade;
 import br.com.tads.tccpool.facade.UserFacade;
 import br.com.tads.tccpool.utils.MD5;
+
 import java.io.File;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -54,64 +56,66 @@ public class UserServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
+
+            //******************************
+            // implementado apenas para finalizar a sprint da lista de amigos, pois os nomes do user podem ser iguais
+            // futuramente a busca será aprimorada
             String action = request.getParameter("action");
             User u = new User();
-            switch(action){
-                case "ADD":{
-                    
+            switch (action) {
+                case "ADD": {
+
                     u.setNome(request.getParameter("nome"));
-                    
+
                     u.setEmail(request.getParameter("email"));
                     u.setSenha(MD5.criptografar(request.getParameter("senha")));
-                    
+
                     //temporariamente só irei cadastrar usuários comuns
                     u.setTipoUsuario(2);
- 
+
                     /*if(!(request.getParameter("cel").equalsIgnoreCase("")))
-                        u.setCel(request.getParameter("cel"));
-                    else
-                        u.setCel("");*/
-                    
-                    /*if(!(request.getParameter("comple").equalsIgnoreCase("")))
-                        u.setComplemento(request.getParameter("comple"));
-                    else
-                        u.setComplemento(null);
-                    */
+                            u.setCel(request.getParameter("cel"));
+                        else
+                            u.setCel("");*/
+
+ /*if(!(request.getParameter("comple").equalsIgnoreCase("")))
+                            u.setComplemento(request.getParameter("comple"));
+                        else
+                            u.setComplemento(null);
+                     */
                     try {
                         User userLogado = UserFacade.insereUsuario(u);
-                        if(userLogado == null) {
+                        if (userLogado == null) {
                             response.sendRedirect("erro.jsp");
-                        }
-                        else {
+                        } else {
                             response.sendRedirect("login.jsp");
                         }
-                        
+
                     } catch (AcessoBdException ex) {
-                         throw new RuntimeException(ex);
+                        throw new RuntimeException(ex);
                     } catch (SQLException ex) {
-                         throw new RuntimeException(ex);
+                        throw new RuntimeException(ex);
                     }
-            
-                    
+
                     break;
                 }
+
                 case "EDIT":{
-<<<<<<< HEAD
+
                     /*
                     User userSearch = (User) session.getAttribute("userSearch");
-=======
-                    
+
                     u.setId(Integer.parseInt(request.getParameter("idUser")));
                     u.setNome(request.getParameter("nome"));
                     u.setDescricao(request.getParameter("descricao"));
                     u.setInteresses(request.getParameter("interesses"));
-                    
-                    if(UserFacade.editarPerfil(u)){
+
+                    if (UserFacade.editarPerfil(u)) {
                         response.sendRedirect("home.jsp");
                     }
-                    
+
                     /*User userSearch = (User) session.getAttribute("userSearch");
->>>>>>> 86d1e4d230a7c4c9bcf456a1f611f8e36cec3b92
+
                     
                     u.setId(userSearch.getId());
                     u.setNome(request.getParameter("nome"));
@@ -261,9 +265,57 @@ public class UserServlet extends HttpServlet {
                    
                    
                     
+=======
+
+                        u.setId(userSearch.getId());
+                        u.setNome(request.getParameter("nome"));
+                       // u.setCpf(request.getParameter("cpf"));
+                        u.setEmail(request.getParameter("email"));
+
+                        String senha = MD5.criptografar(request.getParameter("senha"));
+                        String confirmaSenha = MD5.criptografar(request.getParameter("confirmaSenha"));
+
+                        if(senha.equals(confirmaSenha)) {
+                            u.setSenha(senha);
+                        }
+                        else {
+                            //Se o campo senha não foi preenchido seta a senha para a mesma q está na session
+                            senha = userSearch.getSenha();
+                            u.setSenha(senha);
+                        }
+
+                       // u.setInstituicao(Integer.parseInt(request.getParameter("inst")));
+                        u.setTel(request.getParameter("tel"));
+                        if(!(request.getParameter("cel").equalsIgnoreCase("")))
+                            u.setCel(request.getParameter("cel"));
+                        else
+                            u.setCel("");
+                        //CdEndereco necessário para editar o registro no banco de dados
+                        u.setCdEndereco(Integer.parseInt(request.getParameter("cdEndereco")));
+                        u.setLogradouro(request.getParameter("rua"));
+                        u.setNumero(Integer.parseInt(request.getParameter("num")));
+                        u.setCep(request.getParameter("cep"));
+                        u.setCidade(request.getParameter("cidade"));
+                        u.setEstado(request.getParameter("estado"));
+                        if(!(request.getParameter("comple").equalsIgnoreCase("")))
+                            u.setComplemento(request.getParameter("comple"));
+                        else
+                            u.setComplemento(null);
+
+                       // Boolean editOK = UserFacade.editarUsuario(u, userSearch.getCpf());
+
+                       /* if(editOK) {
+                            response.sendRedirect("home.jsp");
+                            //return para evitar loops
+                            return;
+                        }
+                        else {
+                            response.sendRedirect("UserServlet?action=SEARCH");
+                        }*/
+
                     break;
                 }
-                case "SEARCH":{
+                case "SEARCH": {
                     User userSession = (User) session.getAttribute("user");
                     User userSearch = UserFacade.buscarUsuario(userSession.getId());
                     session.setAttribute("userSearch", userSearch);
@@ -271,22 +323,87 @@ public class UserServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
                 }
-                case "REMOVE":{
+                case "REMOVE": {
                     break;
                 }
-                case "PERFIL":{
-                    User perfil = new User();
+                case "PERFIL": {
+                    User perfil = new User();                             
                     int id = Integer.parseInt(request.getParameter("idUser"));
+                    int idSessao =(int) session.getAttribute("idUserSessao");
                     perfil = UserFacade.geraPerfilUser(id);
+                    int amizade = UserFacade.checandoAmizade(idSessao, id);
                     session.setAttribute("perfil", perfil);
+                    session.setAttribute("amizade", amizade);
                     RequestDispatcher rd = request.getRequestDispatcher("perfil.jsp");
                     rd.forward(request, response);
                     break;
                 }
+
+                case "AMIZADE": {
+                    String acao = request.getParameter("acao");
+                    switch (acao) {
+
+                        case "SOLICITAR": {
+
+                            int idSolicitante = Integer.parseInt(request.getParameter("idSolicitante"));
+                            int idSolicitado = Integer.parseInt(request.getParameter("idSolicitado"));
+
+                            if (UserFacade.solicitarAmizade(idSolicitante, idSolicitado)) {
+                                if (UserFacade.solicitarAmizade2(idSolicitante, idSolicitado)) {
+                                    RequestDispatcher rd = request.getRequestDispatcher("solicitarAmizade.jsp");
+                                    rd.forward(request, response);
+                                } else {
+                                    //erro na tabela do solictado
+                                }
+                            } else {
+                                //erro na tabela do solicitante
+                            }
+
+                            break;
+                        }
+                        case "ACEITAR": {
+                            
+                            int idSolicitante = Integer.parseInt(request.getParameter("idSolicitante"));
+                            int idSolicitado = Integer.parseInt(request.getParameter("idSolicitado"));
+                            UserFacade.aceitarAmizade( idSolicitante, idSolicitado);
+                            RequestDispatcher rd = request.getRequestDispatcher("amizadeAceita.jsp");
+                                    rd.forward(request, response);
+                            break;
+                        }
+                        case "REJEITAR": {
+
+                            break;
+                        }
+                        case "BLOQUEAR": {
+
+                            break;
+                        }
+                        case "EXCLUIR": {
+
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+                
+                case "BUSCARAMIGOS":{
+                    
+                    String tipo = request.getParameter("tipo");
+                    switch(tipo){
+                        
+                        case "ACEITOS":{
+                            
+                            break;
+                        }
+                        
+                    }
+                    
+                    
+                    break;
+                }
             }
-            
-            
-            
+
         }
     }
 

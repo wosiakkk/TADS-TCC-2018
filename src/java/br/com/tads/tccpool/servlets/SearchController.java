@@ -6,12 +6,12 @@
 package br.com.tads.tccpool.servlets;
 
 import br.com.tads.tccpool.beans.User;
-import br.com.tads.tccpool.exception.AcessoBdException;
-import br.com.tads.tccpool.facade.LoginFacade;
-import br.com.tads.tccpool.utils.MD5;
+import br.com.tads.tccpool.dao.UserDAO;
+import br.com.tads.tccpool.facade.UserFacade;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author onurb
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "SearchController", urlPatterns = {"/SearchController"})
+public class SearchController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,46 +40,23 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String action = (String) request.getParameter("action");
-            if("LOGOUT".equals(action)) {
-                HttpSession session = request.getSession();
-                if(session != null){
-                    session.invalidate();
-                    
-                    RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-                    request.setAttribute("title", "Inicio");
-                    request.setAttribute("msg", "Faça login para acessar esta página!");
-                    rd.forward(request, response);
+            
+            String text = request.getParameter("term");
+            System.out.println("Hello from Get Method: " + text);
+            UserDAO userDAO = new UserDAO();
+            try {
+                ArrayList<User> users = userDAO.buscarUsuariosDinamicamente(text);
+                for (User user : users) {
+                    System.out.println(user.getNome());
                 }
-            }
-            else {
-                String email = request.getParameter("login");
-                String senha = MD5.criptografar(request.getParameter("senha"));
 
-                try{
-                    User u = LoginFacade.verificaLogin(email, senha);
-                    //se houver algum retorno
-                    if(u != null){
-                        HttpSession session = request.getSession();
-                        //este dado na sessão indica que o usuário está logado
-                        session.setAttribute("user", u);
-                        session.setAttribute("idUserSessao", u.getId());
-                        //redireciona para a página inicial
-                        request.setAttribute("title", "Home");
-                        RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
-                        rd.forward(request, response);
-                    }else{
-                        // redireciona para login passando mensagem
-                        String param = URLEncoder.encode("Login ou Senha inválidos.", "UTF-8");
-                        response.sendRedirect("index.jsp?msg=" + param);
-                        return;
-                    }
-                }catch(AcessoBdException e){
-                     // para passar o parâmetro para o sendRedirect do jeito certo
-                    String param = URLEncoder.encode("Erro efetuando login [" + e.getMessage() + " - " + e.getCause().getMessage() + "]", "UTF-8");
-                    response.sendRedirect("index.jsp?msg=" + param);
-                    return;
-                }
+                String searchResult = new Gson().toJson(users);
+
+                PrintWriter writer = response.getWriter();
+                writer.write(searchResult);
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
