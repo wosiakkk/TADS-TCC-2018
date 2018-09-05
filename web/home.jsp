@@ -16,7 +16,7 @@
 <div class="col-3">
     <div class="menu-fixed-left">
         <div class="center">
-            <img class="d-block img-fluid rounded-circle" src="${user.getFoto()}">
+            <img class="d-block img-fluid rounded-circle" src="${user.getFoto()}" style="width: 100px; height: 100px">
             <h4><strong style="color: gray"><c:out value="${user.getNome()}"/></strong></h4>
         </div>
         <div class="list-group">
