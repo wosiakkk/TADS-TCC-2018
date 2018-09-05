@@ -38,6 +38,7 @@ public class UserDAO {
                                                         "user.NR_CELULAR,\n" +
                                                         "user.DS_SENHA, \n" +
                                                         "user.CD_ENDERECO, \n" +
+                                                        "user.DS_FOTO, \n" +
                                                         "endr.NM_RUA,\n" +
                                                         "endr.NM_ESTADO,\n" +
                                                         "endr.NR_RUA,\n" +
