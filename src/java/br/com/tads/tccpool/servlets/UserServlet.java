@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -95,7 +96,7 @@ public class UserServlet extends HttpServlet {
                     break;
                 }
                 case "EDIT": {
-/*
+                    /*
                     u.setId(Integer.parseInt(request.getParameter("idUser")));
                     u.setNome(request.getParameter("nome"));
                     u.setDescricao(request.getParameter("descricao"));
@@ -152,13 +153,13 @@ public class UserServlet extends HttpServlet {
                         else {
                             response.sendRedirect("UserServlet?action=SEARCH");
                         }*/
-User alterar = new User();
-                   String caminhoFoto = new String();
-                     try {
-                       
+                    User alterar = new User();
+                    String caminhoFoto = new String();
+                    try {
+
                         /*Faz o parse do request*/
                         List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-                        
+
                         /*Escreve a o arquivo na pasta img*/
                         for (FileItem item : multiparts) {
                             if (item.isFormField()) {
@@ -199,43 +200,42 @@ User alterar = new User();
                                 if (item.getFieldName().equals("")) {
                                     alterar.(item.getString());
                                  }
-                                */
-                             } else {
-                               
+                                 */
+                            } else {
+
                                 Random rand = new Random();
                                 String nomeString = String.valueOf(rand.nextInt()) + ".jpg";
                                 if (!item.getName().equals("")) {
                                     item.write(new File(request.getServletContext().getRealPath("img/fotosPerfil") + File.separator + nomeString));
-                                     caminhoFoto = "img/fotosPerfil" + File.separator + nomeString;
+                                    caminhoFoto = "img/fotosPerfil" + File.separator + nomeString;
                                     alterar.setFoto(caminhoFoto);
                                 }
-                                
-                             }
-                            
+
+                            }
+
                         }
                         request.setAttribute("message", "Arquivo carregado com sucesso");
                     } catch (Exception ex) {
                         request.setAttribute("message", "Upload de arquivo falhou devido a " + ex);
                     }
                     try {
-                        
+
                         boolean edit = UserFacade.editarUsuario(alterar);
-                        if(edit){
+                        if (edit) {
                             alterar = UserFacade.buscarUsuario(alterar.getId());
                             session.setAttribute("userSearch", alterar);
-                            User us = (User)session.getAttribute("user");
+                            User us = (User) session.getAttribute("user");
                             us.setFoto(alterar.getFoto());
                             session.setAttribute("user", us);
-                        }else{
-                            
+                        } else {
+
                         }
-                     
-                     
+
                     } catch (Exception ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
                         request.setAttribute("msg", "Falha ao Realizar Anuncio: " + ex);
                     } finally {
-                    request.getRequestDispatcher("editarPerfil.jsp").forward(request, response);
+                        request.getRequestDispatcher("editarPerfil.jsp").forward(request, response);
                     }
 
                     break;
@@ -252,9 +252,9 @@ User alterar = new User();
                     break;
                 }
                 case "PERFIL": {
-                    User perfil = new User();                             
+                    User perfil = new User();
                     int id = Integer.parseInt(request.getParameter("idUser"));
-                    int idSessao =(int) session.getAttribute("idUserSessao");
+                    int idSessao = (int) session.getAttribute("idUserSessao");
                     perfil = UserFacade.geraPerfilUser(id);
                     int amizade = UserFacade.checandoAmizade(idSessao, id);
                     session.setAttribute("perfil", perfil);
@@ -287,44 +287,101 @@ User alterar = new User();
                             break;
                         }
                         case "ACEITAR": {
-                            
                             int idSolicitante = Integer.parseInt(request.getParameter("idSolicitante"));
                             int idSolicitado = Integer.parseInt(request.getParameter("idSolicitado"));
-                            UserFacade.aceitarAmizade( idSolicitante, idSolicitado);
+                            UserFacade.aceitarAmizade(idSolicitante, idSolicitado);
                             RequestDispatcher rd = request.getRequestDispatcher("amizadeAceita.jsp");
-                                    rd.forward(request, response);
+                            rd.forward(request, response);
                             break;
                         }
                         case "REJEITAR": {
-
+                            int idSessaoSolicitado = Integer.parseInt(request.getParameter("idSessao"));
+                            int idSolicitante = Integer.parseInt(request.getParameter("idSolicitante"));
+                            if(UserFacade.rejeitarAmizade(idSessaoSolicitado, idSolicitante)){
+                                RequestDispatcher rd = request.getRequestDispatcher("amizadeRejeitada.jsp");
+                                rd.forward(request, response);
+                            }else{
+                                //erro rejeição
+                            }
                             break;
                         }
-                        case "BLOQUEAR": {
-
+                        case "REJEITAREBLOQUEAR": {
+                            int idSessaoSolicitado = Integer.parseInt(request.getParameter("idSessao"));
+                            int idSolicitante = Integer.parseInt(request.getParameter("idSolicitante"));
+                            if(UserFacade.rejeitarBloquear(idSessaoSolicitado, idSolicitante)){
+                                RequestDispatcher rd = request.getRequestDispatcher("amizadeBloqueada.jsp");
+                                rd.forward(request, response);
+                            }else{
+                                //erro 
+                            }
+                            break;
+                        }
+                        case "DESBLOQUEAR": {
+                            int idSessao = Integer.parseInt(request.getParameter("idSessao"));
+                            int idDesbloqueio = Integer.parseInt(request.getParameter("idSolicitante")); 
+                            if(UserFacade.desbloquearUsuario(idSessao, idDesbloqueio)){
+                                RequestDispatcher rd = request.getRequestDispatcher("amizadeDesbloqueada.jsp");
+                                rd.forward(request, response);
+                            }else{
+                                
+                            }
                             break;
                         }
                         case "EXCLUIR": {
-
+                            int idSessao = Integer.parseInt(request.getParameter("idSessao"));
+                            int idAmigo = Integer.parseInt(request.getParameter("idSolicitante"));
+                            if(UserFacade.excluirAmizade(idSessao, idAmigo)){
+                                RequestDispatcher rd = request.getRequestDispatcher("amizadeExcluida.jsp");
+                                rd.forward(request, response);
+                            }else{
+                                
+                            }
+                            break;
+                        }
+                        case "LISTARACEITOS": {
+                            int idLogado = Integer.parseInt(request.getParameter("idUser"));
+                            ArrayList<User> amigos = new ArrayList<>();
+                            amigos = (ArrayList<User>) UserFacade.listaDeAmigos(idLogado);
+                            session.setAttribute("amigosAceitos", amigos);
+                            RequestDispatcher rd = request.getRequestDispatcher("listaAmizadeAceitos.jsp");
+                            rd.forward(request, response);
+                            break;
+                        }
+                        case "LISTARPEDIDOS": {
+                            int idLogado = Integer.parseInt(request.getParameter("idUser"));
+                            ArrayList<User> amigos = new ArrayList<>();
+                            amigos = (ArrayList<User>) UserFacade.listaDeAmigosPendentes(idLogado);
+                            session.setAttribute("amigosPendentes", amigos);
+                            RequestDispatcher rd = request.getRequestDispatcher("listaAmizadePendente.jsp");
+                            rd.forward(request, response);
+                            break;
+                        }
+                        case "LISTARBLOQUEADOS": {
+                            int idLogado = Integer.parseInt(request.getParameter("idUser"));
+                            ArrayList<User> amigos = new ArrayList<>();
+                            amigos = (ArrayList<User>) UserFacade.listaDeAmigosBloqueados(idLogado);
+                            session.setAttribute("amigosBloqueados", amigos);
+                            RequestDispatcher rd = request.getRequestDispatcher("listaAmizadeBloqueados.jsp");
+                            rd.forward(request, response);
                             break;
                         }
                     }
 
                     break;
                 }
-                
-                case "BUSCARAMIGOS":{
-                    
+
+                case "BUSCARAMIGOS": {
+
                     String tipo = request.getParameter("tipo");
-                    switch(tipo){
-                        
-                        case "ACEITOS":{
-                            
+                    switch (tipo) {
+
+                        case "ACEITOS": {
+
                             break;
                         }
-                        
+
                     }
-                    
-                    
+
                     break;
                 }
             }

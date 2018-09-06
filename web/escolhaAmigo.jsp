@@ -23,17 +23,17 @@
             <div class="col-sm-4 text-center">
                 <div class="list-group">
                     <div class="list-group-item">
-                        <a  href="#">
+                        <a  href="UserServlet?action=AMIZADE&acao=LISTARPEDIDOS&idUser=${user.getId()}">
                             <img class="d-block img-fluid" src="img\icones\waiting.png">Solicitações
                         </a>
                     </div>
                     <div class="list-group-item">
-                        <a  href="UserServlet?action=BUSCARAMIGOS&tipo=ACEITOS">
+                        <a  href="UserServlet?action=AMIZADE&acao=LISTARACEITOS&idUser=${user.getId()}">
                             <img class="d-block img-fluid" src="img\icones\agreement.png">Amigos    
                         </a>
                     </div>
                     <div class="list-group-item">
-                        <a  href="MainPageServlet?action=ANUNCIO&tipo=material">
+                        <a  href="UserServlet?action=AMIZADE&acao=LISTARBLOQUEADOS&idUser=${user.getId()}">
                             <img class="d-block img-fluid" src="img\icones\hold.png">Bloqueadas
                         </a>
                     </div>

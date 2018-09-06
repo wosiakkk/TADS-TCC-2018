@@ -42,6 +42,10 @@
 <script>
     function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
+        var id_token = googleUser.getAuthResponse().id_token;
+
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.disconnect();
         console.log('id_token: ' + googleUser.getAuthResponse().id_token);
         var redirectUrl = 'LoginGoogle'
         var form = $('<form action="' + redirectUrl + '" method="post">' +
