@@ -29,6 +29,31 @@ $(document).ready(function(){
         //Limpa os campos do formulário
         this.reset();
     });
+<<<<<<< HEAD
+=======
+
+    $('#BTN_LISTAR_MENSAGEM').click(function (e) {
+        var dados = {
+            action: "LIST_MENSAGEM",
+            ID_ORIGEM: 3,
+            ID_DESTINO: 9
+        };
+        $.ajax({
+            url: 'MensagemServlet',
+            data: dados,
+            method: 'POST',
+            dataType: 'html',
+            success: function (resp) {
+                $('#respostaAjax').html(resp);
+            },
+            error: function (resp) {
+                console.log(resp);
+                $('#respostaAjax').html(resp);
+            }
+        });
+    });
+});
+>>>>>>> 8ad634dfa0e86c8be8d3ce4a77a73d9c4c3f3963
 
     $('#BTN_LISTAR_MENSAGEM').click(function (e) {
         var dados = {
