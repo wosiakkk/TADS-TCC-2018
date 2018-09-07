@@ -23,11 +23,31 @@ $(document).ready(function(){
             },
             error: function (resp) {
                 console.log(resp);
-                $('#respostaAjax').html('Erro na requisição. Verifique o console do navegador!');
+                $('#respostaAjax').html(resp);
             }
         });
         //Limpa os campos do formulário
         this.reset();
-   }); 
-});
+    });
 
+    $('#BTN_LISTAR_MENSAGEM').click(function (e) {
+        var dados = {
+            action: "LIST_MENSAGEM",
+            ID_ORIGEM: 3,
+            ID_DESTINO: 9
+        };
+        $.ajax({
+            url: 'MensagemServlet',
+            data: dados,
+            method: 'POST',
+            dataType: 'html',
+            success: function (resp) {
+                $('#respostaAjax').html(resp);
+            },
+            error: function (resp) {
+                console.log(resp);
+                $('#respostaAjax').html(resp);
+            }
+        });
+    });
+});

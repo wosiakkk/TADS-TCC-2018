@@ -8,13 +8,33 @@ import java.util.Calendar;
  * @author Marcos
  */
 public class Mensagem implements Serializable {
-    private int idComentario;
-    private String conteudo;
+    private int idMensagem;
     private int idOrigem;
-    private int idAnuncio;
+    private int idDestino;
+    private String conteudo;
+    private String nmOrigem;
+    private String nmDestino;
     private Calendar data;
     
-    public Mensagem(){}
+    public Mensagem(){
+        this.data = Calendar.getInstance();
+    }
+
+    public String getNmOrigem() {
+        return nmOrigem;
+    }
+
+    public void setNmOrigem(String nmOrigem) {
+        this.nmOrigem = nmOrigem;
+    }
+
+    public String getNmDestino() {
+        return nmDestino;
+    }
+
+    public void setNmDestino(String nmDestino) {
+        this.nmDestino = nmDestino;
+    }
 
     public String getConteudo() {
         return conteudo;
@@ -32,20 +52,20 @@ public class Mensagem implements Serializable {
         this.idOrigem = idOrigem;
     }
 
-    public int getIdAnuncio() {
-        return idAnuncio;
+    public int getIdDestino() {
+        return idDestino;
     }
 
-    public void setIdAnuncio(int idAnuncio) {
-        this.idAnuncio = idAnuncio;
+    public void setIdDestino(int idDestino) {
+        this.idDestino = idDestino;
     }
 
-    public int getIdComentario() {
-        return idComentario;
+    public int getIdMensagem() {
+        return idMensagem;
     }
 
-    public void setIdComentario(int idComentario) {
-        this.idComentario = idComentario;
+    public void setIdMensagem(int idMensagem) {
+        this.idMensagem = idMensagem;
     }
 
     public Calendar getData() {
@@ -54,6 +74,14 @@ public class Mensagem implements Serializable {
 
     public void setData(Calendar data) {
         this.data = data;
+    }
+    
+    @Override
+    public String toString(){
+        return "idMensagem:" + String.valueOf(this.idMensagem) +
+               ";idOrigem:"  + String.valueOf(this.idOrigem)   +
+               ";idDestino:" + String.valueOf(this.idDestino)  +
+               ";data:"      + this.data.getTime().toString();
     }
     
 }

@@ -569,4 +569,7 @@ Author     : onurb
 
 <!-- Rodapé -->
 <%@include file="comentario.jsp" %>
-<%@include file="footer.jsp" %>
+</div> <!-- ./row -->
+</div> <!-- ./container -->
+</body>
+</html>

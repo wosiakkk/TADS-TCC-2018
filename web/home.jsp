@@ -16,7 +16,7 @@
 <div class="col-3">
     <div class="menu-fixed-left">
         <div class="center">
-            <img class="d-block img-fluid rounded-circle" src="${user.getFoto()}" style="width: 100px; height: 100px">
+            <img class="d-block img-fluid rounded-circle" src="${user.getFoto()}">
             <h4><strong style="color: gray"><c:out value="${user.getNome()}"/></strong></h4>
         </div>
         <div class="list-group">
@@ -182,7 +182,6 @@
 
 <!-- Importando: 1-Bootstrap -->
 <script src="assets/bootstrap/js/bootstrap.bundle.js" type="text/javascript"></script>
-<script src="assets/js/comentario.js" type="text/javascript" charset="UTF-8"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {

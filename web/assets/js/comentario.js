@@ -45,7 +45,7 @@ $(document).ready(function(){
 
 function buscarMensagens() {
     var dados = {
-        action: 'LIST',
+        action: 'LIST_COMENTARIOS',
         anuncio: $('input[name=ID_ANUNCIO]').val()
     };
     

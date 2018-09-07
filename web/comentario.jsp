@@ -2,6 +2,12 @@
     Document   : mensagem
     Created on : 22/05/2018, 14:18:31
     Author     : Marcos
+
+    ******************************************************IMPORTANTE******************************************************
+    Este arquivo foi pensado para ser incluído dentro de outros.
+    Por isso não tem declaração de taglib nem dos objetos utilizados nele,mas sim, usa os da página onde ele foi incluído.
+    Vejo um exemplo de utilizão no arqv anuncio.jsp
+    ******************************************************IMPORTANTE******************************************************
 --%>
 
 
@@ -10,7 +16,7 @@
 <div class="col-lg-10">
     <form id="comentarioAjax">
         <input name="action" value="ADD" type="hidden">
-        <input name="ID_ANUNCIO" value="${imovelExibir.getId()}" type="hidden">
+        <input name="ID_ANUNCIO" value="<c:out value="${idExibirAnuncio}"/>" type="hidden">  
         <input name="ID_USUARIO" value="<c:out value="${user.getId()}"/>" type="hidden">
         <input name="ID_REPLY" value="" type="hidden">
         <div class="form-group">

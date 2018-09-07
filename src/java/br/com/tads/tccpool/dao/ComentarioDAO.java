@@ -27,15 +27,6 @@ public class ComentarioDAO {
     private Connection con = null;
     private PreparedStatement stmt = null;
     private ResultSet rs = null;
-    /*
-    SELECT
-  TB_COMENTARIO.*,
-  TB_USUARIO.NM_NOME
-FROM
-  TB_COMENTARIO
-  INNER JOIN TB_USUARIO
-  ON TB_COMENTARIO.ID_ORIGEM = TB_USUARIO.NR_SEQ
-    */
     private final String QUERY_SELECT = "SELECT\n"
                                       + "  TB_COMENTARIO.*,\n"
                                       + "  TB_USUARIO.NM_NOME\n"
@@ -52,9 +43,8 @@ FROM
                                         "   TB_ANUNCIO_ID_ANUNCIO,\n" +
                                         "   DS_CONTEUDO,\n" +
                                         "   ID_ORIGEM,\n" +
-                                        "   ID_PAI,\n" +
-                                        "   DT_DATA\n" +
-                                        ") VALUES (?, ?, ?, ?, ?)";
+                                        "   ID_PAI\n" +
+                                        ") VALUES (?, ?, ?, ?)";
     private final String QUERY_LIKE = "UPDATE tb_comentario SET VL_LIKE = (SELECT VL_LIKE + 1) WHERE NR_SEQ = ?";
     private final String QUERY_UNLIKE = "UPDATE tb_comentario SET VL_UNLIKE = (SELECT VL_UNLIKE + 1) WHERE NR_SEQ = ?";
     private final String QUERY_VALIDA_REPLY = "SELECT 1 FROM TB_COMENTARIO WHERE ID_PAI = ?";
@@ -82,8 +72,6 @@ FROM
         stmt.setString(2, comentario.getConteudo());
         stmt.setInt(3, comentario.getIdOrigem());
         stmt.setInt(4, comentario.getIdPai());
-        //Formata a data para inserir no banco de dados
-        stmt.setString(5, DateFormat.getInstance().format(comentario.getData().getTime()));
         
         return stmt.executeUpdate();
     }
@@ -103,11 +91,7 @@ FROM
             c.setIdOrigem(rs.getInt("ID_ORIGEM"));
             c.setQtdeLikes(rs.getInt("VL_LIKE"));
             c.setQtdeUnlikes(rs.getInt("VL_UNLIKE"));
-            
-            /*SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(format.parse(rs.getString("DT_DATA")));
-            c.setData(cal);*/
+            c.getData().setTime(rs.getDate("DT_DATA"));
             
             comentarios.add(c);
         }
@@ -141,11 +125,7 @@ FROM
             c.setIdOrigem(rs.getInt("ID_ORIGEM"));
             c.setQtdeLikes(rs.getInt("VL_LIKE"));
             c.setQtdeUnlikes(rs.getInt("VL_UNLIKE"));
-            
-            /*SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(format.parse(rs.getString("DT_DATA")));
-            c.setData(cal);*/
+            c.getData().setTime(rs.getDate("DT_DATA"));
             
             comentarios.add(c);
         }

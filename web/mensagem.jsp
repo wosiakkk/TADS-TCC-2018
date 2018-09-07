@@ -13,29 +13,22 @@
 </c:if>
 <!-- importanto CSS para mensagens e comentários -->
 <link href="assets/css/mensagem.css" rel="stylesheet">
+<script type="text/javascript" src="assets/js/mensagem.js"></script>
 
-<div class="col-lg-10">
+<div class="col-md-12 col-lg-12 col-sm-12">
+    <div id="respostaAjax" class="row jumbotron">
+        
+    </div>
     <form id="mensagemAjax">
-        <input name="action" value="ADD" type="hidden">
-        <input name="ID_ANUNCIO" value="4" type="hidden">
-        <input name="ID_USUARIO" value="<c:out value="${user.getId()}"/>" type="hidden">
+        <input name="action" value="ADD_MENSAGEM" type="hidden">
+        <input name="ID_ORIGEM" value="<c:out value="${user.getId()}"/>" type="hidden">
+        <input name="ID_DESTINO" value="9" type="hidden">
         <div class="form-group">
-            <label for="DS_MSG">Mensagem:</label>
             <textarea id="DS_MSG" name="DS_MSG" class="form-control" cols="25" rows="5"></textarea>
         </div>
-        <div class="form-group send-icon">
-            <button name="BTN_ENVIAR" type="submit" class="btn btn-success pull-right" value="Enviar">
-                <i class="fa fa-send"></i>
-            </button>
-        </div>
+        <button name="BTN_ENVIAR" type="submit" class="btn btn-success float-right" value="ENVIAR">
+            <i class="fa fa-send"></i>
+        </button>
+        <button id="BTN_LISTAR_MENSAGEM" name="BTN_LISTAR_MENSAGEM" type="button" class="btn btn-default">LISTAR</button>
     </form> <!-- fim #mensagemAjax -->
 </div> <!-- fim .col-lg-10 -->
-<div id="respostaAjax" class="col-lg-10 comment-main">
-    <ul class="p-0">
-        <li>
-
-        </li>
-    </ul>
-</div> <!-- fim #respostaAjax -->
-<!-- Rodapé -->
-<%@include file="footer.jsp" %>
