@@ -36,12 +36,7 @@ public class MensagemDAO {
                                         "FROM\n" +
                                         "  TB_MENSAGEM\n" +
                                         "WHERE\n" +
-<<<<<<< HEAD
                                         "  ID_ORIGEM IN (?, ?)\n" +
-=======
-                                        "      ID_ORIGEM IN (?, ?)\n" +
-                                        //"  AND ID_DESTINO = ?\n" +
->>>>>>> 8ad634dfa0e86c8be8d3ce4a77a73d9c4c3f3963
                                         "ORDER BY DT_MSG ASC";
     
     public MensagemDAO() {
