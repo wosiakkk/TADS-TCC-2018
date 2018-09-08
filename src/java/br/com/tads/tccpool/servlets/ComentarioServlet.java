@@ -15,11 +15,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,6 +43,16 @@ public class ComentarioServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            
+            HttpSession session = request.getSession();
+            //Validação de acesso
+            if(session == null) {
+                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                request.setAttribute("title", "Inicio");
+                request.setAttribute("msg", "Faça login para acessar esta página!");
+                rd.forward(request, response);
+            }
+            
             String action = (String) request.getParameter("action").trim();
             
             switch(action) {

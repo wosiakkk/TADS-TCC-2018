@@ -6,11 +6,11 @@ Author     : onurb
 
 <!-- Cabeçalho -->
 <%@include file="head.jsp" %>
-<c:if test="${(empty(user))}">
-    <c:redirect url="index.jsp">
-        <c:param name="msg" value="Faça login para acessar esta página!"></c:param>
-    </c:redirect>
-</c:if>
+<!--c:if test="${(empty(user))}"-->
+    <!--c:redirect url="index.jsp"-->
+        <!--c:param name="msg" value="Fa�a login para acessar esta p�gina!"/-->
+    <!--/c:redirect-->
+<!--/c:if-->
 
 <c:if test="${imovelAlterar != null}"> 
     <div class="row">
@@ -81,7 +81,7 @@ Author     : onurb
                 </div>
             </div>
             <div class="form-group">
-                <label for="descricao" class="col-sm-3 control-label">Descrição:</label>
+                <label for="descricao" class="col-sm-3 control-label">Descri&ccedil&atildeo:</label>
                 <div class="col-sm-9">
                     <input type="text" name="descricao" id="descricao" value="${imovelAlterar.descricao}" class="form-control"  > 
                     <span class="help-block">Descreva seu anuncio</span>
@@ -166,8 +166,15 @@ Author     : onurb
     </div>
     <div class="col-md-12"></div>
 </c:if>
-<c:if test="${imovelExibir != null}">   
-    <h2>Anuncio do ${imovelExibir.nomeAnunciante} <a href="UserServlet?action=PERFIL&idUser=${imovelExibir.idAnunciante}">perfil</a> </h2><br><hr>
+<c:if test="${imovelExibir != null}">
+    <c:choose>
+        <c:when test="${!(empty(user))}">
+            <h2>Anuncio de ${imovelExibir.nomeAnunciante} <a href="UserServlet?action=PERFIL&idUser=${imovelExibir.idAnunciante}">perfil</a> </h2><br><hr>
+        </c:when>
+        <c:otherwise>
+            <h2>Anuncio de ${imovelExibir.nomeAnunciante}</h2><br><hr>
+        </c:otherwise>    
+    </c:choose>
     
     <div class="col-md-12"></div>
     <div class="col-sm-2"></div>
@@ -215,7 +222,7 @@ Author     : onurb
         ${imovelExibir.tipoDesc}
     </div>
     <div class="col-sm-9">
-        <label for="descricao">Descrição:</label>
+        <label for="descricao">Descri&ccedil&atildeo:</label>
         ${imovelExibir.descricao}
     </div>
     <div class="col-sm-9">
@@ -261,18 +268,20 @@ Author     : onurb
     </div>
     <!-- /form -->
     <div class="col-md-12"></div>
-    <div class="form-group col-md-2">
-        <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
-            <input type="hidden" name="action"  value="ALTERARANUNCIO" >
-            <br><input type="submit" value="Alterar"  class="form-control btn-primary" />
-        </form>
-    </div>
-    <div class="form-group col-md-2">
-        <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
-            <input type="hidden" name="action"  value="EXCLUIRANUNCIO" >
-            <br><input type="submit" value="Excluir"  class="form-control btn-primary" />
-        </form>
-    </div>
+    <c:if test="${!empty(user)}">
+        <div class="form-group col-md-2">
+            <form  action="AnuncioServlet" method="POST">
+                <input type="hidden" name="action"  value="ALTERARANUNCIO" >
+                <br><input type="submit" value="Alterar"  class="form-control btn-primary" />
+            </form>
+        </div>
+        <div class="form-group col-md-2">
+            <form  action="AnuncioServlet" method="POST">
+                <input type="hidden" name="action"  value="EXCLUIRANUNCIO" >
+                <br><input type="submit" value="Excluir"  class="form-control btn-primary" />
+            </form>
+        </div>
+    </c:if>
     <div class="col-md-12"></div>
 </c:if>
 <c:if test="${movelExibir != null}">   
@@ -317,7 +326,7 @@ Author     : onurb
         ${movelExibir.titulo}
     </div>
     <div class="col-sm-9">
-        <label for="descricao">Descrição:</label>
+        <label for="descricao">Descri&ccedil&atildeo:</label>
         ${movelExibir.descricao}
     </div>
     <div class="col-sm-9">
@@ -326,18 +335,20 @@ Author     : onurb
    </div>
     <!-- /form -->
     <div class="col-md-12"></div>
-    <div class="form-group col-md-2">
-        <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
-            <input type="hidden" name="action"  value="ALTERARANUNCIO" >
-            <br><input type="submit" value="Alterar"  class="form-control btn-primary" />
-        </form>
-    </div>
-    <div class="form-group col-md-2">
-        <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
-            <input type="hidden" name="action"  value="EXCLUIRANUNCIO" >
-            <br><input type="submit" value="Excluir"  class="form-control btn-primary" />
-        </form>
-    </div>
+    <c:if test="${!empty(user)}">
+        <div class="form-group col-md-2">
+            <form  action="AnuncioServlet" method="POST">
+                <input type="hidden" name="action"  value="ALTERARANUNCIO" >
+                <br><input type="submit" value="Alterar"  class="form-control btn-primary" />
+            </form>
+        </div>
+        <div class="form-group col-md-2">
+            <form  action="AnuncioServlet" method="POST">
+                <input type="hidden" name="action"  value="EXCLUIRANUNCIO" >
+                <br><input type="submit" value="Excluir"  class="form-control btn-primary" />
+            </form>
+        </div>
+    </c:if>
     <div class="col-md-12"></div>
 </c:if>
 <c:if test="${movelAlterar != null}">   
@@ -387,7 +398,7 @@ Author     : onurb
                 </div>
             </div>
             <div class="form-group">
-                <label for="descricao" class="col-sm-3 control-label">Descrição:</label>
+                <label for="descricao" class="col-sm-3 control-label">Descri&ccedil&atildeo:</label>
                 <div class="col-sm-9">
                     <input type="text" name="descricao" id="descricao" value="${movelAlterar.descricao}" class="form-control"  > 
                     <span class="help-block">Descreva seu anuncio</span>
@@ -403,12 +414,14 @@ Author     : onurb
                 <input type="submit" value="Alterar"  class="form-control btn-primary" />
             </div>
         </form>   <!-- /form -->
-        <div class="form-group col-md-12">
-            <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
-                <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
-                <input type="submit" value="Cancelar"  class="form-control btn-primary" />
-            </form>
-        </div>
+        <c:if test="${!empty(user)}">
+            <div class="form-group col-md-12">
+                <form  action="AnuncioServlet" method="POST">
+                    <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
+                    <input type="submit" value="Cancelar"  class="form-control btn-primary" />
+                </form>
+            </div>
+        </c:if>
     </div>
     <div class="col-md-12"></div>
 </c:if>
@@ -457,7 +470,7 @@ Author     : onurb
         ${materialExibir.tipoDesc}
     </div>
     <div class="col-sm-9">
-        <label for="descricao">Descrição:</label>
+        <label for="descricao">Descri&ccedil&atildeo:</label>
         ${materialExibir.descricao}
     </div>
     <div class="col-sm-9">
@@ -466,18 +479,20 @@ Author     : onurb
     </div>
     <!-- /form -->
     <div class="col-md-12"></div>
-    <div class="form-group col-md-2">
-        <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
-            <input type="hidden" name="action"  value="ALTERARANUNCIO" >
-            <br><input type="submit" value="Alterar"  class="form-control btn-primary" />
-        </form>
-    </div>
-    <div class="form-group col-md-2">
-        <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
-            <input type="hidden" name="action"  value="EXCLUIRANUNCIO" >
-            <br><input type="submit" value="Excluir"  class="form-control btn-primary" />
-        </form>
-    </div>
+    <c:if test="${!empty(user)}">
+        <div class="form-group col-md-2">
+            <form  action="AnuncioServlet" method="POST">
+                <input type="hidden" name="action"  value="ALTERARANUNCIO" >
+                <br><input type="submit" value="Alterar"  class="form-control btn-primary" />
+            </form>
+        </div>
+        <div class="form-group col-md-2">
+            <form  action="AnuncioServlet" method="POST">
+                <input type="hidden" name="action"  value="EXCLUIRANUNCIO" >
+                <br><input type="submit" value="Excluir"  class="form-control btn-primary" />
+            </form>
+        </div>
+    </c:if>
     <div class="col-md-12"></div>
 </c:if>
 <c:if test="${materialAlterar != null}">   
@@ -537,7 +552,7 @@ Author     : onurb
                 </div>
             </div>
             <div class="form-group">
-                <label for="descricao" class="col-sm-3 control-label">Descrição:</label>
+                <label for="descricao" class="col-sm-3 control-label">Descri&ccedil&atildeo:</label>
                 <div class="col-sm-9">
                     <input type="text" name="descricao" id="descricao" value="${materialAlterar.descricao}" class="form-control"  > 
                     <span class="help-block">Descreva seu anuncio</span>
@@ -553,13 +568,15 @@ Author     : onurb
                 <input type="submit" value="Alterar"  class="form-control btn-primary" />
             </div>
         </form>   <!-- /form -->
-        <div class="form-group col-md-12">
-            <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
-                <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
-                <input type="submit" value="Cancelar"  class="form-control btn-primary" />
-                <br><br><br><br>
-            </form>
-        </div>
+        <c:if test="${!empty(user)}">
+            <div class="form-group col-md-12">
+                <form  action="AnuncioServlet" method="POST">
+                    <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
+                    <input type="submit" value="Cancelar"  class="form-control btn-primary" />
+                    <br><br><br><br>
+                </form>
+            </div>
+        </c:if>
     </div>
     <div class="col-md-12"></div>
 </c:if>

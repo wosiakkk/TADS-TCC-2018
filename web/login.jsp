@@ -7,11 +7,24 @@
 <!-- Cabe�alho -->
 <%@ include file="head.jsp" %>
 <div class="col-md-12 col-sm-12 col-xs-12">
-    <c:if test="${(!empty(msg))}">
-        <div class="alert alert-warning" role="alert">
-            <c:out value="${msg}"/>
-        </div>
-    </c:if>
+    <c:choose>
+        <c:when test="${(!empty(falhaLogin))}">
+            <div class="alert alert-warning col-lg-12 col-sm-12 col-md-12 col-xs-12" role="alert">
+                <h4 class="text-center">
+                    Login ou senha inv&aacute;lidos ou n&atilde;o encontrados.<br>
+                    Tente novamente ou <a href="MainPageServlet?action=CLIENTE">cadastre-se</a>!
+                </h4>
+            </div>
+        </c:when>
+        <c:when test="${(!empty(param.falhaLogin))}">
+            <div class="alert alert-warning col-lg-12 col-sm-12 col-md-12 col-xs-12" role="alert">
+                <h4 class="text-center">
+                    Login ou senha inv&aacute;lidos ou n&atilde;o encontrados.<br>
+                    Tente novamente ou <a href="MainPageServlet?action=CLIENTE">cadastre-se</a>!
+                </h4>
+            </div>
+        </c:when>
+    </c:choose>
     <br>
     <div class="container">
         <div class="row">
@@ -74,7 +87,6 @@
         var emailUser = $('#emailLogin').val();
         if (inputChecked && emailUser !== getCookieValue("emailUser")) {
             setCookie("emailUser", emailUser, 365);
-            event.preventDefault();
         } else {
             //Se o campo "Lembre-se de mim" não estiver marcado então remove o cookie caso exista
             removeCookie("emailUser");

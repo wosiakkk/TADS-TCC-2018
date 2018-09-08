@@ -29,7 +29,6 @@ $(document).ready(function(){
         //Limpa os campos do formulário
         this.reset();
     });
->>>>>>> 8ad634dfa0e86c8be8d3ce4a77a73d9c4c3f3963
 
     $('#BTN_LISTAR_MENSAGEM').click(function (e) {
         var dados = {

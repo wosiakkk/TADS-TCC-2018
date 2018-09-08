@@ -154,9 +154,8 @@
             <div class="search-container">
                 <div class="ui-widget">
                     <form class="form"  action="RedirecionamentoBusca"  method="POST" role="form">
-                    <input type="text" id="search" name="search" class="search" placeholder="Procure aqui"/>
-                    <button type="submit">Ver Perfil</button>
-                      
+                        <input type="text" id="search" name="search" class="search form-control" placeholder="Procure aqui"/>
+                        <button id="btnSearch" name="btnSearch" type="submit" class="btn form-control">Ver Perfil</button>
                     </form>
                 </div>   
         </div>

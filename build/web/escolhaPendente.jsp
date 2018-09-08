@@ -2,7 +2,8 @@
 <%@include file="head.jsp" %>
 <c:if test="${(empty(user))}">
     <c:redirect url="index.jsp">
-        <c:param name="msg" value="Faça login para acessar esta página!"></c:param>
+        <c:param name="msg" value="Faça login para acessar esta página!"/>
+        <!--c:set var="msg" value="Fa&ccedila login para acessar esta p&aacutegina!" scope="request"/-->
     </c:redirect>
 </c:if>
 <div class="row justify-content-center">

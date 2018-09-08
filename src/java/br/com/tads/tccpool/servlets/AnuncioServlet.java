@@ -57,8 +57,17 @@ public class AnuncioServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
+            
             String action = request.getParameter("action");
-
+            
+            //Validação de acesso
+            if(session == null && !("EXIBIRANUNCIO".equals(action))) {
+                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                request.setAttribute("title", "Inicio");
+                request.setAttribute("msg", "Faça login para acessar esta página!");
+                rd.forward(request, response);
+            }
+            
             RequestDispatcher rd;
             
             switch (action) {

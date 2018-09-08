@@ -18,6 +18,11 @@
         <!-- Adicionando jQuery para ser utilizado nas funções -->
         <script src="assets/jquery/jquery.min.js" type="text/javascript"></script>
         <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script
+            src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+            integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+            crossorigin="anonymous">           
+        </script>
 
         <c:choose>
             <c:when test="${title != null}">

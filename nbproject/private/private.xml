@@ -2,31 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-<<<<<<< Updated upstream
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/dao/UserDAO.java</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/web/escolhaAmigo.jsp</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/web/home.jsp</file>
-            <file>file:/C:/Users/onurb/Documents/GitHub/TADS-TCC2/src/java/br/com/tads/tccpool/servlets/UserServlet.java</file>
-=======
-            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/src/java/br/com/tads/tccpool/dao/ComentarioDAO.java</file>
-            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/web/assets/js/mensagem.js</file>
-            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/src/java/br/com/tads/tccpool/facade/ComentarioFacade.java</file>
-            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/web/mensagem.jsp</file>
-            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/web/home.jsp</file>
-            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/web/comentario.jsp</file>
-            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/src/java/br/com/tads/tccpool/dao/MensagemDAO.java</file>
-            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/src/java/br/com/tads/tccpool/beans/Mensagem.java</file>
-            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/src/java/br/com/tads/tccpool/facade/MensagemFacade.java</file>
+            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/src/java/br/com/tads/tccpool/servlets/RedirecionamentoBusca.java</file>
             <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/src/java/br/com/tads/tccpool/servlets/MensagemServlet.java</file>
             <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/web/anuncio.jsp</file>
-            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/src/java/br/com/tads/tccpool/beans/Comentario.java</file>
-            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/web/assets/css/mensagem.css</file>
->>>>>>> Stashed changes
+            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/src/java/br/com/tads/tccpool/servlets/UserServlet.java</file>
+            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/src/java/br/com/tads/tccpool/servlets/MainPageServlet.java</file>
+            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/src/java/br/com/tads/tccpool/servlets/FileUploadDbServlet.java</file>
+            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/src/java/br/com/tads/tccpool/servlets/AnuncioServlet.java</file>
+            <file>file:/C:/Users/Marcos/Documents/GitHub/TADS-TCC-2018/src/java/br/com/tads/tccpool/servlets/ComentarioServlet.java</file>
         </group>
->>>>>>> 8ad634dfa0e86c8be8d3ce4a77a73d9c4c3f3963
     </open-files>
 </project-private>

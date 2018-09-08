@@ -9,7 +9,6 @@ import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.exception.AcessoBdException;
 import br.com.tads.tccpool.facade.UserFacade;
 import br.com.tads.tccpool.utils.MD5;
-import com.sun.corba.se.impl.naming.cosnaming.InterOperableNamingImpl;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -57,6 +56,15 @@ public class UserServlet extends HttpServlet {
             // implementado apenas para finalizar a sprint da lista de amigos, pois os nomes do user podem ser iguais
             // futuramente a busca será aprimorada
             String action = request.getParameter("action");
+            
+            //Validação de acesso
+            if(session == null && !("ADD".equals(action))) {
+                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                request.setAttribute("title", "Inicio");
+                request.setAttribute("msg", "Faça login para acessar esta página!");
+                rd.forward(request, response);
+            }
+            
             User u = new User();
             switch (action) {
                 case "ADD": {
@@ -69,16 +77,6 @@ public class UserServlet extends HttpServlet {
                     //temporariamente só irei cadastrar usuários comuns
                     u.setTipoUsuario(2);
 
-                    /*if(!(request.getParameter("cel").equalsIgnoreCase("")))
-                            u.setCel(request.getParameter("cel"));
-                        else
-                            u.setCel("");*/
-
- /*if(!(request.getParameter("comple").equalsIgnoreCase("")))
-                            u.setComplemento(request.getParameter("comple"));
-                        else
-                            u.setComplemento(null);
-                     */
                     try {
                         User userLogado = UserFacade.insereUsuario(u);
                         if (userLogado == null) {
@@ -96,63 +94,6 @@ public class UserServlet extends HttpServlet {
                     break;
                 }
                 case "EDIT": {
-                    /*
-                    u.setId(Integer.parseInt(request.getParameter("idUser")));
-                    u.setNome(request.getParameter("nome"));
-                    u.setDescricao(request.getParameter("descricao"));
-                    u.setInteresses(request.getParameter("interesses"));
-
-                    if (UserFacade.editarPerfil(u)) {
-                        response.sendRedirect("home.jsp");
-                    }
-
-                    User userSearch = (User) session.getAttribute("userSearch");
-
-                        u.setId(userSearch.getId());
-                        u.setNome(request.getParameter("nome"));
-                       // u.setCpf(request.getParameter("cpf"));
-                        u.setEmail(request.getParameter("email"));
-
-                        String senha = MD5.criptografar(request.getParameter("senha"));
-                        String confirmaSenha = MD5.criptografar(request.getParameter("confirmaSenha"));
-
-                        if(senha.equals(confirmaSenha)) {
-                            u.setSenha(senha);
-                        }
-                        else {
-                            //Se o campo senha não foi preenchido seta a senha para a mesma q está na session
-                            senha = userSearch.getSenha();
-                            u.setSenha(senha);
-                        }
-
-                       // u.setInstituicao(Integer.parseInt(request.getParameter("inst")));
-                        u.setTel(request.getParameter("tel"));
-                        if(!(request.getParameter("cel").equalsIgnoreCase("")))
-                            u.setCel(request.getParameter("cel"));
-                        else
-                            u.setCel("");
-                        //CdEndereco necessário para editar o registro no banco de dados
-                        u.setCdEndereco(Integer.parseInt(request.getParameter("cdEndereco")));
-                        u.setLogradouro(request.getParameter("rua"));
-                        u.setNumero(Integer.parseInt(request.getParameter("num")));
-                        u.setCep(request.getParameter("cep"));
-                        u.setCidade(request.getParameter("cidade"));
-                        u.setEstado(request.getParameter("estado"));
-                        if(!(request.getParameter("comple").equalsIgnoreCase("")))
-                            u.setComplemento(request.getParameter("comple"));
-                        else
-                            u.setComplemento(null);
-
-                       // Boolean editOK = UserFacade.editarUsuario(u, userSearch.getCpf());
-
-                       /* if(editOK) {
-                            response.sendRedirect("home.jsp");
-                            //return para evitar loops
-                            return;
-                        }
-                        else {
-                            response.sendRedirect("UserServlet?action=SEARCH");
-                        }*/
                     User alterar = new User();
                     String caminhoFoto = new String();
                     try {
@@ -166,41 +107,6 @@ public class UserServlet extends HttpServlet {
                                 if (item.getFieldName().equals("idUser")) {
                                     alterar.setId(Integer.parseInt(item.getString()));
                                 }
-                                /*
-                                if (item.getFieldName().equals("")) {
-                                    alterar.(item.getString());
-                                 }
-                                if (item.getFieldName().equals("")) {
-                                    alterar.(item.getString());
-                                 }
-                                if (item.getFieldName().equals("")) {
-                                    alterar.(Integer.parseInt(item.getString()));
-                                }
-                                if (item.getFieldName().equals("")) {
-                                    alterar.(Integer.parseInt(item.getString()));
-                                }
-                                if (item.getFieldName().equals("")) {
-                                    alterar.(Float.parseFloat(item.getString()));
-                                 }
-                                if (item.getFieldName().equals("")) {
-                                    alterar.(item.getString());
-                                 }
-                                if (item.getFieldName().equals("")) {
-                                    alterar.(Integer.parseInt(item.getString()));
-                                 }
-                                if (item.getFieldName().equals("")) {
-                                    alterar.(item.getString());
-                                 }
-                                if (item.getFieldName().equals("")) {
-                                    alterar.(item.getString());
-                                 }
-                                if (item.getFieldName().equals("")) {
-                                    alterar.(item.getString());
-                                 }
-                                if (item.getFieldName().equals("")) {
-                                    alterar.(item.getString());
-                                 }
-                                 */
                             } else {
 
                                 Random rand = new Random();

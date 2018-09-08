@@ -15,7 +15,7 @@
 <form class="form-horizontal"  action="AnuncioServlet?action=ADDIMV"  method="POST" role="form" enctype="multipart/form-data">
     <h2>Cadastro de Anuncio: Imóvel</h2>
     <div class="form-group">
-        <label for="select" class="col-sm-9 control-label">Qual a categoria do seu Imovel ?:</label>
+        <label for="select" class="col-sm-9 control-label">Qual a categoria do seu Imovel ?</label>
         <div class="col-sm-9">
             <c:set var="lista" value="${listaCatImovel}"/>
             <select class="selectpicker" name="catImovel" id="select">
@@ -47,7 +47,7 @@
     </div>
     <div class="form-group">
         <label for="opcoes" class="col-sm-10 control-label">É autorizado pets na residencia?:</label>
-        <div id="opcoes"
+        <div id="opcoes">
             <label class="radio-inline"><input type="radio" name="optpet" value="1">Sim</label>
             <label class="radio-inline"><input type="radio" name="optpet" value="0">Não</label>
         </div>
@@ -140,7 +140,7 @@
         i = 1;
         function myFunction() {
             var x = document.getElementById(i);
-            x.style.display = 'inline'
+            x.style.display = 'inline';
             i++;
         }
     </script>
@@ -149,15 +149,9 @@
 <!-- Rodapé -->
 </div> <!-- ./row -->
 </div> <!-- ./container -->
-!-- Importando: 1-Bootstrap -->
+<!-- Importando: 1-Bootstrap -->
 <script src="assets/bootstrap/js/bootstrap.bundle.js" type="text/javascript"></script>
-<script src="assets/js/comentario.js" type="text/javascript" charset="UTF-8"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        setCopyright();
-    });
-</script>
 </body>
 </html>
 

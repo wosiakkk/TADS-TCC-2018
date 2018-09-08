@@ -38,6 +38,14 @@ public class RedirecionamentoBusca extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
+            //Validação de acesso
+            if(session == null) {
+                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                request.setAttribute("title", "Inicio");
+                request.setAttribute("msg", "Faça login para acessar esta página!");
+                rd.forward(request, response);
+            }
+            
             String teste = request.getParameter("search");
             int idBusca = UserFacade.buscarIdPorNomeDoUsuario(teste);
             int idSessao =(int) session.getAttribute("idUserSessao");

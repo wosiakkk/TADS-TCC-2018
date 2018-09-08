@@ -20,7 +20,7 @@
         
     </div>
     <form id="mensagemAjax">
-        <input name="action" value="ADD" type="hidden">
+        <input name="action" value="ADD_MENSAGEM" type="hidden">
         <input name="ID_ORIGEM" value="<c:out value="${user.getId()}"/>" type="hidden">
         <input name="ID_DESTINO" value="9" type="hidden">
         <div class="form-group">

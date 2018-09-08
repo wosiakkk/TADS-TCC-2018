@@ -70,8 +70,8 @@ public class LoginServlet extends HttpServlet {
                         rd.forward(request, response);
                     }else{
                         // redireciona para login passando mensagem
-                        String param = URLEncoder.encode("Login ou Senha inválidos.", "UTF-8");
-                        response.sendRedirect("index.jsp?msg=" + param);
+                        String param = URLEncoder.encode("Login ou Senha inv&aacutelidos.", "UTF-8");
+                        response.sendRedirect("login.jsp?falhaLogin=1");
                         return;
                     }
                 }catch(AcessoBdException e){
