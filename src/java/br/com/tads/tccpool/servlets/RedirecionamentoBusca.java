@@ -48,15 +48,23 @@ public class RedirecionamentoBusca extends HttpServlet {
             
             String teste = request.getParameter("search");
             int idBusca = UserFacade.buscarIdPorNomeDoUsuario(teste);
-            int idSessao =(int) session.getAttribute("idUserSessao");
-            User perfilBusca = new User();
-            perfilBusca = UserFacade.geraPerfilUser(idBusca);
-            int amizade = UserFacade.checandoAmizade(idSessao, idBusca);
-            session.setAttribute("perfil", perfilBusca);
-             session.setAttribute("amizade", amizade);
+            
+            if(idBusca != -1) {
+                int idSessao =(int) session.getAttribute("idUserSessao");
+                User perfilBusca = new User();
+                perfilBusca = UserFacade.geraPerfilUser(idBusca);
+                int amizade = UserFacade.checandoAmizade(idSessao, idBusca);
+                session.setAttribute("perfil", perfilBusca);
+                session.setAttribute("amizade", amizade);
 
-            RequestDispatcher rd1 = request.getRequestDispatcher("perfil.jsp");
-            rd1.forward(request, response);
+                RequestDispatcher rd1 = request.getRequestDispatcher("perfil.jsp");
+                rd1.forward(request, response);
+            }
+            else {
+                RequestDispatcher rd1 = request.getRequestDispatcher("home.jsp");
+                request.setAttribute("msg", "Nenhum usuário para exibir.");
+                rd1.forward(request, response);
+            }
 
         }
     }

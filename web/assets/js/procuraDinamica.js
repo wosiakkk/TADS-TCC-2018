@@ -1,5 +1,7 @@
 $(function () {
     $("#search").autocomplete({
+        appendTo: "#anchor",
+        autoFocus: true,
         source: function (request, response) {
             $.ajax({
                 url: "SearchController",
@@ -24,8 +26,13 @@ $(function () {
                         newArray[i] = newObject;
                         i++;
                     });
-
-                    response(newArray);
+                    if(values.length > 0) {
+                        response(newArray);
+                    }
+                    else {
+                        response(new Array("Nenhum usuário encontrado."));
+                    }
+                        
                 }
             });
         },

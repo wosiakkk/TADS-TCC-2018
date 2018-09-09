@@ -36,7 +36,7 @@
                             
 
                             <c:if test="${amizade == 0}">
-                                <a type="btn" href="#"> Enviar mensagens</a> <br><hr>
+                                <a type="btn" href="mensagem.jsp?idDestino=${perfil.id}"> Enviar mensagens</a> <br><hr>
                                 <a type="btn" href="UserServlet?action=AMIZADE&idSolicitante=${user.id}&idSolicitado=${perfil.id}&acao=SOLICITAR"> Enviar Pedido de Amizade</a>
                             </c:if>
 

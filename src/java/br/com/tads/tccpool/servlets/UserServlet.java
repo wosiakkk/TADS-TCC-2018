@@ -12,6 +12,7 @@ import br.com.tads.tccpool.utils.MD5;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,18 @@ public class UserServlet extends HttpServlet {
 
                     u.setEmail(request.getParameter("email"));
                     u.setSenha(MD5.criptografar(request.getParameter("senha")));
+                    
+                    try{
+                        if(u.getNome().isEmpty() || u.getEmail().isEmpty() || u.getSenha().isEmpty()) {
+                            String param = URLEncoder.encode("Todos os campos de cadastro são obrigatórios. Por favor, tente novamente.");
+                            response.sendRedirect("erro.jsp?title=Erro&msg=" + param);
+                        }
+                    }
+                    catch(NullPointerException ex) {
+                        Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        String param = URLEncoder.encode("Todos os campos de cadastro são obrigatórios. Por favor, tente novamente.");
+                        response.sendRedirect("erro.jsp?title=Erro&msg=" + param);
+                    }
 
                     //temporariamente só irei cadastrar usuários comuns
                     u.setTipoUsuario(2);
@@ -80,7 +93,8 @@ public class UserServlet extends HttpServlet {
                     try {
                         User userLogado = UserFacade.insereUsuario(u);
                         if (userLogado == null) {
-                            response.sendRedirect("erro.jsp");
+                            String param = URLEncoder.encode("Falha ao cadastrar usuário.");
+                            response.sendRedirect("erro.jsp?title=Erro&msg=" + param);
                         } else {
                             response.sendRedirect("login.jsp");
                         }

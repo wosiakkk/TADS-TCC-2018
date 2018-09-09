@@ -155,29 +155,32 @@
                 <div class="ui-widget">
                     <form class="form"  action="RedirecionamentoBusca"  method="POST" role="form">
                         <input type="text" id="search" name="search" class="search form-control" placeholder="Procure aqui"/>
+                        <div id="anchor" class="col-md-12"></div>
                         <button id="btnSearch" name="btnSearch" type="submit" class="btn form-control">Ver Perfil</button>
                     </form>
-                </div>   
+                </div>
+            </div>
         </div>
+        <c:choose>
+            <c:when test="${(!empty(msg))}">
+                <div class="alert alert-warning col-lg-12 col-sm-12 col-md-12 col-xs-12" role="alert">
+                    <p class="text-center"><c:out value="${msg}"/></p>
+                </div>
+            </c:when>
+            <c:when test="${(!empty(param.msg))}">
+                <div class="alert alert-warning col-lg-12 col-sm-12 col-md-12 col-xs-12" role="alert">
+                    <h4 class="text-center"><c:out value="${param.msg}"/></h4>
+                </div>
+            </c:when>
+        </c:choose>
     </div>
 </div>
 
             </div>
 <!-- Rodapé -->
-<%-- 
-    Document   : footer
-    Created on : 03/04/2018, 21:03:46
-    Author     : Marcos
---%>
 
 </div> <!-- ./row -->
 </div> <!-- ./container -->
-
-<!--footer class="py-5 bg-dark">
-    <div class="container">
-        <p id="copyright" class="m-0 text-center text-white">Copyright &COPY; [[ano]] Mercad&atilde;o do Aluno - SEPT - UFPR</p>
-    </div>
-</footer-->
 
 <!-- Importando: 1-Bootstrap -->
 <script src="assets/bootstrap/js/bootstrap.bundle.js" type="text/javascript"></script>

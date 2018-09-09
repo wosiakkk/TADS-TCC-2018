@@ -4,13 +4,8 @@ Created on : 25/03/2018, 18:55:52
 Author     : onurb
 --%>
 
-<!-- CabeÃ§alho -->
+<!-- Cabeçalho -->
 <%@include file="head.jsp" %>
-<!--c:if test="${(empty(user))}"-->
-    <!--c:redirect url="index.jsp"-->
-        <!--c:param name="msg" value="Faça login para acessar esta página!"/-->
-    <!--/c:redirect-->
-<!--/c:if-->
 
 <c:if test="${imovelAlterar != null}"> 
     <div class="row">
@@ -584,7 +579,7 @@ Author     : onurb
 
 
 
-<!-- RodapÃ© -->
+<!-- Rodapé -->
 <%@include file="comentario.jsp" %>
 </div> <!-- ./row -->
 </div> <!-- ./container -->
