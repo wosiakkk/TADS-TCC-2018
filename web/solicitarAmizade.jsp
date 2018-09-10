@@ -20,11 +20,6 @@
        </div>
     </div>    
 </div>
-    
-<script type="text/javascript">
-    $(document).ready(function () {
-        setCopyright();
-    });
-</script>
+
 </body>
 </html>
