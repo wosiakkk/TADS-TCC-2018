@@ -4,8 +4,8 @@ import br.com.tads.tccpool.beans.Comentario;
 import br.com.tads.tccpool.dao.ComentarioDAO;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -77,22 +77,23 @@ public class ComentarioFacade {
     }
     
     public static String HTMLComentario(Comentario comentario) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         return   "<div class=\"row p-1 pt-3 pr-4\">\n"
                + "    <div class=\"col-lg-2 col-3 user-img text-center\">\n"
                + "        <img src=\"img/profile.jpg\" class=\"main-cmt-img\">\n"
                + "    </div>\n"
                + "    <div class=\"col-lg-10 col-9 user-comment bg-light rounded pb-1\">\n"
                + "        <div class=\"row\">\n"
-               + "            <div class=\"col-lg-12 border-bottom pr-0\">\n"
+               + "            <div class=\"col-lg-8 col-sm-12 col-6 border-bottom pr-0\">\n"
                + "                <i><p class=\"w-100 p-2 m-0\">" + comentario.getNmUser() + "</p></i>\n"
+               + "            </div>\n"
+               + "            <div class=\"col-lg-4 col-sm-12 col-6 border-bottom\">\n"
+               + "                <p class=\"w-100 p-2 m-0\"><span class=\"float-right\"><i class=\"fa fa-clock-o mr-1\" aria-hidden=\"true\"></i>" + format.format(comentario.getData().getTime()) + "</span></p>\n"
                + "            </div>\n"
                + "        </div>\n"
                + "        <div class=\"row\">\n"
-               + "            <div class=\"col-lg-8 col-6 border-bottom pr-0\">\n"
+               + "            <div class=\"col-lg-12 border-bottom pr-0\">\n"
                + "                <p class=\"w-100 p-2 m-0\">" + comentario.getConteudo() + "</p>\n"
-               + "            </div>\n"
-               + "            <div class=\"col-lg-4 col-6 border-bottom\">\n"
-               + "                <p class=\"w-100 p-2 m-0\"><span class=\"float-right\"><i class=\"fa fa-clock-o mr-1\" aria-hidden=\"true\"></i>Sem data por enquanto</span></p>\n"
                + "            </div>\n"
                + "        </div>\n"
                + "        <div class=\"user-comment-desc p-1 pl-2\">\n"
@@ -111,22 +112,23 @@ public class ComentarioFacade {
     }
     
     public static String HTMLReply(Comentario comentario) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         return   "<div class=\"row p-1 pt-3 pr-4 offset-md-1\">\n"
                + "    <div class=\"col-lg-2 col-3 float-right user-img text-center\">\n"
                + "        <img src=\"img/profile.jpg\" class=\"main-cmt-img\">\n"
                + "    </div>\n"
                + "    <div class=\"col-lg-10 col-9 user-comment bg-light rounded pb-1\">\n"
                + "        <div class=\"row\">\n"
-               + "            <div class=\"col-lg-12 border-bottom pr-0\">\n"
+               + "            <div class=\"col-lg-8 col-sm-12 col-6 border-bottom pr-0\">\n"
                + "                <i><p class=\"w-100 p-2 m-0\">" + comentario.getNmUser() + "</p></i>\n"
+               + "            </div>\n"
+               + "            <div class=\"col-lg-4 col-sm-12 col-6 border-bottom\">\n"
+               + "                <p class=\"w-100 p-2 m-0\"><span class=\"float-right\"><i class=\"fa fa-clock-o mr-1\" aria-hidden=\"true\"></i>" + format.format(comentario.getData().getTime()) + "</span></p>\n"
                + "            </div>\n"
                + "        </div>\n"
                + "        <div class=\"row\">\n"
-               + "            <div class=\"col-lg-8 col-6 border-bottom pr-0\">\n"
+               + "            <div class=\"col-lg-12 border-bottom pr-0\">\n"
                + "                <p class=\"w-100 p-2 m-0\">Mensagem: " + comentario.getConteudo() + "</p>\n"
-               + "            </div>\n"
-               + "            <div class=\"col-lg-4 col-6 border-bottom\">\n"
-               + "                <p class=\"w-100 p-2 m-0\"><span class=\"float-right\"><i class=\"fa fa-clock-o mr-1\" aria-hidden=\"true\"></i>Sem data por enquanto</span></p>\n"
                + "            </div>\n"
                + "        </div>\n"
                + "        <div class=\"user-comment-desc p-1 pl-2\">\n"

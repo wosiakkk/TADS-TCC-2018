@@ -1,59 +1,111 @@
 package br.com.tads.tccpool.facade;
 
-import br.com.tads.tccpool.beans.Mensagem;
 import br.com.tads.tccpool.dao.MensagemDAO;
+import br.com.tads.tccpool.beans.Mensagem;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 /**
- *
+ * Mensagens dos usuários
  * @author Marcos
  */
 public class MensagemFacade {
-    public static String insereComentario(Mensagem mensagem) {
-        MensagemDAO mensagemDao = new MensagemDAO();
+    
+    public static String inserir(Mensagem mensagem) {
+        MensagemDAO mDAO = new MensagemDAO();
+        int insertOK = 0;
         try {
-            mensagemDao.inserir(mensagem);
-            return "Mensagem inserida com sucesso!";
+            insertOK = mDAO.inserir(mensagem);
         } catch (SQLException ex) {
+            insertOK = 0;
             Logger.getLogger(MensagemFacade.class.getName()).log(Level.SEVERE, null, ex);
-            return "Falha ao inserir mensagem!";
+        }
+        
+        if(insertOK > 0) {
+            return "Mensagem inserida com sucesso";
+        }
+        else {
+            return "Falha ao inserir mensagem. Verifique os logs do servidor";
         }
     }
     
-    /*public static ArrayList<Mensagem> listarComentarios() {
-        ArrayList<Mensagem> mensagemList = new ArrayList<Mensagem>();
-        String mensagemHTML = "";
-        Calendar data = Calendar.getInstance();
-        int horas = data.get(Calendar.HOUR_OF_DAY);
-        int minutos = data.get(Calendar.MINUTE);
+    public static String listar(int idOrigem, int idDestino) {
+        MensagemDAO mDAO = new MensagemDAO();
+        ArrayList<Mensagem> mensagens;
+        String mensagensFormatadas = "";
         try {
-            mensagens += "<div class=\"row p-1 pt-3 pr-4\">\n"
-                        + "    <div class=\"col-lg-2 col-3 user-img text-center\">\n"
-                        + "        <img src=\"img/profile.jpg\" class=\"main-cmt-img\">\n"
-                        + "    </div>\n"
-                        + "    <div class=\"col-lg-10 col-9 user-comment bg-light rounded pb-1\">\n"
-                        + "        <div class=\"row\">\n"
-                        + "            <div class=\"col-lg-8 col-6 border-bottom pr-0\">\n"
-                        + "                <p class=\"w-100 p-2 m-0\">Mensagem: " + msg + ", Usuario: " + idUsuario + ", Anúncio: " + idAnuncio + "</p>\n"
-                        + "            </div>\n"
-                        + "            <div class=\"col-lg-4 col-6 border-bottom\">\n"
-                        + "                <p class=\"w-100 p-2 m-0\"><span class=\"float-right\"><i class=\"fa fa-clock-o mr-1\" aria-hidden=\"true\"></i>" + String.valueOf(horas) + ":" + String.valueOf(minutos) + "</span></p>\n"
-                        + "            </div>\n"
-                        + "        </div>\n"
-                        + "        <div class=\"user-comment-desc p-1 pl-2\">\n"
-                        + "            <p class=\"m-0 mr-2\"><span><i class=\"fa fa-thumbs-up mr-1\" aria-hidden=\"true\"></i></span>490</p>\n"
-                        + "            <p class=\"m-0 mr-2\"><span><i class=\"fa fa-thumbs-down mr-1\" aria-hidden=\"true\"></i></span>450</p>\n"
-                        + "        </div>\n"
-                        + "    </div>\n"
-                        + "</div>";
-        } catch (Exception e) {
-            mensagens = "Falha ao buscar mensagens!";
+            mensagens = mDAO.listar(idOrigem, idDestino);
+            mensagensFormatadas += MensagemFacade.HTMLMensagem(mensagens);
+        } catch (SQLException ex) {
+            mensagensFormatadas = "Falha ao buscar mensagens. Verifique os logs do servidor.";
+            Logger.getLogger(MensagemFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return mensagemList;
-    }*/
+        return mensagensFormatadas;
+    }
+    
+    public static String HTMLMensagem(ArrayList<Mensagem> mensagens) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        int primeiroID = 0;
+        String HTML = "";
+        
+        /*O Select ordena da mensagem mais antiga para mais atual
+         *Então pega o indicie 0 para ter o usuario que envio a primeira mensagem 
+        **/
+        primeiroID = mensagens.get(0).getIdOrigem();
+        for (Mensagem mensagem : mensagens) {
+            if(mensagem.getIdOrigem() == primeiroID) {
+                HTML += "<div class=\"row col-md-12 col-lg-12 col-sm-12 p-1 pt-3 pr-4\">\n"
+                      + "    <div class=\"col-lg-2 col-2 user-img text-center\">\n"
+                      + "        <img src=\"img/profile.jpg\" class=\"main-cmt-img\">\n"
+                      + "    </div>\n"
+                      + "    <div class=\"col-lg-10 col-8 bg-light rounded pb-1\">\n"
+                      + "        <div class=\"row\">\n"
+                      + "            <div class=\"col-lg-8 col-sm-12 col-6 border-bottom pr-0\">\n"
+                      + "                <i><p class=\"w-100 p-2 m-0\">" + mensagem.getNmOrigem() + "</p></i>\n"
+                      + "            </div>\n"
+                      + "            <div class=\"col-lg-4 col-sm-12 col-6 border-bottom\">\n"
+                      + "                <p class=\"w-100 p-2 m-0\"><span class=\"float-right\"><i class=\"fa fa-clock-o mr-1\" aria-hidden=\"true\"></i>" + format.format(mensagem.getData().getTime()) + "</span></p>\n"
+                      + "            </div>\n"
+                      + "        </div>\n"
+                      + "        <div class=\"row\">\n"
+                      + "            <div class=\"col-lg-12 border-bottom pr-0\">\n"
+                      + "                <p class=\"w-100 p-2 m-0\">" + mensagem.getConteudo() + "</p>\n"
+                      + "            </div>\n"
+                      + "        </div>\n"
+                      + "    </div>\n"
+                      + "</div>";
+            }
+            else {
+                HTML += "<div class=\"row col-md-12 col-lg-12 col-sm-12 p-1 pt-3 pr-4\">\n"
+                      + "    <div class=\"col-lg-10 col-8 bg-light rounded pb-1\">\n"
+                      + "        <div class=\"row\">\n"
+                      + "            <div class=\"col-lg-8 col-sm-12 col-6 border-bottom pr-0\">\n"
+                      + "                <i><p class=\"w-100 p-2 m-0\">" + mensagem.getNmOrigem()+ "</p></i>\n"
+                      + "            </div>\n"
+                      + "            <div class=\"col-lg-4 col-sm-12 col-6 border-bottom\">\n"
+                      + "                <p class=\"w-100 p-2 m-0\"><span class=\"float-right\"><i class=\"fa fa-clock-o mr-1\" aria-hidden=\"true\"></i>" + format.format(mensagem.getData().getTime()) + "</span></p>\n"
+                      + "            </div>\n"
+                      + "        </div>\n"
+                      + "        <div class=\"row\">\n"
+                      + "            <div class=\"col-lg-12 border-bottom pr-0\">\n"
+                      + "                <p class=\"w-100 p-2 m-0\">" + mensagem.getConteudo() + "</p>\n"
+                      + "            </div>\n"
+                      + "        </div>\n"
+                      + "    </div>\n"
+                      + "    <div class=\"col-lg-2 col-2 user-img text-center\">\n"
+                      + "        <img src=\"img/profile.jpg\" class=\"main-cmt-img\">\n"
+                      + "    </div>\n"
+                      + "</div>";
+            }
+                  
+        }
+        
+        return HTML;
+    }
+    
 }
