@@ -121,6 +121,42 @@ public class UserServlet extends HttpServlet {
                                 if (item.getFieldName().equals("idUser")) {
                                     alterar.setId(Integer.parseInt(item.getString()));
                                 }
+                                if (item.getFieldName().equals("codEndereco")) {
+                                    alterar.setCdEndereco(Integer.parseInt(item.getString()));
+                                }
+                                if (item.getFieldName().equals("nome")) {
+                                    alterar.setNome(item.getString());
+                                }
+                                if (item.getFieldName().equals("telefone")) {
+                                    alterar.setTel(item.getString());
+                                }
+                                if (item.getFieldName().equals("celular")) {
+                                    alterar.setCel(item.getString());
+                                }
+                                if (item.getFieldName().equals("logradouro")) {
+                                    alterar.setLogradouro(item.getString());
+                                }
+                                if (item.getFieldName().equals("numero")) {
+                                    alterar.setNumero(Integer.parseInt(item.getString()));
+                                }
+                                if (item.getFieldName().equals("complemento")) {
+                                    alterar.setComplemento(item.getString());
+                                }
+                                if (item.getFieldName().equals("cep")) {
+                                    alterar.setCEP(item.getString());
+                                }
+                                if (item.getFieldName().equals("cidade")) {
+                                    alterar.setCidade(item.getString());
+                                }
+                                if (item.getFieldName().equals("estado")) {
+                                    alterar.setEstado(item.getString());
+                                }
+                                if (item.getFieldName().equals("descricao")) {
+                                    alterar.setDescricao(item.getString());
+                                }
+                                if (item.getFieldName().equals("interesses")) {
+                                    alterar.setInteresses(item.getString());
+                                }
                             } else {
 
                                 Random rand = new Random();

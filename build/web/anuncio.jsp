@@ -11,7 +11,7 @@ Author     : onurb
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <form class="form"  action="AnuncioServlet"  method="POST" role="form">
+                <form class="form"  action="AnuncioServlet"  method="POST" role="form" >
                     <input type="hidden" name="action"  value="ALTERARANUNCIOID" >
                     <input type="hidden" name="idAnuncioImovel"  value="${imovelAlterar.id}" >
                     <input type="hidden" name="tipoAnuncio"  value="imovel" >
@@ -42,9 +42,9 @@ Author     : onurb
                                         <c:set var="counter" value="${counter+1}" />
                                     </c:forEach>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            
+                        
+                    
                     </br>
                     </br>
                     <!-- Left and right controls -->
@@ -57,6 +57,8 @@ Author     : onurb
                         <span class="sr-only">Next</span>
                     </a>
             </div>
+                        </div>
+                        </div>
             <div class="form-group">
                 <label for=tipo class="col-sm-3 control-label">Tipo Imovel:</label>
                 <div class="col-sm-9">
@@ -150,15 +152,17 @@ Author     : onurb
             <div class="form-group col-md-12">
                 <input type="submit" value="Alterar"  class="form-control btn-primary" />
             </div>
-            </form>   <!-- /form -->
+            </form>
+            </div><!-- /form -->
+            </div>
             <div class="form-group col-md-12">
                 <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
                     <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
                     <input type="submit" value="Cancelar"  class="form-control btn-primary" />
                 </form>
             </div>
-        </div>
-    </div>
+        
+    
     <div class="col-md-12"></div>
 </c:if>
 <c:if test="${imovelExibir != null}">

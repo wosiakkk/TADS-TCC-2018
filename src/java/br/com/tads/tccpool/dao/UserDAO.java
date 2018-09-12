@@ -64,10 +64,8 @@ public class UserDAO {
             + " tb_usuario.DS_INTERESSES FROM tcc1.tb_usuario "
             + "WHERE tb_usuario.NR_SEQ = ?";
 
-    private static final String QUERY_EDIT_USR = "UPDATE tb_usuario SET\n"
-            + "DS_FOTO = ?"
-            + "WHERE\n"
-            + "NR_SEQ = ?";
+    private static final String QUERY_EDIT_USR = "UPDATE tb_usuario set NM_NOME = ?, DS_FOTO = ?, NR_TELEFONE = ?, NR_CELULAR = ?, DS_DESCRICAO_USER = ?, DS_INTERESSES = ? WHERE NR_SEQ = ?";
+           
 
     private static final String QUERY_EDIT_END = "UPDATE tb_endereco SET\n"
             + "NM_RUA = ?,"
@@ -371,7 +369,7 @@ public class UserDAO {
     public void editarUser(User u) {
 
         try {
-            /*stmt = con.prepareStatement(QUERY_EDIT_END);
+            stmt = con.prepareStatement(QUERY_EDIT_END);
             stmt.setString(1, u.getLogradouro());
             stmt.setString(2, u.getEstado());
             stmt.setInt(3, u.getNumero());
@@ -381,21 +379,18 @@ public class UserDAO {
             stmt.setInt(7, u.getCdEndereco());
             stmt.executeUpdate();
             
-            int editEndOK = stmt.executeUpdate();*/
+           
 
             stmt = con.prepareStatement(QUERY_EDIT_USR);
-            // stmt.setString(1, u.getCpf());
-            //stmt.setString(2, u.getNome());
-            //stmt.setString(3, u.getEmail());
-            //stmt.setString(4, u.getTel());
-            //stmt.setString(5, u.getCel());
-            //  stmt.setInt(6, u.getInstituicao());
-            //stmt.setString(7, u.getSenha());
-            //stmt.setInt(8, u.getId());
-            //stmt.setString(9, CPFUser);
-            stmt.setString(1, u.getFoto());
-            stmt.setInt(2, u.getId());
-            int editUsrOK = stmt.executeUpdate();
+            stmt.setString(1, u.getNome());
+            stmt.setString(2, u.getFoto());
+            stmt.setString(3, u.getTel());
+            stmt.setString(4, u.getCel());
+            stmt.setString(5, u.getDescricao());
+            stmt.setString(6, u.getInteresses());
+            stmt.setInt(7, u.getId());
+            stmt.executeUpdate();
+            
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
