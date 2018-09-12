@@ -27,16 +27,67 @@
         </div>
 
         <!-- edit form column -->
-        <div class="col-md-9 personal-info">
+        
 
             <h3>Informações do perfil</h3>
 
             
             <input id="idUser" type="hidden" name="idUser" value="${userSearch.id}"/>
+            <input id="codEndereco" type="hidden" name="codEndereco" value="${userSearch.cdEndereco}"/>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Nome Completo:</label>
                     <div class="col-lg-8">
                         <input class="form-control" name="nome" id="nome" type="text" value="<c:out value="${user.getNome()}"/>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Telefone Fixo:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="telefone" id="telefone" type="text" value="<c:out value="${user.tel}"/>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Celular:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="celular" id="celular" type="text" value="<c:out value="${user.cel}"/>">
+                    </div>
+                </div>
+                    
+                    <h4>Endereço:</h4><br>
+                    <div class="form-group">
+                    <label class="col-lg-3 control-label">Logradouro:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="logradouro" id="logradouro" type="text" value="<c:out value="${user.logradouro}"/>">
+                    </div>
+                </div>
+                    <div class="form-group">
+                    <label class="col-lg-3 control-label">Número:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="numero" id="numero" type="number" value="<c:out value="${user.numero}"/>">
+                    </div>
+                </div>
+                    <div class="form-group">
+                    <label class="col-lg-3 control-label">Complemento:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="complemento" id="complemento" type="text" value="<c:out value="${user.complemento}"/>">
+                    </div>
+                </div>
+                    <div class="form-group">
+                    <label class="col-lg-3 control-label">Cep:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="cep" id="cep" type="text" value="<c:out value="${user.CEP}"/>">
+                    </div>
+                </div>
+                    <div class="form-group">
+                    <label class="col-lg-3 control-label">Cidade:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="cidade" id="cidade" type="text" value="<c:out value="${user.cidade}"/>">
+                    </div>
+                </div>
+                    <div class="form-group">
+                    <label class="col-lg-3 control-label">Estado:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="estado" id="estado" type="text" value="<c:out value="${user.estado}"/>">
                     </div>
                 </div>
                 <div class="form-group">
@@ -89,6 +140,8 @@
         setCopyright();
     });
 </script>
+</div>
+</div>
 </body>
 </html>
 

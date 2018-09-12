@@ -22,4 +22,7 @@
     </div>
 </form>
 <!-- Rodapé -->
-<%@include file="footer.jsp" %>
+</div>
+</div>
+</body>
+</html>

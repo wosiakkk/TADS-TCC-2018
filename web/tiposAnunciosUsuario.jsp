@@ -17,4 +17,7 @@
     <a class="list-group-item" href="#">Material</a>
 </div>
 <!-- Rodapé -->
-<%@include file="footer.jsp" %>
+</div>
+</div>
+</body>
+</html>
