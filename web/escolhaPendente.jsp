@@ -6,12 +6,38 @@
         <!--c:set var="msg" value="Fa&ccedila login para acessar esta p&aacutegina!" scope="request"/-->
     </c:redirect>
 </c:if>
-<div class="row justify-content-center">
-    <div class="list-group">
-        <a class="list-group-item" href="AnuncioServlet?action=BUSCARIMOVEISPEND">Im&oacute;vel</a>
-        <a class="list-group-item" href="AnuncioServlet?action=BUSCARMOVEL">M&oacute;vel</a>
-        <a class="list-group-item" href="AnuncioServlet?action=BUSCARMATERIAL">Material</a>
-    </div>    
+        
+        <div class="col-sm-4" style="padding-top: 5%">
+    <h4>Escolha uma categoria:</h4>
+    <hr>
 </div>
-<!-- Rodapé -->
+
+<div class="col-sm-8">
+    <div class="container">
+        <div class="row" style="padding-top:50px">
+            <div class="col-sm-4 text-center">
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <a  href="AnuncioServlet?action=BUSCARIMOVEISPEND">
+                            <img class="d-block img-fluid" src="img\icones\house.png">Imóvel
+                        </a>
+                    </div>
+                    <div class="list-group-item">
+                        <a  href="AnuncioServlet?action=BUSCARMOVEL">
+                            <img class="d-block img-fluid" src="img\icones\chair.png">Móvel    
+                        </a>
+                    </div>
+                    <div class="list-group-item">
+                        <a  href="AnuncioServlet?action=BUSCARMATERIAL">
+                            <img class="d-block img-fluid" src="img\icones\books.png">Material
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+        
+
 <%@include file="footer.jsp" %>

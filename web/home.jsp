@@ -20,11 +20,8 @@
             <h4><strong style="color: gray"><c:out value="${user.getNome()}"/></strong></h4>
         </div>
         <div class="list-group">
-                <c:if test="${user.getTipoUsuario()== 1}">
-                    <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anuncios</a>
-                    <a class="list-group-item" href="#">Opção2</a>
-                    <a class="list-group-item" href="#">Opção3</a>
-                    <a class="list-group-item" href="#">Opção4</a>
+                <c:if test="${user.getTipoUsuario()== 1}">                  
+                    <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anuncios</a>                  
                 </c:if>
                 <c:if test="${user.getTipoUsuario()== 2}">
                     <a class="list-group-item" href="UserServlet?action=PERFIL&idUser=${user.getId()}">Visualizar Meu Perfil</a>
@@ -46,102 +43,113 @@
 </div>
 <div class="col-6 menu-fixed-center">
     <div class="panel panel-body">
-        <!-- Timeline -->
-        <!--===================================================-->
-        <div class="timeline">
+        <c:if test="${user.getTipoUsuario()== 1}">           
+            <div class="jumbotron">
+                <hr>
+                <div class="col-6">
+                    <img src="img\logos\logo400.jpg">
+                    </div>
+                <hr>
+            </div>
+        </c:if>
+        <c:if test="${user.getTipoUsuario()== 2}">
+            <!-- Timeline -->
+            <!--===================================================-->
+            <div class="timeline">
 
-            <!-- Timeline header -->
-            <div class="timeline-header">
-                <div class="timeline-header-title bg-dark">Now</div>
-            </div>
+                <!-- Timeline header -->
+                <div class="timeline-header">
+                    <div class="timeline-header-title bg-dark">Now</div>
+                </div>
 
-            <div class="timeline-entry">
-                <div class="timeline-stat">
-                    <div class="timeline-icon"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Profile picture">
+                <div class="timeline-entry">
+                    <div class="timeline-stat">
+                        <div class="timeline-icon"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Profile picture">
+                        </div>
+                        <div class="timeline-time">30 Min ago</div>
                     </div>
-                    <div class="timeline-time">30 Min ago</div>
-                </div>
-                <div class="timeline-label">
-                    <p class="mar-no pad-btm"><a href="#" class="btn-link text-semibold">Maria J.</a> shared an image</p>
-                    <div class="img-holder">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Image">
+                    <div class="timeline-label">
+                        <p class="mar-no pad-btm"><a href="#" class="btn-link text-semibold">Maria J.</a> shared an image</p>
+                        <div class="img-holder">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Image">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="timeline-entry">
-                <div class="timeline-stat">
-                    <div class="timeline-icon bg-danger"><i class="fa fa-building fa-lg"></i>
+                <div class="timeline-entry">
+                    <div class="timeline-stat">
+                        <div class="timeline-icon bg-danger"><i class="fa fa-building fa-lg"></i>
+                        </div>
+                        <div class="timeline-time">2 Hours ago</div>
                     </div>
-                    <div class="timeline-time">2 Hours ago</div>
-                </div>
-                <div class="timeline-label">
-                    <h4 class="mar-no pad-btm"><a href="#" class="text-danger">Job Meeting</a></h4>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
-                </div>
-            </div>
-            <div class="timeline-entry">
-                <div class="timeline-stat">
-                    <div class="timeline-icon"><img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Profile picture">
+                    <div class="timeline-label">
+                        <h4 class="mar-no pad-btm"><a href="#" class="text-danger">Job Meeting</a></h4>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
                     </div>
-                    <div class="timeline-time">3 Hours ago</div>
                 </div>
-                <div class="timeline-label">
-                    <p class="mar-no pad-btm"><a href="#" class="btn-link text-semibold">Lisa D.</a> commented on <a href="#">The Article</a>
-                    </p>
-                    <blockquote class="bq-sm bq-open">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</blockquote>
-                </div>
-            </div>
-            <div class="timeline-entry">
-                <div class="timeline-stat">
-                    <div class="timeline-icon bg-purple"><i class="fa fa-check fa-lg"></i>
+                <div class="timeline-entry">
+                    <div class="timeline-stat">
+                        <div class="timeline-icon"><img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Profile picture">
+                        </div>
+                        <div class="timeline-time">3 Hours ago</div>
                     </div>
-                    <div class="timeline-time">5 Hours ago</div>
+                    <div class="timeline-label">
+                        <p class="mar-no pad-btm"><a href="#" class="btn-link text-semibold">Lisa D.</a> commented on <a href="#">The Article</a>
+                        </p>
+                        <blockquote class="bq-sm bq-open">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</blockquote>
+                    </div>
                 </div>
-                <div class="timeline-label">
-                    <img class="img-xs img-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Profile picture">
-                    <a href="#" class="btn-link text-semibold">Bobby Marz</a> followed you.
+                <div class="timeline-entry">
+                    <div class="timeline-stat">
+                        <div class="timeline-icon bg-purple"><i class="fa fa-check fa-lg"></i>
+                        </div>
+                        <div class="timeline-time">5 Hours ago</div>
+                    </div>
+                    <div class="timeline-label">
+                        <img class="img-xs img-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Profile picture">
+                        <a href="#" class="btn-link text-semibold">Bobby Marz</a> followed you.
+                    </div>
                 </div>
-            </div>
 
-            <!-- Timeline header -->
-            <div class="timeline-header">
-                <div class="timeline-header-title bg-dark">Yesterday</div>
-            </div>
+                <!-- Timeline header -->
+                <div class="timeline-header">
+                    <div class="timeline-header-title bg-dark">Yesterday</div>
+                </div>
 
-            <div class="timeline-entry">
-                <div class="timeline-stat">
-                    <div class="timeline-icon bg-info"><i class="fa fa-envelope fa-lg"></i>
+                <div class="timeline-entry">
+                    <div class="timeline-stat">
+                        <div class="timeline-icon bg-info"><i class="fa fa-envelope fa-lg"></i>
+                        </div>
+                        <div class="timeline-time">15:45</div>
                     </div>
-                    <div class="timeline-time">15:45</div>
-                </div>
-                <div class="timeline-label">
-                    <h4 class="text-info mar-no pad-btm">Lorem ipsum dolor sit amet</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
-                </div>
-            </div>
-            <div class="timeline-entry">
-                <div class="timeline-stat">
-                    <div class="timeline-icon bg-success"><i class="fa fa-thumbs-up fa-lg"></i>
+                    <div class="timeline-label">
+                        <h4 class="text-info mar-no pad-btm">Lorem ipsum dolor sit amet</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
                     </div>
-                    <div class="timeline-time">13:27</div>
                 </div>
-                <div class="timeline-label">
-                    <img class="img-xs img-circle" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Profile picture">
-                    <a href="#" class="btn-link text-semibold">Michael Both</a> Like <a href="#">The Article</a>
+                <div class="timeline-entry">
+                    <div class="timeline-stat">
+                        <div class="timeline-icon bg-success"><i class="fa fa-thumbs-up fa-lg"></i>
+                        </div>
+                        <div class="timeline-time">13:27</div>
+                    </div>
+                    <div class="timeline-label">
+                        <img class="img-xs img-circle" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Profile picture">
+                        <a href="#" class="btn-link text-semibold">Michael Both</a> Like <a href="#">The Article</a>
+                    </div>
+                </div>
+                <div class="timeline-entry">
+                    <div class="timeline-stat">
+                        <div class="timeline-icon"></div>
+                        <div class="timeline-time">11:27</div>
+                    </div>
+                    <div class="timeline-label">
+                        <<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                    </div>
                 </div>
             </div>
-            <div class="timeline-entry">
-                <div class="timeline-stat">
-                    <div class="timeline-icon"></div>
-                    <div class="timeline-time">11:27</div>
-                </div>
-                <div class="timeline-label">
-                    <<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
-                </div>
-            </div>
-        </div>
-        <!--===================================================-->
-        <!-- End Timeline -->
+            <!--===================================================-->
+            <!-- End Timeline -->
+        </c:if>
     </div>
 </div> <!-- fim .col-lg-6 -->
 <div class="col-3 panel panel-primary menu-fixed-right">

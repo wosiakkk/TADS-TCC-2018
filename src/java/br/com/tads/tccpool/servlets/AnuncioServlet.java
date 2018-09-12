@@ -297,13 +297,20 @@ public class AnuncioServlet extends HttpServlet {
                     rd = request.getRequestDispatcher("aprovarAnuncio.jsp");
                     rd.forward(request, response);
                     break;
+                case "BUSCARMOVEISPEND":
+                    List<Movel> listaMovelPendentes = new ArrayList<Movel>();
+                    
+                    break;
+                case "BUSCARMATERIAISPEND":
+                    
+                    break;
 
                 case "BUSCARPORID":
                     int id = Integer.parseInt(request.getParameter("id"));
                     Imovel imovel = new Imovel();
                     imovel = AnuncioFacade.buscarImovelPorId(id);
                     session.setAttribute("imovelBuscado", imovel);
-                    rd = request.getRequestDispatcher("homeAnunciosPendentes.jsp");
+                    rd = request.getRequestDispatcher("imoveisPendentes.jsp");
                     rd.forward(request, response);
                     break;
 
