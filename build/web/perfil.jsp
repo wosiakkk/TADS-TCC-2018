@@ -10,7 +10,7 @@
         <!-- left column -->
         <div class="col-md-3">
             <div class="text-center">
-                <img src="${perfil.getFoto()}" class="avatar img-circle" alt="avatar" width="250" height="250">
+                <img src="${perfil.getFoto()}" class="avatar img-circle" alt="avatar" width="150" height="150">
             </div>
         </div>
 

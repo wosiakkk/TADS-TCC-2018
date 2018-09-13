@@ -27,6 +27,9 @@ public class UserDAO {
     private static final String QUERY_SIMPLE_INSERT_USR = "INSERT INTO TB_USUARIO"
             + " (NM_NOME,DS_EMAIL,DS_SENHA,TP_USUARIO)"
             + " VALUES (?,?,?,?)";
+    private static final String QUERY_SIMPLE_INSERT_MODADM = "INSERT INTO TB_USUARIO"
+            + " (NM_NOME,DS_EMAIL,DS_SENHA,TP_USUARIO,DS_FOTO)"
+            + " VALUES (?,?,?,?,?)";
     private static final String QUERY_SIMPLE_INSERT_GOOGLE = "INSERT INTO TB_USUARIO"
             + " (NM_NOME,DS_EMAIL,DS_FOTO,TP_USUARIO)"
             + " VALUES (?,?,?,?)";
@@ -182,6 +185,23 @@ public class UserDAO {
             stmt.setString(2, u.getEmail());
             stmt.setString(3, u.getSenha());
             stmt.setInt(4, u.getTipoUsuario());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            stmt.close();
+            con.close();
+        }
+    }
+    
+     public void inserirModOrAdm(User u) throws SQLException {
+        try {
+            stmt = con.prepareStatement(QUERY_SIMPLE_INSERT_MODADM);
+            stmt.setString(1, u.getNome());
+            stmt.setString(2, u.getEmail());
+            stmt.setString(3, u.getSenha());
+            stmt.setInt(4, u.getTipoUsuario());
+            stmt.setString(5, u.getFoto());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -160,6 +160,7 @@ Author     : onurb
         </div>
     </div>
     <div class="col-md-12"></div>
+    
 </c:if>
 <c:if test="${imovelExibir != null}">
     <c:choose>
@@ -279,6 +280,7 @@ Author     : onurb
     </c:if>
     <div class="col-md-12"></div>
 </c:if>
+    
 <c:if test="${movelExibir != null}">   
 
     <h2>Anuncio: ${idExibirAnuncio} </h2><br>
@@ -420,6 +422,7 @@ Author     : onurb
     </div>
     <div class="col-md-12"></div>
 </c:if>
+    
 <c:if test="${materialExibir != null}">   
     <h2>Anuncio: ${idExibirAnuncio} </h2><br>
     <h2> Fotos:</h2></br></br>
@@ -490,6 +493,7 @@ Author     : onurb
     </c:if>
     <div class="col-md-12"></div>
 </c:if>
+    
 <c:if test="${materialAlterar != null}">   
     <div class="form-group">
         <form class="form"  action="AnuncioServlet"  method="POST" role="form">
@@ -575,9 +579,6 @@ Author     : onurb
     </div>
     <div class="col-md-12"></div>
 </c:if>
-
-
-
 
 <!-- Rodapé -->
 <%@include file="comentario.jsp" %>

@@ -13,9 +13,10 @@
 <div class="container">
     <div class="jumbotron col-sm-9 ">
         <div class="col-sm-8">
-            <h5>Sua Amizade foi excluída!</h5>
-        <a href="home.jsp">Voltar para o Home</a> ou <a href="escolhaAmigo.jsp">Visualizar Lista de Amigos</a><hr>
-        <img src="img\logos\logo1.jpg">       
+            <h5>O Adminstrador foi cadastrado!</h5>
+        <a href="home.jsp">Voltar para o Home</a> ou <a href="cadastrarModerador.jsp">Cadastrar mais um moderador</a><hr>
+        <img src="img\logos\logo1.jpg">
+        
        </div>
     </div>    
 </div>

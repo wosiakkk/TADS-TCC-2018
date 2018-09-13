@@ -298,7 +298,6 @@ public class AnuncioDAO {
                 stmt.executeUpdate();
             }
         }
-
         con.close();
         stmt.close();
         rs.close();

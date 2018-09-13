@@ -21,7 +21,8 @@
         </div>
         <div class="list-group">
                 <c:if test="${user.getTipoUsuario()== 1}">                  
-                    <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anuncios</a>                  
+                    <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anuncios</a>
+                    <a class="list-group-item" href="#">Preferências</a>
                 </c:if>
                 <c:if test="${user.getTipoUsuario()== 2}">
                     <a class="list-group-item" href="UserServlet?action=PERFIL&idUser=${user.getId()}">Visualizar Meu Perfil</a>
@@ -33,16 +34,17 @@
                     <a class="list-group-item" href="#">Preferências</a>              
                 </c:if>
                 <c:if test="${user.getTipoUsuario()== 3}">
-                    <a class="list-group-item" href="#">Cadastrar um moderador</a>
-                    <a class="list-group-item" href="#">Opção2</a>
-                    <a class="list-group-item" href="#">Opção3</a>
-                    <a class="list-group-item" href="#">Opção4</a>
+                    <a class="list-group-item" href="cadastrarAdm.jsp">Cadastrar um Administrador</a>
+                    <a class="list-group-item" href="cadastrarModerador.jsp">Cadastrar um moderador</a>
+                    <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anuncios</a> 
+                    <a class="list-group-item" href="#">Preferências</a>
                 </c:if>
         </div>
     </div>
 </div>
 <div class="col-6 menu-fixed-center">
     <div class="panel panel-body">
+        <!-- Usuário Moderador -->
         <c:if test="${user.getTipoUsuario()== 1}">           
             <div class="jumbotron">
                 <hr>
@@ -52,6 +54,17 @@
                 <hr>
             </div>
         </c:if>
+        <!-- Usuário Administrador -->
+        <c:if test="${user.getTipoUsuario()== 3}">           
+            <div class="jumbotron">
+                <hr>
+                <div class="col-6">
+                    <img src="img\logos\logo400.jpg">
+                    </div>
+                <hr>
+            </div>
+        </c:if>
+        <!-- Usuário Comum -->
         <c:if test="${user.getTipoUsuario()== 2}">
             <!-- Timeline -->
             <!--===================================================-->
@@ -183,10 +196,6 @@
         </c:choose>
     </div>
 </div>
-
-            </div>
-<!-- Rodapé -->
-
 </div> <!-- ./row -->
 </div> <!-- ./container -->
 

@@ -29,6 +29,17 @@ public class UserFacade {
         dao.close();
         return u;
     }
+    
+    public static User insereUsuarioModAdm(User u) throws AcessoBdException, SQLException {
+        UserDAO dao = new UserDAO();
+        try {
+            dao.inserirModOrAdm(u);
+        } catch (Exception e) {
+            return null;
+        }
+        dao.close();
+        return u;
+    }
 
     public static User insereUsuarioGoogle(User u) throws AcessoBdException, SQLException {
         UserDAO dao = new UserDAO();

@@ -53,17 +53,17 @@ public class LoginGoogle extends HttpServlet {
                 u.setEmail(payLoad.getEmail());
                 u.setFoto(request.getParameter("foto"));
                 u.setTipoUsuario(2);
-                
-               
                 u = UserFacade.insereUsuarioGoogle(u);
                 u.setSenha("");
+                usr = UserFacade.buscarUsuariogGoogle(u.getEmail());
                 HttpSession session = request.getSession();
-                session.setAttribute("user", u);
-                
-            }else{
+                session.setAttribute("user", usr);
+                session.setAttribute("idUserSessao", u.getId());
+            } else {
                 HttpSession session = request.getSession();
                 usr.setSenha("");
                 session.setAttribute("user", usr);
+                session.setAttribute("idUserSessao", usr.getId());
             }
 
             request.getServletContext()
