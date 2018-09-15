@@ -13,8 +13,8 @@
 </c:if>
 
 <div class="col-sm-4" style="padding-top: 5%">
-    <h4>Escolha opção de Amizade:</h4>
-    <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>        
+    <h4>Escolha uma opção de preferência:</h4>
+    <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>   
     <hr>
 </div>
 
@@ -23,19 +23,21 @@
         <div class="row" style="padding-top:50px">
             <div class="col-sm-4 text-center">
                 <div class="list-group">
+                    <c:if test="${not empty user.senha}">
+                        <div class="list-group-item">
+                            <a  href="alterarSenha.jsp">
+                                <img class="d-block img-fluid" src="img\icones\lock.png">Alterar Senha.
+                            </a>
+                        </div>
+                    </c:if>
                     <div class="list-group-item">
-                        <a  href="UserServlet?action=AMIZADE&acao=LISTARPEDIDOS&idUser=${user.getId()}">
-                            <img class="d-block img-fluid" src="img\icones\waiting.png">Solicitações
+                        <a  href="#">
+                            <img class="d-block img-fluid" src="img\icones\timeline.png">Opções de timeline.    
                         </a>
                     </div>
                     <div class="list-group-item">
-                        <a  href="UserServlet?action=AMIZADE&acao=LISTARACEITOS&idUser=${user.getId()}">
-                            <img class="d-block img-fluid" src="img\icones\agreement.png">Amigos    
-                        </a>
-                    </div>
-                    <div class="list-group-item">
-                        <a  href="UserServlet?action=AMIZADE&acao=LISTARBLOQUEADOS&idUser=${user.getId()}">
-                            <img class="d-block img-fluid" src="img\icones\hold.png">Bloqueadas
+                        <a  href="#">
+                            <img class="d-block img-fluid" src="img\icones\security.png">Privacidade.
                         </a>
                     </div>
                 </div>
@@ -43,7 +45,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Rodapé -->
 <%@include file="footer.jsp" %>

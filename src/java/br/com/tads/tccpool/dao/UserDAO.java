@@ -7,6 +7,7 @@ package br.com.tads.tccpool.dao;
 
 import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.utils.ConnectionFactory;
+import br.com.tads.tccpool.utils.MD5;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class UserDAO {
 
-    private static final String QUERY_LOGIN = "SELECT NR_SEQ, DS_EMAIL, NM_NOME, TP_USUARIO, DS_FOTO FROM TB_USUARIO WHERE DS_EMAIL = ? AND DS_SENHA = ?";
+    private static final String QUERY_LOGIN = "SELECT NR_SEQ, DS_EMAIL, NM_NOME, TP_USUARIO, DS_FOTO, DS_SENHA FROM TB_USUARIO WHERE DS_EMAIL = ? AND DS_SENHA = ?";
     private static final String QUERY_LOGIN_GOOGLE = "SELECT NR_SEQ, NM_NOME, DS_EMAIL, DS_FOTO,TP_USUARIO FROM TB_USUARIO WHERE DS_EMAIL = ?";
     private static final String QUERY_SIMPLE_INSERT_USR = "INSERT INTO TB_USUARIO"
             + " (NM_NOME,DS_EMAIL,DS_SENHA,TP_USUARIO)"
@@ -71,6 +72,10 @@ public class UserDAO {
             + "DS_FOTO = ?"
             + "WHERE\n"
             + "NR_SEQ = ?";
+    
+    private static final String QUERY_SENHA_USR = "SELECT tb_usuario.DS_SENHA FROM tb_usuario WHERE NR_SEQ = ?";
+    
+    private static final String QUERY_UPDATE_SENHA = "UPDATE tb_usuario SET tb_usuario.DS_SENHA = ? WHERE tb_usuario.NR_SEQ = ?";
 
     private static final String QUERY_EDIT_END = "UPDATE tb_endereco SET\n"
             + "NM_RUA = ?,"
@@ -253,6 +258,44 @@ public class UserDAO {
         }
         return u;
     }
+    
+    public Boolean verificaSenha(String senhaPassada, int idSessao){
+        String senhaBuscada;
+        String md5 = MD5.criptografar(senhaPassada);
+        try {
+            stmt = con.prepareStatement(QUERY_SENHA_USR);
+            stmt.setInt(1,idSessao);
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                
+            }
+             senhaBuscada = rs.getString("DS_SENHA");
+            if(senhaBuscada.equalsIgnoreCase(md5)){
+                    return true;
+            }else{
+                return false;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+           
+        } 
+        return false;
+    }
+    
+    public Boolean alterarSenha(String novaSenha, int idSesao){
+        String md5 = MD5.criptografar(novaSenha);
+        try {
+            stmt = con.prepareStatement(QUERY_UPDATE_SENHA);
+            stmt.setString(1, md5);
+            stmt.setInt(2, idSesao);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 
     /**
      *
@@ -276,6 +319,7 @@ public class UserDAO {
                 u.setNome(rs.getString("NM_NOME"));
                 u.setFoto(rs.getString("DS_FOTO"));
                 u.setTipoUsuario(rs.getInt("TP_USUARIO"));
+                u.setSenha(rs.getString("DS_SENHA"));
             }
 
         } catch (SQLException e) {

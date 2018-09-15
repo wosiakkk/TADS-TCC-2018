@@ -233,6 +233,29 @@ public class UserServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
                 }
+                
+                case "ALTSENHA": {
+                   session.setAttribute("erroSenha", "");
+                   String senhaAtual = request.getParameter("senhaAtual");
+                   int id = (Integer)session.getAttribute("idUserSessao");
+                   Boolean teste;
+                   teste = UserFacade.verificaSenha(senhaAtual,id );
+                   if(teste){
+                       String nsenha = request.getParameter("novaSenha");
+                       if(UserFacade.alterarSenha(nsenha, id)){
+                           RequestDispatcher rd = request.getRequestDispatcher("senhaTrocada.jsp");
+                                    rd.forward(request, response);
+                       }else{
+                           //erro
+                       }
+                   }else{
+                       session.setAttribute("erroSenha", "Senha atual incorreta");
+                       RequestDispatcher rd = request.getRequestDispatcher("alterarSenha.jsp");
+                                    rd.forward(request, response);
+                   }
+                   break;
+                }
+                
                 case "AMIZADE": {
                     String acao = request.getParameter("acao");
                     switch (acao) {

@@ -17,6 +17,8 @@
         <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script-->
         <!-- Adicionando jQuery para ser utilizado nas funções -->
         <script src="assets/jquery/jquery.min.js" type="text/javascript"></script>
+        <script src="assets/jquery/jquery.validate.js" type="text/javascript"></script>
+        <script src="assets/jquery/jquery.validate.min.js" type="text/javascript"></script>
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         <script
             src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"

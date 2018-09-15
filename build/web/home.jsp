@@ -22,7 +22,7 @@
         <div class="list-group">
                 <c:if test="${user.getTipoUsuario()== 1}">                  
                     <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anuncios</a>
-                    <a class="list-group-item" href="#">Preferências</a>
+                    <a class="list-group-item" href="escolhaPreferencias.jsp">Preferências</a>
                 </c:if>
                 <c:if test="${user.getTipoUsuario()== 2}">
                     <a class="list-group-item" href="UserServlet?action=PERFIL&idUser=${user.getId()}">Visualizar Meu Perfil</a>
@@ -31,13 +31,13 @@
                     <a class="list-group-item" href="vendas.jsp">Área de vendas</a>                      
                     <a class="list-group-item" href="UserServlet?action=SEARCH">Editar Perfil</a>
                     <a class="list-group-item" href="escolhaAnuncio.jsp">Realizar um Anuncio</a>           
-                    <a class="list-group-item" href="#">Preferências</a>              
+                    <a class="list-group-item" href="escolhaPreferencias.jsp">Preferências</a>              
                 </c:if>
                 <c:if test="${user.getTipoUsuario()== 3}">
                     <a class="list-group-item" href="cadastrarAdm.jsp">Cadastrar um Administrador</a>
                     <a class="list-group-item" href="cadastrarModerador.jsp">Cadastrar um moderador</a>
                     <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anuncios</a> 
-                    <a class="list-group-item" href="#">Preferências</a>
+                    <a class="list-group-item" href="escolhaPreferencias.jsp">Preferências</a>
                 </c:if>
         </div>
     </div>

@@ -14,6 +14,7 @@
 
 <div class="col-sm-4" style="padding-top: 5%">
     <h4>Escolha uma categoria:</h4>
+    <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
     <hr>
 </div>
 

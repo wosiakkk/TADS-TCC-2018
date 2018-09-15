@@ -101,6 +101,16 @@ public class UserFacade {
         }
     }
 
+     public static Boolean verificaSenha(String senhaPasada, int idSessao){
+        UserDAO dao = new UserDAO();
+        return dao.verificaSenha(senhaPasada, idSessao);
+    }
+    
+    public static Boolean alterarSenha(String novaSenha, int idSessao){
+        UserDAO dao = new UserDAO();
+        return dao.alterarSenha(novaSenha, idSessao);
+    }
+    
     public static Boolean editarPerfil(User u) {
         UserDAO dao = new UserDAO();
         try {

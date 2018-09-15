@@ -6,9 +6,10 @@
         <!--c:set var="msg" value="Fa&ccedila login para acessar esta p&aacutegina!" scope="request"/-->
     </c:redirect>
 </c:if>
-        
-        <div class="col-sm-4" style="padding-top: 5%">
+
+<div class="col-sm-4" style="padding-top: 5%">
     <h4>Escolha uma categoria:</h4>
+    <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
     <hr>
 </div>
 
@@ -37,7 +38,7 @@
         </div>
     </div>
 </div>
-        
-        
+
+
 
 <%@include file="footer.jsp" %>
