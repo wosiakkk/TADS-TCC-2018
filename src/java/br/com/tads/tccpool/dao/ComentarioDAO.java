@@ -60,6 +60,9 @@ public class ComentarioDAO {
                                             + "  AND ID_PAI = ?\n"
                                             + "ORDER BY\n"
                                             + "  VL_LIKE DESC";
+    
+    private final String QUERY_DELETE = "DELETE FROM TB_COMENTARIO WHERE NR_SEQ = ?";
+    private final String QUERY_DELETE_REPLY = "DELETE FROM TB_COMENTARIO WHERE ID_PAI = ?";
 
     public ComentarioDAO() {
         ConnectionFactory cf = new ConnectionFactory();
@@ -119,6 +122,7 @@ public class ComentarioDAO {
         while(rs.next()) {
             Comentario c = new Comentario();
             c.setIdComentario(rs.getInt("NR_SEQ"));
+            c.setIdPai(rs.getInt("ID_PAI"));
             c.setIdAnuncio(rs.getInt("TB_ANUNCIO_ID_ANUNCIO"));
             c.setConteudo(rs.getString("DS_CONTEUDO"));
             c.setNmUser(rs.getString("NM_NOME"));
@@ -143,6 +147,18 @@ public class ComentarioDAO {
         stmt = con.prepareStatement(QUERY_UNLIKE);
         stmt.setInt(1, idComentario);
         return stmt.executeUpdate();
+    }
+    
+    public boolean excluirComentario(int idComentario) throws SQLException{
+        stmt = con.prepareStatement(QUERY_DELETE);
+        stmt.setInt(1, idComentario);
+        return stmt.execute();
+    }
+    
+    public boolean excluirReplay(int idPai) throws SQLException {
+        stmt = con.prepareStatement(QUERY_DELETE_REPLY);
+        stmt.setInt(1, idPai);
+        return stmt.execute();
     }
     
 }

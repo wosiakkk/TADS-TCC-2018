@@ -21,7 +21,8 @@ $(function () {
                     var i = 0;
                     values.forEach(function (entry) {
                         var newObject = {
-                            label: entry.nome
+                            label: entry.nome,
+                            id: entry.id
                         };
                         newArray[i] = newObject;
                         i++;
@@ -36,6 +37,9 @@ $(function () {
                 }
             });
         },
-        minLength: 1
+        minLength: 1,
+        select: function (event, ui) {
+            $('input[name=idSearch]').val(ui.item.id);
+        }
     });
 });

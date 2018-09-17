@@ -37,6 +37,7 @@
 
 
         <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" rel="stylesheet">
         <link href="assets/css/shop-homepage.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="assets/css/mainCss.css" rel="stylesheet">
