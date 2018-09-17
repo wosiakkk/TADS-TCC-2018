@@ -10,6 +10,7 @@
     ******************************************************IMPORTANTE******************************************************
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:choose>
     <c:when test="${(empty(user))}">
         <h4 class="text-center">Faça <a href="login.jsp">login</a> para comentar este an&uacute;ncio!</h4>
@@ -20,6 +21,14 @@
         <div class="col-lg-10">
             <form id="comentarioAjax">
                 <input name="action" value="ADD" type="hidden">
+                <c:choose>
+                    <c:when test="${(!empty(idExibirAnuncio))}">
+                        <input name="ID_ANUNCIO" value="<c:out value="${idExibirAnuncio}"/>" type="hidden">
+                    </c:when>
+                    <c:when test="${(!empty(imovelBuscado))}">
+                        <input name="ID_ANUNCIO" value="<c:out value="${imovelBuscado.id}"/>" type="hidden">
+                    </c:when>
+                </c:choose>
                 <input name="ID_ANUNCIO" value="<c:out value="${idExibirAnuncio}"/>" type="hidden">  
                 <input name="ID_USUARIO" value="<c:out value="${user.getId()}"/>" type="hidden">
                 <input name="ID_REPLY" value="" type="hidden">
