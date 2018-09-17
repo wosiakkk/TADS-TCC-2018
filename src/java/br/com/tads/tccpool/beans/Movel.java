@@ -16,10 +16,62 @@ import java.util.List;
 public class Movel implements Serializable {
     private String titulo;
     private String descricao;
-    private Float preco;
+    private String tipoDesc;
+    private float preco;
     private int tipo;
+    private int status;
     private int id;
     private List<String> fotos;
+    private int idAnunciante;
+    private String nomeAnunciante;
+
+    public String getTipoDesc() {
+        return tipoDesc;
+    }
+
+    public void setTipoDesc(String tipoDesc) {
+        this.tipoDesc = tipoDesc;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+    
+
+    
+    public String getNomeAnunciante() {
+        return nomeAnunciante;
+    }
+
+    public void setNomeAnunciante(String nomeAnunciante) {
+        this.nomeAnunciante = nomeAnunciante;
+    }
+    
+    
+
+    public int getIdAnunciante() {
+        return idAnunciante;
+    }
+
+    public void setIdAnunciante(int idAnunciante) {
+        this.idAnunciante = idAnunciante;
+    }
+    
+    
+    
 
     public int getId() {
         return id;

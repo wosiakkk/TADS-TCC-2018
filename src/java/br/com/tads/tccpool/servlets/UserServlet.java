@@ -157,6 +157,11 @@ public class UserServlet extends HttpServlet {
                                 if (item.getFieldName().equals("interesses")) {
                                     alterar.setInteresses(item.getString());
                                 }
+                                if (item.getFieldName().equals("fotoUser")) {
+                                    if(!item.getString().equals("") && alterar.getFoto() == null){
+                                    alterar.setFoto(item.getString());
+                                    }
+                                }
                             } else {
 
                                 Random rand = new Random();
@@ -182,6 +187,7 @@ public class UserServlet extends HttpServlet {
                             session.setAttribute("userSearch", alterar);
                             User us = (User) session.getAttribute("user");
                             us.setFoto(alterar.getFoto());
+                            us.setNome(alterar.getNome());
                             session.setAttribute("user", us);
                         } else {
 

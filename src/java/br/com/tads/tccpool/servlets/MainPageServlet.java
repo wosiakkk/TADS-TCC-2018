@@ -98,10 +98,28 @@ public class MainPageServlet extends HttpServlet {
                             rd2.forward(request, response);
                             break;
                         case "movel":
+                            List<Categoria> listaCategoriaMovel = new ArrayList<Categoria>();
+                            try {
+                                listaCategoriaMovel = MainPageFacade.listaCategoriasMovel();
+                            } catch (AcessoBdException e) {
+                                e.printStackTrace();
+                                String param = URLEncoder.encode("Erro na servlet cadastro " + e.getMessage() + " - " + e.getCause().getMessage() + "]", "UTF-8");
+                                response.sendRedirect("index.jsp?msg=" + param);
+                            }
+                            session.setAttribute("listaCatMovel", listaCategoriaMovel);
                             rd2 = request.getRequestDispatcher("cadastroMovel.jsp");
                             rd2.forward(request, response);
                             break;
                         case "material":
+                            List<Categoria> listaCategoriaMaterial = new ArrayList<Categoria>();
+                            try {
+                                listaCategoriaMaterial = MainPageFacade.listaCategoriasMaterial();
+                            } catch (AcessoBdException e) {
+                                e.printStackTrace();
+                                String param = URLEncoder.encode("Erro na servlet cadastro " + e.getMessage() + " - " + e.getCause().getMessage() + "]", "UTF-8");
+                                response.sendRedirect("index.jsp?msg=" + param);
+                            }
+                            session.setAttribute("listaCatMaterial", listaCategoriaMaterial);
                             rd2 = request.getRequestDispatcher("cadastroMaterial.jsp");
                             rd2.forward(request, response);
                             break;

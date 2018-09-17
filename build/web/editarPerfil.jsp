@@ -15,10 +15,11 @@
     <hr>
     <div class="row">
         <!-- left column -->
-        <div class="col-md-9 personal-info">
+        <div class="col-md-12 personal-info">
+            
             <form id="formEditar" class="form-horizontal" action="UserServlet?action=EDIT"  method="POST" role="form" enctype="multipart/form-data">
-        <div class="col-md-3">
-            <div class="text-center">
+        <div  align="center">
+            <div class="text-center col-md-6">
                 <img src="${userSearch.getFoto()}" class="avatar img-circle" alt="avatar" style="width: 200px; height: 200px">
                 <h6>Carregar uma foto nova...</h6>
 
@@ -26,7 +27,7 @@
             </div>
         </div>
 
-        <!-- edit form column -->
+        <!-- edit form column -->   
         
 
             <h3>Informações do perfil</h3>
@@ -34,22 +35,23 @@
             
             <input id="idUser" type="hidden" name="idUser" value="${userSearch.id}"/>
             <input id="codEndereco" type="hidden" name="codEndereco" value="${userSearch.cdEndereco}"/>
+            <input id="fotoUser" type="hidden" name="fotoUser" value="${userSearch.getFoto()}"/>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Nome Completo:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" name="nome" id="nome" type="text" value="<c:out value="${user.getNome()}"/>">
+                        <input class="form-control" name="nome" id="nome" type="text" value="<c:out value="${userSearch.getNome()}"/>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Telefone Fixo:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" name="telefone" id="telefone" type="text" value="<c:out value="${user.tel}"/>">
+                        <input class="form-control" name="telefone" id="telefone" type="text" value="<c:out value="${userSearch.tel}"/>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Celular:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" name="celular" id="celular" type="text" value="<c:out value="${user.cel}"/>">
+                        <input class="form-control" name="celular" id="celular" type="text" value="<c:out value="${userSearch.cel}"/>">
                     </div>
                 </div>
                     
@@ -57,53 +59,60 @@
                     <div class="form-group">
                     <label class="col-lg-3 control-label">Logradouro:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" name="logradouro" id="logradouro" type="text" value="<c:out value="${user.logradouro}"/>">
+                        <input class="form-control" name="logradouro" id="logradouro" type="text" value="<c:out value="${userSearch.logradouro}"/>">
                     </div>
                 </div>
                     <div class="form-group">
-                    <label class="col-lg-3 control-label">Número:</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" name="numero" id="numero" type="number" value="<c:out value="${user.numero}"/>">
+                    <label class="col-lg-2 control-label">Número:</label>
+                    <div class="col-lg-2">
+                        <input class="form-control" name="numero" id="numero" type="number" value="<c:out value="${userSearch.numero}"/>">
                     </div>
                 </div>
                     <div class="form-group">
                     <label class="col-lg-3 control-label">Complemento:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" name="complemento" id="complemento" type="text" value="<c:out value="${user.complemento}"/>">
+                        <input class="form-control" name="complemento" id="complemento" type="text" value="<c:out value="${userSearch.complemento}"/>">
                     </div>
                 </div>
                     <div class="form-group">
-                    <label class="col-lg-3 control-label">Cep:</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" name="cep" id="cep" type="text" value="<c:out value="${user.CEP}"/>">
+                    <label class="col-lg-2 control-label">Cep:</label>
+                    <div class="col-lg-2">
+                        <input class="form-control" name="cep" id="cep" type="text" value="<c:out value="${userSearch.CEP}"/>">
                     </div>
                 </div>
                     <div class="form-group">
                     <label class="col-lg-3 control-label">Cidade:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" name="cidade" id="cidade" type="text" value="<c:out value="${user.cidade}"/>">
+                        <input class="form-control" name="cidade" id="cidade" type="text" value="<c:out value="${userSearch.cidade}"/>">
                     </div>
                 </div>
                     <div class="form-group">
-                    <label class="col-lg-3 control-label">Estado:</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" name="estado" id="estado" type="text" value="<c:out value="${user.estado}"/>">
+                    <label class="col-lg-2 control-label">Estado:</label>
+                    <div class="col-lg-1">
+                        <input class="form-control" name="estado" id="estado" type="text" value="<c:out value="${userSearch.estado}"/>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="descricao">Uma breve descrição sobre você:</label>
-                    <textarea class="form-control" rows="5" id="descricao" name="descricao"></textarea>
+                    <textarea class="form-control" rows="5" id="descricao" name="descricao" >${userSearch.descricao}</textarea>
                 </div>
                    <div class="form-group">
                     <label for="interesses">Interesses ou qualquer outra coisa relacionada a perfil:</label>
-                    <textarea class="form-control" rows="5" id="interesses" name="interesses"></textarea>
+                    <textarea class="form-control" rows="5" id="interesses" name="interesses" >${userSearch.interesses}</textarea>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-9 col-lg-9 col-md-9 col-xs-9 col-sm-offset-3">
+                
+                <div align="center">
+                    <div class="col-md-6 ">
                         <button type="submit" class="btn btn-primary btn-block" onclick="confirm('Deseja mesmo alterar os dados?');">Salvar</button>
                     </div>
+                    <div class="col-md-6 ">
+                   <br> <a href="home.jsp" class="btn btn-primary btn-block" role="button">Cancelar</a><br>
                 </div>
+                </div>
+                
+                
             </form>
+            
         </div>
                     <br><br><br>
     </div>

@@ -8,7 +8,7 @@ Author     : onurb
 <%@include file="head.jsp" %>
 
 <c:if test="${imovelAlterar != null}"> 
-    <div class="row">
+    
         <div class="col-md-12">
             <div class="form-group">
                 <form class="form"  action="AnuncioServlet"  method="POST" role="form" >
@@ -23,47 +23,53 @@ Author     : onurb
                     <div class="col-md-12">
                         <div class="col-sm-2"></div>
                         <div class="col-md-8">
-                            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner">
-                                    <c:set var="counter" value="0" />
-                                    <c:forEach var="lista" items="${imovelAlterar.fotos}">
-                                        <c:choose>
-                                            <c:when test="${counter == 0}">
-                                                <div class="carousel-item active">
-                                                    <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
-                                                </div>
-                                            </c:when> 
-                                            <c:otherwise>
-                                                <div class="carousel-item">
-                                                    <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
-                                                </div>
-                                            </c:otherwise>
-                                        </c:choose>     
-                                        <c:set var="counter" value="${counter+1}" />
-                                    </c:forEach>
-                                </div>
-                            
-                        
-                    
-                    </br>
-                    </br>
-                    <!-- Left and right controls -->
-                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-            </div>
+                            <div id="demo" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <c:forEach var="foto" items="${imovelAlterar.fotos}" varStatus="j">
+          <c:choose>
+              <c:when test="${j.index == 0}">
+                <li data-target="#demo" data-slide-to="${j.index}" class="active"></li>
+              </c:when>
+              <c:otherwise>
+                <li data-target="#demo" data-slide-to="${j.index}"></li>
+              </c:otherwise>
+          </c:choose>
+      </c:forEach>
+  </ul>
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+      <c:forEach var="foto" items="${imovelAlterar.fotos}" varStatus="i">
+          <c:choose>
+              <c:when test="${i.index == 0}">
+                <div class="carousel-item active">
+                  <img src="${foto}" alt="" width="1100" height="500">
+                </div>
+              </c:when>
+              <c:otherwise>
+                <div class="carousel-item">
+                  <img src="${foto}" alt="" width="1100" height="500">
+                </div>
+              </c:otherwise>
+          </c:choose>
+      </c:forEach> 
+  </div>
+  
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
                         </div>
                         </div>
             <div class="form-group">
                 <label for=tipo class="col-sm-3 control-label">Tipo Imovel:</label>
                 <div class="col-sm-9">
                     <c:set var="lista" value="${listaCatImovel}"/>
-                    <select class="selectpicker" name="tipo" id="select">
+                    <select class="selectpicker form-control" name="tipo" id="select">
                         <c:forEach var="lista" items="${lista}">
                             <option value="${lista.id}" <c:if test="${lista.id == imovelAlterar.tipo}">selected</c:if> > ${lista.descricao}</option>
                         </c:forEach>
@@ -166,188 +172,231 @@ Author     : onurb
     <div class="col-md-12"></div>
 </c:if>
 <c:if test="${imovelExibir != null}">
-    <c:choose>
+    
+    <div class="container">
+<c:choose>
         <c:when test="${!(empty(user))}">
-            <h2>Anuncio de ${imovelExibir.nomeAnunciante} <a href="UserServlet?action=PERFIL&idUser=${imovelExibir.idAnunciante}">perfil</a> </h2><br><hr>
+            <h2>${imovelExibir.titulo}</h2><br><hr>
+        </c:when>
+        <c:otherwise>
+            <h2>{imovelExibir.titulo}</h2><br><hr>
+        </c:otherwise>    
+    </c:choose>
+      <div class="row">
+
+        <div class="col-lg-3">
+          <h2 class="my-4">${imovelExibir.nomeAnunciante}</h2>
+          <div class="list-group">
+              <c:choose>
+        <c:when test="${!(empty(user))}">
+            <a href="UserServlet?action=PERFIL&idUser=${imovelExibir.idAnunciante}" class="list-group-item">Visitar Perfil</a>
         </c:when>
         <c:otherwise>
             <h2>Anuncio de ${imovelExibir.nomeAnunciante}</h2><br><hr>
         </c:otherwise>    
-    </c:choose>
-    
-    <div class="col-md-12"></div>
-    <div class="col-sm-2"></div>
-    <div class="col-md-8">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <c:set var="counter" value="0" />
-                <c:forEach var="lista" items="${imovelExibir.fotos}">
-                    <c:choose>
-                        <c:when test="${counter == 0}">
-                            <div class="carousel-item active">
-                                <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
-                            </div>
-                        </c:when> 
-                        <c:otherwise>
-                            <div class="carousel-item">
-                                <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
-                            </div>
-                        </c:otherwise>
-                    </c:choose>     
-                    <c:set var="counter" value="${counter+1}" />
-                </c:forEach>
-            </div>
-            </br>
-            </br>
-            <!-- Left and right controls -->
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-                <span class="sr-only">Next</span>
-            </a>
+            </c:choose>
+            <a href="#" class="list-group-item">Enviar Mensagem</a>
+            <a href="#" class="list-group-item">Opção 3</a>
+          </div>
         </div>
-    </div>
-    <div class="col-md-12"></div>
-    <div class="col-sm-9">
-        <label for="titulo">Titulo:</label>
-        ${imovelExibir.titulo}
-    </div>
+        <!-- /.col-lg-3 -->
 
-    <div class="col-sm-12">
-        <label>Tipo Imovel:</label>
-        ${imovelExibir.tipoDesc}
-    </div>
-    <div class="col-sm-9">
-        <label for="descricao">Descri&ccedil&atildeo:</label>
-        ${imovelExibir.descricao}
-    </div>
-    <div class="col-sm-9">
-        <label for="descricao" >Quantidade de pessoas:</label>
-        ${imovelExibir.quantidade_pessoas}
-    </div>
-    <div class="col-sm-9">
-        <label for="descricao">Pet:</label>
+        <div class="col-lg-9">
+
+          <div class="card mt-4">
+            <div id="demo" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <c:forEach var="foto" items="${imovelExibir.fotos}" varStatus="j">
+          <c:choose>
+              <c:when test="${j.index == 0}">
+                <li data-target="#demo" data-slide-to="${j.index}" class="active"></li>
+              </c:when>
+              <c:otherwise>
+                <li data-target="#demo" data-slide-to="${j.index}"></li>
+              </c:otherwise>
+          </c:choose>
+      </c:forEach>
+  </ul>
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+      <c:forEach var="foto" items="${imovelExibir.fotos}" varStatus="i">
+          <c:choose>
+              <c:when test="${i.index == 0}">
+                <div class="carousel-item active">
+                  <img src="${foto}" alt="" width="1100" height="500">
+                </div>
+              </c:when>
+              <c:otherwise>
+                <div class="carousel-item">
+                  <img src="${foto}" alt="" width="1100" height="500">
+                </div>
+              </c:otherwise>
+          </c:choose>
+      </c:forEach> 
+  </div>
+  
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+            <div class="card-body">
+              <h3 class="card-title">${imovelExibir.titulo}</h3>
+              <h4><fmt:formatNumber value="${imovelExibir.preco}" type="currency"/></h4>
+              <p class="card-text"> ${imovelExibir.descricao}
+        <br><label>Tipo Imovel:</label> ${imovelExibir.tipoDesc}
+        <br><label>Quantidade de pessoas:</label> ${imovelExibir.quantidade_pessoas}
+        <br><label>Aceita Pet:</label>
         <c:if test="${imovelExibir.boolean_pet < 1}">
-            NÃ£o
+            Não
         </c:if>
         <c:if test="${imovelExibir.boolean_pet == 1}">
             Sim
         </c:if>
-    </div>
-    <div class="col-sm-9">
-        <label for="valor" >PreÃ§o:</label>
-        <fmt:formatNumber value="${imovelExibir.preco}" type="currency"/>
-    </div>
-    <div class="col-sm-6">
-        <label for="rua">Logradouro:</label>
-        ${imovelExibir.rua}
-    </div>
-    <div class="col-sm-3">
-        <label for="num">NÃºmero:</label>
-        ${imovelExibir.numero}
-    </div>
-    <div class="col-sm-9">
-        <label for="cep" >CEP:</label>
-        ${imovelExibir.cep}
-    </div>
-    <div class="col-sm-4">
-        <label for="cidade" >Cidade:</label>
-        ${imovelExibir.cidade}
-    </div>
-    <div class="col-sm-2">
-        <label for="estado" >Estado:</label>
-        ${imovelExibir.estado}
-    </div>
-    <div class="col-sm-9">
-        <label for="comple" >Complemento:</label>
-        ${imovelExibir.complemento}
-    </div>
-    <!-- /form -->
-    <div class="col-md-12"></div>
-    <c:if test="${!empty(user)}">
-        <div class="form-group col-md-2">
-            <form  action="AnuncioServlet" method="POST">
-                <input type="hidden" name="action"  value="ALTERARANUNCIO" >
-                <br><input type="submit" value="Alterar"  class="form-control btn-primary" />
-            </form>
-        </div>
-        <div class="form-group col-md-2">
-            <form  action="AnuncioServlet" method="POST">
-                <input type="hidden" name="action"  value="EXCLUIRANUNCIO" >
-                <br><input type="submit" value="Excluir"  class="form-control btn-primary" />
-            </form>
-        </div>
-    </c:if>
-    <div class="col-md-12"></div>
-</c:if>
-<c:if test="${movelExibir != null}">   
+        <br><label>Logradouro: </label> ${imovelExibir.rua}
+        <br><label>Número: </label> ${imovelExibir.numero}
+        <br><label>CEP: </label> ${imovelExibir.cep}
+        <br><label>Cidade: </label> ${imovelExibir.cidade}
+        <br><label>Estado: </label> ${imovelExibir.estado}
+        <br><label>Complemento: </label> ${imovelExibir.complemento}
+    </p>
+              <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+              4.0 stars
+            </div>
+          </div>
+          <!-- /.card -->
 
-    <h2>Anuncio: ${idExibirAnuncio} </h2><br>
-    <h2> Fotos:</h2></br></br>
-    <div class="col-md-12"></div>
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">    
-        <div class="carousel-inner">
-            <c:set var="counter" value="0" />
-            <c:forEach var="lista" items="${movelExibir.fotos}">
-                <c:choose>
-                    <c:when test="${counter == 0}">
-                        <div class="carousel-item active">
-                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
-                        </div>
-                    </c:when> 
-                    <c:otherwise>
-                        <div class="carousel-item">
-                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
-                        </div>
-                    </c:otherwise>
-                </c:choose>     
-                <c:set var="counter" value="${counter+1}" />
-            </c:forEach>
-        </div>
-        </br>
-        </br>
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-    <div class="col-md-12"></div>
-    <div class="col-sm-9">
-        <label for="titulo">Titulo:</label>
-        ${movelExibir.titulo}
-    </div>
-    <div class="col-sm-9">
-        <label for="descricao">Descri&ccedil&atildeo:</label>
-        ${movelExibir.descricao}
-    </div>
-    <div class="col-sm-9">
-        <label for="valor" >PreÃ§o:</label>
-        <fmt:formatNumber value="${movelExibir.preco}" type="currency"/>
-   </div>
+          
     <!-- /form -->
     <div class="col-md-12"></div>
     <c:if test="${!empty(user)}">
-        <div class="form-group col-md-2">
-            <form  action="AnuncioServlet" method="POST">
-                <input type="hidden" name="action"  value="ALTERARANUNCIO" >
-                <br><input type="submit" value="Alterar"  class="form-control btn-primary" />
+        <c:if test="${imovelExibir.idAnunciante == user.id}">
+        <br><div class="form-group">
+            <form class="form-inline" action="AnuncioServlet" method="POST">
+                <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 " />
+                <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4" />
+                <input type="submit" value="Marcar Como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${imovelExibir.id}" class="form-control btn btn-primary col-md-4" />
             </form>
         </div>
-        <div class="form-group col-md-2">
-            <form  action="AnuncioServlet" method="POST">
-                <input type="hidden" name="action"  value="EXCLUIRANUNCIO" >
-                <br><input type="submit" value="Excluir"  class="form-control btn-primary" />
-            </form>
-        </div>
+            </c:if>
     </c:if>
+    <div class="col-md-12"></div>
+        </div>
+        </div>
+        </div>
+    
+</c:if>
+    
+<c:if test="${movelExibir != null}">   
+    
+    <div class="container">
+<c:choose>
+        <c:when test="${!(empty(user))}">
+            <h2>${movelExibir.titulo}</h2><br><hr>
+        </c:when>
+        <c:otherwise>
+            <h2>{movelExibir.titulo}</h2><br><hr>
+        </c:otherwise>    
+    </c:choose>
+      <div class="row">
+
+        <div class="col-lg-3">
+          <h2 class="my-4">${movelExibir.nomeAnunciante}</h2>
+          <div class="list-group">
+              <c:choose>
+        <c:when test="${!(empty(user))}">
+            <a href="UserServlet?action=PERFIL&idUser=${movelExibir.idAnunciante}" class="list-group-item">Visitar Perfil</a>
+        </c:when>
+        <c:otherwise>
+            <h2>Anuncio de ${movelExibir.nomeAnunciante}</h2><br><hr>
+        </c:otherwise>    
+            </c:choose>
+            <a href="#" class="list-group-item">Enviar Mensagem</a>
+            <a href="#" class="list-group-item">Opção 3</a>
+          </div>
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+
+          <div class="card mt-4">
+            <div id="demo" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <c:forEach var="foto" items="${movelExibir.fotos}" varStatus="j">
+          <c:choose>
+              <c:when test="${j.index == 0}">
+                <li data-target="#demo" data-slide-to="${j.index}" class="active"></li>
+              </c:when>
+              <c:otherwise>
+                <li data-target="#demo" data-slide-to="${j.index}"></li>
+              </c:otherwise>
+          </c:choose>
+      </c:forEach>
+  </ul>
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+      <c:forEach var="foto" items="${movelExibir.fotos}" varStatus="i">
+          <c:choose>
+              <c:when test="${i.index == 0}">
+                <div class="carousel-item active">
+                  <img src="${foto}" alt="" width="1100" height="500">
+                </div>
+              </c:when>
+              <c:otherwise>
+                <div class="carousel-item">
+                  <img src="${foto}" alt="" width="1100" height="500">
+                </div>
+              </c:otherwise>
+          </c:choose>
+      </c:forEach> 
+  </div>
+  
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+            <div class="card-body">
+              <h3 class="card-title">${movelExibir.titulo}</h3>
+              <h4><fmt:formatNumber value="${movelExibir.preco}" type="currency"/></h4>
+              <p class="card-text"> ${movelExibir.descricao}
+        <br><label>Tipo Movel:</label> ${movelExibir.tipoDesc}
+        
+        
+    </p>
+              <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+              4.0 stars
+            </div>
+          </div>
+          <!-- /.card -->
+
+          
+    <!-- /form -->
+    <div class="col-md-12"></div>
+    <c:if test="${!empty(user)}">
+        <c:if test="${movelExibir.idAnunciante == user.id}">
+        <br><div class="form-group">
+            <form class="form-inline" action="AnuncioServlet" method="POST">
+                <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 " />
+                <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4" />
+                <input type="submit" value="Marcar como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${movelExibir.id}" class="form-control btn btn-primary col-md-4" />
+            </form>
+        </div>
+        </c:if>
+    </c:if>
+    <div class="col-md-12"></div>
+        </div>
+        </div>
+        </div>
+    
     <div class="col-md-12"></div>
 </c:if>
 <c:if test="${movelAlterar != null}">   
@@ -359,37 +408,57 @@ Author     : onurb
             <h2>Anuncio: ${idExibirAnuncio} </h2><br>
             <h2> Fotos:</h2></br></br>
             <div class="col-md-12"></div>
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">             
-                <div class="carousel-inner">
-                    <c:set var="counter" value="0" />
-                    <c:forEach var="lista" items="${movelAlterar.fotos}">
-                        <c:choose>
-                            <c:when test="${counter == 0}">
-                                <div class="carousel-item active">
-                                    <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
-                                </div>
-                            </c:when> 
-                            <c:otherwise>
-                                <div class="carousel-item">
-                                    <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
-                                </div>
-                            </c:otherwise>
-                        </c:choose>     
-                        <c:set var="counter" value="${counter+1}" />
-                    </c:forEach>
+            <div id="demo" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <c:forEach var="foto" items="${movelAlterar.fotos}" varStatus="j">
+          <c:choose>
+              <c:when test="${j.index == 0}">
+                <li data-target="#demo" data-slide-to="${j.index}" class="active"></li>
+              </c:when>
+              <c:otherwise>
+                <li data-target="#demo" data-slide-to="${j.index}"></li>
+              </c:otherwise>
+          </c:choose>
+      </c:forEach>
+  </ul>
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+      <c:forEach var="foto" items="${movelAlterar.fotos}" varStatus="i">
+          <c:choose>
+              <c:when test="${i.index == 0}">
+                <div class="carousel-item active">
+                  <img src="${foto}" alt="" width="1100" height="500">
                 </div>
-                </br>
-                </br>
-                <!-- Left and right controls -->
-                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
+              </c:when>
+              <c:otherwise>
+                <div class="carousel-item">
+                  <img src="${foto}" alt="" width="1100" height="500">
+                </div>
+              </c:otherwise>
+          </c:choose>
+      </c:forEach> 
+  </div>
+  
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+            
+            <div class="col-sm-9">
+                <label for=tipo class="control-label">Tipo Móvel:</label>
+                    <c:set var="lista" value="${listaCatMovel}"/>
+                    <select class="selectpicker form-control" name="tipo" id="select">
+                        <c:forEach var="lista" items="${lista}">
+                            <option value="${lista.id}" <c:if test="${lista.id == movelAlterar.tipo}">selected</c:if> > ${lista.descricao}</option>
+                        </c:forEach>
+                    </select>
+                    <!--<input type="text" name="tipo" id="titulo" value="${imovelAlterar.tipoDesc}" class="form-control"  > !-->
+                </div>
             <div class="form-group">
                 <label for=titulo class="col-sm-3 control-label">Titulo:</label>
                 <div class="col-sm-9">
@@ -424,75 +493,115 @@ Author     : onurb
     </div>
     <div class="col-md-12"></div>
 </c:if>
-<c:if test="${materialExibir != null}">   
-    <h2>Anuncio: ${idExibirAnuncio} </h2><br>
-    <h2> Fotos:</h2></br></br>
-    <div class="col-md-12"></div>
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">       
-        <div class="carousel-inner">
-            <c:set var="counter" value="0" />
-            <c:forEach var="lista" items="${materialExibir.fotos}">
-                <c:choose>
-                    <c:when test="${counter == 0}">
-                        <div class="carousel-item active">
-                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
-                        </div>
-                    </c:when> 
-                    <c:otherwise>
-                        <div class="carousel-item">
-                            <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
-                        </div>
-                    </c:otherwise>
-                </c:choose>     
-                <c:set var="counter" value="${counter+1}" />
-            </c:forEach>
+<c:if test="${materialExibir != null}">
+    
+     <div class="container">
+<c:choose>
+        <c:when test="${!(empty(user))}">
+            <h2>${materialExibir.titulo}</h2><br><hr>
+        </c:when>
+        <c:otherwise>
+            <h2>{materialExibir.titulo}</h2><br><hr>
+        </c:otherwise>    
+    </c:choose>
+      <div class="row">
+
+        <div class="col-lg-3">
+          <h2 class="my-4">${materialExibir.nomeAnunciante}</h2>
+          <div class="list-group">
+              <c:choose>
+        <c:when test="${!(empty(user))}">
+            <a href="UserServlet?action=PERFIL&idUser=${materialExibir.idAnunciante}" class="list-group-item">Visitar Perfil</a>
+        </c:when>
+        <c:otherwise>
+            <h2>Anuncio de ${materialExibir.nomeAnunciante}</h2><br><hr>
+        </c:otherwise>    
+            </c:choose>
+            <a href="#" class="list-group-item">Enviar Mensagem</a>
+            <a href="#" class="list-group-item">Opção 3</a>
+          </div>
         </div>
-        </br>
-        </br>
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-    <div class="col-md-12"></div>
-    <div class="col-sm-9">
-        <label for="titulo">Titulo:</label>
-        ${materialExibir.titulo}
-    </div>
-    <div class="col-sm-9">
-        <label for="categoria">Categoria:</label>
-        ${materialExibir.tipoDesc}
-    </div>
-    <div class="col-sm-9">
-        <label for="descricao">Descri&ccedil&atildeo:</label>
-        ${materialExibir.descricao}
-    </div>
-    <div class="col-sm-9">
-        <label for="valor" >PreÃ§o:</label>
-        <fmt:formatNumber value="${materialExibir.preco}" type="currency"/>
-    </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+
+          <div class="card mt-4">
+            <div id="demo" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <c:forEach var="foto" items="${materialExibir.fotos}" varStatus="j">
+          <c:choose>
+              <c:when test="${j.index == 0}">
+                <li data-target="#demo" data-slide-to="${j.index}" class="active"></li>
+              </c:when>
+              <c:otherwise>
+                <li data-target="#demo" data-slide-to="${j.index}"></li>
+              </c:otherwise>
+          </c:choose>
+      </c:forEach>
+  </ul>
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+      <c:forEach var="foto" items="${materialExibir.fotos}" varStatus="i">
+          <c:choose>
+              <c:when test="${i.index == 0}">
+                <div class="carousel-item active">
+                  <img src="${foto}" alt="" width="1100" height="500">
+                </div>
+              </c:when>
+              <c:otherwise>
+                <div class="carousel-item">
+                  <img src="${foto}" alt="" width="1100" height="500">
+                </div>
+              </c:otherwise>
+          </c:choose>
+      </c:forEach> 
+  </div>
+  
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+            <div class="card-body">
+              <h3 class="card-title">${materialExibir.titulo}</h3>
+              <h4><fmt:formatNumber value="${materialExibir.preco}" type="currency"/></h4>
+              <p class="card-text"> ${materialExibir.descricao}
+        <br><label>Tipo Material:</label> ${materialExibir.tipoDesc}
+        
+        
+    </p>
+              <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+              4.0 stars
+            </div>
+          </div>
+          <!-- /.card -->
+
+          
     <!-- /form -->
     <div class="col-md-12"></div>
     <c:if test="${!empty(user)}">
-        <div class="form-group col-md-2">
-            <form  action="AnuncioServlet" method="POST">
-                <input type="hidden" name="action"  value="ALTERARANUNCIO" >
-                <br><input type="submit" value="Alterar"  class="form-control btn-primary" />
+        <c:if test="${materialExibir.idAnunciante == user.id}">
+        <br><div class="form-group">
+            <form class="form-inline" action="AnuncioServlet" method="POST">
+                <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 " />
+                <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4" />
+                <input type="submit" value="Marcar Como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${materialExibir.id}" class="form-control btn btn-primary col-md-4" />
             </form>
         </div>
-        <div class="form-group col-md-2">
-            <form  action="AnuncioServlet" method="POST">
-                <input type="hidden" name="action"  value="EXCLUIRANUNCIO" >
-                <br><input type="submit" value="Excluir"  class="form-control btn-primary" />
-            </form>
-        </div>
+        </c:if>
     </c:if>
     <div class="col-md-12"></div>
+        </div>
+        </div>
+        </div>
+    
+    <div class="col-md-12"></div>
+    
+   
 </c:if>
 <c:if test="${materialAlterar != null}">   
     <div class="form-group">
@@ -503,46 +612,54 @@ Author     : onurb
             <h2>Anuncio: ${idExibirAnuncio} </h2><br>
             <h2> Fotos:</h2></br></br>
             <div class="col-md-12"></div>
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">             
-                <div class="carousel-inner">
-                    <c:set var="counter" value="0" />
-                    <c:forEach var="lista" items="${materialAlterar.fotos}">
-                        <c:choose>
-                            <c:when test="${counter == 0}">
-                                <div class="carousel-item active">
-                                    <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
-                                </div>
-                            </c:when> 
-                            <c:otherwise>
-                                <div class="carousel-item">
-                                    <img src="${lista}" style="height: 400px" alt="Fotos do anuncio">
-                                </div>
-                            </c:otherwise>
-                        </c:choose>     
-                        <c:set var="counter" value="${counter+1}" />
-                    </c:forEach>
+            <div id="demo" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <c:forEach var="foto" items="${materialAlterar.fotos}" varStatus="j">
+          <c:choose>
+              <c:when test="${j.index == 0}">
+                <li data-target="#demo" data-slide-to="${j.index}" class="active"></li>
+              </c:when>
+              <c:otherwise>
+                <li data-target="#demo" data-slide-to="${j.index}"></li>
+              </c:otherwise>
+          </c:choose>
+      </c:forEach>
+  </ul>
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+      <c:forEach var="foto" items="${materialAlterar.fotos}" varStatus="i">
+          <c:choose>
+              <c:when test="${i.index == 0}">
+                <div class="carousel-item active">
+                  <img src="${foto}" alt="" width="1100" height="500">
                 </div>
-                </br>
-                </br>
-                <!-- Left and right controls -->
-                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
+              </c:when>
+              <c:otherwise>
+                <div class="carousel-item">
+                  <img src="${foto}" alt="" width="1100" height="500">
+                </div>
+              </c:otherwise>
+          </c:choose>
+      </c:forEach> 
+  </div>
+  
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
             <div class="col-sm-9">
-                <select class="selectpicker" name="tipo" id="tipo">
-                    <option value="0">SELECIONE</option>
-
-                    <option value="1" <c:if test="${materialAlterar.tipo == 1}">selected</c:if> >Livros DidÃ¡ticos</option>
-                    <option value="2" <c:if test="${materialAlterar.tipo == 2}">selected</c:if> >Livros de Literatura</option>
-                    <option value="3" <c:if test="${materialAlterar.tipo == 3}">selected</c:if> >Apostilas</option>
-                    <option value="4" <c:if test="${materialAlterar.tipo == 4}">selected</c:if> >Outros</option>
+                    <c:set var="lista" value="${listaCatMaterial}"/>
+                    <select class="selectpicker form-control" name="tipo" id="select">
+                        <c:forEach var="lista" items="${lista}">
+                            <option value="${lista.id}" <c:if test="${lista.id == materialAlterar.tipo}">selected</c:if> > ${lista.descricao}</option>
+                        </c:forEach>
                     </select>
+                    <!--<input type="text" name="tipo" id="titulo" value="${imovelAlterar.tipoDesc}" class="form-control"  > !-->
                 </div>
                 <div class="form-group">
                     <label for=titulo class="col-sm-3 control-label">Titulo:</label>
@@ -585,7 +702,7 @@ Author     : onurb
 
 <!-- Rodapé -->
 <%@include file="comentario.jsp" %>
-</div> <!-- ./row -->
+ <!-- ./row -->
 </div> <!-- ./container -->
 </body>
 </html>

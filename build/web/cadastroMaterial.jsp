@@ -11,68 +11,67 @@
         <c:param name="msg" value="Faça login para acessar esta página!"></c:param>
     </c:redirect>
 </c:if>
+<div class="form-group col-md-2"></div>
+<div class="form-group col-md-8">
 <form class="form-horizontal"  action="AnuncioServlet?action=ADDMATERIAL"  method="POST" role="form" enctype="multipart/form-data">
     <h2>Cadastro de Anuncio: Material</h2>
-    <div class="form-group">
-        <label for="select" class="col-sm-3 control-label">Selecione o Tipo de Material</label>
-        <div class="col-sm-9">
-            <select class="selectpicker" name="select" id="select">
+   
+        <div>
+        <label for="select" class=" control-label">Selecione o Tipo de Material</label>
+            <c:set var="lista" value="${listaCatMaterial}"/>
+            <select class="selectpicker form-control" name="select" id="select">
                 <option value="0">SELECIONE</option>
-
-                <option value="1">Livros Didáticos</option>
-                <option value="2">Livros de Literatura</option>
-                <option value="3">Apostilas</option>
-                <option value="4">Outros</option>
+                <c:forEach var="lista" items="${lista}">
+                    <option value="${lista.id}"> ${lista.descricao}</option>
+                </c:forEach>
             </select>
         </div>
-    </div>
-    <div class="form-group">
-        <label for=titulo class="col-sm-3 control-label">Titulo:</label>
-        <div class="col-sm-9">
+    
+        <label for=titulo class="control-label">Titulo:</label>
+        <div >
             <input type="text" name="titulo" id="titulo" placeholder="" class="form-control" autofocus required> 
         </div>
-    </div>
-    <div class="form-group">
-        <label for="descricao" class="col-sm-3 control-label">Descrição:</label>
-        <div class="col-sm-9">
+    
+    
+        <label for="descricao" class="control-label">Descrição:</label>
+        <div >
             <input type="text" name="descricao" id="descricao" placeholder="" class="form-control" autofocus required> 
             <span class="help-block">Descreva seu anuncio</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="valor" class="col-sm-3 control-label">Preço:</label>
-        <div class="col-sm-6">
-            <input type="number" name="valor" id="valor" placeholder="" class="form-control" min="0" autofocus>
-            <span class="help-block">Insira um valor caso deseje.</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="file" class="col-sm-3 control-label">Selecione uma Imagem</label>
-        <div class="col-sm-9">
+        </div><br>
+    
+    
+        <label for="valor" class="control-label">Preço:</label>
+        <div>
+            <input type="number" name="valor" id="valor" placeholder="" class="form-control" min="0" step="any" >
+            <span class="help-block">Insira um valor.</span>
+        </div>    
+    
+        <br><label for="file" class="control-label">Selecione uma Imagem</label>
+        <div >
             <input type="file" name="file" id="file" placeholder="" class="form-control" autofocus required>
         </div>
-    </div>
+    
     <div class="form-group" id="1" style="display:none;">
         <label for="file" class="col-sm-3 control-label"></label> 
-        <div class="col-sm-9" >
+        <div>
             <input type="file" name="file"  placeholder="" class="form-control" autofocus >
         </div>
     </div>
     <div class="form-group" id="2" style="display:none;">
         <label for="file" class="col-sm-3 control-label"></label> 
-        <div class="col-sm-9" >
+        <div >
             <input type="file" name="file"  placeholder="" class="form-control" autofocus >
         </div>
     </div>
     <div class="form-group" id="3" style="display:none;">
         <label for="file" class="col-sm-3 control-label"></label> 
-        <div class="col-sm-9" >
+        <div >
             <input type="file" name="file"  placeholder="" class="form-control" autofocus >
         </div>
     </div>
     <div class="form-group" id="4" style="display:none;">
         <label for="file" class="col-sm-3 control-label"></label> 
-        <div class="col-sm-9" >
+        <div >
             <input type="file" name="file"  placeholder="" class="form-control" autofocus >
         </div>
     </div>
@@ -84,20 +83,24 @@
             i++;
         }
     </script>
-    <div class="form-group">
-        <label for="file" class="col-sm-3 control-label"></label>
-        <div class="col-sm-9">
-            <button type="button" name="button" id="button" class="form-control" onclick="myFunction()">Adicionar Imagem</button>
+    
+        <label for="file" class="control-label"></label>
+        <div >
+            <button type="button" name="button" id="button" class="btn btn-block btn-dark" onclick="myFunction()">Adicionar Imagem</button>
         </div>
-    </div>
+    
 
-    <div class="form-group">
-        <div class="col-sm-9 col-sm-offset-3">
-            <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+    
+        <div class="col-sm-offset-3">
+            <br><button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
         </div>
-    </div>
+        <div>
+            <br><a href="home.jsp" class="btn btn-primary btn-block" role="button">Cancelar</a>
+        </div>
+    
     <br><br><br>
 </form>   <!-- /form -->
+    </div>
 <!-- Rodapé -->
 </div>
 </div>

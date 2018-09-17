@@ -41,6 +41,8 @@ public class UserDAO {
             + "user.DS_SENHA, \n"
             + "user.CD_ENDERECO, \n"
             + "user.DS_FOTO, \n"
+            + "user.DS_DESCRICAO_USER, \n"
+            + "user.DS_INTERESSES, \n"
             + "endr.NM_RUA,\n"
             + "endr.NM_ESTADO,\n"
             + "endr.NR_RUA,\n"
@@ -311,6 +313,12 @@ public class UserDAO {
                 u.setCdEndereco(rs.getInt("CD_ENDERECO"));
                 if (rs.getString("DS_FOTO") != null) {
                     u.setFoto(rs.getString("DS_FOTO"));
+                }
+                if (rs.getString("DS_DESCRICAO_USER") != null) {
+                    u.setDescricao(rs.getString("DS_DESCRICAO_USER"));
+                }
+                if (rs.getString("DS_INTERESSES") != null) {
+                    u.setInteresses(rs.getString("DS_INTERESSES"));
                 }
 
                 return u;

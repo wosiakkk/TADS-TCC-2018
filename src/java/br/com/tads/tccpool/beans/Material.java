@@ -22,6 +22,25 @@ public class Material implements Anunciavel, Serializable {
     private int status;
     private int id;
     private List<String> fotos;
+    private int idAnunciante;
+    private String nomeAnunciante;
+
+    public int getIdAnunciante() {
+        return idAnunciante;
+    }
+
+    public void setIdAnunciante(int idAnunciante) {
+        this.idAnunciante = idAnunciante;
+    }
+
+    public String getNomeAnunciante() {
+        return nomeAnunciante;
+    }
+
+    public void setNomeAnunciante(String nomeAnunciante) {
+        this.nomeAnunciante = nomeAnunciante;
+    }
+    
 
     public String getTipoDesc() {
         return tipoDesc;

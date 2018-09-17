@@ -46,4 +46,20 @@ public class MainPageFacade {
            dao.close();
        }    
     } 
+    public static List<Categoria> listaCategoriasMovel() throws AcessoBdException, SQLException{
+       CategoriaDAO dao = new CategoriaDAO();
+        try{ 
+            return dao.getCategoriasMovel();
+       }finally{
+           dao.close();
+       }    
+    } 
+    public static List<Categoria> listaCategoriasMaterial() throws AcessoBdException, SQLException{
+       CategoriaDAO dao = new CategoriaDAO();
+        try{ 
+            return dao.getCategoriasMaterial();
+       }finally{
+           dao.close();
+       }    
+    } 
 }
