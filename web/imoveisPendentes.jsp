@@ -110,7 +110,9 @@
         </div>
     </div>
 </form>   <!-- /form -->
+<%@include file="comentario.jsp" %>
 </div> <!-- ./row -->
+<!-- Rodapé -->
 </div> <!-- ./container -->
 </body>
 </html>

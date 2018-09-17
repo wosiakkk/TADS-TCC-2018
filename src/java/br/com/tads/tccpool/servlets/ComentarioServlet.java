@@ -6,6 +6,7 @@
 package br.com.tads.tccpool.servlets;
 
 import br.com.tads.tccpool.beans.Comentario;
+import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.facade.ComentarioFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -53,7 +54,11 @@ public class ComentarioServlet extends HttpServlet {
                 rd.forward(request, response);
             }
             
+            //Salva usuário logado para verificações
+            User userLogado = (User) session.getAttribute("user");
+            
             String action = (String) request.getParameter("action").trim();
+            int idComentario = 0;
             
             switch(action) {
                 case "ADD":
@@ -80,20 +85,28 @@ public class ComentarioServlet extends HttpServlet {
                 case "LIST_COMENTARIOS":
                     String comentarios;
                     int anuncio = Integer.parseInt(request.getParameter("anuncio"));
-                    comentarios = ComentarioFacade.listarComentarios(anuncio);
+                    
+                    //Se o tipo de usuário for diferente de 2 isManager recebe true, senão recebe false
+                    boolean isManager = (userLogado.getTipoUsuario() != 2);
+                    comentarios = ComentarioFacade.listarComentarios(anuncio, isManager);
                     out.write(comentarios);
                     out.flush();
                     break;
                     
                 case "LIKE_COMENTARIO":
                 case "UNLIKE_COMENTARIO":
-                    int idComentario = Integer.parseInt(request.getParameter("comentario"));
+                    idComentario = Integer.parseInt(request.getParameter("comentario"));
                     if("LIKE_COMENTARIO".equals(action)) {
                         ComentarioFacade.setLike(idComentario);
                     }
                     else if("UNLIKE_COMENTARIO".equals(action)) {
                         ComentarioFacade.setUnlike(idComentario);
                     }
+                    break;
+                
+                case "EXCLUIR_COMENTARIO":
+                    idComentario = Integer.parseInt(request.getParameter("comentario"));
+                    ComentarioFacade.excluirComentario(idComentario);
                     break;
             }
             

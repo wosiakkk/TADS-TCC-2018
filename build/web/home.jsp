@@ -175,6 +175,7 @@
             <div class="search-container">
                 <div class="ui-widget">
                     <form class="form"  action="RedirecionamentoBusca"  method="POST" role="form">
+                        <input id="idSearch" name="idSearch" type="hidden" value="">
                         <input type="text" id="search" name="search" class="search form-control" placeholder="Procure aqui"/>
                         <div id="anchor" class="col-md-12"></div>
                         <button id="btnSearch" name="btnSearch" type="submit" class="btn form-control">Ver Perfil</button>
@@ -202,11 +203,6 @@
 <!-- Importando: 1-Bootstrap -->
 <script src="assets/bootstrap/js/bootstrap.bundle.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        setCopyright();
-    });
-</script>
 </body>
 </html>
 

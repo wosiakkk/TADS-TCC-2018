@@ -47,13 +47,13 @@ public class RedirecionamentoBusca extends HttpServlet {
             }
             
             String teste = request.getParameter("search");
-            int idBusca = UserFacade.buscarIdPorNomeDoUsuario(teste);
+            int idSearch = Integer.parseInt(request.getParameter("idSearch"));
             
-            if(idBusca != -1) {
+            if(idSearch > 0) {
                 int idSessao =(int) session.getAttribute("idUserSessao");
                 User perfilBusca = new User();
-                perfilBusca = UserFacade.geraPerfilUser(idBusca);
-                int amizade = UserFacade.checandoAmizade(idSessao, idBusca);
+                perfilBusca = UserFacade.geraPerfilUser(idSearch);
+                int amizade = UserFacade.checandoAmizade(idSessao, idSearch);
                 session.setAttribute("perfil", perfilBusca);
                 session.setAttribute("amizade", amizade);
 

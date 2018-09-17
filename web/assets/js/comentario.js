@@ -91,3 +91,29 @@ function replyComentario(comentario){
     $(window).scrollTop($('#DS_MSG'));
     $('#DS_MSG').focus();
 }
+
+function excluirComentario(elemento) {
+    var coonfirmacao = confirm("Tem certeza que deseja excluir este comentario e suas respostas?");
+    if (coonfirmacao === true) {
+        var dados = {
+            action: 'EXCLUIR_COMENTARIO',
+            comentario: $(elemento).data('comentario')
+        };
+        $.ajax({
+            url: 'ComentarioServlet',
+            data: dados,
+            method: 'POST',
+            dataType: 'html',
+            success: function (resp) {
+                buscarMensagens();
+            },
+            error : function (resp) {
+                console.log(resp);
+                alert(resp);
+            }
+        });
+    } else {
+        return;
+    } 
+    
+}
