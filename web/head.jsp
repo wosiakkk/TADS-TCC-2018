@@ -14,6 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="google-signin-client_id" content="416664861929-ceaen1jvonlg3vecdhpmnks7029a2gnd.apps.googleusercontent.com">
         <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+        <link href="assets/css/shop-item.css" rel="stylesheet">
         <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script-->
         <!-- Adicionando jQuery para ser utilizado nas funções -->
         <script src="assets/jquery/jquery.min.js" type="text/javascript"></script>

@@ -45,44 +45,45 @@ public class MainPageServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
+            
             HttpSession session = request.getSession();
             //Validação de acesso
-            if (session == null) {
+            if(session == null) {
                 RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                 request.setAttribute("title", "Inicio");
                 request.setAttribute("msg", "Faça login para acessar esta página!");
                 rd.forward(request, response);
             }
-
+            
             String action = request.getParameter("action");
             String tipo = request.getParameter("tipo");
-            switch (action) {
+            switch(action){
                 case "EDITAR":
                 case "CLIENTE":
-                    List<Instituicao> lista = new ArrayList<Instituicao>();
-                    try {
-                        lista = MainPageFacade.listaInstituicao();
-                    } catch (AcessoBdException e) {
-                        e.printStackTrace();
-                        String param = URLEncoder.encode("Erro na servlet cadastro " + e.getMessage() + " - " + e.getCause().getMessage() + "]", "UTF-8");
-                        response.sendRedirect("index.jsp?msg=" + param);
-                    }
-                    session.setAttribute("lista", lista);
-                    if ("EDITAR".equals(action)) {
-                        RequestDispatcher rd = request.getRequestDispatcher("editarPerfil.jsp");
-                        rd.forward(request, response);
-                    } else {
-                        RequestDispatcher rd = request.getRequestDispatcher("cadastrar.jsp");
-                        rd.forward(request, response);
-                    }
-
+                        List<Instituicao> lista = new ArrayList<Instituicao>();
+                        try{
+                            lista = MainPageFacade.listaInstituicao();
+                        }catch(AcessoBdException e){
+                            e.printStackTrace();
+                            String param = URLEncoder.encode("Erro na servlet cadastro " + e.getMessage() + " - " + e.getCause().getMessage() + "]", "UTF-8");
+                            response.sendRedirect("index.jsp?msg=" + param);
+                        }
+                        session.setAttribute("lista", lista);
+                        if("EDITAR".equals(action)) {
+                            RequestDispatcher rd = request.getRequestDispatcher("editarPerfil.jsp");
+                            rd.forward(request, response);
+                        }
+                        else {
+                            RequestDispatcher rd = request.getRequestDispatcher("cadastrar.jsp");
+                            rd.forward(request, response);
+                        }
+                            
                     break;
                 case "ANUNCIO":
-
+                  
                     RequestDispatcher rd2;
-
-                    switch (tipo) {
+                            
+                      switch(tipo){
                         case "imovel":
                             List<Categoria> listaCategoriaImovel = new ArrayList<Categoria>();
                             try {
@@ -97,18 +98,36 @@ public class MainPageServlet extends HttpServlet {
                             rd2.forward(request, response);
                             break;
                         case "movel":
+                            List<Categoria> listaCategoriaMovel = new ArrayList<Categoria>();
+                            try {
+                                listaCategoriaMovel = MainPageFacade.listaCategoriasMovel();
+                            } catch (AcessoBdException e) {
+                                e.printStackTrace();
+                                String param = URLEncoder.encode("Erro na servlet cadastro " + e.getMessage() + " - " + e.getCause().getMessage() + "]", "UTF-8");
+                                response.sendRedirect("index.jsp?msg=" + param);
+                            }
+                            session.setAttribute("listaCatMovel", listaCategoriaMovel);
                             rd2 = request.getRequestDispatcher("cadastroMovel.jsp");
                             rd2.forward(request, response);
                             break;
                         case "material":
+                            List<Categoria> listaCategoriaMaterial = new ArrayList<Categoria>();
+                            try {
+                                listaCategoriaMaterial = MainPageFacade.listaCategoriasMaterial();
+                            } catch (AcessoBdException e) {
+                                e.printStackTrace();
+                                String param = URLEncoder.encode("Erro na servlet cadastro " + e.getMessage() + " - " + e.getCause().getMessage() + "]", "UTF-8");
+                                response.sendRedirect("index.jsp?msg=" + param);
+                            }
+                            session.setAttribute("listaCatMaterial", listaCategoriaMaterial);
                             rd2 = request.getRequestDispatcher("cadastroMaterial.jsp");
                             rd2.forward(request, response);
                             break;
                     }
                     break;
-
+                    
             }
-
+            
         }
     }
 
