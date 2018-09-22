@@ -101,9 +101,9 @@ public class UserDAO {
             + " tb_amizade.tb_status_amizade_NR_STATUS_AMIGO "
             + "from tb_amizade where tb_amizade.tb_usuario_NR_SEQ = ?";
 
-    private static final String QUERY_SELECIONAR_IDS_AMIGOS_ACEITOS = "SELECT tb_amizade.tb_usuario_NR_SEQ FROM tb_amizade "
-            + "WHERE tb_amizade.tb_usuario_NR_SEQ NOT IN (?) AND"
-            + " tb_amizade.tb_status_amizade_NR_STATUS_AMIGO = 2 AND tb_amizade.id_solicitado = ? OR tb_amizade.id_solicitante = ?";
+   private static final String QUERY_SELECIONAR_IDS_AMIGOS_ACEITOS = "SELECT tb_amizade.tb_usuario_NR_SEQ FROM tb_amizade "
+            + "WHERE (tb_amizade.tb_usuario_NR_SEQ NOT IN (?) AND"
+            + " tb_amizade.tb_status_amizade_NR_STATUS_AMIGO = 2) AND (tb_amizade.id_solicitado = ? OR tb_amizade.id_solicitante = ?)";
 
     private static final String QUERY_SELECIONAR_IDS_AMIZADE_PENDENTE = "SELECT DISTINCT tb_amizade.id_solicitante "
             + "FROM tb_amizade WHERE tb_amizade.id_solicitado = ? "
