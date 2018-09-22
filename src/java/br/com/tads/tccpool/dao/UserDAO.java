@@ -73,15 +73,10 @@ public class UserDAO {
             + " tb_usuario.DS_INTERESSES FROM tcc1.tb_usuario "
             + "WHERE tb_usuario.NR_SEQ = ?";
 
-            + "DS_FOTO = ?"
-            + "WHERE\n"
-            + "NR_SEQ = ?";
-    
-    private static final String QUERY_SENHA_USR = "SELECT tb_usuario.DS_SENHA FROM tb_usuario WHERE NR_SEQ = ?";
-    
-    private static final String QUERY_UPDATE_SENHA = "UPDATE tb_usuario SET tb_usuario.DS_SENHA = ? WHERE tb_usuario.NR_SEQ = ?";
-           
-
+           private static final String QUERY_EDIT_USR = "UPDATE tb_usuario set NM_NOME = ?, "
+                   + "DS_FOTO = ?, NR_TELEFONE = ?, NR_CELULAR = ?, DS_DESCRICAO_USER = ?, "
+                   + "DS_INTERESSES = ? WHERE NR_SEQ = ?";
+                    
     private static final String QUERY_EDIT_END = "UPDATE tb_endereco SET\n"
             + "NM_RUA = ?,"
             + "NM_ESTADO = ?,"
