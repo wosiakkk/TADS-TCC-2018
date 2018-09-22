@@ -37,4 +37,7 @@
     </c:forEach>
 </div>
 <!-- Rodapé -->
-<%@include file="footer.jsp" %>
+</div>
+</div>
+</body>
+</html>
