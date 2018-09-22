@@ -23,3 +23,11 @@ footer {
 .menu-fixed-left{
     position: fixed;
 }
+mark {
+    background-color: #202326;
+    color: black;
+}
+a {
+     color: #16181b;
+}
+
