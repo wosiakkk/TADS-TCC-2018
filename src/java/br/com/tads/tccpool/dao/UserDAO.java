@@ -124,9 +124,10 @@ public class UserDAO {
     private static final String QUERY_REJEITAR_PEDIDO = "DELETE FROM tb_amizade WHERE tb_amizade.id_solicitado = ? "
             + "AND tb_amizade.id_solicitante = ? AND tb_amizade.tb_status_amizade_NR_STATUS_AMIGO = 1";
 
-    private static final String QUERY_REJEITAR_E_BLOQUEAR = "UPDATE tb_amizade SET "
-            + "tb_amizade.tb_status_amizade_NR_STATUS_AMIGO =3 WHERE tb_amizade.id_solicitado = ? "
-            + "AND tb_amizade.id_solicitante = ?";
+   private static final String QUERY_REJEITAR_E_BLOQUEAR = "UPDATE tb_amizade SET \n" +
+"            tb_amizade.tb_status_amizade_NR_STATUS_AMIGO =3, tb_amizade.id_solicitante_bloq = ? WHERE (tb_amizade.id_solicitado = ? \n" +
+"            AND tb_amizade.id_solicitante = ?) OR (tb_amizade.id_solicitado = ? \n" +
+"            AND tb_amizade.id_solicitante = ?)";
 
     private static final String QUERY_DESBLOQUEAR_USUARIO = "UPDATE tb_amizade "
             + "SET "
