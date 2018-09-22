@@ -69,9 +69,12 @@ public class UserServlet extends HttpServlet {
             User u = new User();
             switch (action) {
                 case "ADD": {
+
                     u.setNome(request.getParameter("nome"));
+
                     u.setEmail(request.getParameter("email"));
-                    u.setSenha(MD5.criptografar(request.getParameter("senha")));                    
+                    u.setSenha(MD5.criptografar(request.getParameter("senha")));
+                    
                     try{
                         if(u.getNome().isEmpty() || u.getEmail().isEmpty() || u.getSenha().isEmpty()) {
                             String param = URLEncoder.encode("Todos os campos de cadastro são obrigatórios. Por favor, tente novamente.");
@@ -83,8 +86,10 @@ public class UserServlet extends HttpServlet {
                         String param = URLEncoder.encode("Todos os campos de cadastro são obrigatórios. Por favor, tente novamente.");
                         response.sendRedirect("erro.jsp?title=Erro&msg=" + param);
                     }
-                    //usuário comum
+
+                    //temporariamente só irei cadastrar usuários comuns
                     u.setTipoUsuario(2);
+
                     try {
                         User userLogado = UserFacade.insereUsuario(u);
                         if (userLogado == null) {
@@ -93,13 +98,16 @@ public class UserServlet extends HttpServlet {
                         } else {
                             response.sendRedirect("login.jsp");
                         }
+
                     } catch (AcessoBdException ex) {
                         throw new RuntimeException(ex);
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
+
                     break;
                 }
+                
                 case "ADDMOD": {
                     u.setNome(request.getParameter("nome"));
                     u.setEmail(request.getParameter("email"));
@@ -166,19 +174,64 @@ public class UserServlet extends HttpServlet {
                     }
                     break;
                 }
+                
                 case "EDIT": {
                     User alterar = new User();
                     String caminhoFoto = new String();
                     try {
+
                         /*Faz o parse do request*/
                         List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+
                         /*Escreve a o arquivo na pasta img*/
                         for (FileItem item : multiparts) {
                             if (item.isFormField()) {
                                 if (item.getFieldName().equals("idUser")) {
                                     alterar.setId(Integer.parseInt(item.getString()));
                                 }
+                                if (item.getFieldName().equals("codEndereco")) {
+                                    alterar.setCdEndereco(Integer.parseInt(item.getString()));
+                                }
+                                if (item.getFieldName().equals("nome")) {
+                                    alterar.setNome(item.getString());
+                                }
+                                if (item.getFieldName().equals("telefone")) {
+                                    alterar.setTel(item.getString());
+                                }
+                                if (item.getFieldName().equals("celular")) {
+                                    alterar.setCel(item.getString());
+                                }
+                                if (item.getFieldName().equals("logradouro")) {
+                                    alterar.setLogradouro(item.getString());
+                                }
+                                if (item.getFieldName().equals("numero")) {
+                                    alterar.setNumero(Integer.parseInt(item.getString()));
+                                }
+                                if (item.getFieldName().equals("complemento")) {
+                                    alterar.setComplemento(item.getString());
+                                }
+                                if (item.getFieldName().equals("cep")) {
+                                    alterar.setCEP(item.getString());
+                                }
+                                if (item.getFieldName().equals("cidade")) {
+                                    alterar.setCidade(item.getString());
+                                }
+                                if (item.getFieldName().equals("estado")) {
+                                    alterar.setEstado(item.getString());
+                                }
+                                if (item.getFieldName().equals("descricao")) {
+                                    alterar.setDescricao(item.getString());
+                                }
+                                if (item.getFieldName().equals("interesses")) {
+                                    alterar.setInteresses(item.getString());
+                                }
+                                if (item.getFieldName().equals("fotoUser")) {
+                                    if(!item.getString().equals("") && alterar.getFoto() == null){
+                                    alterar.setFoto(item.getString());
+                                    }
+                                }
                             } else {
+
                                 Random rand = new Random();
                                 String nomeString = String.valueOf(rand.nextInt()) + ".jpg";
                                 if (!item.getName().equals("")) {
@@ -186,28 +239,35 @@ public class UserServlet extends HttpServlet {
                                     caminhoFoto = "img/fotosPerfil" + File.separator + nomeString;
                                     alterar.setFoto(caminhoFoto);
                                 }
+
                             }
+
                         }
                         request.setAttribute("message", "Arquivo carregado com sucesso");
                     } catch (Exception ex) {
                         request.setAttribute("message", "Upload de arquivo falhou devido a " + ex);
                     }
                     try {
+
                         boolean edit = UserFacade.editarUsuario(alterar);
                         if (edit) {
                             alterar = UserFacade.buscarUsuario(alterar.getId());
                             session.setAttribute("userSearch", alterar);
                             User us = (User) session.getAttribute("user");
                             us.setFoto(alterar.getFoto());
+                            us.setNome(alterar.getNome());
                             session.setAttribute("user", us);
                         } else {
+
                         }
+
                     } catch (Exception ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
                         request.setAttribute("msg", "Falha ao Realizar Anuncio: " + ex);
                     } finally {
                         request.getRequestDispatcher("editarPerfil.jsp").forward(request, response);
                     }
+
                     break;
                 }
                 case "SEARCH": {
@@ -255,11 +315,13 @@ public class UserServlet extends HttpServlet {
                    }
                    break;
                 }
-                
+
                 case "AMIZADE": {
                     String acao = request.getParameter("acao");
                     switch (acao) {
+
                         case "SOLICITAR": {
+
                             int idSolicitante = Integer.parseInt(request.getParameter("idSolicitante"));
                             int idSolicitado = Integer.parseInt(request.getParameter("idSolicitado"));
 
@@ -273,6 +335,7 @@ public class UserServlet extends HttpServlet {
                             } else {
                                 //erro na tabela do solicitante
                             }
+
                             break;
                         }
                         case "ACEITAR": {
@@ -311,7 +374,8 @@ public class UserServlet extends HttpServlet {
                             if(UserFacade.desbloquearUsuario(idSessao, idDesbloqueio)){
                                 RequestDispatcher rd = request.getRequestDispatcher("amizadeDesbloqueada.jsp");
                                 rd.forward(request, response);
-                            }else{                               
+                            }else{
+                                
                             }
                             break;
                         }
@@ -321,7 +385,8 @@ public class UserServlet extends HttpServlet {
                             if(UserFacade.excluirAmizade(idSessao, idAmigo)){
                                 RequestDispatcher rd = request.getRequestDispatcher("amizadeExcluida.jsp");
                                 rd.forward(request, response);
-                            }else{                               
+                            }else{
+                                
                             }
                             break;
                         }
@@ -353,19 +418,26 @@ public class UserServlet extends HttpServlet {
                             break;
                         }
                     }
+
                     break;
                 }
+
                 case "BUSCARAMIGOS": {
 
                     String tipo = request.getParameter("tipo");
                     switch (tipo) {
+
                         case "ACEITOS": {
+
                             break;
                         }
+
                     }
+
                     break;
                 }
             }
+
         }
     }
 

@@ -23,14 +23,17 @@ import java.util.logging.Logger;
  */
 public class UserDAO {
 
+    
     private static final String QUERY_LOGIN = "SELECT NR_SEQ, DS_EMAIL, NM_NOME, TP_USUARIO, DS_FOTO, DS_SENHA FROM TB_USUARIO WHERE DS_EMAIL = ? AND DS_SENHA = ?";
     private static final String QUERY_LOGIN_GOOGLE = "SELECT NR_SEQ, NM_NOME, DS_EMAIL, DS_FOTO,TP_USUARIO FROM TB_USUARIO WHERE DS_EMAIL = ?";
+     private static final String QUERY_SIMPLE_INSERT_MODADM = "INSERT INTO TB_USUARIO"
+            + " (NM_NOME,DS_EMAIL,DS_SENHA,TP_USUARIO,DS_FOTO)"
+            + " VALUES (?,?,?,?,?)";
     private static final String QUERY_SIMPLE_INSERT_USR = "INSERT INTO TB_USUARIO"
             + " (NM_NOME,DS_EMAIL,DS_SENHA,TP_USUARIO)"
             + " VALUES (?,?,?,?)";
-    private static final String QUERY_SIMPLE_INSERT_MODADM = "INSERT INTO TB_USUARIO"
-            + " (NM_NOME,DS_EMAIL,DS_SENHA,TP_USUARIO,DS_FOTO)"
-            + " VALUES (?,?,?,?,?)";
+    private static final String QUERY_SENHA_USR = "SELECT tb_usuario.DS_SENHA FROM tb_usuario WHERE NR_SEQ = ?";
+    private static final String QUERY_UPDATE_SENHA = "UPDATE tb_usuario SET tb_usuario.DS_SENHA = ? WHERE tb_usuario.NR_SEQ = ?";
     private static final String QUERY_SIMPLE_INSERT_GOOGLE = "INSERT INTO TB_USUARIO"
             + " (NM_NOME,DS_EMAIL,DS_FOTO,TP_USUARIO)"
             + " VALUES (?,?,?,?)";
@@ -45,6 +48,8 @@ public class UserDAO {
             + "user.DS_SENHA, \n"
             + "user.CD_ENDERECO, \n"
             + "user.DS_FOTO, \n"
+            + "user.DS_DESCRICAO_USER, \n"
+            + "user.DS_INTERESSES, \n"
             + "endr.NM_RUA,\n"
             + "endr.NM_ESTADO,\n"
             + "endr.NR_RUA,\n"
@@ -68,7 +73,6 @@ public class UserDAO {
             + " tb_usuario.DS_INTERESSES FROM tcc1.tb_usuario "
             + "WHERE tb_usuario.NR_SEQ = ?";
 
-    private static final String QUERY_EDIT_USR = "UPDATE tb_usuario SET\n"
             + "DS_FOTO = ?"
             + "WHERE\n"
             + "NR_SEQ = ?";
@@ -76,6 +80,7 @@ public class UserDAO {
     private static final String QUERY_SENHA_USR = "SELECT tb_usuario.DS_SENHA FROM tb_usuario WHERE NR_SEQ = ?";
     
     private static final String QUERY_UPDATE_SENHA = "UPDATE tb_usuario SET tb_usuario.DS_SENHA = ? WHERE tb_usuario.NR_SEQ = ?";
+           
 
     private static final String QUERY_EDIT_END = "UPDATE tb_endereco SET\n"
             + "NM_RUA = ?,"
@@ -182,6 +187,9 @@ public class UserDAO {
         con.close();
         con = null;
     }
+    
+    
+    
 
     public void inserirUser(User u) throws SQLException {
         try {
@@ -190,23 +198,6 @@ public class UserDAO {
             stmt.setString(2, u.getEmail());
             stmt.setString(3, u.getSenha());
             stmt.setInt(4, u.getTipoUsuario());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            stmt.close();
-            con.close();
-        }
-    }
-    
-     public void inserirModOrAdm(User u) throws SQLException {
-        try {
-            stmt = con.prepareStatement(QUERY_SIMPLE_INSERT_MODADM);
-            stmt.setString(1, u.getNome());
-            stmt.setString(2, u.getEmail());
-            stmt.setString(3, u.getSenha());
-            stmt.setInt(4, u.getTipoUsuario());
-            stmt.setString(5, u.getFoto());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -257,44 +248,6 @@ public class UserDAO {
             con.close();
         }
         return u;
-    }
-    
-    public Boolean verificaSenha(String senhaPassada, int idSessao){
-        String senhaBuscada;
-        String md5 = MD5.criptografar(senhaPassada);
-        try {
-            stmt = con.prepareStatement(QUERY_SENHA_USR);
-            stmt.setInt(1,idSessao);
-            rs = stmt.executeQuery();
-            if(rs.next()){
-                
-            }
-             senhaBuscada = rs.getString("DS_SENHA");
-            if(senhaBuscada.equalsIgnoreCase(md5)){
-                    return true;
-            }else{
-                return false;
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-           
-        } 
-        return false;
-    }
-    
-    public Boolean alterarSenha(String novaSenha, int idSesao){
-        String md5 = MD5.criptografar(novaSenha);
-        try {
-            stmt = con.prepareStatement(QUERY_UPDATE_SENHA);
-            stmt.setString(1, md5);
-            stmt.setInt(2, idSesao);
-            stmt.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
     }
 
     /**
@@ -378,6 +331,12 @@ public class UserDAO {
                 if (rs.getString("DS_FOTO") != null) {
                     u.setFoto(rs.getString("DS_FOTO"));
                 }
+                if (rs.getString("DS_DESCRICAO_USER") != null) {
+                    u.setDescricao(rs.getString("DS_DESCRICAO_USER"));
+                }
+                if (rs.getString("DS_INTERESSES") != null) {
+                    u.setInteresses(rs.getString("DS_INTERESSES"));
+                }
 
                 return u;
             } else {
@@ -435,7 +394,7 @@ public class UserDAO {
     public void editarUser(User u) {
 
         try {
-            /*stmt = con.prepareStatement(QUERY_EDIT_END);
+            stmt = con.prepareStatement(QUERY_EDIT_END);
             stmt.setString(1, u.getLogradouro());
             stmt.setString(2, u.getEstado());
             stmt.setInt(3, u.getNumero());
@@ -445,21 +404,18 @@ public class UserDAO {
             stmt.setInt(7, u.getCdEndereco());
             stmt.executeUpdate();
             
-            int editEndOK = stmt.executeUpdate();*/
+           
 
             stmt = con.prepareStatement(QUERY_EDIT_USR);
-            // stmt.setString(1, u.getCpf());
-            //stmt.setString(2, u.getNome());
-            //stmt.setString(3, u.getEmail());
-            //stmt.setString(4, u.getTel());
-            //stmt.setString(5, u.getCel());
-            //  stmt.setInt(6, u.getInstituicao());
-            //stmt.setString(7, u.getSenha());
-            //stmt.setInt(8, u.getId());
-            //stmt.setString(9, CPFUser);
-            stmt.setString(1, u.getFoto());
-            stmt.setInt(2, u.getId());
-            int editUsrOK = stmt.executeUpdate();
+            stmt.setString(1, u.getNome());
+            stmt.setString(2, u.getFoto());
+            stmt.setString(3, u.getTel());
+            stmt.setString(4, u.getCel());
+            stmt.setString(5, u.getDescricao());
+            stmt.setString(6, u.getInteresses());
+            stmt.setInt(7, u.getId());
+            stmt.executeUpdate();
+            
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -762,6 +718,61 @@ public class UserDAO {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
+    }
+    
+    public void inserirModOrAdm(User u) throws SQLException {
+        try {
+            stmt = con.prepareStatement(QUERY_SIMPLE_INSERT_MODADM);
+            stmt.setString(1, u.getNome());
+            stmt.setString(2, u.getEmail());
+            stmt.setString(3, u.getSenha());
+            stmt.setInt(4, u.getTipoUsuario());
+            stmt.setString(5, u.getFoto());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            stmt.close();
+            con.close();
+        }
+    }
+    
+    public Boolean verificaSenha(String senhaPassada, int idSessao){
+        String senhaBuscada;
+        String md5 = MD5.criptografar(senhaPassada);
+        try {
+            stmt = con.prepareStatement(QUERY_SENHA_USR);
+            stmt.setInt(1,idSessao);
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                
+            }
+             senhaBuscada = rs.getString("DS_SENHA");
+            if(senhaBuscada.equalsIgnoreCase(md5)){
+                    return true;
+            }else{
+                return false;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+           
+        } 
+        return false;
+    }
+    
+    public Boolean alterarSenha(String novaSenha, int idSesao){
+        String md5 = MD5.criptografar(novaSenha);
+        try {
+            stmt = con.prepareStatement(QUERY_UPDATE_SENHA);
+            stmt.setString(1, md5);
+            stmt.setInt(2, idSesao);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
     //***************************************
     //***************************************

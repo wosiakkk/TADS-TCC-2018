@@ -22,6 +22,8 @@ import java.util.List;
 public class CategoriaDAO {
     private static final String QUERY_CAT = "SELECT * FROM TB_CATEGORIA";
     private static final String QUERY_CAT_IMV = "SELECT * FROM TB_CATEGORIA_IMOVEL";
+    private static final String QUERY_CAT_MOVEL = "SELECT * FROM TB_CATEGORIA_MOVEL";
+    private static final String QUERY_CAT_MATERIAL = "SELECT * FROM TB_CATEGORIA_MATERIAL";
     private Connection con = null;
     private PreparedStatement stmt = null;
     private ResultSet rs = null;
@@ -92,4 +94,51 @@ public class CategoriaDAO {
         rs.close();
        return list;
     }
+    
+    public List<Categoria> getCategoriasMovel() throws SQLException{
+        List<Categoria> list = new ArrayList<>();
+        try{
+           stmt= con.prepareStatement(QUERY_CAT_MOVEL);
+           rs = stmt.executeQuery();
+           if(rs!=null){              
+               while(rs.next()){
+                   Categoria  cat = new Categoria();
+                  cat.setDescricao(rs.getString("DS_DESCRICAO"));
+                   cat.setId(Integer.parseInt(rs.getString("ID_CATEGORIA_MOVEL")));
+                   list.add(cat);
+               }
+           }
+        }catch(SQLException e){
+          //  throw new AcessoBdException("erro dao instituicao", e);
+          System.out.println(e.getMessage());
+        }
+        con.close();
+        stmt.close();
+        rs.close();
+       return list;
+    }
+    
+    public List<Categoria> getCategoriasMaterial() throws SQLException{
+        List<Categoria> list = new ArrayList<>();
+        try{
+           stmt= con.prepareStatement(QUERY_CAT_MATERIAL);
+           rs = stmt.executeQuery();
+           if(rs!=null){              
+               while(rs.next()){
+                   Categoria  cat = new Categoria();
+                  cat.setDescricao(rs.getString("DS_DESCRICAO"));
+                   cat.setId(Integer.parseInt(rs.getString("ID_CATEGORIA_MATERIAL")));
+                   list.add(cat);
+               }
+           }
+        }catch(SQLException e){
+          //  throw new AcessoBdException("erro dao instituicao", e);
+          System.out.println(e.getMessage());
+        }
+        con.close();
+        stmt.close();
+        rs.close();
+       return list;
+    }
+    
 }

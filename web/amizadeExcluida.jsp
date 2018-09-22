@@ -25,5 +25,7 @@
         setCopyright();
     });
 </script>
+</div>
+</div>
 </body>
 </html>

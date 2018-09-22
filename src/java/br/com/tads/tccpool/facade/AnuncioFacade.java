@@ -130,9 +130,13 @@ public class AnuncioFacade {
         AnuncioDAO dao = new AnuncioDAO();
         dao.deletarAnuncioImovel(id, i);
     }
-   public static void deletarAnuncio(int id) throws SQLException{
+   public static void deletarAnuncioMovel(int id, Movel m) throws SQLException{
         AnuncioDAO dao = new AnuncioDAO();
-        dao.deletarAnuncio(id);
+        dao.deletarAnuncioMovel(id, m);
+   }   
+   public static void deletarAnuncioMaterial(int id, Material m) throws SQLException{
+        AnuncioDAO dao = new AnuncioDAO();
+        dao.deletarAnuncioMaterial(id, m);
     }
    public static void updateImovel(Imovel i, int idAnuncio) throws AcessoBdException, SQLException{
         AnuncioDAO dao = new AnuncioDAO();
@@ -149,6 +153,13 @@ public class AnuncioFacade {
    public static void updateMaterial(Material m, int idAnuncio) throws AcessoBdException, SQLException{
         AnuncioDAO dao = new AnuncioDAO();
         dao.updateMaterial(m, idAnuncio);
+        dao.close();
+        
+    }
+   
+   public static void updateStatusAnuncio(int idAnuncio, int status) throws AcessoBdException, SQLException{
+        AnuncioDAO dao = new AnuncioDAO();
+        dao.alterarStatusAnuncio(idAnuncio, status);
         dao.close();
         
     }
