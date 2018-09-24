@@ -42,6 +42,31 @@
             <input type="number" name="valor" id="valor" placeholder="" class="form-control" min="0" step="any">
             <span class="help-block">Insira um valor caso deseje.</span>
         </div>
+        
+        <br><label for="rua" class="col-sm-3 control-label">Logradouro:</label>
+        <div class="col-sm-9">
+            <input type="text" name="rua" id="rua" placeholder="" class="form-control" autofocus required>
+        </div>
+        <br><label for="num" class="col-sm-3 control-label">Número:</label>
+        <div class="col-sm-2">
+            <input type="text" name="num" id="num" placeholder="" class="form-control" autofocus required>
+        </div>
+        <br><label for="cep" class="col-sm-3 control-label">CEP:</label>
+        <div class="col-sm-9">
+            <input type="text" name="cep" id="cep" placeholder="" class="form-control" autofocus required>
+        </div>
+        <br><label for="cidade" class="col-sm-3 control-label">Cidade:</label>
+        <div class="col-sm-9">
+            <input type="text" name="cidade" id="cidade" placeholder="" class="form-control" autofocus required>
+        </div>
+        <br><label for="estado" class="col-sm-3 control-label">Estado:</label>
+        <div class="col-sm-2">
+            <input type="text" name="estado" id="estado" placeholder="" class="form-control" autofocus required>
+        </div>
+        <br><label for="comple" class="col-sm-3 control-label">Complemento:</label>
+        <div class="col-sm-9">
+            <input type="text" name="comple" id="comple" placeholder="" class="form-control" autofocus>
+        </div>
     
         <br><label for="file" class="control-label">Selecione uma Imagem</label>
         <div >

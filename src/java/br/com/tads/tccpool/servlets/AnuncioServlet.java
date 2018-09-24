@@ -203,6 +203,30 @@ public class AnuncioServlet extends HttpServlet {
                                 if (item2.getFieldName().equals("select")) {
                                     movel.setTipo(Integer.parseInt(item2.getString()));
                                 }
+                                if (item2.getFieldName().equals("rua")) {
+                                    movel.setRua(item2.getString());
+
+                                }
+                                if (item2.getFieldName().equals("num")) {
+                                    movel.setNumero(Integer.parseInt(item2.getString()));
+
+                                }
+                                if (item2.getFieldName().equals("cep")) {
+                                    movel.setCep(item2.getString());
+
+                                }
+                                if (item2.getFieldName().equals("cidade")) {
+                                    movel.setCidade(item2.getString());
+
+                                }
+                                if (item2.getFieldName().equals("estado")) {
+                                    movel.setEstado(item2.getString());
+
+                                }
+                                if (item2.getFieldName().equals("comple")) {
+                                    movel.setComplemento(item2.getString());
+
+                                }
                                 //  an.setObj(movel);
                             } else {
                                 //nome = AnuncioFacade.getId() + 1;
@@ -258,6 +282,30 @@ public class AnuncioServlet extends HttpServlet {
                                 }
                                 if (item2.getFieldName().equals("select")) {
                                     material.setTipo(Integer.parseInt(item2.getString()));
+                                }
+                                if (item2.getFieldName().equals("rua")) {
+                                    material.setRua(item2.getString());
+
+                                }
+                                if (item2.getFieldName().equals("num")) {
+                                    material.setNumero(Integer.parseInt(item2.getString()));
+
+                                }
+                                if (item2.getFieldName().equals("cep")) {
+                                    material.setCep(item2.getString());
+
+                                }
+                                if (item2.getFieldName().equals("cidade")) {
+                                    material.setCidade(item2.getString());
+
+                                }
+                                if (item2.getFieldName().equals("estado")) {
+                                    material.setEstado(item2.getString());
+
+                                }
+                                if (item2.getFieldName().equals("comple")) {
+                                    material.setComplemento(item2.getString());
+
                                 }
                                 // anu.setObj(material);
                             } else {
@@ -544,6 +592,26 @@ public class AnuncioServlet extends HttpServlet {
                            if(request.getParameter("valor")!= null && !request.getParameter("valor").equals("")){
                                m.setPreco(Float.parseFloat(request.getParameter("valor")));
                            }
+                           if(request.getParameter("rua")!= null && !request.getParameter("rua").equals("")){
+                               m.setRua(request.getParameter("rua"));
+                           }
+                           if(request.getParameter("num")!= null && !request.getParameter("num").equals("")){
+                               m.setNumero(Integer.parseInt(request.getParameter("num")));
+                           }
+                           if(request.getParameter("cep")!= null && !request.getParameter("cep").equals("")){
+                               m.setCep(request.getParameter("cep"));
+                           }
+                           if(request.getParameter("cidade")!= null && !request.getParameter("cidade").equals("")){
+                               m.setCidade(request.getParameter("cidade"));
+                           }
+                           if(request.getParameter("estado")!= null && !request.getParameter("estado").equals("")){
+                               m.setEstado(request.getParameter("estado"));
+                           }
+                           if(request.getParameter("comple")!= null && !request.getParameter("comple").equals("")){
+                               m.setComplemento(request.getParameter("comple"));
+                           }else{
+                               m.setComplemento("  ");
+                           }
                            int idAnuncioAlterar = (int)session.getAttribute("idExibirAnuncio");
                                AnuncioFacade.updateMovel(m, idAnuncioAlterar);
                                Movel mov = AnuncioFacade.buscarMovelPorId(idAnuncioAlterar);
@@ -572,6 +640,26 @@ public class AnuncioServlet extends HttpServlet {
                            
                            if(request.getParameter("valor")!= null && !request.getParameter("valor").equals("")){
                                m.setPreco(Float.parseFloat(request.getParameter("valor")));
+                           }
+                           if(request.getParameter("rua")!= null && !request.getParameter("rua").equals("")){
+                               m.setRua(request.getParameter("rua"));
+                           }
+                           if(request.getParameter("num")!= null && !request.getParameter("num").equals("")){
+                               m.setNumero(Integer.parseInt(request.getParameter("num")));
+                           }
+                           if(request.getParameter("cep")!= null && !request.getParameter("cep").equals("")){
+                               m.setCep(request.getParameter("cep"));
+                           }
+                           if(request.getParameter("cidade")!= null && !request.getParameter("cidade").equals("")){
+                               m.setCidade(request.getParameter("cidade"));
+                           }
+                           if(request.getParameter("estado")!= null && !request.getParameter("estado").equals("")){
+                               m.setEstado(request.getParameter("estado"));
+                           }
+                           if(request.getParameter("comple")!= null && !request.getParameter("comple").equals("")){
+                               m.setComplemento(request.getParameter("comple"));
+                           }else{
+                               m.setComplemento("  ");
                            }
                            int idAnuncioAlterar = (int)session.getAttribute("idExibirAnuncio");
                                AnuncioFacade.updateMaterial(m, idAnuncioAlterar);

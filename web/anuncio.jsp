@@ -369,7 +369,12 @@ Author     : onurb
               <h4><fmt:formatNumber value="${movelExibir.preco}" type="currency"/></h4>
               <p class="card-text"> ${movelExibir.descricao}
         <br><label>Tipo Movel:</label> ${movelExibir.tipoDesc}
-        
+        <br><label>Logradouro: </label> ${movelExibir.rua}
+        <br><label>Número: </label> ${movelExibir.numero}
+        <br><label>CEP: </label> ${movelExibir.cep}
+        <br><label>Cidade: </label> ${movelExibir.cidade}
+        <br><label>Estado: </label> ${movelExibir.estado}
+        <br><label>Complemento: </label> ${movelExibir.complemento}
         
     </p>
               <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
@@ -478,6 +483,42 @@ Author     : onurb
                     <input type="number" name="valor" id="valor" value="${movelAlterar.preco}" class="form-control" min="0" step="any" >
                 </div>
             </div>
+                <div class="form-group">
+                <label for="rua" class="col-sm-3 control-label">Logradouro:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="rua" id="rua" value="${movelAlterar.rua}" class="form-control"  >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="num" class="col-sm-3 control-label">NÃºmero:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="num" id="num" value="${movelAlterar.numero}" class="form-control"  >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cep" class="col-sm-3 control-label">CEP:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="cep" id="cep" value="${movelAlterar.cep}" class="form-control"  >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cidade" class="col-sm-3 control-label">Cidade:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="cidade" id="cidade" value="${movelAlterar.cidade}" class="form-control"  >
+                </div>
+            </div> 
+            <div class="form-group">
+                <label for="estado" class="col-sm-3 control-label">Estado:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="estado" id="estado" value="${movelAlterar.estado}" class="form-control"  >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="comple" class="col-sm-3 control-label">Complemento:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="comple" id="comple" value="${movelAlterar.complemento}" class="form-control"  >
+                </div>
+            </div>
             <div class="form-group col-md-12">
                 <input type="submit" value="Alterar"  class="form-control btn-primary" />
             </div>
@@ -571,7 +612,12 @@ Author     : onurb
               <h4><fmt:formatNumber value="${materialExibir.preco}" type="currency"/></h4>
               <p class="card-text"> ${materialExibir.descricao}
         <br><label>Tipo Material:</label> ${materialExibir.tipoDesc}
-        
+        <br><label>Logradouro: </label> ${materialExibir.rua}
+        <br><label>Número: </label> ${materialExibir.numero}
+        <br><label>CEP: </label> ${materialExibir.cep}
+        <br><label>Cidade: </label> ${materialExibir.cidade}
+        <br><label>Estado: </label> ${materialExibir.estado}
+        <br><label>Complemento: </label> ${materialExibir.complemento}
         
     </p>
               <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
@@ -680,6 +726,44 @@ Author     : onurb
                     <input type="number" name="valor" id="valor" value="${materialAlterar.preco}" class="form-control" min="0" step="any" >
                 </div>
             </div>
+                
+                <div class="form-group">
+                <label for="rua" class="col-sm-3 control-label">Logradouro:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="rua" id="rua" value="${materialAlterar.rua}" class="form-control"  >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="num" class="col-sm-3 control-label">NÃºmero:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="num" id="num" value="${materialAlterar.numero}" class="form-control"  >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cep" class="col-sm-3 control-label">CEP:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="cep" id="cep" value="${materialAlterar.cep}" class="form-control"  >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cidade" class="col-sm-3 control-label">Cidade:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="cidade" id="cidade" value="${materialAlterar.cidade}" class="form-control"  >
+                </div>
+            </div> 
+            <div class="form-group">
+                <label for="estado" class="col-sm-3 control-label">Estado:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="estado" id="estado" value="${materialAlterar.estado}" class="form-control"  >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="comple" class="col-sm-3 control-label">Complemento:</label>
+                <div class="col-sm-9">
+                    <input type="text" name="comple" id="comple" value="${materialAlterar.complemento}" class="form-control"  >
+                </div>
+            </div>
+                
             <div class="form-group col-md-12">
                 <input type="submit" value="Alterar"  class="form-control btn-primary" />
             </div>
