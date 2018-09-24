@@ -36,10 +36,6 @@ public class AnuncioDAO {
             + " VALUES (?,?,?,?,?,?)";
     private static final String QUERY_UPDATE_END = "UPDATE tb_endereco_anuncio SET DS_RUA = ?, DS_ESTADO = ?,NR_NUMERO = ?,NR_CEP = ?,DS_COMPLEMENTO = ?,DS_CIDADE = ? where ID_ENDERECO = ?";
     private static final String QUERY_UPDATE_END_SEM_COMP = "UPDATE tb_endereco_anuncio SET DS_RUA = ?, DS_ESTADO = ?,NR_NUMERO = ?,NR_CEP = ?,DS_CIDADE = ? where ID_ENDERECO = ?";
-    private static final String QUERY_INSERT_IMOVEL_ANUNCIO = "INSERT INTO tb_anuncio "
-            + "(DS_DESCRICAO,NR_VALOR,TB_CATEGORIA_ID_CATEGORIA,TB_STATUS_ID_STATUS,TB_ENDERECO_ID_ENDERECO,TB_IMOVEL_idTB_IMOVEL,DS_TITULO, TB_USUARIO_NR_SEQ) "
-            + "VALUES "
-            + "(?,?,?,?,?,(select max(id_imovel) from tb_imovel),?, ?)";
     private static final String QUERY_UPDATE_IMOVEL_ANUNCIO = "UPDATE tb_anuncio SET DS_DESCRICAO = ?,NR_VALOR = ?,TB_STATUS_ID_STATUS = ?,DS_TITULO = ? WHERE ID_ANUNCIO = ?";
     private static final String QUERY_UPDATE_MOVEL_ANUNCIO = "UPDATE tb_anuncio SET DS_DESCRICAO = ?,NR_VALOR = ?,TB_STATUS_ID_STATUS = ?,DS_TITULO = ? WHERE ID_ANUNCIO = ?";
     private static final String QUERY_UPDATE_MATERIAL_ANUNCIO = "UPDATE tb_anuncio SET DS_DESCRICAO = ?,NR_VALOR = ?,TB_STATUS_ID_STATUS = ?,DS_TITULO = ? WHERE ID_ANUNCIO = ?";
@@ -77,8 +73,8 @@ public class AnuncioDAO {
             + "             TB_ANUNCIO.TB_STATUS_ID_STATUS = ?\n"
             + "             AND TB_ANUNCIO.TB_CATEGORIA_ID_CATEGORIA = ?";
 
-    private final String QUERY_CONSULTA_MOVEL_ID = "select a.DS_DESCRICAO, a.DS_TITULO, a.NR_VALOR, a.TB_STATUS_ID_STATUS, a.TB_MOVEL_ID_MOVEL, M.TB_CATEGORIA_MOVEL_ID_CATEGORIA_MOVEL, cm.DS_DESCRICAO as TIPO_DESC, a.TB_USUARIO_NR_SEQ, u.NM_NOME from tb_anuncio A left JOIN tb_movel M ON A.TB_MOVEL_ID_MOVEL = M.ID_MOVEL left join tb_categoria_movel cm on m.TB_CATEGORIA_MOVEL_ID_CATEGORIA_MOVEL = cm.ID_CATEGORIA_MOVEL INNER JOIN tb_usuario u on u.NR_SEQ = a.TB_USUARIO_NR_SEQ WHERE ID_ANUNCIO = ?";
-    private final String QUERY_CONSULTA_MATERIAL_ID = "select a.DS_DESCRICAO, a.DS_TITULO, a.NR_VALOR, a.TB_STATUS_ID_STATUS, a.TB_MATERIAL_ID_MATERIAL, M.TB_CATEGORIA_MATERIAL_ID_CATEGORIA_MATERIAL, cm.DS_DESCRICAO as TIPO_DESC, a.TB_USUARIO_NR_SEQ, u.NM_NOME from tb_anuncio A left JOIN tb_material M ON A.TB_MATERIAL_ID_MATERIAL = M.ID_MATERIAL left join tb_categoria_material cm on m.TB_CATEGORIA_MATERIAL_ID_CATEGORIA_MATERIAL = cm.ID_CATEGORIA_MATERIAL INNER JOIN tb_usuario u on u.NR_SEQ = a.TB_USUARIO_NR_SEQ WHERE ID_ANUNCIO = ?";
+    private final String QUERY_CONSULTA_MOVEL_ID = "select a.DS_DESCRICAO, a.DS_TITULO, a.NR_VALOR, a.TB_STATUS_ID_STATUS, a.TB_MOVEL_ID_MOVEL, M.TB_CATEGORIA_MOVEL_ID_CATEGORIA_MOVEL, cm.DS_DESCRICAO as TIPO_DESC, a.TB_USUARIO_NR_SEQ, u.NM_NOME, TB_ENDERECO_ID_ENDERECO, tb_endereco_anuncio.DS_RUA,tb_endereco_anuncio.DS_ESTADO, tb_endereco_anuncio.NR_NUMERO, tb_endereco_anuncio.NR_CEP, tb_endereco_anuncio.DS_COMPLEMENTO, tb_endereco_anuncio.DS_CIDADE from tb_anuncio A left JOIN tb_movel M ON A.TB_MOVEL_ID_MOVEL = M.ID_MOVEL left join tb_categoria_movel cm on m.TB_CATEGORIA_MOVEL_ID_CATEGORIA_MOVEL = cm.ID_CATEGORIA_MOVEL INNER JOIN tb_endereco_anuncio ON ID_ENDERECO = TB_ENDERECO_ID_ENDERECO INNER JOIN tb_usuario u on u.NR_SEQ = a.TB_USUARIO_NR_SEQ WHERE ID_ANUNCIO = ?";
+    private final String QUERY_CONSULTA_MATERIAL_ID = "select a.DS_DESCRICAO, a.DS_TITULO, a.NR_VALOR, a.TB_STATUS_ID_STATUS, a.TB_MATERIAL_ID_MATERIAL, M.TB_CATEGORIA_MATERIAL_ID_CATEGORIA_MATERIAL, cm.DS_DESCRICAO as TIPO_DESC, a.TB_USUARIO_NR_SEQ, u.NM_NOME, TB_ENDERECO_ID_ENDERECO, tb_endereco_anuncio.DS_RUA,tb_endereco_anuncio.DS_ESTADO, tb_endereco_anuncio.NR_NUMERO, tb_endereco_anuncio.NR_CEP, tb_endereco_anuncio.DS_COMPLEMENTO, tb_endereco_anuncio.DS_CIDADE from tb_anuncio A left JOIN tb_material M ON A.TB_MATERIAL_ID_MATERIAL = M.ID_MATERIAL left join tb_categoria_material cm on m.TB_CATEGORIA_MATERIAL_ID_CATEGORIA_MATERIAL = cm.ID_CATEGORIA_MATERIAL INNER JOIN tb_endereco_anuncio ON ID_ENDERECO = TB_ENDERECO_ID_ENDERECO INNER JOIN tb_usuario u on u.NR_SEQ = a.TB_USUARIO_NR_SEQ WHERE ID_ANUNCIO = ?";
     private final String QUERY_CONSULTA_IMOVEL_ID = "SELECT \n" +
             "		tb_imovel.NR_PET, \n" +
             "		tb_imovel.NR_QNT_PESSOAS, \n" +
@@ -113,13 +109,17 @@ public class AnuncioDAO {
 
     private static final String QUERY_INSERT_CAMINHO = "INSERT INTO tb_fotos(ds_caminho,tb_anuncio_id_anuncio)VALUES(?,?)";
 
-    private final String QUERY_INSERT_MOVEL_ANUNCIO = "INSERT INTO tb_anuncio (DS_DESCRICAO,NR_VALOR,DS_TITULO,TB_CATEGORIA_ID_CATEGORIA,TB_STATUS_ID_STATUS, TB_USUARIO_NR_SEQ,TB_MOVEL_ID_MOVEL"
-            + ") VALUES(?,?,?,?,?,?,?)";
+    private final String QUERY_INSERT_MOVEL_ANUNCIO = "INSERT INTO tb_anuncio (DS_DESCRICAO,NR_VALOR,DS_TITULO,TB_CATEGORIA_ID_CATEGORIA,TB_STATUS_ID_STATUS, TB_USUARIO_NR_SEQ,TB_MOVEL_ID_MOVEL,TB_ENDERECO_ID_ENDERECO"
+            + ") VALUES(?,?,?,?,?,?,(select max(id_movel) from tb_movel),?)";
+    private static final String QUERY_INSERT_IMOVEL_ANUNCIO = "INSERT INTO tb_anuncio "
+            + "(DS_DESCRICAO,NR_VALOR,TB_CATEGORIA_ID_CATEGORIA,TB_STATUS_ID_STATUS,TB_ENDERECO_ID_ENDERECO,TB_IMOVEL_idTB_IMOVEL,DS_TITULO, TB_USUARIO_NR_SEQ) "
+            + "VALUES "
+            + "(?,?,?,?,?,(select max(id_imovel) from tb_imovel),?, ?)";
+    private final String QUERY_INSERT_MATERIAL_ANUNCIO = "INSERT INTO tb_anuncio (DS_DESCRICAO,NR_VALOR,TB_CATEGORIA_ID_CATEGORIA,TB_STATUS_ID_STATUS, TB_USUARIO_NR_SEQ, DS_TITULO,TB_MATERIAL_ID_MATERIAL,TB_ENDERECO_ID_ENDERECO"
+            + ") VALUES(?,?,?,?,?,?,(select max(id_material) from tb_material),?)";
 
     private final String QUERY_INSERT_MATERIAL = "INSERT INTO tb_material (TB_CATEGORIA_MATERIAL_ID_CATEGORIA_MATERIAL) VALUES (?)";
     private final String QUERY_INSERT_MOVEL = "INSERT INTO tb_movel (TB_CATEGORIA_MOVEL_ID_CATEGORIA_MOVEL) VALUES (?)";
-    private final String QUERY_INSERT_MATERIAL_ANUNCIO = "INSERT INTO tb_anuncio (DS_DESCRICAO,NR_VALOR,TB_CATEGORIA_ID_CATEGORIA,TB_STATUS_ID_STATUS, TB_USUARIO_NR_SEQ, DS_TITULO,TB_MATERIAL_ID_MATERIAL"
-            + ") VALUES(?,?,?,?,?,?,?)";
 
     private final String QUERY_CONSULTA_ID_FOTO = "select max(tb_anuncio_id_anuncio) as id from tb_fotos;";
 
@@ -287,6 +287,17 @@ public class AnuncioDAO {
         stmt = con.prepareStatement(QUERY_INSERT_MOVEL);
         stmt.setInt(1, m.getTipo());
          stmt.executeUpdate();
+         
+          stmt = con.prepareStatement(QUERY_INSERT_END);
+        stmt.setString(1, m.getRua());
+        stmt.setString(2, m.getEstado());
+        stmt.setInt(3, m.getNumero());
+        stmt.setString(4, m.getCep());
+        stmt.setString(5, m.getComplemento());
+        stmt.setString(6, m.getCidade());
+        stmt.executeUpdate();
+         
+         
          int id1 = 0;
          stmt = con.prepareStatement("SELECT last_insert_id() as ID");
         rs = stmt.executeQuery();
@@ -325,13 +336,21 @@ public class AnuncioDAO {
         stmt = con.prepareStatement(QUERY_INSERT_MATERIAL);
         stmt.setInt(1, m.getTipo());
          stmt.executeUpdate();
+         stmt.clearParameters();
          int id1 = 0;
+         
+         stmt = con.prepareStatement(QUERY_INSERT_END);
+        stmt.setString(1, m.getRua());
+        stmt.setString(2, m.getEstado());
+        stmt.setInt(3, m.getNumero());
+        stmt.setString(4, m.getCep());
+        stmt.setString(5, m.getComplemento());
+        stmt.setString(6, m.getCidade());
+        stmt.executeUpdate();
          stmt = con.prepareStatement("SELECT last_insert_id() as ID");
         rs = stmt.executeQuery();
         if (rs.next()) {
             id1 = rs.getInt("ID");
-        }
-        
         stmt = con.prepareStatement(QUERY_INSERT_MATERIAL_ANUNCIO);
         stmt.setString(1, m.getDescricao());
         stmt.setFloat(2, m.getPreco());
@@ -341,6 +360,9 @@ public class AnuncioDAO {
         stmt.setString(6, m.getTitulo());
         stmt.setInt(7, id1);
         stmt.executeUpdate();
+        
+        }
+        
         stmt = con.prepareStatement("SELECT last_insert_id() as ID");
         rs = stmt.executeQuery();
         if (rs.next()) {
@@ -677,6 +699,14 @@ public class AnuncioDAO {
             }
             m.setIdAnunciante(rs.getInt("TB_USUARIO_NR_SEQ"));
             m.setNomeAnunciante(rs.getString("NM_NOME"));
+            m.setEnderecoId(rs.getInt("TB_ENDERECO_ID_ENDERECO"));
+            m.setRua(rs.getString("DS_RUA"));
+            m.setNumero(rs.getInt("NR_NUMERO"));
+            m.setTitulo(rs.getString("DS_TITULO"));
+            m.setEstado(rs.getString("DS_ESTADO"));
+            m.setCidade(rs.getString("DS_CIDADE"));
+            m.setCep(rs.getString("NR_CEP"));
+            m.setComplemento(rs.getString("DS_COMPLEMENTO"));
             
             stmt = con.prepareStatement(QUERY_BUSCAR_FOTOS_POR_ID);
             stmt.setInt(1, id);
@@ -718,6 +748,14 @@ public class AnuncioDAO {
             }
             m.setIdAnunciante(rs.getInt("TB_USUARIO_NR_SEQ"));
             m.setNomeAnunciante(rs.getString("NM_NOME"));
+            m.setEnderecoId(rs.getInt("TB_ENDERECO_ID_ENDERECO"));
+            m.setRua(rs.getString("DS_RUA"));
+            m.setNumero(rs.getInt("NR_NUMERO"));
+            
+            m.setEstado(rs.getString("DS_ESTADO"));
+            m.setCidade(rs.getString("DS_CIDADE"));
+            m.setCep(rs.getString("NR_CEP"));
+            m.setComplemento(rs.getString("DS_COMPLEMENTO"));
             
             stmt = con.prepareStatement(QUERY_BUSCAR_FOTOS_POR_ID);
             stmt.setInt(1, id);
@@ -736,6 +774,7 @@ public class AnuncioDAO {
     }
 
     public void updateMovel(Movel m, int idAnuncio) throws SQLException {
+        int idEnd = 0;
 
         try {
             stmt = con.prepareStatement(QUERY_UPDATE_MOVEL_ANUNCIO);
@@ -745,6 +784,24 @@ public class AnuncioDAO {
             stmt.setString(4, m.getTitulo());
             stmt.setInt(5, idAnuncio);
             stmt.executeUpdate();
+            
+            stmt = con.prepareStatement("SELECT TB_ENDERECO_ID_ENDERECO FROM tb_anuncio where ID_ANUNCIO = ?");
+            stmt.setInt(1, idAnuncio);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                idEnd = rs.getInt("TB_ENDERECO_ID_ENDERECO");
+            }
+
+            stmt = con.prepareStatement(QUERY_UPDATE_END);
+            stmt.setString(1, m.getRua());
+            stmt.setString(2, m.getEstado());
+            stmt.setInt(3, m.getNumero());
+            stmt.setString(4, m.getCep());
+            stmt.setString(5, m.getComplemento());
+            stmt.setString(6, m.getCidade());
+            stmt.setInt(7, idEnd);
+            stmt.executeUpdate();
+            
             
             stmt = con.prepareStatement(QUERY_UPDATE_MOVEL);
             stmt.setInt(1,m.getTipo());
@@ -762,7 +819,7 @@ public class AnuncioDAO {
     }
   
     public void updateMaterial(Material m, int idAnuncio) throws SQLException {
-        
+        int idEnd = 0;
         try{
             stmt = con.prepareStatement(QUERY_UPDATE_MATERIAL_ANUNCIO);
             stmt.setString(1, m.getDescricao());
@@ -771,6 +828,24 @@ public class AnuncioDAO {
             stmt.setString(4, m.getTitulo());    
             stmt.setInt(5, idAnuncio);
             stmt.executeUpdate();
+            
+            stmt = con.prepareStatement("SELECT TB_ENDERECO_ID_ENDERECO FROM tb_anuncio where ID_ANUNCIO = ?");
+            stmt.setInt(1, idAnuncio);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                idEnd = rs.getInt("TB_ENDERECO_ID_ENDERECO");
+            }
+
+            stmt = con.prepareStatement(QUERY_UPDATE_END);
+            stmt.setString(1, m.getRua());
+            stmt.setString(2, m.getEstado());
+            stmt.setInt(3, m.getNumero());
+            stmt.setString(4, m.getCep());
+            stmt.setString(5, m.getComplemento());
+            stmt.setString(6, m.getCidade());
+            stmt.setInt(7, idEnd);
+            stmt.executeUpdate();
+            stmt.clearParameters();
             
             stmt = con.prepareStatement(QUERY_UPDATE_MATERIAL);
             stmt.setInt(1,m.getTipo());
