@@ -6,6 +6,7 @@
 package br.com.tads.tccpool.dao;
 
 import br.com.tads.tccpool.beans.Anuncio;
+import br.com.tads.tccpool.beans.FiltroAnuncio;
 import br.com.tads.tccpool.beans.Imovel;
 import br.com.tads.tccpool.beans.Material;
 import br.com.tads.tccpool.beans.Movel;
@@ -127,7 +128,7 @@ public class AnuncioDAO {
 
     private final String UPDATE_STATUS = "UPDATE TB_ANUNCIO SET TB_STATUS_ID_STATUS = ? WHERE ID_ANUNCIO = ?";
 
-    private final String QUERY_BUSCAR_ANUNCIOS_APROVADOS = "SELECT\n"
+    private final String QUERY_BUSCAR_ANUNCIOS_APROVADOS = "SELECT DISTINCT\n"
             + "	ID_ANUNCIO,\n"
             + "	DS_TITULO,\n"
             + "    ANUNCIO.DS_DESCRICAO,\n"
@@ -141,8 +142,7 @@ public class AnuncioDAO {
             + "    INNER JOIN\n"
             + "		TB_FOTOS AS FOTO ON FOTO.TB_ANUNCIO_ID_ANUNCIO = ANUNCIO.ID_ANUNCIO\n"
             + "WHERE\n"
-            + "	TB_STATUS_ID_STATUS = 2\n"
-            + "    GROUP BY ANUNCIO.ID_ANUNCIO";
+            + "	TB_STATUS_ID_STATUS = 2";
 
     //query para buscar anuncios do usuario apos pressiona o botão ''meus nuancios'' na home
     private final String QUERY_BUCASR_ANUNCIOS_DO_USUARIO = "SELECT\n"
@@ -471,6 +471,29 @@ public class AnuncioDAO {
     public List<Anuncio> buscarAnuncioAprovado() throws SQLException {
         List<Anuncio> lista = new ArrayList<Anuncio>();
         stmt = con.prepareStatement(QUERY_BUSCAR_ANUNCIOS_APROVADOS);
+        rs = stmt.executeQuery();
+        while (rs.next()) {
+            Anuncio anuncio = new Anuncio();
+            anuncio.setIdAnuncio(rs.getInt("ID_ANUNCIO"));
+            anuncio.setTitulo(rs.getString("DS_TITULO"));
+            anuncio.setValor(rs.getFloat("NR_VALOR"));
+            anuncio.setDescricao(rs.getString("DS_DESCRICAO"));
+            anuncio.setCategoria(rs.getString("DS_CATEGORIA"));
+            anuncio.setCaminhoFoto(rs.getString("DS_CAMINHO"));
+            lista.add(anuncio);
+        }
+        con.close();
+        stmt.close();
+        rs.close();
+        return lista;
+    }
+        
+    public List<Anuncio> filtrarAnuncio(FiltroAnuncio filtro) throws SQLException {
+        List<Anuncio> lista = new ArrayList<Anuncio>();
+        String SQLFiltro = "\nAND TB_CATEGORIA_ID_CATEGORIA IN (" + (filtro.isImovel() ? "1, " : "NULL, ") + (filtro.isMovel() ? "2, " : "NULL, ") + (filtro.isMaterial()? "3)" : "NULL)");
+        
+        stmt = con.prepareStatement(QUERY_BUSCAR_ANUNCIOS_APROVADOS + SQLFiltro);
+        
         rs = stmt.executeQuery();
         while (rs.next()) {
             Anuncio anuncio = new Anuncio();
