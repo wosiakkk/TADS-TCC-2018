@@ -9,6 +9,7 @@ import br.com.tads.tccpool.beans.Imovel;
 import br.com.tads.tccpool.beans.Material;
 import br.com.tads.tccpool.beans.Movel;
 import br.com.tads.tccpool.beans.Anuncio;
+import br.com.tads.tccpool.beans.FiltroAnuncio;
 import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.dao.AnuncioDAO;
 import br.com.tads.tccpool.exception.AcessoBdException;
@@ -70,13 +71,19 @@ public class AnuncioFacade {
         dao.aprovarAnuncio(status, id);
     }
     
-    public static String buscarAnuncioAprovado() {
+    public static String buscarAnuncioAprovado(FiltroAnuncio filtro) {
         AnuncioDAO dao = new AnuncioDAO();
         String HTMLResponse = "";
         List<Anuncio> anunciosAprovados = null;
         
         try {
-            anunciosAprovados = dao.buscarAnuncioAprovado();
+            if(filtro == null || (!filtro.isImovel() && !filtro.isMovel() && !filtro.isMaterial())) {
+                anunciosAprovados = dao.buscarAnuncioAprovado();
+            }
+            else {
+                anunciosAprovados = dao.filtrarAnuncio(filtro);
+            }
+            
             if(anunciosAprovados != null) {
                 for (Anuncio anuncio : anunciosAprovados) {
                     HTMLResponse += "<div class=\"col-lg-4 col-md-6 mb-4\">\n" +

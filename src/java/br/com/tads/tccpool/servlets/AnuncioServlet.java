@@ -7,6 +7,7 @@ package br.com.tads.tccpool.servlets;
 
 import br.com.tads.tccpool.beans.Anuncio;
 import br.com.tads.tccpool.beans.Categoria;
+import br.com.tads.tccpool.beans.FiltroAnuncio;
 import br.com.tads.tccpool.beans.Imovel;
 import br.com.tads.tccpool.beans.Material;
 import br.com.tads.tccpool.beans.Movel;
@@ -376,7 +377,7 @@ public class AnuncioServlet extends HttpServlet {
                     break;
                     
                 case "BUSCAAPROVADOS":
-                    String HTMLResponse = AnuncioFacade.buscarAnuncioAprovado();
+                    String HTMLResponse = AnuncioFacade.buscarAnuncioAprovado(null);
                     
                     if(HTMLResponse != null) {
                         out.write(HTMLResponse);
@@ -688,19 +689,37 @@ public class AnuncioServlet extends HttpServlet {
                             
                         }
                         
-                    case "INFORMARVENDAANUNCIO":
-                        try{
-                         if(session.getAttribute("idExibirAnuncio") != null){
-                             int idAnuncioVenda = (int)session.getAttribute("idExibirAnuncio");
-                             AnuncioFacade.updateStatusAnuncio(idAnuncioVenda, 5);
-                            User u = (User)session.getAttribute("user");
-                     List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
-                    session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
+                case "INFORMARVENDAANUNCIO":
+                    try {
+                        if (session.getAttribute("idExibirAnuncio") != null) {
+                            int idAnuncioVenda = (int) session.getAttribute("idExibirAnuncio");
+                            AnuncioFacade.updateStatusAnuncio(idAnuncioVenda, 5);
+                            User u = (User) session.getAttribute("user");
+                            List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                            session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                             request.getRequestDispatcher("resumo.jsp").forward(request, response);
-                         }   
-                        }catch(Exception e){
-                            
                         }
+                    }
+                    catch (Exception e) {
+
+                    }
+                    break;
+                case "FILTROANUNCIO":
+                    FiltroAnuncio filtro = new FiltroAnuncio();
+
+                    try {
+                        filtro.setMovel("1".equals((String) request.getParameter("movel")));
+                        filtro.setImovel("1".equals((String) request.getParameter("imovel")));
+                        filtro.setMaterial("1".equals((String) request.getParameter("material")));
+
+                        out.write(AnuncioFacade.buscarAnuncioAprovado(filtro));
+                        out.flush();
+                    }
+                    catch (Exception ex) {
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    break;
             }
         }
     }
