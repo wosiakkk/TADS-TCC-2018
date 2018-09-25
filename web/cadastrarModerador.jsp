@@ -6,8 +6,23 @@
 
 <!-- Cabeçalho -->
 <%@include file="head.jsp" %> 
+
+<link href="assets/css/feed-style.css" rel="stylesheet">
+
 <c:if test="${user.getTipoUsuario()== 3}">  
-<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+    
+<!-- Página com foto e as opções do perfil -->
+<%@include file="opcoes.jsp" %>
+
+<!-- Script para dar destaque na opção navegada -->
+<script>
+    $(document).ready(function () {
+        $("#opCadMod").addClass("highlight");
+    });
+</script>    
+        
+    
+<div class="col-8 menu-fixed-center">
     <form id="formulario" class="form-horizontal"  action="UserServlet?action=ADDMOD"  method="POST" role="form">
         <hr>
         <h2>Cadastro de Moderador</h2>
@@ -39,7 +54,7 @@
         </div>    
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
-                <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+                <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
             </div>
         </div>
 </form> <!-- ./form -->

@@ -567,6 +567,9 @@ public class UserDAO {
             stmt = con.prepareStatement(QUERY_REJEITAR_E_BLOQUEAR);
             stmt.setInt(1, idSessao);
             stmt.setInt(2, idSolicitante);
+            stmt.setInt(3, idSessao);
+            stmt.setInt(4, idSessao);
+            stmt.setInt(5, idSolicitante);
             stmt.executeUpdate();
             verifica = true;
             stmt.close();

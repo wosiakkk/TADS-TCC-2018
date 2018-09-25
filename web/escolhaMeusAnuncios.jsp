@@ -12,8 +12,6 @@
     </c:redirect>
 </c:if>
 
-
-
 <link href="assets/css/feed-style.css" rel="stylesheet">
 
 <!-- Página com foto e as opções do perfil -->
@@ -22,7 +20,7 @@
 <!-- Script para dar destaque na opção navegada -->
 <script>  
     $(document).ready(function () {
-  $("#opRanuncio").addClass("highlight");
+  $("#opAnuncio").addClass("highlight");
 });
 </script>
 
@@ -30,29 +28,36 @@
     <div class="panel panel-body">             
         <!-- Usuário Comum -->
         <c:if test="${user.getTipoUsuario()== 2}">
-            <h4>Escolha uma categoria:</h4>
-             <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
-             <hr>       
-            <div class="container-fluid col-8">                                                         
+            <div class="col-sm-12" style="padding-top: 5%">
+                <h4>Escolha uma categoria:</h4>
+                <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+                <hr>
+            </div>
+            <div class="container-fluid col-8">  
                 <div class="list-group">
                     <div class="list-group-item">
-                        <a  href="MainPageServlet?action=ANUNCIO&tipo=imovel">
-                            <img class="d-block img-fluid" src="img\icones\house.png">Imóvel
+                        <a  href="#">
+                            <img class="d-block img-fluid" src="img\icones\confirmation.png">Aprovados
                         </a>
                     </div>
                     <div class="list-group-item">
-                        <a  href="MainPageServlet?action=ANUNCIO&tipo=movel">
-                            <img class="d-block img-fluid" src="img\icones\chair.png">Móvel    
+                        <a  href="#">
+                            <img class="d-block img-fluid" src="img\icones\vendido.png">Vendidos    
                         </a>
                     </div>
                     <div class="list-group-item">
-                        <a  href="MainPageServlet?action=ANUNCIO&tipo=material">
-                            <img class="d-block img-fluid" src="img\icones\books.png">Material
+                        <a  href="AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr=${user.getId()}">
+                            <img class="d-block img-fluid" src="img\icones\time.png">Pendentes
                         </a>
                     </div>
-                </div>                                                            
-            </div>                                    
-        </c:if>    
+                    <div class="list-group-item">
+                        <a  href="#">
+                            <img class="d-block img-fluid" src="img\icones\negado.png">Rejeitados
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </c:if>
     </div>
 </div> <!-- fim .col-lg-6 -->
 </div> <!-- ./row -->

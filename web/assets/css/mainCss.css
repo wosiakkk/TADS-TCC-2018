@@ -30,4 +30,15 @@ mark {
 a {
      color: #16181b;
 }
+.card-header{
+    background-color:#6c757d;
+}
+.card-body{
+    background-color:#ebeef0;
+}
+
+.highlight{
+    background-color:#ebeef0;
+    color: black;
+}
 

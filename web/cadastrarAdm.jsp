@@ -6,8 +6,23 @@
 
 <!-- Cabeçalho -->
 <%@include file="head.jsp" %> 
+
+<link href="assets/css/feed-style.css" rel="stylesheet">
+
 <c:if test="${user.getTipoUsuario()== 3}">  
-<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+    
+<!-- Página com foto e as opções do perfil -->
+<%@include file="opcoes.jsp" %>
+
+<!-- Script para dar destaque na opção navegada -->
+<script>
+    $(document).ready(function () {
+        $("#opCadAdm").addClass("highlight");
+    });
+</script>    
+    
+    
+<div class="col-8 menu-fixed-center">
     <form id="formulario" class="form-horizontal"  action="UserServlet?action=ADDADM"  method="POST" role="form">
         <hr>
         <h2>Cadastro de Administrador</h2>
@@ -36,12 +51,14 @@
             <div class="col-sm-9">
                 <input type="password" name="confsenha" id="confsenha" placeholder="Confirmar Senha" class="form-control" required>
             </div>
-        </div>    
+        </div> 
+        <hr>
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
-                <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+                <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
             </div>
         </div>
+        <hr>
 </form> <!-- ./form -->
 <script type="text/javascript" src="assets\js\validarCadastro.js"></script>
 </div>
@@ -50,5 +67,7 @@
     <h2>Somente Administradores podem acessar essa área</h2>
 </c:if>  
 
-<!-- Rodapé -->
-<%@include file="footer.jsp" %>
+</div>
+</div>
+</body>
+</html>
