@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 $(document).ready(function(){
+    
+    //Carrega as mensagens salvas
+    listarMensagens();
+    
     $('#mensagemAjax').submit(function (event) {
         //Cacela comportamento padrão do formulário de recarregar a página
         event.preventDefault();
@@ -18,8 +22,7 @@ $(document).ready(function(){
             method: 'POST',
             dataType: 'html',
             success: function (resp) {
-                console.log(resp);
-                $('#respostaAjax ul li').append(resp);
+                listarMensagens();
             },
             error: function (resp) {
                 console.log(resp);
@@ -30,24 +33,26 @@ $(document).ready(function(){
         this.reset();
     });
 
-    $('#BTN_LISTAR_MENSAGEM').click(function (e) {
-        var dados = {
-            action: "LIST_MENSAGEM",
-            ID_ORIGEM: 3,
-            ID_DESTINO: 9
-        };
-        $.ajax({
-            url: 'MensagemServlet',
-            data: dados,
-            method: 'POST',
-            dataType: 'html',
-            success: function (resp) {
-                $('#respostaAjax').html(resp);
-            },
-            error: function (resp) {
-                console.log(resp);
-                $('#respostaAjax').html(resp);
-            }
-        });
-    });
 });
+
+function listarMensagens() {
+
+    var dados = {
+        action: "LIST_MENSAGEM",
+        ID_ORIGEM: $('input[name=ID_ORIGEM]').val(),
+        ID_DESTINO: $('input[name=ID_DESTINO').val()
+    };
+    $.ajax({
+        url: 'MensagemServlet',
+        data: dados,
+        method: 'POST',
+        dataType: 'html',
+        success: function (resp) {
+            $('#respostaAjax').html(resp);
+        },
+        error: function (resp) {
+            console.log(resp);
+            $('#respostaAjax').html(resp);
+        }
+    });
+}
