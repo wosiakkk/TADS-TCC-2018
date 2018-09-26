@@ -61,3 +61,10 @@ body{
     border-width: 13px 0 0 13px;
     border-color: #f3f3f3 transparent transparent transparent; 
 }
+
+#respostaAjax {
+    border: 1px solid #d3d6d8;
+    border-radius: 3px;
+    max-height: 60%;
+    overflow-y: scroll;
+}

@@ -13,6 +13,7 @@
 </c:if>
 <!-- importanto CSS para mensagens e comentários -->
 <link href="assets/css/mensagem.css" rel="stylesheet">
+<link href="assets/css/feed-style.css" rel="stylesheet">
 <script type="text/javascript" src="assets/js/mensagem.js"></script>
 
 <div class="col-md-12 col-lg-12 col-sm-12">
@@ -20,7 +21,11 @@
     <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
     <hr>
 </div>
-<div class="col-md-12 col-lg-12 col-sm-12">
+
+<!-- Página com foto e as opções do perfil -->
+<%@include file="opcoes.jsp" %>
+
+<div class="col-md-9 col-lg-9 col-sm-12">
     <div id="respostaAjax" class="row jumbotron">
         
     </div>
@@ -32,8 +37,7 @@
             <textarea id="DS_MSG" name="DS_MSG" class="form-control" cols="25" rows="5"></textarea>
         </div>
         <button name="BTN_ENVIAR" type="submit" class="btn btn-success float-right" value="ENVIAR">
-            <i class="fa fa-send"></i>
+            <i class="fa fa-send fa-2x"></i>
         </button>
-        <button id="BTN_LISTAR_MENSAGEM" name="BTN_LISTAR_MENSAGEM" type="button" class="btn btn-default">LISTAR</button>
     </form> <!-- fim #mensagemAjax -->
 </div> <!-- fim .col-lg-10 -->
