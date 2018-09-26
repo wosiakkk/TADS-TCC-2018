@@ -58,37 +58,28 @@ public class AnuncioServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
-            
             String action = request.getParameter("action");
-            
             //Validação de acesso
-            if(session == null && !("EXIBIRANUNCIO".equals(action))) {
+            if (session == null && !("EXIBIRANUNCIO".equals(action))) {
                 RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                 request.setAttribute("title", "Inicio");
                 request.setAttribute("msg", "Faça login para acessar esta página!");
                 rd.forward(request, response);
             }
-            
             RequestDispatcher rd;
-            
+
             switch (action) {
                 case "ADDIMV":
-
                     Imovel im = new Imovel();
                     Anuncio a = new Anuncio();
                     int cat = 1;
                     String caminhoImovel = new String();
-
-                    //String caminhoReal = "C:\\Users\\onurb\\Documents\\NetBeansProjects\\TCCPOOL\\web\\img";
                     List<String> listImovel = new ArrayList<String>();
-                    /// if (ServletFileUpload.isMultipartContent(request)) {
-
                     try {
                         int i = 0;
                         /*Faz o parse do request*/
                         List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
                         int nome;// = new String();
-
                         /*Escreve a o arquivo na pasta img*/
                         for (FileItem item : multiparts) {
                             if (item.isFormField()) {
@@ -97,11 +88,9 @@ public class AnuncioServlet extends HttpServlet {
                                 }
                                 if (item.getFieldName().equals("titulo")) {
                                     im.setTitulo(item.getString());
-
                                 }
                                 if (item.getFieldName().equals("descricao")) {
                                     im.setDescricao(item.getString());
-
                                 }
                                 if (item.getFieldName().equals("quantidade")) {
                                     im.setQuantidade_pessoas(Integer.parseInt(item.getString()));
@@ -111,71 +100,52 @@ public class AnuncioServlet extends HttpServlet {
                                 }
                                 if (item.getFieldName().equals("valor")) {
                                     im.setPreco(Float.parseFloat(item.getString()));
-
                                 }
                                 if (item.getFieldName().equals("rua")) {
                                     im.setRua(item.getString());
-
                                 }
                                 if (item.getFieldName().equals("num")) {
                                     im.setNumero(Integer.parseInt(item.getString()));
-
                                 }
                                 if (item.getFieldName().equals("cep")) {
                                     im.setCep(item.getString());
-
                                 }
                                 if (item.getFieldName().equals("cidade")) {
                                     im.setCidade(item.getString());
-
                                 }
                                 if (item.getFieldName().equals("estado")) {
                                     im.setEstado(item.getString());
-
                                 }
                                 if (item.getFieldName().equals("comple")) {
                                     im.setComplemento(item.getString());
-
                                 }
                                 a.setObj(im);
-
                             } else {
-                                // nome = AnuncioFacade.getId()+1;
-                                // File imagem = new File(destino, nome);
-                                // item.write(imagem);
-                                //nome = multiparts.get(i).getName();
                                 Random rand = new Random();
                                 String nomeString = String.valueOf(rand.nextInt()) + ".jpg";
                                 if (!item.getName().equals("")) {
                                     item.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
-
                                     caminhoImovel = "img" + File.separator + nomeString;
                                     listImovel.add(caminhoImovel);
                                 }
-                                //item.getFieldName().equals("titulo");
-
                             }
-                            //item.getString("titulo");
                         }
                         request.setAttribute("message", "Arquivo carregado com sucesso");
                     } catch (Exception ex) {
                         request.setAttribute("message", "Upload de arquivo falhou devido a " + ex);
                     }
                     try {
-                   
-                        User u = (User)session.getAttribute("user");
+                        User u = (User) session.getAttribute("user");
                         AnuncioFacade.insereImovel(im, cat, listImovel, u);
                         request.setAttribute("msg", "Anuncio Realizao Com Sucesso");
-                     List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
-                    session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
-                     
-                     
+                        List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                        session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                     } catch (SQLException ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
                         request.setAttribute("msg", "Falha ao Realizar Anuncio: " + ex);
                     } finally {
-                    rd = request.getRequestDispatcher("resumo.jsp");
-                    rd.forward(request, response);
+                        rd = request.getRequestDispatcher("resumo.jsp");
+                        rd.forward(request, response);
                     }
                     break;
                 case "ADDMOVEL":
@@ -188,8 +158,7 @@ public class AnuncioServlet extends HttpServlet {
                         int i = 0;
                         /*Faz o parse do request*/
                         List<FileItem> multiparts2 = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-                        int nome;// = new String();
-
+                        int nome;
                         for (FileItem item2 : multiparts2) {
                             if (item2.isFormField()) {
                                 if (item2.getFieldName().equals("titulo")) {
@@ -206,39 +175,30 @@ public class AnuncioServlet extends HttpServlet {
                                 }
                                 if (item2.getFieldName().equals("rua")) {
                                     movel.setRua(item2.getString());
-
                                 }
                                 if (item2.getFieldName().equals("num")) {
                                     movel.setNumero(Integer.parseInt(item2.getString()));
-
                                 }
                                 if (item2.getFieldName().equals("cep")) {
                                     movel.setCep(item2.getString());
-
                                 }
                                 if (item2.getFieldName().equals("cidade")) {
                                     movel.setCidade(item2.getString());
-
                                 }
                                 if (item2.getFieldName().equals("estado")) {
                                     movel.setEstado(item2.getString());
-
                                 }
                                 if (item2.getFieldName().equals("comple")) {
                                     movel.setComplemento(item2.getString());
-
                                 }
-                                //  an.setObj(movel);
                             } else {
-                                //nome = AnuncioFacade.getId() + 1;
-                                //String nomeString = String.valueOf(nome)+".jpg";
                                 Random rand = new Random();
                                 String nomeString = String.valueOf(-1 * (rand.nextInt())) + ".jpg";
                                 if (!item2.getName().equals("")) {
-                                item2.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
-                                caminhomovel = "img" + File.separator + nomeString;
-                                lista.add(caminhomovel);
-                            }
+                                    item2.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
+                                    caminhomovel = "img" + File.separator + nomeString;
+                                    lista.add(caminhomovel);
+                                }
                             }
                         }
                         request.setAttribute("message", "Arquivo carregado com sucesso");
@@ -246,20 +206,18 @@ public class AnuncioServlet extends HttpServlet {
                         request.setAttribute("message", "Upload de arquivo falhou devido a " + ex);
                     }
                     try {
-                        User u = (User)session.getAttribute("user");
+                        User u = (User) session.getAttribute("user");
                         AnuncioFacade.insereMovel(movel, cate, lista, u);
                         List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
-                    session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
+                        session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                     } catch (SQLException ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    finally{
+                    } finally {
                         request.getRequestDispatcher("resumo.jsp").forward(request, response);
                     }
-
                     break;
+
                 case "ADDMATERIAL":
-                    
                     Material material = new Material();
                     Anuncio anu = new Anuncio();
                     int categ = 3;
@@ -269,7 +227,7 @@ public class AnuncioServlet extends HttpServlet {
                         int i = 0;
                         /*Faz o parse do request*/
                         List<FileItem> multiparts2 = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-                        int nome;// = new String();
+                        int nome;
                         for (FileItem item2 : multiparts2) {
                             if (item2.isFormField()) {
                                 if (item2.getFieldName().equals("titulo")) {
@@ -286,45 +244,30 @@ public class AnuncioServlet extends HttpServlet {
                                 }
                                 if (item2.getFieldName().equals("rua")) {
                                     material.setRua(item2.getString());
-
                                 }
                                 if (item2.getFieldName().equals("num")) {
                                     material.setNumero(Integer.parseInt(item2.getString()));
-
                                 }
                                 if (item2.getFieldName().equals("cep")) {
                                     material.setCep(item2.getString());
-
                                 }
                                 if (item2.getFieldName().equals("cidade")) {
                                     material.setCidade(item2.getString());
-
                                 }
                                 if (item2.getFieldName().equals("estado")) {
                                     material.setEstado(item2.getString());
-
                                 }
                                 if (item2.getFieldName().equals("comple")) {
                                     material.setComplemento(item2.getString());
-
                                 }
-                                // anu.setObj(material);
                             } else {
-                                 //nome = AnuncioFacade.getId() + 1;
-                                //String nomeString = String.valueOf(nome)+".jpg";
                                 Random rand = new Random();
                                 String nomeString = String.valueOf(-1 * (rand.nextInt())) + ".jpg";
                                 if (!item2.getName().equals("")) {
-                                item2.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
-                                caminhomaterial = "img" + File.separator + nomeString;
-                                listaMaterial.add(caminhomaterial);
-                                
-                                /*nome = AnuncioFacade.getId() + 1;
-                                item2.write(new File(request.getServletContext().getRealPath("img") + File.separator + nome));
-                                caminhomaterial = request.getServletContext().getRealPath("img") + File.separator + nome;
-                                caminhomaterial = "img" + File.separator + nomeString;
-                                i++;*/
-                            }
+                                    item2.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
+                                    caminhomaterial = "img" + File.separator + nomeString;
+                                    listaMaterial.add(caminhomaterial);
+                                }
                             }
                         }
                         request.setAttribute("message", "Arquivo carregado com sucesso");
@@ -332,15 +275,13 @@ public class AnuncioServlet extends HttpServlet {
                         request.setAttribute("message", "Upload de arquivo falhou devido a " + ex);
                     }
                     try {
-                        User u = (User)session.getAttribute("user");
+                        User u = (User) session.getAttribute("user");
                         AnuncioFacade.insereMaterial(material, categ, listaMaterial, u);
                         List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
-                    session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
+                        session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                     } catch (SQLException ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    
-                    finally{
+                    } finally {
                         request.getRequestDispatcher("resumo.jsp").forward(request, response);
                     }
                     break;
@@ -352,14 +293,21 @@ public class AnuncioServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
 
-                    case "BUSCARMOVEISPEND":
+                case "BUSCARMOVEISPEND":
                     List<Movel> listaMovelPendentes = new ArrayList<Movel>();
-                    
+                    listaMovelPendentes = AnuncioFacade.buscarPendenteMovel();
+                    session.setAttribute("listaMovelPendente", listaMovelPendentes);
+                    rd = request.getRequestDispatcher("aprovarAnuncioMovel.jsp");
+                    rd.forward(request, response);
                     break;
                 case "BUSCARMATERIAISPEND":
-                    
+                    List<Material> listaMatPendentes = new ArrayList<Material>();
+                    listaMatPendentes = AnuncioFacade.buscarPendenteMaterial();
+                    session.setAttribute("listaMatPendente", listaMatPendentes);
+                    rd = request.getRequestDispatcher("aprovarAnuncioMat.jsp");
+                    rd.forward(request, response);
                     break;
-                    
+
                 case "BUSCARPORID":
                     int id = Integer.parseInt(request.getParameter("id"));
                     Imovel imovel = new Imovel();
@@ -369,47 +317,57 @@ public class AnuncioServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
 
-                case "APROVIMV":
+                case "BUSCARPORIDMOVEL":
+                    int idM = Integer.parseInt(request.getParameter("id"));
+                    Movel m1 = new Movel();
+                    m1 = AnuncioFacade.buscarMovelPorId(idM);
+                    session.setAttribute("movelBuscado", m1);
+                    rd = request.getRequestDispatcher("moveisPendentes.jsp");
+                    rd.forward(request, response);
+                    break;
+
+                case "BUSCARPORIDMAT":
+                    int idMat = Integer.parseInt(request.getParameter("id"));
+                    Material mt = new Material();
+                    mt = AnuncioFacade.buscarMaterialPorId(idMat);
+                    session.setAttribute("matBuscado", mt);
+                    rd = request.getRequestDispatcher("materiaisPendentes.jsp");
+                    rd.forward(request, response);
+                    break;
+
+                case "APROVAR":
                     int idImv = Integer.parseInt(request.getParameter("id"));
                     String status = request.getParameter("optradio");
                     AnuncioFacade.alterarStatus(status, idImv);
                     response.sendRedirect("escolhaPendente.jsp");
-                    break;
-                    
+                    break;           
+
                 case "BUSCAAPROVADOS":
                     String HTMLResponse = AnuncioFacade.buscarAnuncioAprovado(null);
-                    
-                    if(HTMLResponse != null) {
+                    if (HTMLResponse != null) {
                         out.write(HTMLResponse);
-                    }
-                    else {
+                    } else {
                         out.write("Falha ao buscar an&uacute;ncios. Tente novamente mais tarde.");
                     }
                     break;
-                    
-                    //buscar anuncios de determinado usuario para mostrar no botão ''mues anuncios"
+
                 case "BUSCAANUNCIOUSER":
-                    try{
-                    int idUser = Integer.parseInt(request.getParameter("idUsr"));
-                     List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(idUser);
-                    session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
-                    rd = request.getRequestDispatcher("resumo.jsp");
-                    rd.forward(request, response); 
-                    }catch(Exception e){
-                            
-                        }
+                    try {
+                        int idUser = Integer.parseInt(request.getParameter("idUsr"));
+                        List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(idUser);
+                        session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
+                        rd = request.getRequestDispatcher("resumo.jsp");
+                        rd.forward(request, response);
+                    } catch (Exception e) {
+                    }
                     break;
-                    
-                     //exibir página de anuncio
+
                 case "EXIBIRANUNCIO":
                     int idAnuncio = Integer.parseInt(request.getParameter("idAnuncio"));
                     int t = AnuncioFacade.verifcaTipoAnuncio(idAnuncio);
                     if (t == 1) {
                         Imovel i = new Imovel();
-                        //int idImovel = AnuncioFacade.retornoIdImovel(idAnuncio);
                         i = AnuncioFacade.buscarImovelPorId(idAnuncio);
-                        //i.setId(idAnuncio);
-                      //  i = AnuncioFacade.exibirImovel(idAnuncio);
                         session.setAttribute("imovelExibir", i);
                         session.setAttribute("idExibirAnuncio", idAnuncio);
                         session.removeAttribute("imovelAlterar");
@@ -445,250 +403,238 @@ public class AnuncioServlet extends HttpServlet {
                         rd.forward(request, response);
                     }
                     break;
-                    //case para excluir um anuncio
-                    case "EXCLUIRANUNCIO":
-                        try{
-                     if(session.getAttribute("imovelExibir") != null){
-                     int idAnuncioExcluir = (int)session.getAttribute("idExibirAnuncio");
-                     Imovel ImovelExcluir = (Imovel)session.getAttribute("imovelExibir");
-                     AnuncioFacade.deletarAnuncioImovel(idAnuncioExcluir, ImovelExcluir);
-                     User u = (User)session.getAttribute("user");
-                     List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
-                    session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
-                     } else if(session.getAttribute("movelExibir") != null){
-                         int idAnuncioExcluir = (int)session.getAttribute("idExibirAnuncio");
-                     Movel MovelExcluir = (Movel)session.getAttribute("movelExibir");
-                     AnuncioFacade.deletarAnuncioMovel(idAnuncioExcluir,MovelExcluir);
-                     User u = (User)session.getAttribute("user");
-                     List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
-                    session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
-                     }else if(session.getAttribute("materialExibir") != null){
-                         int idAnuncioExcluir = (int)session.getAttribute("idExibirAnuncio");
-                     Material materialExcluir = (Material)session.getAttribute("materialExibir");
-                     AnuncioFacade.deletarAnuncioMaterial(idAnuncioExcluir, materialExcluir);
-                     User u = (User)session.getAttribute("user");
-                     List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
-                    session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
-                     }
-                    rd = request.getRequestDispatcher("resumo.jsp");
-                    rd.forward(request, response); 
-                        }catch(Exception e){
-                            
+
+                case "EXCLUIRANUNCIO":
+                    try {
+                        if (session.getAttribute("imovelExibir") != null) {
+                            int idAnuncioExcluir = (int) session.getAttribute("idExibirAnuncio");
+                            Imovel ImovelExcluir = (Imovel) session.getAttribute("imovelExibir");
+                            AnuncioFacade.deletarAnuncioImovel(idAnuncioExcluir, ImovelExcluir);
+                            User u = (User) session.getAttribute("user");
+                            List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                            session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
+                        } else if (session.getAttribute("movelExibir") != null) {
+                            int idAnuncioExcluir = (int) session.getAttribute("idExibirAnuncio");
+                            Movel MovelExcluir = (Movel) session.getAttribute("movelExibir");
+                            AnuncioFacade.deletarAnuncioMovel(idAnuncioExcluir, MovelExcluir);
+                            User u = (User) session.getAttribute("user");
+                            List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                            session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
+                        } else if (session.getAttribute("materialExibir") != null) {
+                            int idAnuncioExcluir = (int) session.getAttribute("idExibirAnuncio");
+                            Material materialExcluir = (Material) session.getAttribute("materialExibir");
+                            AnuncioFacade.deletarAnuncioMaterial(idAnuncioExcluir, materialExcluir);
+                            User u = (User) session.getAttribute("user");
+                            List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                            session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                         }
+                        rd = request.getRequestDispatcher("resumo.jsp");
+                        rd.forward(request, response);
+                    } catch (Exception e) {
+                    }
                     break;
-                    
-                    case "ALTERARANUNCIO":
-                        try{
-                     if (session.getAttribute("imovelExibir") != null){
-                     int idAnuncioAlterar = (int)session.getAttribute("idExibirAnuncio");
-                     Imovel ImovelAlterar = (Imovel)session.getAttribute("imovelExibir");
-                     session.setAttribute("imovelAlterar", ImovelAlterar);
-                        session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
-                        session.removeAttribute("imovelExibir");
-                        List<Categoria> listaCategoriaImovel = new ArrayList<Categoria>();
-                                listaCategoriaImovel = MainPageFacade.listaCategoriasImovel();
+
+                case "ALTERARANUNCIO":
+                    try {
+                        if (session.getAttribute("imovelExibir") != null) {
+                            int idAnuncioAlterar = (int) session.getAttribute("idExibirAnuncio");
+                            Imovel ImovelAlterar = (Imovel) session.getAttribute("imovelExibir");
+                            session.setAttribute("imovelAlterar", ImovelAlterar);
+                            session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
+                            session.removeAttribute("imovelExibir");
+                            List<Categoria> listaCategoriaImovel = new ArrayList<Categoria>();
+                            listaCategoriaImovel = MainPageFacade.listaCategoriasImovel();
                             session.setAttribute("listaCatImovel", listaCategoriaImovel);
-                            
-                     }else if(session.getAttribute("movelExibir") != null){
-                         int idAnuncioAlterar = (int)session.getAttribute("idExibirAnuncio");
-                     Movel movelAlterar = (Movel)session.getAttribute("movelExibir");
-                     session.setAttribute("movelAlterar", movelAlterar);
-                        session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
-                        session.removeAttribute("movelExibir");
-                        List<Categoria> listaCategoriaMovel = new ArrayList<Categoria>();
-                                listaCategoriaMovel = MainPageFacade.listaCategoriasMovel();
+                        } else if (session.getAttribute("movelExibir") != null) {
+                            int idAnuncioAlterar = (int) session.getAttribute("idExibirAnuncio");
+                            Movel movelAlterar = (Movel) session.getAttribute("movelExibir");
+                            session.setAttribute("movelAlterar", movelAlterar);
+                            session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
+                            session.removeAttribute("movelExibir");
+                            List<Categoria> listaCategoriaMovel = new ArrayList<Categoria>();
+                            listaCategoriaMovel = MainPageFacade.listaCategoriasMovel();
                             session.setAttribute("listaCatMovel", listaCategoriaMovel);
-                        
-                     }else if(session.getAttribute("materialExibir") != null){
-                         int idAnuncioAlterar = (int)session.getAttribute("idExibirAnuncio");
-                     Material materialAlterar = (Material)session.getAttribute("materialExibir");
-                     session.setAttribute("materialAlterar", materialAlterar);
-                        session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
-                        session.removeAttribute("materialExibir");
-                        List<Categoria> listaCategoriaMaterial = new ArrayList<Categoria>();
-                                listaCategoriaMaterial = MainPageFacade.listaCategoriasMaterial();
+                        } else if (session.getAttribute("materialExibir") != null) {
+                            int idAnuncioAlterar = (int) session.getAttribute("idExibirAnuncio");
+                            Material materialAlterar = (Material) session.getAttribute("materialExibir");
+                            session.setAttribute("materialAlterar", materialAlterar);
+                            session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
+                            session.removeAttribute("materialExibir");
+                            List<Categoria> listaCategoriaMaterial = new ArrayList<Categoria>();
+                            listaCategoriaMaterial = MainPageFacade.listaCategoriasMaterial();
                             session.setAttribute("listaCatMaterial", listaCategoriaMaterial);
-                        
-                     }
-                        rd = request.getRequestDispatcher("anuncio.jsp");
-                        rd.forward(request, response); 
-                        }catch(Exception e){
-                            
-                        }
-                    break;
-                    
-                    case"ALTERARANUNCIOID":
-                        
-                        try{
-                            
-                            if(request.getParameter("tipoAnuncio").equals("imovel")){
-                                Imovel i = new Imovel();
-                           if(request.getParameter("idAnuncioImovel")!= null && !request.getParameter("idAnuncioImovel").equals("")){
-                               i.setId(Integer.parseInt(request.getParameter("idAnuncioImovel")));
-                           }
-                           if(request.getParameter("tipo")!= null && !request.getParameter("tipo").equals("")){
-                               i.setTipo(Integer.parseInt(request.getParameter("tipo")));
-                           }
-                           if(request.getParameter("titulo")!= null && !request.getParameter("titulo").equals("")){
-                               i.setTitulo(request.getParameter("titulo"));
-                           }
-                           if(request.getParameter("descricao")!= null && !request.getParameter("descricao").equals("")){
-                               i.setDescricao(request.getParameter("descricao"));
-                           }
-                           if(request.getParameter("descricaoPet")!= null && !request.getParameter("descricaoPet").equals("")){
-                               i.setBoolean_pet(Integer.parseInt(request.getParameter("descricaoPet")));
-                           }
-                           if(request.getParameter("descricaoPessoas")!= null && !request.getParameter("descricaoPessoas").equals("")){
-                               i.setQuantidade_pessoas(Integer.parseInt(request.getParameter("descricaoPessoas")));
-                           }
-                           if(request.getParameter("valor")!= null && !request.getParameter("valor").equals("")){
-                               i.setPreco(Float.parseFloat(request.getParameter("valor")));
-                           }
-                           if(request.getParameter("rua")!= null && !request.getParameter("rua").equals("")){
-                               i.setRua(request.getParameter("rua"));
-                           }
-                           if(request.getParameter("num")!= null && !request.getParameter("num").equals("")){
-                               i.setNumero(Integer.parseInt(request.getParameter("num")));
-                           }
-                           if(request.getParameter("cep")!= null && !request.getParameter("cep").equals("")){
-                               i.setCep(request.getParameter("cep"));
-                           }
-                           if(request.getParameter("cidade")!= null && !request.getParameter("cidade").equals("")){
-                               i.setCidade(request.getParameter("cidade"));
-                           }
-                           if(request.getParameter("estado")!= null && !request.getParameter("estado").equals("")){
-                               i.setEstado(request.getParameter("estado"));
-                           }
-                           if(request.getParameter("comple")!= null && !request.getParameter("comple").equals("")){
-                               i.setComplemento(request.getParameter("comple"));
-                           }else{
-                               i.setComplemento("  ");
-                           }
-                           if(i.getId() != 0){
-                               int idAnuncioAlterar = (int)session.getAttribute("idExibirAnuncio");
-                               AnuncioFacade.updateImovel(i, idAnuncioAlterar);
-                               Imovel imov = AnuncioFacade.buscarImovelPorId(idAnuncioAlterar);
-                               session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
-                               session.setAttribute("imovelExibir", imov);
-                        session.removeAttribute("imovelAlterar");
-                           }
-                           
-                        }else if(request.getParameter("tipoAnuncio").equals("movel")){
-                                 Movel m = new Movel();
-                           if(request.getParameter("idAnuncioMovel")!= null && !request.getParameter("idAnuncioMovel").equals("")){
-                               m.setId(Integer.parseInt(request.getParameter("idAnuncioMovel")));
-                           }
-                           
-                           if(request.getParameter("titulo")!= null && !request.getParameter("titulo").equals("")){
-                               m.setTitulo(request.getParameter("titulo"));
-                           }
-                           if(request.getParameter("descricao")!= null && !request.getParameter("descricao").equals("")){
-                               m.setDescricao(request.getParameter("descricao"));
-                           }
-                           
-                           if(request.getParameter("tipo")!= null && !request.getParameter("tipo").equals("")){
-                               m.setTipo(Integer.parseInt(request.getParameter("tipo")));
-                           }
-                           
-                           if(request.getParameter("valor")!= null && !request.getParameter("valor").equals("")){
-                               m.setPreco(Float.parseFloat(request.getParameter("valor")));
-                           }
-                           if(request.getParameter("rua")!= null && !request.getParameter("rua").equals("")){
-                               m.setRua(request.getParameter("rua"));
-                           }
-                           if(request.getParameter("num")!= null && !request.getParameter("num").equals("")){
-                               m.setNumero(Integer.parseInt(request.getParameter("num")));
-                           }
-                           if(request.getParameter("cep")!= null && !request.getParameter("cep").equals("")){
-                               m.setCep(request.getParameter("cep"));
-                           }
-                           if(request.getParameter("cidade")!= null && !request.getParameter("cidade").equals("")){
-                               m.setCidade(request.getParameter("cidade"));
-                           }
-                           if(request.getParameter("estado")!= null && !request.getParameter("estado").equals("")){
-                               m.setEstado(request.getParameter("estado"));
-                           }
-                           if(request.getParameter("comple")!= null && !request.getParameter("comple").equals("")){
-                               m.setComplemento(request.getParameter("comple"));
-                           }else{
-                               m.setComplemento("  ");
-                           }
-                           int idAnuncioAlterar = (int)session.getAttribute("idExibirAnuncio");
-                               AnuncioFacade.updateMovel(m, idAnuncioAlterar);
-                               Movel mov = AnuncioFacade.buscarMovelPorId(idAnuncioAlterar);
-                               session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
-                               session.setAttribute("movelExibir", mov);
-                        session.removeAttribute("movelAlterar");
-                        }else if(request.getParameter("tipoAnuncio").equals("material")){
-                                 Material m = new Material();
-                           if(request.getParameter("idAnuncioMaterial")!= null && !request.getParameter("idAnuncioMaterial").equals("")){
-                               m.setId(Integer.parseInt(request.getParameter("idAnuncioMaterial")));
-                           }
-                           if(request.getParameter("tipo")!= null && !request.getParameter("tipo").equals("")){
-                               m.setTipo(Integer.parseInt(request.getParameter("tipo")));
-                           }
-                           
-                           if(request.getParameter("titulo")!= null && !request.getParameter("titulo").equals("")){
-                               m.setTitulo(request.getParameter("titulo"));
-                           }
-                           if(request.getParameter("descricao")!= null && !request.getParameter("descricao").equals("")){
-                               m.setDescricao(request.getParameter("descricao"));
-                           }
-                           
-                           if(request.getParameter("tipo")!= null && !request.getParameter("tipo").equals("")){
-                               m.setTipo(Integer.parseInt(request.getParameter("tipo")));
-                           }
-                           
-                           if(request.getParameter("valor")!= null && !request.getParameter("valor").equals("")){
-                               m.setPreco(Float.parseFloat(request.getParameter("valor")));
-                           }
-                           if(request.getParameter("rua")!= null && !request.getParameter("rua").equals("")){
-                               m.setRua(request.getParameter("rua"));
-                           }
-                           if(request.getParameter("num")!= null && !request.getParameter("num").equals("")){
-                               m.setNumero(Integer.parseInt(request.getParameter("num")));
-                           }
-                           if(request.getParameter("cep")!= null && !request.getParameter("cep").equals("")){
-                               m.setCep(request.getParameter("cep"));
-                           }
-                           if(request.getParameter("cidade")!= null && !request.getParameter("cidade").equals("")){
-                               m.setCidade(request.getParameter("cidade"));
-                           }
-                           if(request.getParameter("estado")!= null && !request.getParameter("estado").equals("")){
-                               m.setEstado(request.getParameter("estado"));
-                           }
-                           if(request.getParameter("comple")!= null && !request.getParameter("comple").equals("")){
-                               m.setComplemento(request.getParameter("comple"));
-                           }else{
-                               m.setComplemento("  ");
-                           }
-                           int idAnuncioAlterar = (int)session.getAttribute("idExibirAnuncio");
-                               AnuncioFacade.updateMaterial(m, idAnuncioAlterar);
-                               Material mat = AnuncioFacade.buscarMaterialPorId(idAnuncioAlterar);
-                               session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
-                               session.setAttribute("materialExibir", mat);
-                        session.removeAttribute("materialAlterar");
+
                         }
                         rd = request.getRequestDispatcher("anuncio.jsp");
                         rd.forward(request, response);
-                        }catch(Exception e){
-                            
-                        }
+                    } catch (Exception e) {
+                    }
                     break;
-                    
-                    case"CANCELARALTERARANUNCIO":
-                        try{
-                            session.removeAttribute("imovelAlterar");
-                            session.removeAttribute("imovelExibir");
-                            User u = (User)session.getAttribute("user");
-                     List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
-                    session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
-                            request.getRequestDispatcher("resumo.jsp").forward(request, response);
-                            
-                        }catch(Exception e){
-                            
+
+                case "ALTERARANUNCIOID":
+                    try {
+                        if (request.getParameter("tipoAnuncio").equals("imovel")) {
+                            Imovel i = new Imovel();
+                            if (request.getParameter("idAnuncioImovel") != null && !request.getParameter("idAnuncioImovel").equals("")) {
+                                i.setId(Integer.parseInt(request.getParameter("idAnuncioImovel")));
+                            }
+                            if (request.getParameter("tipo") != null && !request.getParameter("tipo").equals("")) {
+                                i.setTipo(Integer.parseInt(request.getParameter("tipo")));
+                            }
+                            if (request.getParameter("titulo") != null && !request.getParameter("titulo").equals("")) {
+                                i.setTitulo(request.getParameter("titulo"));
+                            }
+                            if (request.getParameter("descricao") != null && !request.getParameter("descricao").equals("")) {
+                                i.setDescricao(request.getParameter("descricao"));
+                            }
+                            if (request.getParameter("descricaoPet") != null && !request.getParameter("descricaoPet").equals("")) {
+                                i.setBoolean_pet(Integer.parseInt(request.getParameter("descricaoPet")));
+                            }
+                            if (request.getParameter("descricaoPessoas") != null && !request.getParameter("descricaoPessoas").equals("")) {
+                                i.setQuantidade_pessoas(Integer.parseInt(request.getParameter("descricaoPessoas")));
+                            }
+                            if (request.getParameter("valor") != null && !request.getParameter("valor").equals("")) {
+                                i.setPreco(Float.parseFloat(request.getParameter("valor")));
+                            }
+                            if (request.getParameter("rua") != null && !request.getParameter("rua").equals("")) {
+                                i.setRua(request.getParameter("rua"));
+                            }
+                            if (request.getParameter("num") != null && !request.getParameter("num").equals("")) {
+                                i.setNumero(Integer.parseInt(request.getParameter("num")));
+                            }
+                            if (request.getParameter("cep") != null && !request.getParameter("cep").equals("")) {
+                                i.setCep(request.getParameter("cep"));
+                            }
+                            if (request.getParameter("cidade") != null && !request.getParameter("cidade").equals("")) {
+                                i.setCidade(request.getParameter("cidade"));
+                            }
+                            if (request.getParameter("estado") != null && !request.getParameter("estado").equals("")) {
+                                i.setEstado(request.getParameter("estado"));
+                            }
+                            if (request.getParameter("comple") != null && !request.getParameter("comple").equals("")) {
+                                i.setComplemento(request.getParameter("comple"));
+                            } else {
+                                i.setComplemento("  ");
+                            }
+                            if (i.getId() != 0) {
+                                int idAnuncioAlterar = (int) session.getAttribute("idExibirAnuncio");
+                                AnuncioFacade.updateImovel(i, idAnuncioAlterar);
+                                Imovel imov = AnuncioFacade.buscarImovelPorId(idAnuncioAlterar);
+                                session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
+                                session.setAttribute("imovelExibir", imov);
+                                session.removeAttribute("imovelAlterar");
+                            }
+                        } else if (request.getParameter("tipoAnuncio").equals("movel")) {
+                            Movel m = new Movel();
+                            if (request.getParameter("idAnuncioMovel") != null && !request.getParameter("idAnuncioMovel").equals("")) {
+                                m.setId(Integer.parseInt(request.getParameter("idAnuncioMovel")));
+                            }
+                            if (request.getParameter("titulo") != null && !request.getParameter("titulo").equals("")) {
+                                m.setTitulo(request.getParameter("titulo"));
+                            }
+                            if (request.getParameter("descricao") != null && !request.getParameter("descricao").equals("")) {
+                                m.setDescricao(request.getParameter("descricao"));
+                            }
+                            if (request.getParameter("tipo") != null && !request.getParameter("tipo").equals("")) {
+                                m.setTipo(Integer.parseInt(request.getParameter("tipo")));
+                            }
+                            if (request.getParameter("valor") != null && !request.getParameter("valor").equals("")) {
+                                m.setPreco(Float.parseFloat(request.getParameter("valor")));
+                            }
+                            if (request.getParameter("rua") != null && !request.getParameter("rua").equals("")) {
+                                m.setRua(request.getParameter("rua"));
+                            }
+                            if (request.getParameter("num") != null && !request.getParameter("num").equals("")) {
+                                m.setNumero(Integer.parseInt(request.getParameter("num")));
+                            }
+                            if (request.getParameter("cep") != null && !request.getParameter("cep").equals("")) {
+                                m.setCep(request.getParameter("cep"));
+                            }
+                            if (request.getParameter("cidade") != null && !request.getParameter("cidade").equals("")) {
+                                m.setCidade(request.getParameter("cidade"));
+                            }
+                            if (request.getParameter("estado") != null && !request.getParameter("estado").equals("")) {
+                                m.setEstado(request.getParameter("estado"));
+                            }
+                            if (request.getParameter("comple") != null && !request.getParameter("comple").equals("")) {
+                                m.setComplemento(request.getParameter("comple"));
+                            } else {
+                                m.setComplemento("  ");
+                            }
+                            int idAnuncioAlterar = (int) session.getAttribute("idExibirAnuncio");
+                            AnuncioFacade.updateMovel(m, idAnuncioAlterar);
+                            Movel mov = AnuncioFacade.buscarMovelPorId(idAnuncioAlterar);
+                            session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
+                            session.setAttribute("movelExibir", mov);
+                            session.removeAttribute("movelAlterar");
+                        } else if (request.getParameter("tipoAnuncio").equals("material")) {
+                            Material m = new Material();
+                            if (request.getParameter("idAnuncioMaterial") != null && !request.getParameter("idAnuncioMaterial").equals("")) {
+                                m.setId(Integer.parseInt(request.getParameter("idAnuncioMaterial")));
+                            }
+                            if (request.getParameter("tipo") != null && !request.getParameter("tipo").equals("")) {
+                                m.setTipo(Integer.parseInt(request.getParameter("tipo")));
+                            }
+
+                            if (request.getParameter("titulo") != null && !request.getParameter("titulo").equals("")) {
+                                m.setTitulo(request.getParameter("titulo"));
+                            }
+                            if (request.getParameter("descricao") != null && !request.getParameter("descricao").equals("")) {
+                                m.setDescricao(request.getParameter("descricao"));
+                            }
+
+                            if (request.getParameter("tipo") != null && !request.getParameter("tipo").equals("")) {
+                                m.setTipo(Integer.parseInt(request.getParameter("tipo")));
+                            }
+
+                            if (request.getParameter("valor") != null && !request.getParameter("valor").equals("")) {
+                                m.setPreco(Float.parseFloat(request.getParameter("valor")));
+                            }
+                            if (request.getParameter("rua") != null && !request.getParameter("rua").equals("")) {
+                                m.setRua(request.getParameter("rua"));
+                            }
+                            if (request.getParameter("num") != null && !request.getParameter("num").equals("")) {
+                                m.setNumero(Integer.parseInt(request.getParameter("num")));
+                            }
+                            if (request.getParameter("cep") != null && !request.getParameter("cep").equals("")) {
+                                m.setCep(request.getParameter("cep"));
+                            }
+                            if (request.getParameter("cidade") != null && !request.getParameter("cidade").equals("")) {
+                                m.setCidade(request.getParameter("cidade"));
+                            }
+                            if (request.getParameter("estado") != null && !request.getParameter("estado").equals("")) {
+                                m.setEstado(request.getParameter("estado"));
+                            }
+                            if (request.getParameter("comple") != null && !request.getParameter("comple").equals("")) {
+                                m.setComplemento(request.getParameter("comple"));
+                            } else {
+                                m.setComplemento("  ");
+                            }
+                            int idAnuncioAlterar = (int) session.getAttribute("idExibirAnuncio");
+                            AnuncioFacade.updateMaterial(m, idAnuncioAlterar);
+                            Material mat = AnuncioFacade.buscarMaterialPorId(idAnuncioAlterar);
+                            session.setAttribute("idExibirAnuncio", idAnuncioAlterar);
+                            session.setAttribute("materialExibir", mat);
+                            session.removeAttribute("materialAlterar");
                         }
-                        
+                        rd = request.getRequestDispatcher("anuncio.jsp");
+                        rd.forward(request, response);
+                    } catch (Exception e) {
+
+                    }
+                    break;
+
+                case "CANCELARALTERARANUNCIO":
+                    try {
+                        session.removeAttribute("imovelAlterar");
+                        session.removeAttribute("imovelExibir");
+                        User u = (User) session.getAttribute("user");
+                        List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                        session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
+                        request.getRequestDispatcher("resumo.jsp").forward(request, response);
+                    } catch (Exception e) {
+                    }
+
                 case "INFORMARVENDAANUNCIO":
                     try {
                         if (session.getAttribute("idExibirAnuncio") != null) {
@@ -699,26 +645,20 @@ public class AnuncioServlet extends HttpServlet {
                             session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                             request.getRequestDispatcher("resumo.jsp").forward(request, response);
                         }
-                    }
-                    catch (Exception e) {
-
+                    } catch (Exception e) {
                     }
                     break;
                 case "FILTROANUNCIO":
                     FiltroAnuncio filtro = new FiltroAnuncio();
-
                     try {
                         filtro.setMovel("1".equals((String) request.getParameter("movel")));
                         filtro.setImovel("1".equals((String) request.getParameter("imovel")));
                         filtro.setMaterial("1".equals((String) request.getParameter("material")));
-
                         out.write(AnuncioFacade.buscarAnuncioAprovado(filtro));
                         out.flush();
-                    }
-                    catch (Exception ex) {
+                    } catch (Exception ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
                     break;
             }
         }

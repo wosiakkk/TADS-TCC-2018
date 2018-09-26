@@ -34,12 +34,12 @@
                         </a>
                     </div>
                     <div class="list-group-item">
-                        <a  href="AnuncioServlet?action=BUSCARMOVEL">
+                        <a  href="AnuncioServlet?action=BUSCARMOVEISPEND">
                             <img class="d-block img-fluid" src="img\icones\chair.png">Móvel    
                         </a>
                     </div>
                     <div class="list-group-item">
-                        <a  href="AnuncioServlet?action=BUSCARMATERIAL">
+                        <a  href="AnuncioServlet?action=BUSCARMATERIAISPEND">
                             <img class="d-block img-fluid" src="img\icones\books.png">Material
                         </a>
                     </div>
@@ -79,12 +79,12 @@
                         </a>
                     </div>
                     <div class="list-group-item">
-                        <a  href="AnuncioServlet?action=BUSCARMOVEL">
+                        <a  href="AnuncioServlet?action=BUSCARMOVEISPEND">
                             <img class="d-block img-fluid" src="img\icones\chair.png">Móvel    
                         </a>
                     </div>
                     <div class="list-group-item">
-                        <a  href="AnuncioServlet?action=BUSCARMATERIAL">
+                        <a  href="AnuncioServlet?action=BUSCARMATERIAISPEND">
                             <img class="d-block img-fluid" src="img\icones\books.png">Material
                         </a>
                     </div>
