@@ -50,46 +50,32 @@ public class UserServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
-
-            //******************************
-            // implementado apenas para finalizar a sprint da lista de amigos, pois os nomes do user podem ser iguais
-            // futuramente a busca será aprimorada
             String action = request.getParameter("action");
-            
             //Validação de acesso
-            if(session == null && !("ADD".equals(action))) {
+            if (session == null && !("ADD".equals(action))) {
                 RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                 request.setAttribute("title", "Inicio");
                 request.setAttribute("msg", "Faça login para acessar esta página!");
                 rd.forward(request, response);
             }
-            
             User u = new User();
             switch (action) {
                 case "ADD": {
-
                     u.setNome(request.getParameter("nome"));
-
                     u.setEmail(request.getParameter("email"));
                     u.setSenha(MD5.criptografar(request.getParameter("senha")));
-                    
-                    try{
-                        if(u.getNome().isEmpty() || u.getEmail().isEmpty() || u.getSenha().isEmpty()) {
+                    try {
+                        if (u.getNome().isEmpty() || u.getEmail().isEmpty() || u.getSenha().isEmpty()) {
                             String param = URLEncoder.encode("Todos os campos de cadastro são obrigatórios. Por favor, tente novamente.");
                             response.sendRedirect("erro.jsp?title=Erro&msg=" + param);
                         }
-                    }
-                    catch(NullPointerException ex) {
+                    } catch (NullPointerException ex) {
                         Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
                         String param = URLEncoder.encode("Todos os campos de cadastro são obrigatórios. Por favor, tente novamente.");
                         response.sendRedirect("erro.jsp?title=Erro&msg=" + param);
                     }
-
-                    //temporariamente só irei cadastrar usuários comuns
                     u.setTipoUsuario(2);
-
                     try {
                         User userLogado = UserFacade.insereUsuario(u);
                         if (userLogado == null) {
@@ -98,28 +84,25 @@ public class UserServlet extends HttpServlet {
                         } else {
                             response.sendRedirect("login.jsp");
                         }
-
                     } catch (AcessoBdException ex) {
                         throw new RuntimeException(ex);
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
-
                     break;
                 }
-                
+
                 case "ADDMOD": {
                     u.setNome(request.getParameter("nome"));
                     u.setEmail(request.getParameter("email"));
-                    u.setSenha(MD5.criptografar(request.getParameter("senha"))); 
+                    u.setSenha(MD5.criptografar(request.getParameter("senha")));
                     u.setFoto("img\\fotosPerfil\\mod.png");
-                    try{
-                        if(u.getNome().isEmpty() || u.getEmail().isEmpty() || u.getSenha().isEmpty()) {
+                    try {
+                        if (u.getNome().isEmpty() || u.getEmail().isEmpty() || u.getSenha().isEmpty()) {
                             String param = URLEncoder.encode("Todos os campos de cadastro são obrigatórios. Por favor, tente novamente.");
                             response.sendRedirect("erro.jsp?title=Erro&msg=" + param);
                         }
-                    }
-                    catch(NullPointerException ex) {
+                    } catch (NullPointerException ex) {
                         Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
                         String param = URLEncoder.encode("Todos os campos de cadastro são obrigatórios. Por favor, tente novamente.");
                         response.sendRedirect("erro.jsp?title=Erro&msg=" + param);
@@ -132,27 +115,41 @@ public class UserServlet extends HttpServlet {
                             String param = URLEncoder.encode("Falha ao cadastrar moderador.");
                             response.sendRedirect("erro.jsp?title=Erro&msg=" + param);
                         } else {
-                            response.sendRedirect("modCadastrado.jsp");
+                            session.removeAttribute("mensagemAcao");
+                            session.removeAttribute("mensagemAcaoTipo");
+                            session.setAttribute("mensagemAcao", "O novo Moderador foi cadastrado!");
+                            session.setAttribute("mensagemAcaoTipo", 2);
+                            RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                            rd.forward(request, response);
                         }
                     } catch (AcessoBdException ex) {
-                        throw new RuntimeException(ex);
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "Erro ao cadastrar um novo moderador(AcessoBdException)!");
+                        session.setAttribute("mensagemAcaoTipo", 2);
+                        RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                        rd.forward(request, response);
                     } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "Erro ao cadastrar um novo moderador(SQLException)!");
+                        session.setAttribute("mensagemAcaoTipo", 2);
+                        RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                        rd.forward(request, response);
                     }
                     break;
                 }
                 case "ADDADM": {
                     u.setNome(request.getParameter("nome"));
                     u.setEmail(request.getParameter("email"));
-                    u.setSenha(MD5.criptografar(request.getParameter("senha"))); 
+                    u.setSenha(MD5.criptografar(request.getParameter("senha")));
                     u.setFoto("img\\fotosPerfil\\adm.png");
-                    try{
-                        if(u.getNome().isEmpty() || u.getEmail().isEmpty() || u.getSenha().isEmpty()) {
+                    try {
+                        if (u.getNome().isEmpty() || u.getEmail().isEmpty() || u.getSenha().isEmpty()) {
                             String param = URLEncoder.encode("Todos os campos de cadastro são obrigatórios. Por favor, tente novamente.");
                             response.sendRedirect("erro.jsp?title=Erro&msg=" + param);
                         }
-                    }
-                    catch(NullPointerException ex) {
+                    } catch (NullPointerException ex) {
                         Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
                         String param = URLEncoder.encode("Todos os campos de cadastro são obrigatórios. Por favor, tente novamente.");
                         response.sendRedirect("erro.jsp?title=Erro&msg=" + param);
@@ -165,24 +162,37 @@ public class UserServlet extends HttpServlet {
                             String param = URLEncoder.encode("Falha ao cadastrar moderador.");
                             response.sendRedirect("erro.jsp?title=Erro&msg=" + param);
                         } else {
-                            response.sendRedirect("admCadastrado.jsp");
+                            session.removeAttribute("mensagemAcao");
+                            session.removeAttribute("mensagemAcaoTipo");
+                            session.setAttribute("mensagemAcao", "O novo Administrador foi cadastrado!");
+                            session.setAttribute("mensagemAcaoTipo", 3);
+                            RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                            rd.forward(request, response);
                         }
                     } catch (AcessoBdException ex) {
-                        throw new RuntimeException(ex);
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "Erro ao cadastrar novo Administrador(AcessoBdException)!");
+                        session.setAttribute("mensagemAcaoTipo", 3);
+                        RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                        rd.forward(request, response);
                     } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "Erro ao cadastrar novo Administrador(SQLException)!");
+                        session.setAttribute("mensagemAcaoTipo", 3);
+                        RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                        rd.forward(request, response);
                     }
                     break;
                 }
-                
+
                 case "EDIT": {
                     User alterar = new User();
                     String caminhoFoto = new String();
                     try {
-
                         /*Faz o parse do request*/
                         List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-
                         /*Escreve a o arquivo na pasta img*/
                         for (FileItem item : multiparts) {
                             if (item.isFormField()) {
@@ -226,12 +236,11 @@ public class UserServlet extends HttpServlet {
                                     alterar.setInteresses(item.getString());
                                 }
                                 if (item.getFieldName().equals("fotoUser")) {
-                                    if(!item.getString().equals("") && alterar.getFoto() == null){
-                                    alterar.setFoto(item.getString());
+                                    if (!item.getString().equals("") && alterar.getFoto() == null) {
+                                        alterar.setFoto(item.getString());
                                     }
                                 }
                             } else {
-
                                 Random rand = new Random();
                                 String nomeString = String.valueOf(rand.nextInt()) + ".jpg";
                                 if (!item.getName().equals("")) {
@@ -239,16 +248,13 @@ public class UserServlet extends HttpServlet {
                                     caminhoFoto = "img/fotosPerfil" + File.separator + nomeString;
                                     alterar.setFoto(caminhoFoto);
                                 }
-
                             }
-
                         }
                         request.setAttribute("message", "Arquivo carregado com sucesso");
                     } catch (Exception ex) {
                         request.setAttribute("message", "Upload de arquivo falhou devido a " + ex);
                     }
                     try {
-
                         boolean edit = UserFacade.editarUsuario(alterar);
                         if (edit) {
                             alterar = UserFacade.buscarUsuario(alterar.getId());
@@ -260,14 +266,12 @@ public class UserServlet extends HttpServlet {
                         } else {
 
                         }
-
                     } catch (Exception ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
                         request.setAttribute("msg", "Falha ao Realizar Anuncio: " + ex);
                     } finally {
                         request.getRequestDispatcher("editarPerfil.jsp").forward(request, response);
                     }
-
                     break;
                 }
                 case "SEARCH": {
@@ -278,9 +282,7 @@ public class UserServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
                 }
-                case "REMOVE": {
-                    break;
-                }
+
                 case "PERFIL": {
                     User perfil = new User();
                     int id = Integer.parseInt(request.getParameter("idUser"));
@@ -293,100 +295,170 @@ public class UserServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
                 }
-                
+
                 case "ALTSENHA": {
-                   session.setAttribute("erroSenha", "");
-                   String senhaAtual = request.getParameter("senhaAtual");
-                   int id = (Integer)session.getAttribute("idUserSessao");
-                   Boolean teste;
-                   teste = UserFacade.verificaSenha(senhaAtual,id );
-                   if(teste){
-                       String nsenha = request.getParameter("novaSenha");
-                       if(UserFacade.alterarSenha(nsenha, id)){
-                           RequestDispatcher rd = request.getRequestDispatcher("senhaTrocada.jsp");
-                                    rd.forward(request, response);
-                       }else{
-                           //erro
-                       }
-                   }else{
-                       session.setAttribute("erroSenha", "Senha atual incorreta");
-                       RequestDispatcher rd = request.getRequestDispatcher("alterarSenha.jsp");
-                                    rd.forward(request, response);
-                   }
-                   break;
+                    session.setAttribute("erroSenha", "");
+                    String senhaAtual = request.getParameter("senhaAtual");
+                    int id = (Integer) session.getAttribute("idUserSessao");
+                    Boolean teste;
+                    teste = UserFacade.verificaSenha(senhaAtual, id);
+                    if (teste) {
+                        String nsenha = request.getParameter("novaSenha");
+                        if (UserFacade.alterarSenha(nsenha, id)) {
+                            session.removeAttribute("mensagemAcao");
+                            session.removeAttribute("mensagemAcaoTipo");
+                            session.setAttribute("mensagemAcao", "Sua senha foi atualizada!");
+                            session.setAttribute("mensagemAcaoTipo", 4);
+                            RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                            rd.forward(request, response);
+                        } else {
+                            session.removeAttribute("mensagemAcao");
+                            session.removeAttribute("mensagemAcaoTipo");
+                            session.setAttribute("mensagemAcao", "Erro ao alterar a sua senha!");
+                            session.setAttribute("mensagemAcaoTipo", 4);
+                            RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                            rd.forward(request, response);
+                        }
+                    } else {
+                        session.setAttribute("erroSenha", "Senha atual incorreta");
+                        RequestDispatcher rd = request.getRequestDispatcher("alterarSenha.jsp");
+                        rd.forward(request, response);
+                    }
+                    break;
                 }
 
                 case "AMIZADE": {
                     String acao = request.getParameter("acao");
                     switch (acao) {
-
                         case "SOLICITAR": {
-
                             int idSolicitante = Integer.parseInt(request.getParameter("idSolicitante"));
                             int idSolicitado = Integer.parseInt(request.getParameter("idSolicitado"));
-
                             if (UserFacade.solicitarAmizade(idSolicitante, idSolicitado)) {
                                 if (UserFacade.solicitarAmizade2(idSolicitante, idSolicitado)) {
-                                    RequestDispatcher rd = request.getRequestDispatcher("solicitarAmizade.jsp");
+                                    session.removeAttribute("mensagemAcao");
+                                    session.removeAttribute("mensagemAcaoTipo");
+                                    session.setAttribute("mensagemAcao", "Seu pedido de amizade foi enviado!");
+                                    session.setAttribute("mensagemAcaoTipo", 1);
+                                    RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
                                     rd.forward(request, response);
                                 } else {
                                     //erro na tabela do solictado
+                                    session.removeAttribute("mensagemAcao");
+                                    session.removeAttribute("mensagemAcaoTipo");
+                                    session.setAttribute("mensagemAcao", "Erro ao enviar pedido de amizade!(tabela do solictado)");
+                                    session.setAttribute("mensagemAcaoTipo", 1);
+                                    RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                                    rd.forward(request, response);
                                 }
                             } else {
                                 //erro na tabela do solicitante
+                                session.removeAttribute("mensagemAcao");
+                                session.removeAttribute("mensagemAcaoTipo");
+                                session.setAttribute("mensagemAcao", "Erro ao enviar pedido de amizade!(tabela do solicitante)");
+                                session.setAttribute("mensagemAcaoTipo", 1);
+                                RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                                rd.forward(request, response);
                             }
-
                             break;
                         }
                         case "ACEITAR": {
                             int idSolicitante = Integer.parseInt(request.getParameter("idSolicitante"));
                             int idSolicitado = Integer.parseInt(request.getParameter("idSolicitado"));
-                            UserFacade.aceitarAmizade(idSolicitante, idSolicitado);
-                            RequestDispatcher rd = request.getRequestDispatcher("amizadeAceita.jsp");
-                            rd.forward(request, response);
+                            if (UserFacade.aceitarAmizade(idSolicitante, idSolicitado)) {
+                                session.removeAttribute("mensagemAcao");
+                                session.removeAttribute("mensagemAcaoTipo");
+                                session.setAttribute("mensagemAcao", "Sua amizade foi aceita!");
+                                session.setAttribute("mensagemAcaoTipo", 1);
+                                RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                                rd.forward(request, response);
+                            } else {
+                                session.removeAttribute("mensagemAcao");
+                                session.removeAttribute("mensagemAcaoTipo");
+                                session.setAttribute("mensagemAcao", "Erro ao aceitar a amizade!");
+                                session.setAttribute("mensagemAcaoTipo", 1);
+                                RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                                rd.forward(request, response);
+                            }
+
                             break;
                         }
                         case "REJEITAR": {
                             int idSessaoSolicitado = Integer.parseInt(request.getParameter("idSessao"));
                             int idSolicitante = Integer.parseInt(request.getParameter("idSolicitante"));
-                            if(UserFacade.rejeitarAmizade(idSessaoSolicitado, idSolicitante)){
-                                RequestDispatcher rd = request.getRequestDispatcher("amizadeRejeitada.jsp");
+                            if (UserFacade.rejeitarAmizade(idSessaoSolicitado, idSolicitante)) {
+                                session.removeAttribute("mensagemAcao");
+                                session.removeAttribute("mensagemAcaoTipo");
+                                session.setAttribute("mensagemAcao", "O pedido de amizade foi rejeitado!");
+                                session.setAttribute("mensagemAcaoTipo", 1);
+                                RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
                                 rd.forward(request, response);
-                            }else{
-                                //erro rejeição
+                            } else {
+                                session.removeAttribute("mensagemAcao");
+                                session.removeAttribute("mensagemAcaoTipo");
+                                session.setAttribute("mensagemAcao", "Erro ao rejeitar amizade!");
+                                session.setAttribute("mensagemAcaoTipo", 1);
+                                RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                                rd.forward(request, response);
                             }
                             break;
                         }
                         case "REJEITAREBLOQUEAR": {
                             int idSessaoSolicitado = Integer.parseInt(request.getParameter("idSessao"));
                             int idSolicitante = Integer.parseInt(request.getParameter("idSolicitante"));
-                            if(UserFacade.rejeitarBloquear(idSessaoSolicitado, idSolicitante)){
-                                RequestDispatcher rd = request.getRequestDispatcher("amizadeBloqueada.jsp");
+                            if (UserFacade.rejeitarBloquear(idSessaoSolicitado, idSolicitante)) {
+                                session.removeAttribute("mensagemAcao");
+                                session.removeAttribute("mensagemAcaoTipo");
+                                session.setAttribute("mensagemAcao", "O usuário foi bloqueado!");
+                                session.setAttribute("mensagemAcaoTipo", 1);
+                                RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
                                 rd.forward(request, response);
-                            }else{
-                                //erro 
+                            } else {
+                                session.removeAttribute("mensagemAcao");
+                                session.removeAttribute("mensagemAcaoTipo");
+                                session.setAttribute("mensagemAcao", "Erro ao bloquear usuário!");
+                                session.setAttribute("mensagemAcaoTipo", 1);
+                                RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                                rd.forward(request, response);
                             }
                             break;
                         }
                         case "DESBLOQUEAR": {
                             int idSessao = Integer.parseInt(request.getParameter("idSessao"));
-                            int idDesbloqueio = Integer.parseInt(request.getParameter("idSolicitante")); 
-                            if(UserFacade.desbloquearUsuario(idSessao, idDesbloqueio)){
-                                RequestDispatcher rd = request.getRequestDispatcher("amizadeDesbloqueada.jsp");
+                            int idDesbloqueio = Integer.parseInt(request.getParameter("idSolicitante"));
+                            if (UserFacade.desbloquearUsuario(idSessao, idDesbloqueio)) {
+                                session.removeAttribute("mensagemAcao");
+                                session.removeAttribute("mensagemAcaoTipo");
+                                session.setAttribute("mensagemAcao", "O usuário foi desbloqueado!");
+                                session.setAttribute("mensagemAcaoTipo", 1);
+                                RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
                                 rd.forward(request, response);
-                            }else{
-                                
+                            } else {
+                                session.removeAttribute("mensagemAcao");
+                                session.removeAttribute("mensagemAcaoTipo");
+                                session.setAttribute("mensagemAcao", "Erro ao desbloquear o usuário!");
+                                session.setAttribute("mensagemAcaoTipo", 1);
+                                RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                                rd.forward(request, response);
                             }
                             break;
                         }
                         case "EXCLUIR": {
                             int idSessao = Integer.parseInt(request.getParameter("idSessao"));
                             int idAmigo = Integer.parseInt(request.getParameter("idSolicitante"));
-                            if(UserFacade.excluirAmizade(idSessao, idAmigo)){
-                                RequestDispatcher rd = request.getRequestDispatcher("amizadeExcluida.jsp");
+                            if (UserFacade.excluirAmizade(idSessao, idAmigo)) {
+                                session.removeAttribute("mensagemAcao");
+                                session.removeAttribute("mensagemAcaoTipo");
+                                session.setAttribute("mensagemAcao", "O usuário foi excluido!");
+                                session.setAttribute("mensagemAcaoTipo", 1);
+                                RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
                                 rd.forward(request, response);
-                            }else{
-                                
+                            } else {
+                                session.removeAttribute("mensagemAcao");
+                                session.removeAttribute("mensagemAcaoTipo");
+                                session.setAttribute("mensagemAcao", "Erro ao excluir usuário!");
+                                session.setAttribute("mensagemAcaoTipo", 1);
+                                RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                                rd.forward(request, response);
                             }
                             break;
                         }
@@ -418,26 +490,9 @@ public class UserServlet extends HttpServlet {
                             break;
                         }
                     }
-
-                    break;
-                }
-
-                case "BUSCARAMIGOS": {
-
-                    String tipo = request.getParameter("tipo");
-                    switch (tipo) {
-
-                        case "ACEITOS": {
-
-                            break;
-                        }
-
-                    }
-
                     break;
                 }
             }
-
         }
     }
 

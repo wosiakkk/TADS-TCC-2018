@@ -23,10 +23,9 @@ import java.util.logging.Logger;
  */
 public class UserDAO {
 
-    
     private static final String QUERY_LOGIN = "SELECT NR_SEQ, DS_EMAIL, NM_NOME, TP_USUARIO, DS_FOTO, DS_SENHA FROM TB_USUARIO WHERE DS_EMAIL = ? AND DS_SENHA = ?";
     private static final String QUERY_LOGIN_GOOGLE = "SELECT NR_SEQ, NM_NOME, DS_EMAIL, DS_FOTO,TP_USUARIO FROM TB_USUARIO WHERE DS_EMAIL = ?";
-     private static final String QUERY_SIMPLE_INSERT_MODADM = "INSERT INTO TB_USUARIO"
+    private static final String QUERY_SIMPLE_INSERT_MODADM = "INSERT INTO TB_USUARIO"
             + " (NM_NOME,DS_EMAIL,DS_SENHA,TP_USUARIO,DS_FOTO)"
             + " VALUES (?,?,?,?,?)";
     private static final String QUERY_SIMPLE_INSERT_USR = "INSERT INTO TB_USUARIO"
@@ -73,10 +72,10 @@ public class UserDAO {
             + " tb_usuario.DS_INTERESSES FROM tcc1.tb_usuario "
             + "WHERE tb_usuario.NR_SEQ = ?";
 
-           private static final String QUERY_EDIT_USR = "UPDATE tb_usuario set NM_NOME = ?, "
-                   + "DS_FOTO = ?, NR_TELEFONE = ?, NR_CELULAR = ?, DS_DESCRICAO_USER = ?, "
-                   + "DS_INTERESSES = ? WHERE NR_SEQ = ?";
-                    
+    private static final String QUERY_EDIT_USR = "UPDATE tb_usuario set NM_NOME = ?, "
+            + "DS_FOTO = ?, NR_TELEFONE = ?, NR_CELULAR = ?, DS_DESCRICAO_USER = ?, "
+            + "DS_INTERESSES = ? WHERE NR_SEQ = ?";
+
     private static final String QUERY_EDIT_END = "UPDATE tb_endereco SET\n"
             + "NM_RUA = ?,"
             + "NM_ESTADO = ?,"
@@ -97,11 +96,11 @@ public class UserDAO {
 
     private static final String QUERY_BUSCAR_USUARIOS = "SELECT * FROM tb_usuario WHERE NM_NOME LIKE ?";
 
-   private static final String QUERY_SELECIONAR_IDS_AMIZADE = "SELECT tb_amizade.id_solicitado, tb_amizade.id_solicitante,"
+    private static final String QUERY_SELECIONAR_IDS_AMIZADE = "SELECT tb_amizade.id_solicitado, tb_amizade.id_solicitante,"
             + " tb_amizade.tb_status_amizade_NR_STATUS_AMIGO, tb_amizade.id_solicitante_bloq "
             + "from tb_amizade where tb_amizade.tb_usuario_NR_SEQ = ?";
 
-   private static final String QUERY_SELECIONAR_IDS_AMIGOS_ACEITOS = "SELECT tb_amizade.tb_usuario_NR_SEQ FROM tb_amizade "
+    private static final String QUERY_SELECIONAR_IDS_AMIGOS_ACEITOS = "SELECT tb_amizade.tb_usuario_NR_SEQ FROM tb_amizade "
             + "WHERE (tb_amizade.tb_usuario_NR_SEQ NOT IN (?) AND"
             + " tb_amizade.tb_status_amizade_NR_STATUS_AMIGO = 2) AND (tb_amizade.id_solicitado = ? OR tb_amizade.id_solicitante = ?)";
 
@@ -124,11 +123,10 @@ public class UserDAO {
     private static final String QUERY_REJEITAR_PEDIDO = "DELETE FROM tb_amizade WHERE tb_amizade.id_solicitado = ? "
             + "AND tb_amizade.id_solicitante = ? AND tb_amizade.tb_status_amizade_NR_STATUS_AMIGO = 1";
 
-   private static final String QUERY_REJEITAR_E_BLOQUEAR = "UPDATE tb_amizade SET \n" +
-"            tb_amizade.tb_status_amizade_NR_STATUS_AMIGO =3, tb_amizade.id_solicitante_bloq = ? WHERE (tb_amizade.id_solicitado = ? \n" +
-"            AND tb_amizade.id_solicitante = ?) OR (tb_amizade.id_solicitado = ? \n" +
-"            AND tb_amizade.id_solicitante = ?)";
-   
+    private static final String QUERY_REJEITAR_E_BLOQUEAR = "UPDATE tb_amizade SET \n"
+            + "            tb_amizade.tb_status_amizade_NR_STATUS_AMIGO =3, tb_amizade.id_solicitante_bloq = ? WHERE (tb_amizade.id_solicitado = ? \n"
+            + "            AND tb_amizade.id_solicitante = ?) OR (tb_amizade.id_solicitado = ? \n"
+            + "            AND tb_amizade.id_solicitante = ?)";
 
     private static final String QUERY_DESBLOQUEAR_USUARIO = "UPDATE tb_amizade "
             + "SET "
@@ -146,8 +144,8 @@ public class UserDAO {
             + "AND tb_amizade.id_solicitante = ?) "
             + "OR (tb_amizade.id_solicitado = ? "
             + "AND tb_amizade.id_solicitante = ?)";
-    
-    private static final String query_nova_lista_bloqueados ="SELECT distinct tb_amizade.id_solicitado, tb_amizade.id_solicitante "
+
+    private static final String query_nova_lista_bloqueados = "SELECT distinct tb_amizade.id_solicitado, tb_amizade.id_solicitante "
             + "from tb_amizade where (tb_amizade.id_solicitante_bloq = ? and tb_amizade.tb_status_amizade_NR_STATUS_AMIGO=3)";
 
     //******************************
@@ -187,9 +185,6 @@ public class UserDAO {
         con.close();
         con = null;
     }
-    
-    
-    
 
     public void inserirUser(User u) throws SQLException {
         try {
@@ -403,8 +398,6 @@ public class UserDAO {
             stmt.setString(6, u.getCidade());
             stmt.setInt(7, u.getCdEndereco());
             stmt.executeUpdate();
-            
-           
 
             stmt = con.prepareStatement(QUERY_EDIT_USR);
             stmt.setString(1, u.getNome());
@@ -415,7 +408,6 @@ public class UserDAO {
             stmt.setString(6, u.getInteresses());
             stmt.setInt(7, u.getId());
             stmt.executeUpdate();
-            
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -511,13 +503,13 @@ public class UserDAO {
                         return 3;//vocês já são amigos
                     } else if (idSessao == idSolicitante && idPerfil == idSolicitado && statusAmizade == 3 && idSolicitante == idSolicitanteBloq) {
                         return 4;//usuario bloqueado
-                    }else if (idSessao == idSolicitante && idPerfil == idSolicitado && statusAmizade == 3 && idSolicitado == idSolicitanteBloq) {
+                    } else if (idSessao == idSolicitante && idPerfil == idSolicitado && statusAmizade == 3 && idSolicitado == idSolicitanteBloq) {
                         return 5;//usuario bloqueado
                     } else if (idSessao == idSolicitado && idPerfil == idSolicitante && statusAmizade == 3 && idPerfil == idSolicitanteBloq) {
                         return 5;//você foi bloqueado por esse usuário
-                    }else if (idSessao == idSolicitado && idPerfil == idSolicitante && statusAmizade == 3 && idSolicitado == idSolicitanteBloq) {
+                    } else if (idSessao == idSolicitado && idPerfil == idSolicitante && statusAmizade == 3 && idSolicitado == idSolicitanteBloq) {
                         return 4;//usuario bloqueado
-                    }else if (idSessao == idSolicitado && idPerfil == idSolicitante && statusAmizade == 3 && idPerfil == idSolicitanteBloq) {
+                    } else if (idSessao == idSolicitado && idPerfil == idSolicitante && statusAmizade == 3 && idPerfil == idSolicitanteBloq) {
                         return 5;//você foi bloqueado por esse usuário
                     }
                 }
@@ -530,8 +522,8 @@ public class UserDAO {
         return 0; //nenhuma ação de amizade
     }
 
-    public void aceitarAmizade(int idSolicitante, int idSolicitado) {
-
+    public Boolean aceitarAmizade(int idSolicitante, int idSolicitado) {
+        Boolean v = false;
         try {
             stmt = con.prepareStatement(QUERY_ACEITAR_AMIZADE);
             stmt.setInt(1, idSolicitado);
@@ -539,10 +531,11 @@ public class UserDAO {
             stmt.executeUpdate();
             stmt.close();
             con.close();
+            v = true;
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        return v;
     }
 
     public Boolean rejeitarPedidoAmizade(int idSessaoSolicitado, int idSolicitante) {
@@ -685,9 +678,9 @@ public class UserDAO {
             stmt.setInt(1, idUserLogado);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                if(rs.getInt("id_solicitante") != idUserLogado){
+                if (rs.getInt("id_solicitante") != idUserLogado) {
                     listaIds.add(rs.getInt("id_solicitante"));
-                }else if(rs.getInt("id_solicitado") != idUserLogado){
+                } else if (rs.getInt("id_solicitado") != idUserLogado) {
                     listaIds.add(rs.getInt("id_solicitado"));
                 }
             }
@@ -728,7 +721,7 @@ public class UserDAO {
         }
         return id;
     }
-    
+
     public void inserirModOrAdm(User u) throws SQLException {
         try {
             stmt = con.prepareStatement(QUERY_SIMPLE_INSERT_MODADM);
@@ -745,32 +738,32 @@ public class UserDAO {
             con.close();
         }
     }
-    
-    public Boolean verificaSenha(String senhaPassada, int idSessao){
+
+    public Boolean verificaSenha(String senhaPassada, int idSessao) {
         String senhaBuscada;
         String md5 = MD5.criptografar(senhaPassada);
         try {
             stmt = con.prepareStatement(QUERY_SENHA_USR);
-            stmt.setInt(1,idSessao);
+            stmt.setInt(1, idSessao);
             rs = stmt.executeQuery();
-            if(rs.next()){
-                
+            if (rs.next()) {
+
             }
-             senhaBuscada = rs.getString("DS_SENHA");
-            if(senhaBuscada.equalsIgnoreCase(md5)){
-                    return true;
-            }else{
+            senhaBuscada = rs.getString("DS_SENHA");
+            if (senhaBuscada.equalsIgnoreCase(md5)) {
+                return true;
+            } else {
                 return false;
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-           
-        } 
+
+        }
         return false;
     }
-    
-    public Boolean alterarSenha(String novaSenha, int idSesao){
+
+    public Boolean alterarSenha(String novaSenha, int idSesao) {
         String md5 = MD5.criptografar(novaSenha);
         try {
             stmt = con.prepareStatement(QUERY_UPDATE_SENHA);

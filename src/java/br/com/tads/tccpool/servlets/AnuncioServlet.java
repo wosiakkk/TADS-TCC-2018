@@ -144,8 +144,12 @@ public class AnuncioServlet extends HttpServlet {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
                         request.setAttribute("msg", "Falha ao Realizar Anuncio: " + ex);
                     } finally {
-                        rd = request.getRequestDispatcher("resumo.jsp");
-                        rd.forward(request, response);
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "O Imovel foi cadastrado para avaliação!");
+                        session.setAttribute("mensagemAcaoTipo", 5);
+                        RequestDispatcher rdi = request.getRequestDispatcher("infoAcao.jsp");
+                        rdi.forward(request, response);
                     }
                     break;
                 case "ADDMOVEL":
@@ -213,7 +217,12 @@ public class AnuncioServlet extends HttpServlet {
                     } catch (SQLException ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
-                        request.getRequestDispatcher("resumo.jsp").forward(request, response);
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "O Movel foi cadastrado para avaliação!");
+                        session.setAttribute("mensagemAcaoTipo", 6);
+                        RequestDispatcher rdi = request.getRequestDispatcher("infoAcao.jsp");
+                        rdi.forward(request, response);
                     }
                     break;
 
@@ -282,7 +291,12 @@ public class AnuncioServlet extends HttpServlet {
                     } catch (SQLException ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
-                        request.getRequestDispatcher("resumo.jsp").forward(request, response);
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "O Material foi cadastrado para avaliação!");
+                        session.setAttribute("mensagemAcaoTipo", 7);
+                        RequestDispatcher rdi = request.getRequestDispatcher("infoAcao.jsp");
+                        rdi.forward(request, response);
                     }
                     break;
                 case "BUSCARIMOVEISPEND":
@@ -339,8 +353,22 @@ public class AnuncioServlet extends HttpServlet {
                     int idImv = Integer.parseInt(request.getParameter("id"));
                     String status = request.getParameter("optradio");
                     AnuncioFacade.alterarStatus(status, idImv);
-                    response.sendRedirect("escolhaPendente.jsp");
-                    break;           
+                    if (status.equalsIgnoreCase("sim")) {
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "O anúncio foi aprovado!");
+                        session.setAttribute("mensagemAcaoTipo", 8);
+                        RequestDispatcher rdi = request.getRequestDispatcher("infoAcao.jsp");
+                        rdi.forward(request, response);
+                    } else {
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "O anúncio foi rejeitado!");
+                        session.setAttribute("mensagemAcaoTipo", 8);
+                        RequestDispatcher rdi = request.getRequestDispatcher("infoAcao.jsp");
+                        rdi.forward(request, response);
+                    }
+                    break;
 
                 case "BUSCAAPROVADOS":
                     String HTMLResponse = AnuncioFacade.buscarAnuncioAprovado(null);
