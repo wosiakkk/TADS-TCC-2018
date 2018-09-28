@@ -5,7 +5,6 @@
  */
 package br.com.tads.tccpool.beans;
 
-import br.com.tads.tccpool.interfaces.Anunciavel;
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
  *
  * @author Diego
  */
-public class Material implements Anunciavel, Serializable {
+public class Material implements Serializable {
     private String titulo;
     private String descricao;
     private String tipoDesc;

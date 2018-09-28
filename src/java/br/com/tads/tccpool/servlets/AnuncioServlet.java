@@ -15,7 +15,6 @@ import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.exception.AcessoBdException;
 import br.com.tads.tccpool.facade.AnuncioFacade;
 import br.com.tads.tccpool.facade.MainPageFacade;
-import br.com.tads.tccpool.interfaces.Anunciavel;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -119,7 +118,7 @@ public class AnuncioServlet extends HttpServlet {
                                 if (item.getFieldName().equals("comple")) {
                                     im.setComplemento(item.getString());
                                 }
-                                a.setObj(im);
+                                
                             } else {
                                 Random rand = new Random();
                                 String nomeString = String.valueOf(rand.nextInt()) + ".jpg";

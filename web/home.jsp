@@ -23,6 +23,7 @@
                 <div class="list-group">
                     <c:if test="${user.getTipoUsuario()== 1}">                  
                         <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anuncios</a>
+                        <a id="opVendas" class="list-group-item" href="vendas.jsp">Área de vendas</a>
                         <a class="list-group-item" href="escolhaPreferencias.jsp">Preferências</a>
                     </c:if>
                     <c:if test="${user.getTipoUsuario()== 2}">
@@ -40,6 +41,7 @@
                         <a class="list-group-item" href="cadastrarModerador.jsp">Cadastrar um moderador</a>
                         <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anuncios</a> 
                         <a class="list-group-item" href="escolhaPreferencias.jsp">Preferências</a>
+                        <a id="opVendas" class="list-group-item" href="vendas.jsp">Área de vendas</a>
                         <a class="list-group-item" href="gerarRelatorioAdm.jsp">Estatísticas</a>
                     </c:if>
                 </div>
