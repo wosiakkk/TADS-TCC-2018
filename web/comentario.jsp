@@ -18,7 +18,7 @@
     <c:otherwise>
         <link href="assets/css/comentario.css" rel="stylesheet">
 
-        <div class="col-lg-10">
+        <div class="col-lg-12">
             <form id="comentarioAjax">
                 <input name="action" value="ADD" type="hidden">
                 <c:choose>

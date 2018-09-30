@@ -14,36 +14,16 @@
 
 <link href="assets/css/feed-style.css" rel="stylesheet">
 
+<!-- Página com foto e as opções do perfil -->
+<%@include file="opcoes.jsp" %>
 
-<div class="col-3">
-    <div class="menu-fixed-left">
-        <div class="center">
-            <img class="d-block img-fluid rounded-circle" src="${user.getFoto()}">
-            <h4><strong style="color: gray"><c:out value="${user.getNome()}"/></strong></h4>
-        </div>
-        <div class="list-group">
-            <c:if test="${user.getTipoUsuario()== 1}">                  
-                <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anuncios</a>
-                <a class="list-group-item" href="escolhaPreferencias.jsp">Preferências</a>
-            </c:if>
-            <c:if test="${user.getTipoUsuario()== 2}">
-                <a class="list-group-item" href="UserServlet?action=PERFIL&idUser=${user.getId()}">Visualizar Meu Perfil</a>
-                <a class="list-group-item" href="AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr=${user.getId()}">Meus anuncios</a> 
-                <mark><a class="list-group-item" href="escolhaAmigo.jsp">Meus Amigos</a></mark>
-                <a class="list-group-item" href="vendas.jsp">Área de vendas</a>                      
-                <a class="list-group-item" href="UserServlet?action=SEARCH">Editar Perfil</a>
-                <a class="list-group-item" href="escolhaAnuncio.jsp">Realizar um Anuncio</a>           
-                <a class="list-group-item" href="escolhaPreferencias.jsp">Preferências</a>              
-            </c:if>
-            <c:if test="${user.getTipoUsuario()== 3}">
-                <a class="list-group-item" href="cadastrarAdm.jsp">Cadastrar um Administrador</a>
-                <a class="list-group-item" href="cadastrarModerador.jsp">Cadastrar um moderador</a>
-                <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anuncios</a> 
-                <a class="list-group-item" href="escolhaPreferencias.jsp">Preferências</a>
-            </c:if>
-        </div>
-    </div>
-</div>
+<!-- Script para dar destaque na opção navegada -->
+<script>  
+    $(document).ready(function () {
+  $("#opAmigo").addClass("highlight");
+});
+</script>
+
 <div class="col-8 menu-fixed-center">
     <div class="panel panel-body">             
         <!-- Usuário Comum -->

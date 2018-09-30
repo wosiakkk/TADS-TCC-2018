@@ -5,7 +5,6 @@
  */
 package br.com.tads.tccpool.beans;
  
-import br.com.tads.tccpool.interfaces.Anunciavel;
 import java.io.Serializable;
 import java.util.List;
 

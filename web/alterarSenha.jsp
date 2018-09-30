@@ -6,8 +6,28 @@
 
 <!-- Cabeçalho -->
 <%@include file="head.jsp" %>
+<c:if test="${(empty(user))}">
+    <c:redirect url="index.jsp">
+        <c:param name="msg" value="Faça login para acessar esta página!"></c:param>
+    </c:redirect>
+</c:if>
+
+<link href="assets/css/feed-style.css" rel="stylesheet">
+
+<!-- Página com foto e as opções do perfil -->
+<%@include file="opcoes.jsp" %>
+
+<!-- Script para dar destaque na opção navegada -->
+<script>  
+    $(document).ready(function () {
+  $("#opPref").addClass("highlight");
+  $("#opPrefAdm").addClass("highlight");
+  $("#opPrefMod").addClass("highlight");
+});
+</script>
+
 <c:if test="${not empty user.senha}">
-    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+    <div class="col-md-9 col-sm-9 col-xs-9 col-lg-9">
         <form id="formulario" class="form-horizontal"  action="UserServlet?action=ALTSENHA"  method="POST" role="form">
             <h2>Alteração de senha.</h2>
             <a href="escolhaPreferencias.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
@@ -34,11 +54,13 @@
                     <input type="password" name="confsenha" id="confsenha" placeholder="Confirmar Senha" class="form-control" required>
                 </div>
             </div>    
+            <hr>
             <div class="form-group">
                 <div class="col-sm-9 col-sm-offset-3">
-                    <button type="submit" class="btn btn-primary btn-block">Alterar</button>
+                    <button type="submit" class="btn btn-outline-dark">Alterar</button>
                 </div>
             </div>
+            <hr>
         </form> <!-- ./form -->
     </div>
 
@@ -47,5 +69,8 @@
 <c:if test="${empty user.senha}">
     <h2>Sua senha é gerenciada pelo Google :)</h2>
 </c:if>
-<!-- Rodapé -->
-<%@include file="footer.jsp" %>
+    </div> <!-- fim .col-lg-6 -->
+</div> <!-- ./row -->
+</div> <!-- ./container -->
+</body>
+</html>   

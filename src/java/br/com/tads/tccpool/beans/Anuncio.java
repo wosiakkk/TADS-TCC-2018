@@ -5,7 +5,7 @@
  */
 package br.com.tads.tccpool.beans;
 
-import br.com.tads.tccpool.interfaces.Anunciavel;
+
 import java.io.Serializable;
 
 
@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @author onurb
  */
 public class Anuncio implements Serializable {
-    private Anunciavel obj;
+
     private int idAnuncio;
     private int idUsuario;
     private int idCategoria;
@@ -77,14 +77,6 @@ public class Anuncio implements Serializable {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
-    }
-    
-    public Anunciavel getObj() {
-        return obj;
-    }
-
-    public void setObj(Anunciavel obj) {
-        this.obj = obj;
     }
 
     public String getCaminhoFoto() {

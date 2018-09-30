@@ -5,7 +5,7 @@
  */
 package br.com.tads.tccpool.beans;
 
-import br.com.tads.tccpool.interfaces.Anunciavel;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author onurb
  */
-public class Imovel implements Anunciavel, Serializable {
+public class Imovel implements Serializable {
     
     private int idAnunciante;
     private String nomeAnunciante;
@@ -95,55 +95,55 @@ public class Imovel implements Anunciavel, Serializable {
      *
      * @return
      */
-    @Override
+    
     public List<String> getFotos() {
         return fotos;
     }
-    @Override
+    
     public void setFotos(List<String> fotos) {
         this.fotos = fotos;
     }
-    @Override
+   
     public int getId() {
         return id;
     }
-    @Override
+    
     public void setId(int id) {
         this.id = id;
     }
-    @Override
+    
     public String getCidade() {
         return cidade;
     }
-    @Override
+    
     public void setCidade(String cidade) {
         this.cidade = cidade;
     }
-    @Override
+     
     public String getRua() {
         return rua;
     }
-    @Override
+     
     public void setRua(String rua) {
         this.rua = rua;
     }
-    @Override
+     
     public int getNumero() {
         return numero;
     }
-    @Override
+     
     public void setNumero(int numero) {
         this.numero = numero;
     }
-    @Override
+     
     public String getEstado() {
         return estado;
     }
-    @Override
+     
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    @Override
+     
     public String getCep() {
         return cep;
     }
@@ -160,32 +160,32 @@ public class Imovel implements Anunciavel, Serializable {
         this.complemento = complemento;
     }
 
-    @Override
+     
     public String getTitulo() {
         return titulo;
     }
 
-    @Override
+     
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
 
-    @Override
+     
     public float getPreco() {
         return preco;
     }
 
-    @Override
+     
     public void setPreco(float preco) {
         this.preco = preco;
     }
 
-    @Override
+     
     public void setDescricao(String desc) {
         this.descricao = desc;
     }
 
-    @Override
+     
     public String getDescricao() {
         return this.descricao;
     }
