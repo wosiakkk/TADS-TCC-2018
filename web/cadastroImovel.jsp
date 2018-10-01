@@ -38,7 +38,7 @@
         </div>
         <br><label for="quantidade" class="col-sm-10 control-label">Quantidade de pessoas que podem dividr:</label>
         <div class="col-sm-2">
-            <input type="text" name="quantidade" id="quantidade" placeholder="" class="form-control" autofocus required>
+            <input type="number" name="quantidade" id="quantidade" placeholder="" class="form-control" autofocus required>
         </div>
         <br><label for="opcoes" class="col-sm-10 control-label">É autorizado pets na residencia?:</label>
         <div id="opcoes">
@@ -57,11 +57,11 @@
         </div>
         <br><label for="num" class="col-sm-3 control-label">Número:</label>
         <div class="col-sm-2">
-            <input type="text" name="num" id="num" placeholder="" class="form-control" autofocus required>
+            <input type="number" name="num" id="num" placeholder="" class="form-control" autofocus required>
         </div>
         <br><label for="cep" class="col-sm-3 control-label">CEP:</label>
         <div class="col-sm-9">
-            <input type="text" name="cep" id="cep" placeholder="" class="form-control" autofocus required>
+            <input type="text" name="cep" id="cep" maxlength="8" placeholder="" class="form-control" autofocus required>
         </div>
         <br><label for="cidade" class="col-sm-3 control-label">Cidade:</label>
         <div class="col-sm-9">
@@ -69,7 +69,7 @@
         </div>
         <br><label for="estado" class="col-sm-3 control-label">Estado:</label>
         <div class="col-sm-2">
-            <input type="text" name="estado" id="estado" placeholder="" class="form-control" autofocus required>
+            <input type="text" name="estado" id="estado" placeholder="" class="form-control" autofocus required maxlength="2">
         </div>
         <br><label for="comple" class="col-sm-3 control-label">Complemento:</label>
         <div class="col-sm-9">

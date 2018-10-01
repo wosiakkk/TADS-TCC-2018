@@ -120,10 +120,10 @@ public class AnuncioFacade {
         return HTMLResponse;
     }
 
-    public static List<Anuncio> buscarAnuncioDoUsuario(int id) throws SQLException {
+    public static List<Anuncio> buscarAnuncioDoUsuario(int id,int status) throws SQLException {
         AnuncioDAO dao = new AnuncioDAO();
         List<Anuncio> anunciosDoUsuario = null;
-        anunciosDoUsuario = dao.buscarAnunciosDoUsuario(id);
+        anunciosDoUsuario = dao.buscarAnunciosDoUsuario(id, status);
         return anunciosDoUsuario;
     }
 
