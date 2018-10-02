@@ -36,22 +36,22 @@
             <div class="container-fluid col-8">  
                 <div class="list-group">
                     <div class="list-group-item">
-                        <a  href="#">
+                        <a  href="AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr=${user.getId()}&status=2">
                             <img class="d-block img-fluid" src="img\icones\confirmation.png">Aprovados
                         </a>
                     </div>
                     <div class="list-group-item">
-                        <a  href="#">
+                        <a  href="AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr=${user.getId()}&status=5">
                             <img class="d-block img-fluid" src="img\icones\vendido.png">Vendidos    
                         </a>
                     </div>
                     <div class="list-group-item">
-                        <a  href="AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr=${user.getId()}">
+                        <a  href="AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr=${user.getId()}&status=1">
                             <img class="d-block img-fluid" src="img\icones\time.png">Pendentes
                         </a>
                     </div>
                     <div class="list-group-item">
-                        <a  href="#">
+                        <a  href="AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr=${user.getId()}&status=4">
                             <img class="d-block img-fluid" src="img\icones\negado.png">Rejeitados
                         </a>
                     </div>

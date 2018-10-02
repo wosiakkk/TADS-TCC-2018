@@ -54,13 +54,13 @@
                     <div class="form-group">                      
                         <div class="col-lg-9">
                             <label>Telefone Fixo:</label>
-                            <input class="form-control" name="telefone" id="telefone" type="text" value="<c:out value="${userSearch.tel}"/>">
+                            <input class="form-control" name="telefone" id="telefone" placeholder="(xx)xxxx-xxxx" type="tel" maxlength="10" pattern="[0-9]" value="<c:out value="${userSearch.tel}"/>">
                         </div>
                     </div>
                     <div class="form-group">                       
                         <div class="col-lg-9">
                             <label>Celular:</label>
-                            <input class="form-control" name="celular" id="celular" type="text" value="<c:out value="${userSearch.cel}"/>">
+                            <input class="form-control" name="celular" id="celular" placeholder="(xx)xxxxx-xxxx" type="tel" maxlength="11" pattern="[0-9]" value="<c:out value="${userSearch.cel}"/>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -100,7 +100,7 @@
                     <div class="form-group">                       
                         <div class="col-lg-9">
                             <label>Cep:</label>
-                            <input class="form-control" name="cep" id="cep" type="text" value="<c:out value="${userSearch.CEP}"/>">
+                            <input class="form-control" name="cep" id="cep" maxlength="8" type="text" value="<c:out value="${userSearch.CEP}"/>">
                         </div>
                     </div>
                     <div class="form-group">                       
@@ -112,7 +112,7 @@
                     <div class="form-group">                       
                         <div class="col-lg-3">
                             <label>Estado:</label>
-                            <input class="form-control" name="estado" id="estado" type="text" value="<c:out value="${userSearch.estado}"/>">
+                            <input class="form-control" name="estado" id="estado" maxlength="2" type="text" value="<c:out value="${userSearch.estado}"/>">
                         </div>
                     </div>
                     <hr>

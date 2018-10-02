@@ -266,19 +266,18 @@ public class AnuncioDAO {
             + "	TB_STATUS_ID_STATUS = 2";
 
     //query para buscar anuncios do usuario apos pressiona o botão ''meus nuancios'' na home
-    private final String QUERY_BUCASR_ANUNCIOS_DO_USUARIO = "SELECT\n"
-            + " tb_anuncio.TB_USUARIO_NR_SEQ,"
-            + " tb_anuncio.DS_DESCRICAO,"
-            + " tb_anuncio.TB_CATEGORIA_ID_CATEGORIA,"
-            + " tb_anuncio.ID_ANUNCIO,"
-            + " tb_status.DS_DESCRICAO as ESTADO,"
-            + " tb_categoria_anuncio.DS_DESCRICAO as DS_CAT\n"
-            + " FROM\n"
-            + " tb_anuncio\n"
-            + " INNER JOIN tb_categoria_anuncio on ID_CATEGORIA = TB_CATEGORIA_ID_CATEGORIA\n"
-            + " INNER JOIN tb_status on ID_STATUS = TB_STATUS_ID_STATUS"
-            + " WHERE\n"
-            + " TB_USUARIO_NR_SEQ = ?";
+    private final String QUERY_BUCASR_ANUNCIOS_DO_USUARIO = "SELECT tb_anuncio.TB_USUARIO_NR_SEQ,\n" +
+"       tb_anuncio.DS_DESCRICAO,\n" +
+"       tb_anuncio.TB_CATEGORIA_ID_CATEGORIA,\n" +
+"       tb_anuncio.ID_ANUNCIO,\n" +
+"       tb_status.DS_DESCRICAO as ESTADO,\n" +
+"       tb_categoria_anuncio.DS_DESCRICAO as DS_CAT\n" +
+"        FROM\n" +
+"         tb_anuncio\n" +
+"          INNER JOIN tb_categoria_anuncio on ID_CATEGORIA = TB_CATEGORIA_ID_CATEGORIA\n" +
+"          INNER JOIN tb_status on ID_STATUS = TB_STATUS_ID_STATUS\n" +
+"          WHERE\n" +
+"          TB_USUARIO_NR_SEQ = ? AND TB_STATUS_ID_STATUS = ?";
 
     //query para descobrir o tipo de anuncio
     private final String QUERY_TIPO_ANUNCIO = "SELECT TB_CATEGORIA_ID_CATEGORIA from tb_anuncio where ID_ANUNCIO = ?";
@@ -733,10 +732,11 @@ public class AnuncioDAO {
         return lista;
     }
 
-    public List<Anuncio> buscarAnunciosDoUsuario(int idUsuario) throws SQLException {
+    public List<Anuncio> buscarAnunciosDoUsuario(int idUsuario, int status) throws SQLException {
         List<Anuncio> lista = new ArrayList<Anuncio>();
         stmt = con.prepareStatement(QUERY_BUCASR_ANUNCIOS_DO_USUARIO);
         stmt.setInt(1, idUsuario);
+        stmt.setInt(2, status);
         rs = stmt.executeQuery();
         while (rs.next()) {
             Anuncio anuncio = new Anuncio();
