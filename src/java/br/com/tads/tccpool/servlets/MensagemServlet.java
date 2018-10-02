@@ -6,6 +6,7 @@
 package br.com.tads.tccpool.servlets;
 
 import br.com.tads.tccpool.beans.Mensagem;
+import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.facade.MensagemFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -46,6 +47,9 @@ public class MensagemServlet extends HttpServlet {
                 rd.forward(request, response);
             }
             
+            User userLogado = (User)session.getAttribute("user");
+            String retornoListar = "";
+            
             
             String action = (String) request.getParameter("action").trim();
             
@@ -63,9 +67,17 @@ public class MensagemServlet extends HttpServlet {
                     break;
                     
                 case "LIST_MENSAGEM":
+                    //int idConversa = Integer.parseInt(request.getParameter("ID_CONVERSA"));
                     int idOrigem = Integer.parseInt(request.getParameter("ID_ORIGEM"));
                     int idDestino = Integer.parseInt(request.getParameter("ID_DESTINO"));
-                    String retornoListar = MensagemFacade.listar(idOrigem, idDestino);
+                    retornoListar = MensagemFacade.listar(idOrigem, idDestino, userLogado);
+                    
+                    out.write(retornoListar);
+                    out.flush();
+                    break;
+                    
+                case "LIST_CONVERSA":
+                    retornoListar = MensagemFacade.listarConversas(userLogado.getId());
                     
                     out.write(retornoListar);
                     out.flush();

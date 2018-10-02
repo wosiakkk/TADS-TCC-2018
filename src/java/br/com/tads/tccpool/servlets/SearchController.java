@@ -41,11 +41,14 @@ public class SearchController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
+            HttpSession session = request.getSession();
+            User userLogado = (User)session.getAttribute("user");
+            
             String text = request.getParameter("term");
             System.out.println("Hello from Get Method: " + text);
             UserDAO userDAO = new UserDAO();
             try {
-                ArrayList<User> users = userDAO.buscarUsuariosDinamicamente(text);
+                ArrayList<User> users = userDAO.buscarUsuariosDinamicamente(text, userLogado.getId());
                 for (User user : users) {
                     System.out.println(user.getNome());
                 }
