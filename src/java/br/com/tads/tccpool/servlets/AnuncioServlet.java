@@ -137,8 +137,8 @@ public class AnuncioServlet extends HttpServlet {
                         User u = (User) session.getAttribute("user");
                         AnuncioFacade.insereImovel(im, cat, listImovel, u);
                         request.setAttribute("msg", "Anuncio Realizao Com Sucesso");
-                        List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
-                        session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
+                        //List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                        //session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                     } catch (SQLException ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
                         request.setAttribute("msg", "Falha ao Realizar Anuncio: " + ex);
@@ -211,8 +211,8 @@ public class AnuncioServlet extends HttpServlet {
                     try {
                         User u = (User) session.getAttribute("user");
                         AnuncioFacade.insereMovel(movel, cate, lista, u);
-                        List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
-                        session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
+                        //List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                        //session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                     } catch (SQLException ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
@@ -285,8 +285,8 @@ public class AnuncioServlet extends HttpServlet {
                     try {
                         User u = (User) session.getAttribute("user");
                         AnuncioFacade.insereMaterial(material, categ, listaMaterial, u);
-                        List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
-                        session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
+                        //List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                        //session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                     } catch (SQLException ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
@@ -381,7 +381,8 @@ public class AnuncioServlet extends HttpServlet {
                 case "BUSCAANUNCIOUSER":
                     try {
                         int idUser = Integer.parseInt(request.getParameter("idUsr"));
-                        List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(idUser);
+                        int statusAnuncio = Integer.parseInt(request.getParameter("status"));
+                        List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(idUser, statusAnuncio);
                         session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                         rd = request.getRequestDispatcher("resumo.jsp");
                         rd.forward(request, response);
@@ -438,21 +439,21 @@ public class AnuncioServlet extends HttpServlet {
                             Imovel ImovelExcluir = (Imovel) session.getAttribute("imovelExibir");
                             AnuncioFacade.deletarAnuncioImovel(idAnuncioExcluir, ImovelExcluir);
                             User u = (User) session.getAttribute("user");
-                            List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                            List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId(), 1);
                             session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                         } else if (session.getAttribute("movelExibir") != null) {
                             int idAnuncioExcluir = (int) session.getAttribute("idExibirAnuncio");
                             Movel MovelExcluir = (Movel) session.getAttribute("movelExibir");
                             AnuncioFacade.deletarAnuncioMovel(idAnuncioExcluir, MovelExcluir);
                             User u = (User) session.getAttribute("user");
-                            List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                            List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId(), 1);
                             session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                         } else if (session.getAttribute("materialExibir") != null) {
                             int idAnuncioExcluir = (int) session.getAttribute("idExibirAnuncio");
                             Material materialExcluir = (Material) session.getAttribute("materialExibir");
                             AnuncioFacade.deletarAnuncioMaterial(idAnuncioExcluir, materialExcluir);
                             User u = (User) session.getAttribute("user");
-                            List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                            List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId(), 1);
                             session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                         }
                         rd = request.getRequestDispatcher("resumo.jsp");
@@ -656,7 +657,7 @@ public class AnuncioServlet extends HttpServlet {
                         session.removeAttribute("imovelAlterar");
                         session.removeAttribute("imovelExibir");
                         User u = (User) session.getAttribute("user");
-                        List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                        List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId(), 1);
                         session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                         request.getRequestDispatcher("resumo.jsp").forward(request, response);
                     } catch (Exception e) {
@@ -668,7 +669,7 @@ public class AnuncioServlet extends HttpServlet {
                             int idAnuncioVenda = (int) session.getAttribute("idExibirAnuncio");
                             AnuncioFacade.updateStatusAnuncio(idAnuncioVenda, 5);
                             User u = (User) session.getAttribute("user");
-                            List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId());
+                            List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId(), 5);
                             session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                             request.getRequestDispatcher("resumo.jsp").forward(request, response);
                         }
