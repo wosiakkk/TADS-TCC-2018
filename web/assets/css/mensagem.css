@@ -65,6 +65,7 @@ body{
 #respostaAjax {
     border: 1px solid #d3d6d8;
     border-radius: 3px;
+    min-height: 50%;
     max-height: 60%;
     overflow-y: scroll;
 }

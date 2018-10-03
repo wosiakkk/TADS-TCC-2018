@@ -94,7 +94,7 @@ public class UserDAO {
             + "id_solicitado = ? AND id_solicitante = ? "
             + "and tb_status_amizade_NR_STATUS_AMIGO = 1";
 
-    private static final String QUERY_BUSCAR_USUARIOS = "SELECT * FROM tb_usuario WHERE NM_NOME LIKE ?";
+    private static final String QUERY_BUSCAR_USUARIOS = "SELECT * FROM tb_usuario WHERE NM_NOME LIKE ? AND NR_SEQ != ?";
 
     private static final String QUERY_SELECIONAR_IDS_AMIZADE = "SELECT tb_amizade.id_solicitado, tb_amizade.id_solicitante,"
             + " tb_amizade.tb_status_amizade_NR_STATUS_AMIGO, tb_amizade.id_solicitante_bloq "
@@ -460,12 +460,13 @@ public class UserDAO {
         return true;
     }
 
-    public ArrayList buscarUsuariosDinamicamente(String s) {
+    public ArrayList buscarUsuariosDinamicamente(String s, int userLogado) {
         ArrayList usuariosAchados = new ArrayList();
 
         try {
             stmt = con.prepareStatement(QUERY_BUSCAR_USUARIOS);
             stmt.setString(1, "%" + s + "%");
+            stmt.setInt(2, userLogado);
             rs = stmt.executeQuery();
             while (rs.next()) {
                 User u = new User();
