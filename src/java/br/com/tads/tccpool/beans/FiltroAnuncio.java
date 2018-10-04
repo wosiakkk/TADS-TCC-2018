@@ -1,4 +1,4 @@
-/*
+/*  
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,27 +6,73 @@
 
 package br.com.tads.tccpool.beans;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+
 /**
  *
  * @author Marcos
  */
 public class FiltroAnuncio {
-    private boolean movel;
-    private boolean imovel;
-    private boolean material;
-    private boolean pets;
-    private Double maxValor;
-    private Double minValor;
+    //Flag que sinaliza se o filtro deve ser aplicado na consulta
+    private boolean filtroAtivo = false;
+    private boolean movel = false;
+    private boolean imovel = false;
+    private boolean material = false;
+    private boolean pets = false;
+    private Double maxValor = 1000000.00;
+    private Double minValor = 0.0;
     /**
      * Ordenação:
      * 1 - Maior valor
      * 2 - Menor valor
      * 3 - Título anúncio (alfabetica)
      */
-    private int ordenacao;
+    private Integer ordenacao = 0;
 
     public FiltroAnuncio() {}
 
+    public FiltroAnuncio(HttpServletRequest request) {
+        this.filtroAtivo = true;
+        Enumeration<String> names = request.getParameterNames();
+        
+        while(names.hasMoreElements()) {
+            String paramName = names.nextElement();
+            if("movel".equals(paramName))
+                this.movel = ((String)request.getParameter("movel")).equals("1");
+            
+            if("imovel".equals(paramName))
+                this.imovel = ((String)request.getParameter("imovel")).equals("1");
+            
+            if("material".equals(paramName))
+                this.material = ((String)request.getParameter("material")).equals("1");
+            
+            if("pets".equals(paramName))
+                this.pets = ((String)request.getParameter("pets")).equals("1");
+            
+            if("maxValor".equals(paramName))
+                this.maxValor = (request.getParameter("maxValor").length() == 0 || Integer.parseInt(request.getParameter("maxValor")) == 0) ? this.maxValor : Double.parseDouble(request.getParameter("maxValor"));
+            
+            if("minValor".equals(paramName))
+                this.minValor = request.getParameter("minValor").length() == 0 ? this.minValor : Double.parseDouble(request.getParameter("minValor"));
+            
+            if("ordenacao".equals(paramName))
+                this.ordenacao = Integer.parseInt(request.getParameter("ordenacao"));
+        }
+    }
+
+    public boolean isFiltroAtivo() {
+        return filtroAtivo;
+    }
+
+    public void setFiltroAtivo(boolean filtroAtivo) {
+        this.filtroAtivo = filtroAtivo;
+    }
+    
     public boolean isMovel() {
         return movel;
     }
@@ -75,11 +121,11 @@ public class FiltroAnuncio {
         this.minValor = minValor;
     }
 
-    public int getOrdenacao() {
+    public Integer getOrdenacao() {
         return ordenacao;
     }
 
-    public void setOrdenacao(int ordenacao) {
+    public void setOrdenacao(Integer ordenacao) {
         this.ordenacao = ordenacao;
     }
             
