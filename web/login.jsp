@@ -6,6 +6,7 @@
 
 <!-- Cabeçalho -->
 <%@ include file="head.jsp" %>
+<link href="assets/css/feed-style.css" rel="stylesheet">
 <div class="col-md-12 col-sm-12 col-xs-12">
     <c:choose>
         <c:when test="${(!empty(falhaLogin))}">

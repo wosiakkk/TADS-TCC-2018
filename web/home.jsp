@@ -55,7 +55,7 @@
                     <div class="jumbotron">
                         <hr>
                         <div class="col-6">
-                            <img src="img\logos\logo400.jpg">
+                            <img src="img\logos\logo400.jpg" class="rounded border border-dark">
                         </div>
                         <hr>
                     </div>
@@ -65,7 +65,7 @@
                     <div class="jumbotron">
                         <hr>
                         <div class="col-6">
-                            <img src="img\logos\logo400.jpg">
+                            <img src="img\logos\logo400.jpg" class="rounded border border-dark">
                         </div>
                         <hr>
                     </div>
