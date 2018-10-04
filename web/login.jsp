@@ -75,6 +75,8 @@
 <!-- Importando plugin JSCookie para trabalhar com cookies do navegador -->
 <script src="assets/jquery/plugins/js-cookie.js" type="text/javascript"></script>
 <script type="text/javascript">
+    $('#emailLogin').focus();
+    
     var cookieValue = getCookieValue("emailUser");
     if (typeof cookieValue !== "undefined" || cookieValue !== false) {
         $('#remember').prop('checked', 'true');

@@ -249,21 +249,24 @@ public class AnuncioDAO {
 
     private final String UPDATE_STATUS = "UPDATE TB_ANUNCIO SET TB_STATUS_ID_STATUS = ? WHERE ID_ANUNCIO = ?";
 
-    private final String QUERY_BUSCAR_ANUNCIOS_APROVADOS = "SELECT DISTINCT\n"
-            + "	ID_ANUNCIO,\n"
-            + "	DS_TITULO,\n"
-            + "    ANUNCIO.DS_DESCRICAO,\n"
-            + "    NR_VALOR,\n"
-            + "    CAT_ANUNCIO.DS_DESCRICAO AS DS_CATEGORIA,\n"
-            + "    FOTO.DS_CAMINHO AS DS_CAMINHO\n"
-            + "FROM\n"
-            + "	TB_ANUNCIO AS ANUNCIO\n"
-            + "    INNER JOIN\n"
-            + "		TB_CATEGORIA_ANUNCIO AS CAT_ANUNCIO ON CAT_ANUNCIO.ID_CATEGORIA = ANUNCIO.TB_CATEGORIA_ID_CATEGORIA\n"
-            + "    INNER JOIN\n"
-            + "		TB_FOTOS AS FOTO ON FOTO.TB_ANUNCIO_ID_ANUNCIO = ANUNCIO.ID_ANUNCIO\n"
-            + "WHERE\n"
-            + "	TB_STATUS_ID_STATUS = 2";
+    private final String QUERY_BUSCAR_ANUNCIOS_APROVADOS = "SELECT\n"
+                                                         + "	ID_ANUNCIO,\n"
+                                                         + "	DS_TITULO,\n"
+                                                         + "    ANUNCIO.DS_DESCRICAO,\n"
+                                                         + "    NR_VALOR,\n"
+                                                         + "    CAT_ANUNCIO.DS_DESCRICAO AS DS_CATEGORIA,\n"
+                                                         + "    FOTO.DS_CAMINHO AS DS_CAMINHO\n"
+                                                         + "FROM\n"
+                                                         + "	TB_ANUNCIO AS ANUNCIO\n"
+                                                         + "    LEFT JOIN\n"
+                                                         + "        TB_CATEGORIA_ANUNCIO AS CAT_ANUNCIO ON CAT_ANUNCIO.ID_CATEGORIA = ANUNCIO.TB_CATEGORIA_ID_CATEGORIA\n"
+                                                         + "    LEFT JOIN\n"
+                                                         + "        TB_FOTOS AS FOTO ON FOTO.TB_ANUNCIO_ID_ANUNCIO = ANUNCIO.ID_ANUNCIO\n"
+                                                         + "WHERE\n"
+                                                         + "	TB_STATUS_ID_STATUS = 2\n"
+                                                         + "GROUP BY ANUNCIO.ID_ANUNCIO";
+    
+    private final String QUERY_FILTRO_ANUNCIO = "{CALL FILTRO_ANUNCIO (?, ?, ?, ?, ?, ?, ?)}";
 
     //query para buscar anuncios do usuario apos pressiona o botão ''meus nuancios'' na home
     private final String QUERY_BUCASR_ANUNCIOS_DO_USUARIO = "SELECT tb_anuncio.TB_USUARIO_NR_SEQ,\n" +
@@ -712,10 +715,18 @@ public class AnuncioDAO {
     }
 
     public List<Anuncio> filtrarAnuncio(FiltroAnuncio filtro) throws SQLException {
-        List<Anuncio> lista = new ArrayList<Anuncio>();
-        String SQLFiltro = "\nAND TB_CATEGORIA_ID_CATEGORIA IN (" + (filtro.isImovel() ? "1, " : "NULL, ") + (filtro.isMovel() ? "2, " : "NULL, ") + (filtro.isMaterial() ? "3)" : "NULL)");
-        stmt = con.prepareStatement(QUERY_BUSCAR_ANUNCIOS_APROVADOS + SQLFiltro);
+        List<Anuncio> lista = new ArrayList<>();
+        stmt = con.prepareStatement(QUERY_FILTRO_ANUNCIO);
+        stmt.setBoolean(1, filtro.isImovel());
+        stmt.setBoolean(2, filtro.isMovel());
+        stmt.setBoolean(3, filtro.isMaterial());
+        stmt.setBoolean(4, filtro.isPets());
+        stmt.setDouble(5, filtro.getMinValor());
+        stmt.setDouble(6, filtro.getMaxValor());   
+        stmt.setString(7, String.valueOf(filtro.getOrdenacao()));
+        
         rs = stmt.executeQuery();
+        
         while (rs.next()) {
             Anuncio anuncio = new Anuncio();
             anuncio.setIdAnuncio(rs.getInt("ID_ANUNCIO"));
