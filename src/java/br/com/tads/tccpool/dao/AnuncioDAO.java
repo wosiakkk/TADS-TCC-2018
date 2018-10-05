@@ -143,6 +143,7 @@ public class AnuncioDAO {
             + "           TB_ANUNCIO.NR_VALOR, \n"
             + "           TB_ANUNCIO.DS_TITULO, \n"
             + "           TB_ANUNCIO.ID_ANUNCIO, \n"
+            + "            TB_ANUNCIO.TB_STATUS_ID_STATUS,\n"
             + "           TB_ENDERECO_ID_ENDERECO, \n"
             + "           tb_endereco_anuncio.DS_RUA, \n"
             + "           tb_endereco_anuncio.DS_ESTADO, \n"
@@ -585,6 +586,7 @@ public class AnuncioDAO {
             i.setCidade(rs.getString("DS_CIDADE"));
             i.setCep(rs.getString("NR_CEP"));
             i.setComplemento(rs.getString("DS_COMPLEMENTO"));
+            i.setStatus(rs.getInt("TB_STATUS_ID_STATUS"));
             stmt = con.prepareStatement(QUERY_BUSCAR_FOTOS_POR_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
@@ -622,6 +624,7 @@ public class AnuncioDAO {
             m.setCidade(rs.getString("DS_CIDADE"));
             m.setCep(rs.getString("NR_CEP"));
             m.setComplemento(rs.getString("DS_COMPLEMENTO"));
+            m.setStatus(rs.getInt("TB_STATUS_ID_STATUS"));
             stmt = con.prepareStatement(QUERY_BUSCAR_FOTOS_POR_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
@@ -659,6 +662,7 @@ public class AnuncioDAO {
             m.setCidade(rs.getString("DS_CIDADE"));
             m.setCep(rs.getString("NR_CEP"));
             m.setComplemento(rs.getString("DS_COMPLEMENTO"));
+            m.setStatus(rs.getInt("TB_STATUS_ID_STATUS"));
             stmt = con.prepareStatement(QUERY_BUSCAR_FOTOS_POR_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();

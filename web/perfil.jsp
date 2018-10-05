@@ -71,32 +71,32 @@
             <c:if test="${perfil.logradouro != null}">
                 <br><div class="card">
                     <div class="card-header text-white">Telefone Fixo:</div>
-                    <div class="card-body">${userSearch.tel}</div>
+                    <div class="card-body">${perfil.tel}</div>
                 </div>
                 <div class="card">
                     <div class="card-header text-white">Celular:</div>
-                    <div class="card-body">${userSearch.cel}</div>
+                    <div class="card-body">${perfil.cel}</div>
                 </div>
                 <br><h4>Endereço:</h4><br>
                 <div class="card">
                     <div class="card-header text-white">Logradouro:</div>
-                    <div class="card-body">${userSearch.logradouro}</div>
+                    <div class="card-body">${perfil.logradouro}</div>
                     <div class="card-header text-white">Número:</div>
-                    <div class="card-body">${userSearch.numero}</div>
+                    <div class="card-body">${perfil.numero}</div>
                     <div class="card-header text-white">Complemento:</div>
-                    <div class="card-body">${userSearch.complemento}</div>
+                    <div class="card-body">${perfil.complemento}</div>
                     <div class="card-header text-white">CEP:</div>
-                    <div class="card-body">${userSearch.CEP}</div>
+                    <div class="card-body">${perfil.CEP}</div>
                     <div class="card-header text-white">Cidade:</div>
-                    <div class="card-body">${userSearch.cidade}</div>
+                    <div class="card-body">${perfil.cidade}</div>
                     <div class="card-header text-white">Estado:</div>
-                    <div class="card-body">${userSearch.estado}</div>
+                    <div class="card-body">${perfil.estado}</div>
                 </c:if>
-                <br><div class="card">
+                <div class="card">
                     <div class="card-header text-white">Descricao do Usuário:</div>
                     <div class="card-body">${perfil.descricao}</div>
                 </div>
-                <br><div class="card">
+                <div class="card">
                     <div class="card-header text-white">Interesses:</div>
                     <div class="card-body">${perfil.interesses}</div>
                 </div>

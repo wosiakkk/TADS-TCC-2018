@@ -287,7 +287,7 @@ public class UserServlet extends HttpServlet {
                     User perfil = new User();
                     int id = Integer.parseInt(request.getParameter("idUser"));
                     int idSessao = (int) session.getAttribute("idUserSessao");
-                    perfil = UserFacade.geraPerfilUser(id);
+                    perfil = UserFacade.buscarUsuario(id);
                     int amizade = UserFacade.checandoAmizade(idSessao, id);
                     session.setAttribute("perfil", perfil);
                     session.setAttribute("amizade", amizade);

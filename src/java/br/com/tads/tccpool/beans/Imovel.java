@@ -27,12 +27,22 @@ public class Imovel implements Serializable {
     private float preco;
     private String rua;
     private int numero;
+    private int status;
     private int enderecoId;
     private String estado;
     private String cidade;
     private String cep;
     private String complemento = "";
     private List<String> fotos;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
 
     public int getIdAnunciante() {
         return idAnunciante;

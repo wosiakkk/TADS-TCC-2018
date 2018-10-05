@@ -276,8 +276,10 @@ Author     : onurb
                             <form class="form-inline" action="AnuncioServlet" method="POST">
                                 <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 btn btn-outline-dark " />
                                 <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
+                                <c:if test="${imovelExibir.status == 2}">
                                 <input type="submit" value="Marcar Como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${imovelExibir.id}" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
-                            </form>                          
+                                </c:if>
+                                </form>                          
                         </div>                          
                     </c:if>
                 </c:if>
@@ -380,8 +382,10 @@ Author     : onurb
                             <form class="form-inline" action="AnuncioServlet" method="POST">
                                 <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 " />
                                 <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4" />
+                                <c:if test="${movelExibir.statu == 2}">
                                 <input type="submit" value="Marcar como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${movelExibir.id}" class="form-control btn btn-primary col-md-4" />
-                            </form>
+                                </c:if>
+                                </form>
                         </div>
                     </c:if>
                 </c:if>
@@ -632,8 +636,10 @@ Author     : onurb
                             <form class="form-inline" action="AnuncioServlet" method="POST">
                                 <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 " />
                                 <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4" />
+                                <c:if test="${materialExibir.status == 2}">
                                 <input type="submit" value="Marcar Como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${materialExibir.id}" class="form-control btn btn-primary col-md-4" />
-                            </form>
+                                </c:if>
+                                </form>
                         </div>
                     </c:if>
                 </c:if>

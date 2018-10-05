@@ -22,6 +22,25 @@
 });
 </script>
 
+<script>
+function formatar(mascara, documento){
+  var i = documento.value.length;
+  var saida = mascara.substring(0,1);
+  var texto = mascara.substring(i)
+  
+  if (texto.substring(0,1) != saida){
+            documento.value += texto.substring(0,1);
+  }
+  
+}
+
+function numeros( campo )
+{
+    if ( isNaN( campo.value.substring(campo.value.length-1) ) )
+        campo.value = campo.value.substr( 0 , campo.value.length - 1 );
+}
+</script>
+
 <div class="col-8 menu-fixed-center">
     <h1>Edite seu Perfil</h1>
     <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
@@ -54,13 +73,13 @@
                     <div class="form-group">                      
                         <div class="col-lg-9">
                             <label>Telefone Fixo:</label>
-                            <input class="form-control" name="telefone" id="telefone" placeholder="(xx)xxxx-xxxx" type="tel" maxlength="10" pattern="[0-9]" value="<c:out value="${userSearch.tel}"/>">
+                            <input class="form-control" name="telefone" id="telefone"  type="text" maxlength="12" onkeyup="numeros( this )" OnKeyPress="formatar('##-####-####', this)" value="<c:out value="${userSearch.tel}"/>">
                         </div>
                     </div>
                     <div class="form-group">                       
                         <div class="col-lg-9">
                             <label>Celular:</label>
-                            <input class="form-control" name="celular" id="celular" placeholder="(xx)xxxxx-xxxx" type="tel" maxlength="11" pattern="[0-9]" value="<c:out value="${userSearch.cel}"/>">
+                            <input class="form-control" name="celular" id="celular"  type="text" maxlength="13" onkeyup="numeros( this )" OnKeyPress="formatar('##-#####-####', this)" value="<c:out value="${userSearch.cel}"/>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -100,7 +119,7 @@
                     <div class="form-group">                       
                         <div class="col-lg-9">
                             <label>Cep:</label>
-                            <input class="form-control" name="cep" id="cep" maxlength="8" type="text" value="<c:out value="${userSearch.CEP}"/>">
+                            <input class="form-control" name="cep" id="cep" maxlength="9" type="text" onkeyup="numeros( this )" OnKeyPress="formatar('#####-###', this)" value="<c:out value="${userSearch.CEP}"/>">
                         </div>
                     </div>
                     <div class="form-group">                       
