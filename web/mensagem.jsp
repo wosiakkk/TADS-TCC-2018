@@ -16,21 +16,22 @@
 <link href="assets/css/feed-style.css" rel="stylesheet">
 <script type="text/javascript" src="assets/js/mensagem.js"></script>
 
-<div class="col-md-12 col-lg-12 col-sm-12">
+<!--div class="col-3">
     <h1>Mensagens</h1>
     <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
     <hr>
-</div>
-
+</div-->
 <!-- Página com foto e as opções do perfil -->
 <%@include file="opcoes.jsp" %>
 
-<div class="col-md-9 col-lg-9 col-sm-12">
-    <div id="respostaAjax" class="row jumbotron">
-        
+<div class="col-md-7 col-lg-7 col-sm-12">
+
+    <div id="respostaAjax" class="jumbotron row">
+
     </div>
     <form id="mensagemAjax">
         <input name="action" value="ADD_MENSAGEM" type="hidden">
+        <input name="ID_CONVERSA" id="ID_CONVERSA" value="" type="hidden">
         <input name="ID_ORIGEM" value="<c:out value="${user.getId()}"/>" type="hidden">
         <input name="ID_DESTINO" value="<c:out value="${perfil.id}"/>" type="hidden">
         <div class="form-group">
@@ -40,4 +41,9 @@
             <i class="fa fa-send fa-2x"></i>
         </button>
     </form> <!-- fim #mensagemAjax -->
-</div> <!-- fim .col-lg-10 -->
+</div> <!-- fim .col-lg-9 -->
+<div class="col-md-2 col-lg-2 col-sm-12">
+    <div id="conversaBox" class="list-group">
+        
+    </div>
+</div>

@@ -12,6 +12,7 @@
     </c:redirect>
 </c:if>
 <link href="assets/css/feed-style.css" rel="stylesheet">
+
 <div class="col-lg-12">
     <h1>&Aacute;rea de Vendas</h1>
     <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
@@ -28,84 +29,47 @@
 </div>
 
 <div class="col-lg-2 col-md-2 col-xs-12 menu">
-    <form id="formFiltro" role="form">
+    <form id="formFiltro" role="form" method="POST">
         <div class="form-group">
             <label for="ordem">Ordenar por:</label>
-            <select id="ordem" name="ordem" class="form-control" disabled>
-                <option></option>
+            <select id="ordenacao" name="ordenacao" class="form-control">
+                <option value="0"></option>
                 <option value="1">Maior valor</option>
                 <option value="2">Menor valor</option>
                 <option value="3">T&iacutetulo do an&uacutencio</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="min">De: </label>
-            <input id="min" name="min" class="form-control" type="number" placeholder="0.00" disabled>
-            <label for="max">At&eacute: </label>
-            <input id="max" name="max" class="form-control" type="number" placeholder="0.00" disabled>
+            <label for="minValor">De: </label>
+            <input id="minValor" name="minValor" class="form-control" type="number" placeholder="0.00" />
+            <label for="maxValor">At&eacute: </label>
+            <input id="maxValor" name="maxValor" class="form-control" type="number" placeholder="0.00" />
         </div>
         <div class="checkbox">
             <label>
-                <input id="movel" name="movel" type="checkbox" value="0"/> M&oacuteveis
+                <input id="movel" name="movel" type="checkbox" value="0" /> M&oacuteveis
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input id="imovel" name="imovel" type="checkbox" value="0"/> Im&oacuteveis
+                <input id="imovel" name="imovel" type="checkbox" value="0" /> Im&oacuteveis
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input id="material" name="material" type="checkbox" value="0"/> Materiais
+                <input id="material" name="material" type="checkbox" value="0" /> Materiais
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input id="pet" name="pet" type="checkbox" disabled/> Pets?
+                <input id="pets" name="pets" type="checkbox" /> Pets?
             </label>
         </div> 
+        <input type="hidden" name="action" id="action" value="FILTROANUNCIO">
         <button type="submit" class="btn btn-primary">
             Filtrar
         </button>
     </form>
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        buscarAnunciosAprovados("#pageContent");
-    });
-    
-    $('input[type=checkbox]').change(function(){
-       if(this.checked) {
-           $(this).val('1');
-       } 
-       else {
-           $(this).val('0');
-       }
-    });
-    
-    $("#formFiltro").submit(function(event){
-        event.preventDefault();
-        
-        var dados = {
-            imovel: $('input[name=imovel]').val(),
-            movel: $('input[name=movel]').val(),
-            material: $('input[name=material]').val(),
-            action: 'FILTROANUNCIO'
-        };
-        
-        $.ajax({
-            url: 'AnuncioServlet',
-            method: 'POST',
-            data: dados,
-            dataType: 'HTML',
-            success: function(resp) {
-                $("#pageContent").html(resp);
-            },
-            error: function(resp) {
-                console.log(resp);
-                alert("Ocorreu um erro ao filtrar os anúcnios. Por favor, tente novamente mais tarde.");
-            }
-        });
-    });
-</script>
+<script type="text/javascript" src="assets/js/vendas.js"></script>

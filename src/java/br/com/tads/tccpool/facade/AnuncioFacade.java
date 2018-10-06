@@ -90,12 +90,13 @@ public class AnuncioFacade {
         String HTMLResponse = "";
         List<Anuncio> anunciosAprovados = null;
         try {
-            if (filtro == null || (!filtro.isImovel() && !filtro.isMovel() && !filtro.isMaterial())) {
-                anunciosAprovados = dao.buscarAnuncioAprovado();
-            } else {
+            if (filtro.isFiltroAtivo()) {
                 anunciosAprovados = dao.filtrarAnuncio(filtro);
+            } else {
+                anunciosAprovados = dao.buscarAnuncioAprovado();
             }
             if (anunciosAprovados != null) {
+                
                 for (Anuncio anuncio : anunciosAprovados) {
                     HTMLResponse += "<div class=\"col-lg-4 col-md-6 mb-4\">\n"
                             + "    <div class=\"card h-100\">\n"
@@ -114,7 +115,11 @@ public class AnuncioFacade {
                             + "</div>";
                 }
             }
+            else {
+                HTMLResponse = "Não foram encontrados anúncios para esse filtro.";
+            }
         } catch (SQLException ex) {
+            HTMLResponse = "Falha ao filtrar os anúncios. Pro favor, tente novamente mais tarde!";
             Logger.getLogger(AnuncioFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         return HTMLResponse;

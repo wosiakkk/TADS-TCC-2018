@@ -33,6 +33,7 @@
                         <a class="list-group-item" href="vendas.jsp">Área de vendas</a>                      
                         <a class="list-group-item" href="UserServlet?action=SEARCH">Editar Perfil</a>
                         <a class="list-group-item" href="escolhaAnuncio.jsp">Realizar um Anuncio</a>           
+                        <a class="list-group-item" href="mensagem.jsp">Mensagens</a>
                         <a class="list-group-item" href="escolhaPreferencias.jsp">Preferências</a>
                         <a class="list-group-item" href="gerarRelatorio.jsp">Estatísticas</a>
                     </c:if>
@@ -54,7 +55,7 @@
                     <div class="jumbotron">
                         <hr>
                         <div class="col-6">
-                            <img src="img\logos\logo400.jpg">
+                            <img src="img\logos\logo400.jpg" class="rounded border border-dark">
                         </div>
                         <hr>
                     </div>
@@ -64,7 +65,7 @@
                     <div class="jumbotron">
                         <hr>
                         <div class="col-6">
-                            <img src="img\logos\logo400.jpg">
+                            <img src="img\logos\logo400.jpg" class="rounded border border-dark">
                         </div>
                         <hr>
                     </div>

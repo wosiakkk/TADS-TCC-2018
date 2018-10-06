@@ -370,7 +370,7 @@ public class AnuncioServlet extends HttpServlet {
                     break;
 
                 case "BUSCAAPROVADOS":
-                    String HTMLResponse = AnuncioFacade.buscarAnuncioAprovado(null);
+                    String HTMLResponse = AnuncioFacade.buscarAnuncioAprovado(new FiltroAnuncio());
                     if (HTMLResponse != null) {
                         out.write(HTMLResponse);
                     } else {
@@ -677,11 +677,9 @@ public class AnuncioServlet extends HttpServlet {
                     }
                     break;
                 case "FILTROANUNCIO":
-                    FiltroAnuncio filtro = new FiltroAnuncio();
-                    try {
-                        filtro.setMovel("1".equals((String) request.getParameter("movel")));
-                        filtro.setImovel("1".equals((String) request.getParameter("imovel")));
-                        filtro.setMaterial("1".equals((String) request.getParameter("material")));
+                    try {                        
+                        FiltroAnuncio filtro = new FiltroAnuncio(request);
+                        
                         out.write(AnuncioFacade.buscarAnuncioAprovado(filtro));
                         out.flush();
                     } catch (Exception ex) {

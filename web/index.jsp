@@ -6,6 +6,7 @@
 
 <!-- Cabeçalho -->
 <%@ include file="head.jsp" %>
+<link href="assets/css/feed-style.css" rel="stylesheet">
 <c:if test="${!(empty(user))}">
     <c:redirect url="home.jsp"/>
 </c:if>
@@ -28,14 +29,10 @@
     </div>
 </div>
 <div class="col-lg-9">
-    <div id="pageContent" class="row">
-        
-    </div> <!-- fim .row -->
+    <div class="jumbotron">
+         <img src="img\logos\logo1.jpg" class="rounded border border-dark">      
+    </div>
 </div> <!-- End col-lg-9 -->
-
-<script type="text/javascript" lang="UTF-8">
-    buscarAnunciosAprovados("#pageContent");
-</script>
 
 <!-- Rodapé -->
 <%@ include file="footer.jsp" %>

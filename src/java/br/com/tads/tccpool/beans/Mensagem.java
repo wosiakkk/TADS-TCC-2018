@@ -8,18 +8,28 @@ import java.util.Calendar;
  * @author Marcos
  */
 public class Mensagem implements Serializable {
+    private int idConversa;
     private int idMensagem;
     private int idOrigem;
     private int idDestino;
     private String conteudo;
     private String nmOrigem;
     private String nmDestino;
+    private String fotoDestino;
     private Calendar data;
     
     public Mensagem(){
         this.data = Calendar.getInstance();
     }
 
+    public int getIdConversa() {
+        return idConversa;
+    }
+
+    public void setIdConversa(int idConversa) {
+        this.idConversa = idConversa;
+    }
+    
     public String getNmOrigem() {
         return nmOrigem;
     }
@@ -58,6 +68,14 @@ public class Mensagem implements Serializable {
 
     public void setIdDestino(int idDestino) {
         this.idDestino = idDestino;
+    }
+    
+    public String getFotoDestino() {
+        return fotoDestino;
+    }
+
+    public void setFotoDestino(String fotoDestino) {
+        this.fotoDestino = fotoDestino;
     }
 
     public int getIdMensagem() {

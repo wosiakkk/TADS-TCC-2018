@@ -6,6 +6,7 @@
 
 <!-- Cabeçalho -->
 <%@ include file="head.jsp" %>
+<link href="assets/css/feed-style.css" rel="stylesheet">
 <div class="col-md-12 col-sm-12 col-xs-12">
     <c:choose>
         <c:when test="${(!empty(falhaLogin))}">
@@ -75,6 +76,8 @@
 <!-- Importando plugin JSCookie para trabalhar com cookies do navegador -->
 <script src="assets/jquery/plugins/js-cookie.js" type="text/javascript"></script>
 <script type="text/javascript">
+    $('#emailLogin').focus();
+    
     var cookieValue = getCookieValue("emailUser");
     if (typeof cookieValue !== "undefined" || cookieValue !== false) {
         $('#remember').prop('checked', 'true');
