@@ -22,7 +22,7 @@
             <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
             <hr>
             <div>
-                <img class="d-block img-fluid rounded-circle" style="width: 100px; height: 100px" src="${perfil.getFoto()}"><hr>
+                <img class="d-block img-fluid rounded-circle" style="width: 200px; height: 200px" src="${perfil.getFoto()}"><hr>
                 <c:if test="${perfil.id != user.id}">
 
                     <br><a href="AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr=${perfil.id}" class="btn btn-outline-dark">Ver Anuncios</a>                       

@@ -8,6 +8,7 @@ package br.com.tads.tccpool.servlets;
 import br.com.tads.tccpool.beans.Anuncio;
 import br.com.tads.tccpool.beans.Categoria;
 import br.com.tads.tccpool.beans.FiltroAnuncio;
+import br.com.tads.tccpool.beans.Foto;
 import br.com.tads.tccpool.beans.Imovel;
 import br.com.tads.tccpool.beans.Material;
 import br.com.tads.tccpool.beans.Movel;
@@ -52,7 +53,7 @@ public class AnuncioServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, AcessoBdException, SQLException {
+            throws ServletException, IOException, AcessoBdException, SQLException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -126,6 +127,9 @@ public class AnuncioServlet extends HttpServlet {
                                     item.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
                                     caminhoImovel = "img" + File.separator + nomeString;
                                     listImovel.add(caminhoImovel);
+                                    javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                    image.resize(850, 500);
+                                    image.saveAs(request.getServletContext().getRealPath("img") + File.separator + nomeString);
                                 }
                             }
                         }
@@ -201,6 +205,9 @@ public class AnuncioServlet extends HttpServlet {
                                     item2.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
                                     caminhomovel = "img" + File.separator + nomeString;
                                     lista.add(caminhomovel);
+                                    javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                    image.resize(850, 500);
+                                    image.saveAs(request.getServletContext().getRealPath("img") + File.separator + nomeString);
                                 }
                             }
                         }
@@ -275,6 +282,9 @@ public class AnuncioServlet extends HttpServlet {
                                     item2.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
                                     caminhomaterial = "img" + File.separator + nomeString;
                                     listaMaterial.add(caminhomaterial);
+                                    javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                    image.resize(850, 500);
+                                    image.saveAs(request.getServletContext().getRealPath("img") + File.separator + nomeString);
                                 }
                             }
                         }
@@ -380,6 +390,15 @@ public class AnuncioServlet extends HttpServlet {
 
                 case "BUSCAANUNCIOUSER":
                     try {
+                        List<Categoria> listaCategoriaImovel = new ArrayList<Categoria>();
+                        listaCategoriaImovel = MainPageFacade.listaCategoriasImovel();
+                        session.setAttribute("listaCatImovel", listaCategoriaImovel);
+                        List<Categoria> listaCategoriaMovel = new ArrayList<Categoria>();
+                        listaCategoriaMovel = MainPageFacade.listaCategoriasMovel();
+                        session.setAttribute("listaCatMovel", listaCategoriaMovel);
+                        List<Categoria> listaCategoriaMaterial = new ArrayList<Categoria>();
+                        listaCategoriaMaterial = MainPageFacade.listaCategoriasMaterial();
+                        session.setAttribute("listaCatMaterial", listaCategoriaMaterial);
                         int idUser = Integer.parseInt(request.getParameter("idUsr"));
                         int statusAnuncio = Integer.parseInt(request.getParameter("status"));
                         List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(idUser, statusAnuncio);
@@ -393,7 +412,7 @@ public class AnuncioServlet extends HttpServlet {
                 case "EXIBIRANUNCIO":
                     int idAnuncio = Integer.parseInt(request.getParameter("idAnuncio"));
                     int t = AnuncioFacade.verifcaTipoAnuncio(idAnuncio);
-                    if (t == 1) {
+                        if (t == 1) {
                         Imovel i = new Imovel();
                         i = AnuncioFacade.buscarImovelPorId(idAnuncio);
                         session.setAttribute("imovelExibir", i);
@@ -656,12 +675,14 @@ public class AnuncioServlet extends HttpServlet {
                     try {
                         session.removeAttribute("imovelAlterar");
                         session.removeAttribute("imovelExibir");
+                        int stat = Integer.parseInt(request.getParameter("status"));
                         User u = (User) session.getAttribute("user");
-                        List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId(), 1);
+                        List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId(), stat);
                         session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                         request.getRequestDispatcher("resumo.jsp").forward(request, response);
                     } catch (Exception e) {
                     }
+                    break;
 
                 case "INFORMARVENDAANUNCIO":
                     try {
@@ -686,6 +707,106 @@ public class AnuncioServlet extends HttpServlet {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
+                    
+                    case "ALTERARFOTOSANUNCIO":
+                    try{
+                        
+                        int idA = Integer.parseInt(request.getParameter("idAnuncio"));
+                        Anuncio anun = AnuncioFacade.buscaAlteraFotosAnuncio(idA);
+                        request.setAttribute("anuncio", anun);
+                        request.getRequestDispatcher("alteraFotoAnuncio.jsp").forward(request, response);
+                    }catch(Exception e){
+                        request.setAttribute("erro", e.toString());
+                        request.getRequestDispatcher("erro.jsp");
+                    }
+                        break;
+                        
+                        case "UPDATEFOTOSANUNCIO":
+                        try{
+                        List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+                        String nome = new String();
+                        List<Foto> listaFotosNovas = new ArrayList<>();
+                        List<Foto> listaFotosAlteradas = new ArrayList<>();
+                        Anuncio anunc = new Anuncio();
+                        int excluir[] = new int[5];
+                        int exInd = 0;
+                        /*Escreve a o arquivo na pasta img*/
+                        for (FileItem item : multiparts) {
+                            if (item.isFormField()) {
+                                if (item.getFieldName().equals("idAnuncio")) {
+                                    anunc.setIdAnuncio(Integer.parseInt(item.getString()));
+                                }
+                                if (item.getFieldName().equals("checkExcluir")) {
+                                    excluir[exInd] = Integer.parseInt(item.getString());
+                                    exInd++;
+                                }
+                            } else {
+                                Random rand = new Random();
+                                String nomeString = String.valueOf(rand.nextInt()) + ".jpg";
+                                if (!item.getName().equals("")) {
+                                    if(item.getFieldName().equals("fotoNova")){
+                                    item.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
+                                    Foto f = new Foto();
+                                    f.setCaminho("img" + File.separator + nomeString);
+                                    f.setIdAnuncio(anunc.getIdAnuncio());
+                                    listaFotosNovas.add(f);
+                                    javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                    image.resize(850, 500);
+                                    image.saveAs(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                    }else{
+                                        Foto f = new Foto();
+                                        f.setIdFoto(Integer.parseInt(item.getFieldName()));
+                                        item.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
+                                        f.setCaminho("img" + File.separator + nomeString);
+                                        f.setIdAnuncio(anunc.getIdAnuncio());
+                                        listaFotosAlteradas.add(f);
+                                        javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                        image.resize(850, 500);
+                                        image.saveAs(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                    }
+                                }
+                            }
+                        }
+                        if(!listaFotosNovas.isEmpty()){
+                            AnuncioFacade.insereFotosAnuncio(listaFotosNovas);
+                            AnuncioFacade.updateStatusAnuncio(anunc.getIdAnuncio(), 1);
+                        } 
+                        if(!listaFotosAlteradas.isEmpty()){
+                            AnuncioFacade.alteraFotosAnuncio(listaFotosAlteradas);
+                            AnuncioFacade.updateStatusAnuncio(anunc.getIdAnuncio(), 1);
+                        }
+                        if(excluir[0] != 0){
+                            AnuncioFacade.excluiFotosAnuncio(excluir);
+                            AnuncioFacade.updateStatusAnuncio(anunc.getIdAnuncio(), 1);
+                        }
+                        int ann = AnuncioFacade.verifcaTipoAnuncio(anunc.getIdAnuncio());
+                switch (ann) {
+                    case 1:
+                        Imovel i = AnuncioFacade.buscarImovelPorId(anunc.getIdAnuncio());
+                        session.setAttribute("imovelExibir", i);
+                        session.removeAttribute("imovelAlterar");
+                        session.setAttribute("idExibirAnuncio", anunc.getIdAnuncio());
+                        break;
+                    case 2:
+                        Movel m = AnuncioFacade.buscarMovelPorId(anunc.getIdAnuncio());
+                        session.setAttribute("movelExibir", m);
+                        session.removeAttribute("movelAlterar");
+                        session.setAttribute("idExibirAnuncio", anunc.getIdAnuncio());
+                        break;
+                    case 3:
+                        Material mat = AnuncioFacade.buscarMaterialPorId(anunc.getIdAnuncio());
+                        session.setAttribute("materialExibir", mat);
+                        session.removeAttribute("materialAlterar");
+                        session.setAttribute("idExibirAnuncio", anunc.getIdAnuncio());
+                        break;
+                    default:
+                        break;
+                }
+                        request.getRequestDispatcher("anuncio.jsp").forward(request, response);
+                    }catch(Exception e){
+                        e.toString();
+                    }
+                        break;
             }
         }
     }
@@ -708,6 +829,8 @@ public class AnuncioServlet extends HttpServlet {
             Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -727,6 +850,8 @@ public class AnuncioServlet extends HttpServlet {
         } catch (AcessoBdException ex) {
             Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

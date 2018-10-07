@@ -247,6 +247,9 @@ public class UserServlet extends HttpServlet {
                                     item.write(new File(request.getServletContext().getRealPath("img/fotosPerfil") + File.separator + nomeString));
                                     caminhoFoto = "img/fotosPerfil" + File.separator + nomeString;
                                     alterar.setFoto(caminhoFoto);
+                                    javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img/fotosPerfil") + File.separator + nomeString);
+                                    image.resize(200, 200);
+                                    image.saveAs(request.getServletContext().getRealPath("img/fotosPerfil") + File.separator + nomeString);
                                 }
                             }
                         }

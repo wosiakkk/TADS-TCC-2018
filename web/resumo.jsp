@@ -38,12 +38,15 @@
                 <img class="list-inline-item" src="img\icones\books.png"> 
                 <hr>
             </div>
+                <c:if test="${fn:length(ListaAunciosDoUusario) == 0}">
+                    <h3>Você não possui anúncios nesta categoria.</h3>
+                </c:if>
 
             <div class="jumbotron col-sm-12" >
                 <c:set var="listaDoUsuario" value="${ListaAunciosDoUusario}"/>
                 <c:forEach var="listaDoUsuario" items="${listaDoUsuario}">
                     <div class="card">
-                        <h3 class="card-header primary-color white-text">Anuncio Pendente</h3>
+                        <h3 class="card-header primary-color white-text">Anuncio ${listaDoUsuario.statusAnuncio}</h3>
                         <div class="card-body">
                             <h4 class="card-title">Descrição: ${listaDoUsuario.descricao}</h4>
                             <p class="card-text">Categoria :${listaDoUsuario.categoria}</p>
