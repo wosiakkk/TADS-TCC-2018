@@ -11,6 +11,26 @@
         <c:param name="msg" value="Faça login para acessar esta página!"></c:param>
     </c:redirect>
 </c:if>
+
+<script>
+function formatar(mascara, documento){
+  var i = documento.value.length;
+  var saida = mascara.substring(0,1);
+  var texto = mascara.substring(i)
+  
+  if (texto.substring(0,1) != saida){
+            documento.value += texto.substring(0,1);
+  }
+  
+}
+
+function numeros( campo )
+{
+    if ( isNaN( campo.value.substring(campo.value.length-1) ) )
+        campo.value = campo.value.substr( 0 , campo.value.length - 1 );
+}
+</script>
+
 <div class="form-group col-md-2"></div>
 <div class="form-group col-md-8">
 <form class="form-horizontal"  action="AnuncioServlet?action=ADDMATERIAL"  method="POST" role="form" enctype="multipart/form-data">
@@ -35,7 +55,7 @@
     
         <label for="descricao" class="control-label">Descrição:</label>
         <div >
-            <input type="text" name="descricao" id="descricao" placeholder="" class="form-control" autofocus required> 
+            <textarea class="form-control" rows="5" id="descricao" name="descricao"></textarea>
             <span class="help-block">Descreva seu anuncio</span>
         </div><br>
     
@@ -56,7 +76,7 @@
         </div>
         <br><label for="cep" class="col-sm-3 control-label">CEP:</label>
         <div class="col-sm-9">
-            <input type="text" name="cep" id="cep" maxlength="8" placeholder="" class="form-control" autofocus required>
+            <input type="text" name="cep" id="cep" maxlength="9" placeholder="" class="form-control" onkeyup="numeros( this )" OnKeyPress="formatar('#####-###', this)" required>
         </div>
         <br><label for="cidade" class="col-sm-3 control-label">Cidade:</label>
         <div class="col-sm-9">

@@ -7,11 +7,13 @@ package br.com.tads.tccpool.dao;
 
 import br.com.tads.tccpool.beans.Anuncio;
 import br.com.tads.tccpool.beans.FiltroAnuncio;
+import br.com.tads.tccpool.beans.Foto;
 import br.com.tads.tccpool.beans.Imovel;
 import br.com.tads.tccpool.beans.Material;
 import br.com.tads.tccpool.beans.Movel;
 import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.utils.ConnectionFactory;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +27,10 @@ import java.util.List;
  */
 public class AnuncioDAO {
 
+    private final static String QUERY_BUSCA_FOTOS_ANUNCIO = "SELECT ID_FOTO, DS_CAMINHO FROM tcc1.tb_fotos WHERE TB_ANUNCIO_ID_ANUNCIO = ?";
+    private final static String QUERY_UPDATE_FOTOS_ANUNCIO = "UPDATE tcc1.tb_fotos SET DS_CAMINHO = ? WHERE ID_FOTO = ?";
+    private final static String QUERY_INSERT_FOTOS_ANUNCIO = "INSERT INTO tcc1.tb_fotos (TB_ANUNCIO_ID_ANUNCIO, DS_CAMINHO) VALUES (?,?)";
+    private final static String QUERY_DELETE_FOTOS_ANUNCIO_COM_ID = "DELETE FROM tcc1.tb_fotos WHERE ID_FOTO = ?";
     private static final String QUERY_INSERT_IMOVEL = "INSERT INTO tb_imovel (NR_QNT_PESSOAS,NR_PET, TB_CATEGORIA_IMOVEL_ID_CATEGORIA_IMOVEL) VALUES (?,?,?);";
     private static final String QUERY_UPDATE_IMOVEL = "UPDATE tb_imovel SET NR_QNT_PESSOAS = ?,  NR_PET = ?, TB_CATEGORIA_IMOVEL_ID_CATEGORIA_IMOVEL = ? WHERE ID_IMOVEL = ?;";
     private static final String QUERY_UPDATE_STATUS_ANUNCIO = "UPDATE tb_anuncio SET TB_STATUS_ID_STATUS = ? WHERE ID_ANUNCIO = ?";
@@ -64,7 +70,7 @@ public class AnuncioDAO {
             + "             tb_endereco_anuncio.DS_CIDADE\n"
             + "             FROM\n"
             + "             tb_anuncio\n"
-            + "             INNER JOIN\n"
+            + "             LEFT JOIN\n"
             + "             tb_endereco_anuncio ON ID_ENDERECO = TB_ENDERECO_ID_ENDERECO\n"
             + "             INNER JOIN\n"
             + "             tb_imovel ON ID_IMOVEL = TB_IMOVEL_idTB_IMOVEL\n"
@@ -94,7 +100,7 @@ public class AnuncioDAO {
             + "		tb_endereco_anuncio.DS_CIDADE \n"
             + "	FROM\n"
             + "		tb_anuncio\n"
-            + "	INNER JOIN \n"
+            + "	LEFT JOIN \n"
             + "		tb_endereco_anuncio ON ID_ENDERECO = TB_ENDERECO_ID_ENDERECO\n"
             + "	INNER JOIN \n"
             + "		tb_movel ON ID_MOVEL = TB_MOVEL_ID_MOVEL\n"
@@ -124,7 +130,7 @@ public class AnuncioDAO {
             + "            		tb_endereco_anuncio.DS_CIDADE \n"
             + "            	FROM\n"
             + "            		tb_anuncio\n"
-            + "            	INNER JOIN \n"
+            + "            	LEFT JOIN \n"
             + "            		tb_endereco_anuncio ON ID_ENDERECO = TB_ENDERECO_ID_ENDERECO\n"
             + "            	INNER JOIN \n"
             + "            		tb_material ON ID_MATERIAL = TB_MATERIAL_ID_MATERIAL \n"
@@ -135,6 +141,7 @@ public class AnuncioDAO {
             + "            	AND TB_ANUNCIO.TB_CATEGORIA_ID_CATEGORIA = 3";
 
     private final String QUERY_CONSULTA_IMOVEL_ID = "SELECT \n"
+            + "		tb_imovel.ID_IMOVEL, \n"
             + "		tb_imovel.NR_PET, \n"
             + "		tb_imovel.NR_QNT_PESSOAS, \n"
             + "		tb_imovel.TB_CATEGORIA_IMOVEL_ID_CATEGORIA_IMOVEL, \n"
@@ -143,6 +150,7 @@ public class AnuncioDAO {
             + "           TB_ANUNCIO.NR_VALOR, \n"
             + "           TB_ANUNCIO.DS_TITULO, \n"
             + "           TB_ANUNCIO.ID_ANUNCIO, \n"
+            + "            TB_ANUNCIO.TB_STATUS_ID_STATUS,\n"
             + "           TB_ENDERECO_ID_ENDERECO, \n"
             + "           tb_endereco_anuncio.DS_RUA, \n"
             + "           tb_endereco_anuncio.DS_ESTADO, \n"
@@ -154,7 +162,7 @@ public class AnuncioDAO {
             + "           tb_usuario.NM_NOME\n"
             + "          FROM \n"
             + "           tb_anuncio \n"
-            + "          INNER JOIN\n"
+            + "          LEFT JOIN\n"
             + "           tb_endereco_anuncio ON ID_ENDERECO = TB_ENDERECO_ID_ENDERECO \n"
             + "          INNER JOIN \n"
             + "           tb_imovel ON ID_IMOVEL = TB_IMOVEL_idTB_IMOVEL \n"
@@ -186,7 +194,7 @@ public class AnuncioDAO {
             + "		tb_usuario.NM_NOME\n"
             + "	FROM \n"
             + "		tb_anuncio \n"
-            + "	INNER JOIN\n"
+            + "	LEFT JOIN\n"
             + "		tb_endereco_anuncio ON ID_ENDERECO = TB_ENDERECO_ID_ENDERECO \n"
             + "	INNER JOIN \n"
             + "		tb_movel ON ID_MOVEL = TB_MOVEL_ID_MOVEL \n"
@@ -218,7 +226,7 @@ public class AnuncioDAO {
             + "		tb_usuario.NM_NOME\n"
             + "	FROM \n"
             + "		tb_anuncio \n"
-            + "	INNER JOIN\n"
+            + "	LEFT JOIN\n"
             + "		tb_endereco_anuncio ON ID_ENDERECO = TB_ENDERECO_ID_ENDERECO \n"
             + "	INNER JOIN \n"
             + "		tb_material ON ID_MATERIAL = TB_MATERIAL_ID_MATERIAL \n"
@@ -571,7 +579,7 @@ public class AnuncioDAO {
         rs = stmt.executeQuery();
         Imovel i = new Imovel();
         if (rs.next()) {
-            i.setId(rs.getInt("ID_ANUNCIO"));
+            i.setId(rs.getInt("ID_IMOVEL"));
             i.setIdAnunciante(rs.getInt("TB_USUARIO_NR_SEQ"));
             i.setNomeAnunciante(rs.getString("NM_NOME"));
             i.setBoolean_pet(rs.getInt("NR_PET"));
@@ -588,6 +596,7 @@ public class AnuncioDAO {
             i.setCidade(rs.getString("DS_CIDADE"));
             i.setCep(rs.getString("NR_CEP"));
             i.setComplemento(rs.getString("DS_COMPLEMENTO"));
+            i.setStatus(rs.getInt("TB_STATUS_ID_STATUS"));
             stmt = con.prepareStatement(QUERY_BUSCAR_FOTOS_POR_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
@@ -610,7 +619,7 @@ public class AnuncioDAO {
         rs = stmt.executeQuery();
         Movel m = new Movel();
         if (rs.next()) {
-            m.setId(rs.getInt("ID_ANUNCIO"));
+            m.setId(rs.getInt("ID_MOVEL"));
             m.setIdAnunciante(rs.getInt("TB_USUARIO_NR_SEQ"));
             m.setNomeAnunciante(rs.getString("NM_NOME"));
             m.setTipoDesc(rs.getString("DESC_TIPO"));
@@ -625,6 +634,7 @@ public class AnuncioDAO {
             m.setCidade(rs.getString("DS_CIDADE"));
             m.setCep(rs.getString("NR_CEP"));
             m.setComplemento(rs.getString("DS_COMPLEMENTO"));
+            m.setStatus(rs.getInt("TB_STATUS_ID_STATUS"));
             stmt = con.prepareStatement(QUERY_BUSCAR_FOTOS_POR_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
@@ -647,7 +657,7 @@ public class AnuncioDAO {
         rs = stmt.executeQuery();
         Material m = new Material();
         if (rs.next()) {
-            m.setId(rs.getInt("ID_ANUNCIO"));
+            m.setId(rs.getInt("ID_MATERIAL"));
             m.setIdAnunciante(rs.getInt("TB_USUARIO_NR_SEQ"));
             m.setNomeAnunciante(rs.getString("NM_NOME"));
             m.setTipoDesc(rs.getString("DESC_TIPO"));
@@ -662,6 +672,7 @@ public class AnuncioDAO {
             m.setCidade(rs.getString("DS_CIDADE"));
             m.setCep(rs.getString("NR_CEP"));
             m.setComplemento(rs.getString("DS_COMPLEMENTO"));
+            m.setStatus(rs.getInt("TB_STATUS_ID_STATUS"));
             stmt = con.prepareStatement(QUERY_BUSCAR_FOTOS_POR_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
@@ -745,7 +756,7 @@ public class AnuncioDAO {
 
     public List<Anuncio> buscarAnunciosDoUsuario(int idUsuario, int status) throws SQLException {
         List<Anuncio> lista = new ArrayList<Anuncio>();
-        stmt = con.prepareStatement(QUERY_BUCASR_ANUNCIOS_DO_USUARIO);
+            stmt = con.prepareStatement(QUERY_BUCASR_ANUNCIOS_DO_USUARIO);
         stmt.setInt(1, idUsuario);
         stmt.setInt(2, status);
         rs = stmt.executeQuery();
@@ -992,4 +1003,136 @@ public class AnuncioDAO {
             stmt.close();
         }
     }
+    
+    
+    public Anuncio buscaAlteraFotosAnuncio(int idAnuncio) throws SQLException, InstantiationException, ClassNotFoundException, Exception{
+        Anuncio a = new Anuncio();
+        List<Foto> lista = new ArrayList<>();
+        try{
+            con = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(QUERY_BUSCA_FOTOS_ANUNCIO);
+            stmt.setInt(1,idAnuncio);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                Foto f = new Foto();
+                f.setIdFoto(rs.getInt("ID_FOTO"));
+                f.setCaminho(rs.getString("DS_CAMINHO"));
+                f.setIdAnuncio(idAnuncio);
+                lista.add(f);
+            }
+            a.setIdAnuncio(idAnuncio);
+            a.setFotos(lista);
+        }catch (SQLException e) {
+            throw new SQLException(e);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
+        }catch (Exception e) {
+            throw new Exception(e.getMessage());
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return a;
+    }
+    
+    
+    public void alteraFotosAnuncio(List<Foto> lista) throws SQLException, InstantiationException, ClassNotFoundException, Exception{
+        try{
+            con = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(QUERY_UPDATE_FOTOS_ANUNCIO);
+            for(Foto f: lista){
+            stmt.setString(1,f.getCaminho());
+            stmt.setInt(2,f.getIdFoto());
+            stmt.executeUpdate();
+            }
+            
+        }catch (SQLException e) {
+            throw new SQLException(e);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
+        }catch (Exception e) {
+            throw new Exception(e.getMessage());
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        
+    }
+    
+    
+    
+    public void insereFotosAnuncio(List<Foto> lista) throws SQLException, InstantiationException, ClassNotFoundException, Exception{
+        try{
+            con = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(QUERY_INSERT_FOTOS_ANUNCIO);
+            for(Foto f: lista){ 
+            stmt.setInt(1,f.getIdAnuncio());
+            stmt.setString(2,f.getCaminho());
+            stmt.executeUpdate();
+            }
+            
+        }catch (SQLException e) {
+            throw new SQLException(e);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
+        }catch (Exception e) {
+            throw new Exception(e.getMessage());
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        
+    }
+    
+    
+    public void excluiFotosAnuncio(int[] excluir) throws SQLException, InstantiationException, ClassNotFoundException, Exception{
+        try{
+            con = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(QUERY_DELETE_FOTOS_ANUNCIO_COM_ID);
+            for(int e: excluir){ 
+            stmt.setInt(1,e);
+            stmt.executeUpdate();
+            }
+            
+        }catch (SQLException e) {
+            throw new SQLException(e);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
+        }catch (Exception e) {
+            throw new Exception(e.getMessage());
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        
+    }
+    
 }

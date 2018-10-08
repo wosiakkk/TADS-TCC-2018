@@ -7,13 +7,14 @@ package br.com.tads.tccpool.beans;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 
 /**
  *
  * @author onurb
  */
-public class Anuncio implements Serializable {
+ public class Anuncio implements Serializable {
 
     private int idAnuncio;
     private int idUsuario;
@@ -25,8 +26,31 @@ public class Anuncio implements Serializable {
     private float valor;
     private String descricao;
     private String categoria;
-    private String caminhoFoto;
+    private List<Foto> fotos;
     private String statusAnuncio;
+    private String caminhoFoto;
+
+    public String getCaminhoFoto() {
+        return caminhoFoto;
+    }
+
+    public void setCaminhoFoto(String caminhoFoto) {
+        this.caminhoFoto = caminhoFoto;
+    }
+    
+    
+
+    public List<Foto> getFotos() {
+        return fotos;
+    }
+
+    public void setFotos(List<Foto> fotos) {
+        this.fotos = fotos;
+    }
+
+    
+    
+    
     
 
     public Anuncio() {}
@@ -79,13 +103,7 @@ public class Anuncio implements Serializable {
         this.categoria = categoria;
     }
 
-    public String getCaminhoFoto() {
-        return caminhoFoto;
-    }
-
-    public void setCaminhoFoto(String caminhoFoto) {
-        this.caminhoFoto = caminhoFoto;
-    }
+    
 
     public int getIdCategoria() {
         return idCategoria;

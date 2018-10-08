@@ -57,3 +57,6 @@ pom.xml.tag
 nbproject/build-impl.xml
 nbproject/project.properties
 src/java/br/com/tads/tccpool/utils/DB.properties
+nbproject/build-impl.xml
+nbproject/project.xml
+src/java/br/com/tads/tccpool/utils/DB.properties

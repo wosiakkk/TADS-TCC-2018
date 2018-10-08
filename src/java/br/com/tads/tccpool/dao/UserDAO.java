@@ -23,6 +23,16 @@ import java.util.logging.Logger;
  */
 public class UserDAO {
 
+    private static final String QUERY_INSERT_ENDERECO_USER = "INSERT INTO `tcc1`.`tb_endereco`\n" +
+                                                            "(`NM_RUA`,\n" +
+                                                            "`NM_ESTADO`,\n" +
+                                                            "`NR_RUA`,\n" +
+                                                            "`NR_CEP`,\n" +
+                                                            "`DS_COMPLEMENTO`,\n" +
+                                                            "`NM_CIDADE`)\n" +
+                                                            "VALUES\n" +
+                                                            "(?,?,?,?,?,?)";
+    private static final String QUERY_CONSULTA_ID_ENDERECO_USER = "SELECT CD_ENDERECO FROM tcc1.tb_usuario WHERE NR_SEQ = ?";
     private static final String QUERY_LOGIN = "SELECT NR_SEQ, DS_EMAIL, NM_NOME, TP_USUARIO, DS_FOTO, DS_SENHA FROM TB_USUARIO WHERE DS_EMAIL = ? AND DS_SENHA = ?";
     private static final String QUERY_LOGIN_GOOGLE = "SELECT NR_SEQ, NM_NOME, DS_EMAIL, DS_FOTO,TP_USUARIO FROM TB_USUARIO WHERE DS_EMAIL = ?";
     private static final String QUERY_SIMPLE_INSERT_MODADM = "INSERT INTO TB_USUARIO"
@@ -74,7 +84,7 @@ public class UserDAO {
 
     private static final String QUERY_EDIT_USR = "UPDATE tb_usuario set NM_NOME = ?, "
             + "DS_FOTO = ?, NR_TELEFONE = ?, NR_CELULAR = ?, DS_DESCRICAO_USER = ?, "
-            + "DS_INTERESSES = ? WHERE NR_SEQ = ?";
+            + "DS_INTERESSES = ?, CD_ENDERECO = ? WHERE NR_SEQ = ?";
 
     private static final String QUERY_EDIT_END = "UPDATE tb_endereco SET\n"
             + "NM_RUA = ?,"
@@ -389,6 +399,15 @@ public class UserDAO {
     public void editarUser(User u) {
 
         try {
+            
+            int idEnd = 0;
+            stmt = con.prepareStatement(QUERY_CONSULTA_ID_ENDERECO_USER);
+            stmt.setInt(1, u.getId());
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                idEnd = rs.getInt("CD_ENDERECO");
+            }
+            if(idEnd != 0){
             stmt = con.prepareStatement(QUERY_EDIT_END);
             stmt.setString(1, u.getLogradouro());
             stmt.setString(2, u.getEstado());
@@ -398,6 +417,24 @@ public class UserDAO {
             stmt.setString(6, u.getCidade());
             stmt.setInt(7, u.getCdEndereco());
             stmt.executeUpdate();
+            }else{
+                stmt = con.prepareStatement(QUERY_INSERT_ENDERECO_USER);
+            stmt.setString(1, u.getLogradouro());
+            stmt.setString(2, u.getEstado());
+            stmt.setInt(3, u.getNumero());
+            stmt.setString(4, u.getCep());
+            stmt.setString(5, u.getComplemento());
+            stmt.setString(6, u.getCidade());
+            stmt.executeUpdate();
+            
+                stmt = con.prepareStatement("SELECT LAST_INSERT_ID() AS ID");
+                rs = stmt.executeQuery();
+                if(rs.next()){
+                    idEnd = rs.getInt("ID");
+                }
+                
+            
+            }
 
             stmt = con.prepareStatement(QUERY_EDIT_USR);
             stmt.setString(1, u.getNome());
@@ -406,7 +443,12 @@ public class UserDAO {
             stmt.setString(4, u.getCel());
             stmt.setString(5, u.getDescricao());
             stmt.setString(6, u.getInteresses());
-            stmt.setInt(7, u.getId());
+            if(u.getCdEndereco() != 0){
+            stmt.setInt(7, u.getCdEndereco());
+            }else{
+            stmt.setInt(7, idEnd);
+            }
+            stmt.setInt(8, u.getId());
             stmt.executeUpdate();
 
         } catch (SQLException e) {

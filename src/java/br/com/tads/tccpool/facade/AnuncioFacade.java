@@ -10,6 +10,7 @@ import br.com.tads.tccpool.beans.Material;
 import br.com.tads.tccpool.beans.Movel;
 import br.com.tads.tccpool.beans.Anuncio;
 import br.com.tads.tccpool.beans.FiltroAnuncio;
+import br.com.tads.tccpool.beans.Foto;
 import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.dao.AnuncioDAO;
 import br.com.tads.tccpool.exception.AcessoBdException;
@@ -185,5 +186,26 @@ public class AnuncioFacade {
         dao.alterarStatusAnuncio(idAnuncio, status);
         dao.close();
 
+    }
+    
+    public static Anuncio buscaAlteraFotosAnuncio(int idAnuncio) throws InstantiationException, ClassNotFoundException, Exception{
+        AnuncioDAO adao = new AnuncioDAO();
+        return adao.buscaAlteraFotosAnuncio(idAnuncio);
+    }
+    
+    public static void alteraFotosAnuncio(List<Foto> lista) throws InstantiationException, ClassNotFoundException, Exception{
+        AnuncioDAO adao = new AnuncioDAO();
+        adao.alteraFotosAnuncio(lista);
+        adao.close();
+    }
+    
+    public static void insereFotosAnuncio(List<Foto> lista) throws InstantiationException, ClassNotFoundException, Exception{
+        AnuncioDAO adao = new AnuncioDAO();
+        adao.insereFotosAnuncio(lista);
+    }
+    
+    public static void excluiFotosAnuncio(int[] excluir) throws InstantiationException, ClassNotFoundException, Exception{
+        AnuncioDAO adao = new AnuncioDAO();
+        adao.excluiFotosAnuncio(excluir);
     }
 }

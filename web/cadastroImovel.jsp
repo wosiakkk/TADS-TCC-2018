@@ -12,6 +12,26 @@
     </c:redirect>
 </c:if>
 
+<script>
+function formatar(mascara, documento){
+  var i = documento.value.length;
+  var saida = mascara.substring(0,1);
+  var texto = mascara.substring(i)
+  
+  if (texto.substring(0,1) != saida){
+            documento.value += texto.substring(0,1);
+  }
+  
+}
+
+function numeros( campo )
+{
+    if ( isNaN( campo.value.substring(campo.value.length-1) ) )
+        campo.value = campo.value.substr( 0 , campo.value.length - 1 );
+}
+</script>
+
+
 <div class="form-group col-md-2"></div>
     <div class="form-group col-md-10">
 <form class="form-horizontal"  action="AnuncioServlet?action=ADDIMV"  method="POST" role="form" enctype="multipart/form-data">
@@ -33,10 +53,10 @@
         </div>
         <br><label for="descricao" class="col-sm-9 control-label">Descrição:</label>
         <div class="col-sm-9">
-            <input type="text" name="descricao" id="descricao" placeholder="" class="form-control" autofocus required> 
+            <textarea class="form-control" rows="5" id="descricao" name="descricao"></textarea>
             <span class="help-block">Descreva seu anuncio</span>
         </div>
-        <br><label for="quantidade" class="col-sm-10 control-label">Quantidade de pessoas que podem dividr:</label>
+        <br><label for="quantidade" class="col-sm-10 control-label">O imóvel comporta até quantas pessoas?</label>
         <div class="col-sm-2">
             <input type="number" name="quantidade" id="quantidade" placeholder="" class="form-control" autofocus required>
         </div>
@@ -45,7 +65,7 @@
             <label class="radio-inline"><input type="radio" name="optpet" value="1">Sim</label>
             <label class="radio-inline"><input type="radio" name="optpet" value="0">Não</label>
         </div>
-        <br><label for="valor" class="col-sm-3 control-label">Preço:</label>
+        <br><label for="valor" class="col-sm-3 control-label">Preço do aluguel:</label>
         <div class="col-sm-6">
             <input type="number" name="valor" id="valor" placeholder="" class="form-control" step="0.01" autofocus>
             <span class="help-block">Insira um valor caso deseje.</span>
@@ -61,7 +81,7 @@
         </div>
         <br><label for="cep" class="col-sm-3 control-label">CEP:</label>
         <div class="col-sm-9">
-            <input type="text" name="cep" id="cep" maxlength="8" placeholder="" class="form-control" autofocus required>
+            <input type="text" name="cep" id="cep" maxlength="9" placeholder="" class="form-control" onkeyup="numeros( this )" OnKeyPress="formatar('#####-###', this)" required>
         </div>
         <br><label for="cidade" class="col-sm-3 control-label">Cidade:</label>
         <div class="col-sm-9">
