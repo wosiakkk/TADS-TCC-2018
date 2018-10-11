@@ -5,8 +5,11 @@
  */
 package br.com.tads.tccpool.servlets;
 
+import br.com.tads.tccpool.beans.Notificacao;
 import br.com.tads.tccpool.beans.User;
+import br.com.tads.tccpool.dao.NotificacaoDAO;
 import br.com.tads.tccpool.exception.AcessoBdException;
+import br.com.tads.tccpool.facade.NotificacaoFacade;
 import br.com.tads.tccpool.facade.UserFacade;
 import br.com.tads.tccpool.utils.MD5;
 import java.io.File;
@@ -338,6 +341,8 @@ public class UserServlet extends HttpServlet {
                             int idSolicitado = Integer.parseInt(request.getParameter("idSolicitado"));
                             if (UserFacade.solicitarAmizade(idSolicitante, idSolicitado)) {
                                 if (UserFacade.solicitarAmizade2(idSolicitante, idSolicitado)) {
+                                    //notificação
+                                    NotificacaoFacade.inserirnotificacao(idSolicitante, idSolicitado, 1);
                                     session.removeAttribute("mensagemAcao");
                                     session.removeAttribute("mensagemAcaoTipo");
                                     session.setAttribute("mensagemAcao", "Seu pedido de amizade foi enviado!");
@@ -493,6 +498,31 @@ public class UserServlet extends HttpServlet {
                             break;
                         }
                     }
+                    break;
+                }
+                case "NOTIFICACAO":{
+                    String acao = request.getParameter("acao");
+                    switch(acao){
+                        case "CONTAGEM":{
+                            int idAjax = Integer.parseInt(request.getParameter("idAjax"));
+                            
+                            break;
+                        }
+                    }
+                    
+                    
+                    
+                    
+                    
+                  /*  int idAjax = Integer.parseInt(request.getParameter("idAjax"));
+                    List<Notificacao> listNoti;
+                try {
+                    listNoti = NotificacaoFacade.buscar(idAjax);
+                     session.setAttribute("notificaca", listNoti);
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }*/
+                   
                     break;
                 }
             }

@@ -24,7 +24,7 @@
         <script
             src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
             integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
-            crossorigin="anonymous">           
+            crossorigin="anonymous">
         </script>
 
         <c:choose>
@@ -42,7 +42,11 @@
         <link href="assets/css/shop-homepage.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="assets/css/mainCss.css" rel="stylesheet">
-
+        
+        <link href="assets/css/notificacao.css" rel="stylesheet">
+        <c:if test="${user != null}">
+            <script src="assets\js\notificacao.js" type="text/javascript"></script>
+        </c:if>      
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -59,10 +63,23 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto nav">
+                        <c:if test="${user != null}">
+                            <li id="notification_li">
+                                <a class="nav-link" href="#" id="notificationLink">Notificações</a>
+                                
+                                <div id="notificationContainer">
+                                       <div id="notificationTitle">Sua notificações</div>
+                                    <div id="notificationsBody" class="notifications">
+                                        
+                                    </div>
+                                    <div id="notificationFooter"><a href="#">Ver Todas</a></div>
+                                </div>
+                            </li>
+                        </c:if>
                         <li class="nav-item">
                             <c:choose>
-                                <c:when test="${user != null}">
+                                <c:when test="${user != null}">                                  
                                     <a class="nav-link" href="home.jsp">Home</a>                                    
                                 </c:when>
                                 <c:otherwise>
@@ -120,8 +137,10 @@
                 </div>
             </div>
         </nav>
-
         
+
+<!--Campo oculto usado pelas requisições ajax de notificações -->
+<input name="idOculta" type="text" value="${user.getId()}" hidden>
         <!-- Adicionando Bootstrap -->
         <script src="assets/bootstrap/js/bootstrap.bundle.js" type="text/javascript"></script>
         <!-- Importa funções padrão -->
