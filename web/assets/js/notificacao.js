@@ -58,7 +58,7 @@ $(document).ready(function () {
     });
 
 //Funcao de clicar no popup
-    $("#notificationContainer").click(function () {
+   /* $("#notificationContainer").click(function () {
         return false;
-    });
+    });*/
 });

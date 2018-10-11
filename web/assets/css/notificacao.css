@@ -22,7 +22,8 @@ and open the template in the editor.
 
 #notification_li
 {
-    position:relative
+    position:relative;
+     
 }
 #notificationContainer 
 {
@@ -36,7 +37,16 @@ and open the template in the editor.
     width: 400px;
     z-index: -1;
     display: none; 
+    
 }
+
+#linkNoti{
+    color: #0069d9;
+}
+#linkPagNoti{
+    color: #333333;
+}
+
 
 #notificationContainer:before {
     content: '';
@@ -67,6 +77,9 @@ and open the template in the editor.
     padding: 33px 0px 0px 0px !important;
     min-height:300px;
     color: #6c757d;
+    overflow:auto; 
+    max-width: 385px;
+    max-height: 400px
 }
 #notificationFooter
 {

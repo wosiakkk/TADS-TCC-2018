@@ -15,7 +15,7 @@ import java.util.List;
  * @author onurb
  */
 public class NotificacaoFacade {
-    public static void inserirnotificacao(int gerador, int receptor, int tipoNoti){
+    public static void inserirnotificacao(int gerador, int receptor, int tipoNoti) throws SQLException{
         NotificacaoDAO dao = new NotificacaoDAO();
         dao.inserirNoticacao(gerador, receptor, tipoNoti);
     }    

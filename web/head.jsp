@@ -68,12 +68,12 @@
                             <li id="notification_li">
                                 <a class="nav-link" href="#" id="notificationLink">Notificações</a>
                                 
-                                <div id="notificationContainer">
+                                <div id="notificationContainer" data-spy="scroll" >
                                        <div id="notificationTitle">Sua notificações</div>
-                                    <div id="notificationsBody" class="notifications">
+                                    <div id="notificationsBody" class="notifications" >
                                         
                                     </div>
-                                    <div id="notificationFooter"><a href="#">Ver Todas</a></div>
+                                       <div id="notificationFooter"><a id="linkPagNoti" href="#">Ver Todas</a></div>
                                 </div>
                             </li>
                         </c:if>

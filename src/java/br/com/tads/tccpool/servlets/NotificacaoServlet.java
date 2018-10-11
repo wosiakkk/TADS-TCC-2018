@@ -77,9 +77,11 @@ public class NotificacaoServlet extends HttpServlet {
                     todas = NotificacaoFacade.buscar(idUsr);
                     if(todas.size()>0){
                         for(Notificacao n : todas){
-                            String descNoti="";
+                            String descNoti = "";
+                            String link = "";
                             if(n.getTipoNot()==1){
                                 descNoti = "Você recebeu um pedeido de amizade de: ";
+                                link = "UserServlet?action=AMIZADE&acao=LISTARPEDIDOS&idUser="+idUsr+"";
                             }else if(n.getTipoNot() ==2){
                                 descNoti= "Seu pedido de amizade foi aceito por: ";
                             }
@@ -92,14 +94,14 @@ public class NotificacaoServlet extends HttpServlet {
                                                  " <img src=\""+u.getFoto()+"\"  class=\"img-thumbnail\" width=\"50\" height=\"50\">\n" +
                                          " </div>\n" +
                                          " <div class=\"d-inline-block\">\n" +
-                                              "  <h5 class=\"card-title center\">"+ descNoti + u.getNome()+"</h5> "
+                                              "  <h5 class=\"card-title center\">"+ descNoti + u.getNome()+"</h5> <a id=\"linkNoti\" href="+link+">Ver</a>"
                                          + "</div> "
                                      + "</div>"
                                     + "</div>";
                         }
                         response.setContentType("text/plain");
-                            response.setCharacterEncoding("UTF-8");
-                            response.getWriter().write(retorno);
+                        response.setCharacterEncoding("UTF-8");
+                        response.getWriter().write(retorno);
                     }
                     break;
                 }
