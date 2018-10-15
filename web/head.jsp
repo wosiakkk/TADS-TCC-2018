@@ -46,7 +46,8 @@
         <link href="assets/css/notificacao.css" rel="stylesheet">
         <c:if test="${user != null}">
             <script src="assets\js\notificacao.js" type="text/javascript"></script>
-        </c:if>      
+        </c:if> 
+            <link href="assets/css/feed-style.css" rel="stylesheet">
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -73,7 +74,7 @@
                                     <div id="notificationsBody" class="notifications" >
                                         
                                     </div>
-                                       <div id="notificationFooter"><a id="linkPagNoti" href="#">Ver Todas</a></div>
+                                       <div id="notificationFooter"><button class="btn btn-outline-light" id="linkPagNoti" >Ver Todas</button></div>
                                 </div>
                             </li>
                         </c:if>

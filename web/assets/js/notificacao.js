@@ -57,6 +57,12 @@ $(document).ready(function () {
         $("#notificationsBody").empty();
     });
 
+//requisição ao clicar em ''ver todas''
+   $("#linkPagNoti").click(function (){
+       window.location.href = "notificacoes.jsp";
+    });
+    
+
 //Funcao de clicar no popup
    /* $("#notificationContainer").click(function () {
         return false;

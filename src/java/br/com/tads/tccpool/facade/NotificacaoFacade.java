@@ -31,4 +31,12 @@ public class NotificacaoFacade {
         NotificacaoDAO dao = new NotificacaoDAO();
         dao.lerNotificacoes(idUsr);
     }
+    public static void excluir(int idNoti) throws SQLException{
+        NotificacaoDAO dao = new NotificacaoDAO();
+        dao.excluirNotificacao(idNoti);
+    }
+    public static void excluirTodas(int idUsr) throws SQLException{
+        NotificacaoDAO dao = new NotificacaoDAO();
+        dao.excluirTodasNotificacoes(idUsr);
+    }
 }

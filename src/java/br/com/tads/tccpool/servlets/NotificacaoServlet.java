@@ -12,9 +12,11 @@ import br.com.tads.tccpool.facade.UserFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,64 +46,154 @@ public class NotificacaoServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
             String action = request.getParameter("action");
-            int idUsr = Integer.parseInt(request.getParameter("idAjax"));
-            
+            int idUsr = 0;
+            if (!(action.equalsIgnoreCase("EXCLUIR") || action.equalsIgnoreCase("EXCLUIRTODAS"))) {
+                idUsr = Integer.parseInt(request.getParameter("idAjax"));
+            }
+
             switch (action) {
                 //conta o numero de notificações novas para exibir no contador
-                case "CONTAGEM": {                   
+                case "CONTAGEM": {
                     List<Notificacao> listNoti;
                     try {
                         listNoti = NotificacaoFacade.buscarNovas(idUsr);
                         int numNotificacoes = listNoti.size();
-                        if(numNotificacoes >0){
+                        if (numNotificacoes > 0) {
                             response.setContentType("text/plain");
                             response.setCharacterEncoding("UTF-8");
-                            String resp = "<span id=\"notification_count\">"+numNotificacoes+"</span>";
+                            String resp = "<span id=\"notification_count\">" + numNotificacoes + "</span>";
                             response.getWriter().write(resp);
                         }
-                      //*  session.setAttribute("notificaca", listNoti);
+                        //*  session.setAttribute("notificaca", listNoti);
                     } catch (SQLException ex) {
                         Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
                 }
                 //muda o status das notifiações para lido ao exbir o popup com a lista
-                case "LER":{                   
+                case "LER": {
                     NotificacaoFacade.lerNotificacao(idUsr);
                     break;
                 }
                 //lista as notificações e envia para ser exibida no popup de notificação
-                case "LISTAR":{
-                    String retorno="";
+                case "LISTAR": {
+
+                    String retorno = "";
                     List<Notificacao> todas;
                     todas = NotificacaoFacade.buscar(idUsr);
-                    if(todas.size()>0){
-                        for(Notificacao n : todas){
+                    if (todas.size() > 0) {
+                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        for (Notificacao n : todas) {
                             String descNoti = "";
                             String link = "";
-                            if(n.getTipoNot()==1){
+                            if (n.getTipoNot() == 1) {
                                 descNoti = "Você recebeu um pedeido de amizade de: ";
-                                link = "UserServlet?action=AMIZADE&acao=LISTARPEDIDOS&idUser="+idUsr+"";
-                            }else if(n.getTipoNot() ==2){
-                                descNoti= "Seu pedido de amizade foi aceito por: ";
+                                link = "UserServlet?action=AMIZADE&acao=LISTARPEDIDOS&idUser=" + idUsr + "";
+                            } else if (n.getTipoNot() == 2) {
+                                descNoti = "Seu pedido de amizade foi aceito por: ";
                             }
                             User u = new User();
                             u = UserFacade.buscarUsuario(n.getIdGerador());
                             //retorno += "<span>Pedido de amizade de "+u.getNome()+"</span> <br> ";
                             retorno += "<div class=\"card\">  "
-                                        + "<div class=\"card-body\">\n" +
-                                           "  <div class=\"d-inline-block\">\n" +
-                                                 " <img src=\""+u.getFoto()+"\"  class=\"img-thumbnail\" width=\"50\" height=\"50\">\n" +
-                                         " </div>\n" +
-                                         " <div class=\"d-inline-block\">\n" +
-                                              "  <h5 class=\"card-title center\">"+ descNoti + u.getNome()+"</h5> <a id=\"linkNoti\" href="+link+">Ver</a>"
-                                         + "</div> "
-                                     + "</div>"
+                                    + "<div class=\"card-body\">\n"
+                                    + " <div class=\"d-inline-block\">\n"
+                                    + " <img src=\"" + u.getFoto() + "\"  class=\"img-thumbnail\" width=\"50\" height=\"50\">\n"
+                                    + " </div>\n"
+                                    + " <div class=\"d-inline-block\">\n"
+                                    + "  <h5 class=\"card-title center\">" + descNoti + u.getNome() + "</h5> <a id=\"linkNoti\" href=" + link + ">Ver</a>"
+                                    + "</div>"
+                                    + "<div> <small><span>" + format.format(n.getData().getTime()) + "</span></small></div>"
+                                    + "</div>"
                                     + "</div>";
                         }
                         response.setContentType("text/plain");
                         response.setCharacterEncoding("UTF-8");
                         response.getWriter().write(retorno);
+                    }
+                    break;
+                }
+                //case para listar todas as notificações na página de notificações
+                case "LISTARPAGINA": {
+                    String retorno = "";
+                    List<Notificacao> listaN;
+                    listaN = NotificacaoFacade.buscar(idUsr);
+                    if (listaN.size() > 0) {
+                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        for (Notificacao n : listaN) {
+                            String descNoti = "";
+                            String link = "";
+                            if (n.getTipoNot() == 1) {
+                                descNoti = "Você recebeu um pedeido de amizade de: ";
+                                link = "UserServlet?action=AMIZADE&acao=LISTARPEDIDOS&idUser=" + idUsr + "";
+                            } else if (n.getTipoNot() == 2) {
+                                descNoti = "Seu pedido de amizade foi aceito por: ";
+                            }
+                            User u = new User();
+                            u = UserFacade.buscarUsuario(n.getIdGerador());
+                            //retorno += "<span>Pedido de amizade de "+u.getNome()+"</span> <br> ";
+                            retorno += "<div class=\"card\">  "
+                                    + "<div class=\"card-body\">\n"
+                                    + " <div class=\"d-inline-block\">\n"
+                                    + " <img src=\"" + u.getFoto() + "\"  class=\"img-thumbnail\" width=\"50\" height=\"50\">\n"
+                                    + " </div>\n"
+                                    + " <div class=\"d-inline-block\">\n"
+                                    + "  <h5 class=\"card-title center\">" + descNoti + u.getNome() + "</h5> <a href=" + link + " class=\"btn btn-outline-dark\">Ver</a>"
+                                    + "<form action=\"NotificacaoServlet?action=EXCLUIR\"  method=\"POST\" role=\"form\"><input name=\"idNoti\" value=" + n.getId() + " hidden>"
+                                    + "<button class=\"btn btn-outline-dark\" type=\"submit\">Excluir</button></form><hr>"
+                                    + "</div>"
+                                    + "<div>"
+                                    + "<small><span>" + format.format(n.getData().getTime()) + "</span></small>"
+                                    + "</div>"
+                                    + "</div>"
+                                    + "</div>";
+                        }
+                        response.setContentType("text/plain");
+                        response.setCharacterEncoding("UTF-8");
+                        response.getWriter().write(retorno);
+                    }
+
+                    break;
+                }
+
+                case "EXCLUIR": {
+                    int idNoti = Integer.parseInt(request.getParameter("idNoti"));
+                    try {
+                        NotificacaoFacade.excluir(idNoti);
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "A sua notificação foi excluída!");
+                        session.setAttribute("mensagemAcaoTipo", 10);
+                        RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                        rd.forward(request, response);
+                    } catch (SQLException ex) {
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "Problemas ao excluir sua notificação!");
+                        session.setAttribute("mensagemAcaoTipo", 10);
+                        RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                        rd.forward(request, response);
+                    }
+                    break;
+                }
+                
+                case "EXCLUIRTODAS": {
+                    int idSessao = Integer.parseInt(session.getAttribute("idUserSessao").toString());
+                    try{
+                        NotificacaoFacade.excluirTodas(idSessao);
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "Todas as suas notificações foram excluídas!");
+                        session.setAttribute("mensagemAcaoTipo", 10);
+                        RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                        rd.forward(request, response);
+                    }catch(SQLException ex){
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "Erro ao excluir todas as notificações!");
+                        session.setAttribute("mensagemAcaoTipo", 10);
+                        RequestDispatcher rd = request.getRequestDispatcher("infoAcao.jsp");
+                        rd.forward(request, response);
                     }
                     break;
                 }

@@ -5,6 +5,8 @@
  */
 package br.com.tads.tccpool.beans;
 
+import java.util.Calendar;
+
 /**
  *
  * @author onurb
@@ -15,7 +17,9 @@ public class Notificacao {
     private int idUser;   
     private int statusNot;
     private int tipoNot;
+    private Calendar data;
 
+    
     public int getId() {
         return id;
     }
@@ -55,4 +59,13 @@ public class Notificacao {
     public void setTipoNot(int tipoNot) {
         this.tipoNot = tipoNot;
     }
+    
+    public Calendar getData() {
+        return data;
+    }
+
+    public void setData(Calendar data) {
+        this.data = data;
+    }
+
 }
