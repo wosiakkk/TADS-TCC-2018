@@ -90,7 +90,7 @@ public class ComentarioFacade {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         String HTMLComentario = "<div class=\"row p-1 pt-3 pr-4 " + (isReply ? "offset-md-1" : "") + "\">\n"
                               + "    <div class=\"col-lg-2 col-3 user-img text-center\">\n"
-                              + "        <img src=\"img/profile.jpg\" class=\"main-cmt-img\">\n"
+                              + "        <img src=\"" + comentario.getFotoUser() + "\" class=\"main-cmt-img\">\n"
                               + "    </div>\n"
                               + "    <div class=\"col-lg-10 col-9 user-comment bg-light rounded pb-1\">\n";
 
