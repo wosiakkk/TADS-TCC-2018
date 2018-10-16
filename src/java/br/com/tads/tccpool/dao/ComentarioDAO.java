@@ -12,12 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  *
@@ -29,7 +25,8 @@ public class ComentarioDAO {
     private ResultSet rs = null;
     private final String QUERY_SELECT = "SELECT\n"
                                       + "  TB_COMENTARIO.*,\n"
-                                      + "  TB_USUARIO.NM_NOME\n"
+                                      + "  TB_USUARIO.NM_NOME,\n"
+                                      + "  TB_USUARIO.DS_FOTO\n"
                                       + "FROM\n"
                                       + "  TB_COMENTARIO\n"
                                       + "  INNER JOIN TB_USUARIO\n"
@@ -50,7 +47,8 @@ public class ComentarioDAO {
     private final String QUERY_VALIDA_REPLY = "SELECT 1 FROM TB_COMENTARIO WHERE ID_PAI = ?";
     private final String QUERY_SELECT_REPLY = "SELECT\n"
                                             + "  TB_COMENTARIO.*,\n"
-                                            + "  TB_USUARIO.NM_NOME\n"
+                                            + "  TB_USUARIO.NM_NOME,\n"
+                                            + "  TB_USUARIO.DS_FOTO\n"
                                             + "FROM\n"
                                             + "  TB_COMENTARIO\n"
                                             + "  INNER JOIN TB_USUARIO\n"
@@ -80,7 +78,7 @@ public class ComentarioDAO {
     }
     
     public ArrayList<Comentario> listar(int idAnuncio) throws SQLException, ParseException {
-        ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
+        ArrayList<Comentario> comentarios = new ArrayList<>();
         stmt = con.prepareStatement(QUERY_SELECT);
         stmt.setInt(1, idAnuncio);
         rs = stmt.executeQuery();
@@ -91,6 +89,7 @@ public class ComentarioDAO {
             c.setIdAnuncio(rs.getInt("TB_ANUNCIO_ID_ANUNCIO"));
             c.setConteudo(rs.getString("DS_CONTEUDO"));
             c.setNmUser(rs.getString("NM_NOME"));
+            c.setFotoUser(rs.getString("DS_FOTO"));
             c.setIdOrigem(rs.getInt("ID_ORIGEM"));
             c.setQtdeLikes(rs.getInt("VL_LIKE"));
             c.setQtdeUnlikes(rs.getInt("VL_UNLIKE"));
@@ -112,7 +111,7 @@ public class ComentarioDAO {
     }
     
     public ArrayList<Comentario> listarReply(int idAnuncio, int idComentario) throws SQLException{
-        ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
+        ArrayList<Comentario> comentarios = new ArrayList<>();
         stmt = con.prepareStatement(QUERY_SELECT_REPLY);
         stmt.setInt(1, idAnuncio);
         stmt.setInt(2, idComentario);
@@ -126,6 +125,7 @@ public class ComentarioDAO {
             c.setIdAnuncio(rs.getInt("TB_ANUNCIO_ID_ANUNCIO"));
             c.setConteudo(rs.getString("DS_CONTEUDO"));
             c.setNmUser(rs.getString("NM_NOME"));
+            c.setFotoUser(rs.getString("DS_FOTO"));
             c.setIdOrigem(rs.getInt("ID_ORIGEM"));
             c.setQtdeLikes(rs.getInt("VL_LIKE"));
             c.setQtdeUnlikes(rs.getInt("VL_UNLIKE"));
