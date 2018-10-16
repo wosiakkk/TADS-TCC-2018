@@ -12,6 +12,27 @@
     </c:redirect>
 </c:if>
 <link href="assets/css/feed-style.css" rel="stylesheet">
+
+
+
+
+<script type="text/javascript">
+    /*$(document).ready(function() {
+        $.ajax({
+            method : 'post',
+            url : 'UserServlet?action=NOTIFICACAO',
+            data : {
+                idAjax : $('input[name=idOculta]').val()
+            },
+            success : function(){
+                alert('deu boa');
+            }
+        })
+    });*/
+</script>
+
+
+
 <div class="container">
     <div class="row">
         <div class="col-3">
