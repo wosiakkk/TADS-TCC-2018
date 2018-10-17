@@ -31,16 +31,27 @@ function numeros( campo )
 }
 </script>
 
+<link href="assets/css/feed-style.css" rel="stylesheet">
 
-<div class="form-group col-md-2"></div>
-    <div class="form-group col-md-10">
+<!-- Página com foto e as opções do perfil -->
+<%@include file="opcoes.jsp" %>
+
+<!-- Script para dar destaque na opção navegada -->
+<script>  
+    $(document).ready(function () {
+  $("#opPerfil").addClass("highlight");
+});
+</script>
+
+
+    <div class="form-group col-md-8 menu-fixed-center">
 <form class="form-horizontal"  action="AnuncioServlet?action=ADDIMV"  method="POST" role="form" enctype="multipart/form-data">
     <h2>Cadastro de Anuncio: Imóvel</h2>
         <label for="select" class="col-sm-9 control-label">Qual a categoria do seu Imovel ?</label>
         <div class="col-sm-9">
             <c:set var="lista" value="${listaCatImovel}"/>
-            <select class="selectpicker form-control" name="catImovel" id="select">
-                <option value="0">SELECIONE</option>
+            <select class="selectpicker form-control" name="catImovel" id="select" required>
+                <option value="" selected disabled>SELECIONE</option>
                 <c:forEach var="lista" items="${lista}">
                     <option value="${lista.id}"> ${lista.descricao}</option>
                 </c:forEach>
@@ -53,7 +64,7 @@ function numeros( campo )
         </div>
         <br><label for="descricao" class="col-sm-9 control-label">Descrição:</label>
         <div class="col-sm-9">
-            <textarea class="form-control" rows="5" id="descricao" name="descricao"></textarea>
+            <textarea class="form-control" rows="5" id="descricao" name="descricao" required></textarea>
             <span class="help-block">Descreva seu anuncio</span>
         </div>
         <br><label for="quantidade" class="col-sm-10 control-label">O imóvel comporta até quantas pessoas?</label>
@@ -63,11 +74,11 @@ function numeros( campo )
         <br><label for="opcoes" class="col-sm-10 control-label">É autorizado pets na residencia?:</label>
         <div id="opcoes">
             <label class="radio-inline"><input type="radio" name="optpet" value="1">Sim</label>
-            <label class="radio-inline"><input type="radio" name="optpet" value="0">Não</label>
+            <label class="radio-inline"><input type="radio" name="optpet" value="0" checked>Não</label>
         </div>
         <br><label for="valor" class="col-sm-3 control-label">Preço do aluguel:</label>
         <div class="col-sm-6">
-            <input type="number" name="valor" id="valor" placeholder="" class="form-control" step="0.01" autofocus>
+            <input type="number" name="valor" id="valor" placeholder="" class="form-control" step="0.01" autofocus required>
             <span class="help-block">Insira um valor caso deseje.</span>
         </div>
     
@@ -89,7 +100,7 @@ function numeros( campo )
         </div>
         <br><label for="estado" class="col-sm-3 control-label">Estado:</label>
         <div class="col-sm-2">
-            <input type="text" name="estado" id="estado" placeholder="" class="form-control" autofocus required maxlength="2">
+            <input type="text" name="estado" id="estado" placeholder="" class="form-control" autofocus required maxlength="2" required>
         </div>
         <br><label for="comple" class="col-sm-3 control-label">Complemento:</label>
         <div class="col-sm-9">

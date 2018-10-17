@@ -5,6 +5,7 @@
  */
 package br.com.tads.tccpool.servlets;
 
+import br.com.tads.tccpool.beans.Privacidade;
 import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.exception.AcessoBdException;
 import br.com.tads.tccpool.facade.UserFacade;
@@ -294,6 +295,9 @@ public class UserServlet extends HttpServlet {
                     int amizade = UserFacade.checandoAmizade(idSessao, id);
                     session.setAttribute("perfil", perfil);
                     session.setAttribute("amizade", amizade);
+                    Privacidade pri = UserFacade.buscarPrivacidade(id);
+                    request.setAttribute("privacidade", pri);
+                    
                     RequestDispatcher rd = request.getRequestDispatcher("perfil.jsp");
                     rd.forward(request, response);
                     break;
@@ -495,6 +499,54 @@ public class UserServlet extends HttpServlet {
                     }
                     break;
                 }
+                case "EDITARPRIVACIDADE":
+                    try{
+                        Privacidade p = new Privacidade();
+                        Privacidade pret = new Privacidade();
+                        int telefone = Integer.parseInt(request.getParameter("radioTelefone"));
+                        int endereco = Integer.parseInt(request.getParameter("radioEndereco"));
+                        int descricao = Integer.parseInt(request.getParameter("radioDescricao"));
+                        int interesses = Integer.parseInt(request.getParameter("radioInteresses"));
+                        int idUser = Integer.parseInt(request.getParameter("idUser"));
+                        if(request.getParameter("privacidadeId") != null && !request.getParameter("privacidadeId").equals("")){
+                            int idPrivacidade = Integer.parseInt(request.getParameter("privacidadeId"));
+                            p.setId(idPrivacidade);
+                        }
+                        p.setIdUser(idUser);
+                        p.setPrivacidadeTelefone(telefone);
+                        p.setPrivacidadeEndereco(endereco);
+                        p.setPrivacidadeDescricao(descricao);
+                        p.setPrivacidadeInteresses(interesses);
+                        boolean ret = UserFacade.editarPrivacidade(p);
+                        if(ret){
+                            session.setAttribute("privacidadeMensagem", "Informações alteradas com sucesso.");
+                        }else{
+                            session.setAttribute("privacidadeMensagem", "Erro ao alterar as informações, tente novamente.");
+                        }
+                        pret = UserFacade.buscarPrivacidade(idUser);
+                        session.setAttribute("privacidade", pret);
+                        response.sendRedirect("editarPrivacidade.jsp");
+                    }catch(Exception e){
+                       String erro =  e.toString();
+                    }
+                    
+                case "PRIVACIDADE":
+                    try{
+                        int idUser = 0;
+                        Privacidade pret = new Privacidade();
+                        if(request.getParameter("idUser") != null && !request.getParameter("idUser").equals("")){
+                         idUser = Integer.parseInt(request.getParameter("idUser"));
+                        }
+                        if(idUser != 0){
+                        pret = UserFacade.buscarPrivacidade(idUser);
+                        request.setAttribute("privacidade", pret);
+                        }else{
+                            request.setAttribute("privacidadeMensagem", "Erro ao buscar dados de privacidade, tente novamente.");
+                        }
+                        request.getRequestDispatcher("editarPrivacidade.jsp").forward(request, response);
+                    }catch(Exception e){
+                        String erro = e.toString();
+                    }
             }
         }
     }

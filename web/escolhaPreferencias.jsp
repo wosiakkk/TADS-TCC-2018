@@ -47,7 +47,7 @@
                         </a>
                     </div>
                     <div class="list-group-item">
-                        <a  href="#">
+                        <a  href="UserServlet?action=PRIVACIDADE&idUser=${user.id}">
                             <img class="d-block img-fluid" src="img\icones\security.png">Privacidade
                         </a>
                     </div>

@@ -5,6 +5,7 @@
  */
 package br.com.tads.tccpool.facade;
 
+import br.com.tads.tccpool.beans.Privacidade;
 import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.dao.UserDAO;
 import br.com.tads.tccpool.exception.AcessoBdException;
@@ -205,5 +206,15 @@ public class UserFacade {
     }
     //******************************
     //******************************
+    
+    public static Boolean editarPrivacidade(Privacidade p) {
+        UserDAO dao = new UserDAO();
+        return dao.editarPrivacidade(p);
+    }
+    
+    public static Privacidade buscarPrivacidade(int idUser) {
+        UserDAO dao = new UserDAO();
+        return dao.buscarPrivacidade(idUser);
+    }
 
 }

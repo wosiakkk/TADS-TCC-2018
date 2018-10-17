@@ -30,16 +30,27 @@ function numeros( campo )
         campo.value = campo.value.substr( 0 , campo.value.length - 1 );
 }
 </script>
+<link href="assets/css/feed-style.css" rel="stylesheet">
 
-<div class="form-group col-md-2"></div>
-    <div class="form-group col-md-8">
+<!-- Página com foto e as opções do perfil -->
+<%@include file="opcoes.jsp" %>
+
+<!-- Script para dar destaque na opção navegada -->
+<script>  
+    $(document).ready(function () {
+  $("#opPerfil").addClass("highlight");
+});
+</script>
+
+
+    <div class="form-group col-md-8 menu-fixed-center">
 <form class="form-horizontal"  action="AnuncioServlet?action=ADDMOVEL"  method="POST" role="form" enctype="multipart/form-data">
     <h2>Cadastro de Anuncio: Móvel</h2>
     <label for="select" class=" control-label">Selecione o Tipo de Material</label>
         <div>
             <c:set var="lista" value="${listaCatMovel}"/>
-            <select class="selectpicker form-control" name="select" id="select">
-                <option value="0">SELECIONE</option>
+            <select class="selectpicker form-control" name="select" id="select" required>
+                <option value="" selected disabled>SELECIONE</option>
                 <c:forEach var="lista" items="${lista}">
                     <option value="${lista.id}"> ${lista.descricao}</option>
                 </c:forEach>
@@ -53,13 +64,13 @@ function numeros( campo )
     
         <br><label for="descricao" class=" control-label">Descrição:</label>
         <div>
-            <textarea class="form-control" rows="5" id="descricao" name="descricao"></textarea>
+            <textarea class="form-control" rows="5" id="descricao" name="descricao" required></textarea>
             <span class="help-block">Descreva seu anuncio</span>
         </div>
     
         <br><label for="valor" class=" control-label">Preço:</label>
         <div >
-            <input type="number" name="valor" id="valor" placeholder="" class="form-control" min="0" step="any">
+            <input type="number" name="valor" id="valor" placeholder="" class="form-control" min="0" step="any" required>
             <span class="help-block">Insira um valor caso deseje.</span>
         </div>
         

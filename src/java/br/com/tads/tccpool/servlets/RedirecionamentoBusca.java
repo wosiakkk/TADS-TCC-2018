@@ -5,6 +5,7 @@
  */
 package br.com.tads.tccpool.servlets;
 
+import br.com.tads.tccpool.beans.Privacidade;
 import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.facade.UserFacade;
 import java.io.IOException;
@@ -52,10 +53,13 @@ public class RedirecionamentoBusca extends HttpServlet {
             if(idSearch > 0) {
                 int idSessao =(int) session.getAttribute("idUserSessao");
                 User perfilBusca = new User();
-                perfilBusca = UserFacade.geraPerfilUser(idSearch);
+               // perfilBusca = UserFacade.geraPerfilUser(idSearch);
+                perfilBusca = UserFacade.buscarUsuario(idSearch);
                 int amizade = UserFacade.checandoAmizade(idSessao, idSearch);
                 session.setAttribute("perfil", perfilBusca);
                 session.setAttribute("amizade", amizade);
+                Privacidade pri = UserFacade.buscarPrivacidade(idSearch);
+                    request.setAttribute("privacidade", pri);
 
                 RequestDispatcher rd1 = request.getRequestDispatcher("perfil.jsp");
                 rd1.forward(request, response);
