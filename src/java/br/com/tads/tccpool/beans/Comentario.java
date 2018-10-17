@@ -17,6 +17,15 @@ public class Comentario implements Serializable {
     private int qtdeLikes;
     private int qtdeUnlikes;
     private Calendar data;
+    private String fotoUser;
+
+    public String getFotoUser() {
+        return fotoUser;
+    }
+
+    public void setFotoUser(String fotoUser) {
+        this.fotoUser = fotoUser;
+    }
     
     public Comentario(){
         this.data = Calendar.getInstance();

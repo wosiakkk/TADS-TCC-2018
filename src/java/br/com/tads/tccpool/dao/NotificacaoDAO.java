@@ -44,6 +44,8 @@ public class NotificacaoDAO {
     private static final String UPDATE_EXCLUIR_NOTIFICACAO = "DELETE FROM tb_notificacao WHERE tb_notificacao.NR_SEQ = ?";
 
     private static final String UPDATE_EXCLUIR_TODAS_NOTIFICACOES = "DELETE FROM tb_notificacao WHERE tb_notificacao.tb_usuario_NR_SEQ = ?";
+    
+    private static final String QUERY_ID_USR_ANUNCIO = "SELECT tb_anuncio.TB_USUARIO_NR_SEQ FROM tb_anuncio WHERE tb_anuncio.ID_ANUNCIO = ?";
 
     private Connection con = null;
     private PreparedStatement stmt = null;
@@ -114,9 +116,36 @@ public class NotificacaoDAO {
                 }
                 break;
             }
+            //notificação comentário de anúncio
+            case 3:{
+               try {
+                    stmt = con.prepareStatement(QUERY_INSERIR_NOTIFICACAO);
+                    stmt.setInt(1, gerador);
+                    stmt.setInt(2, receptor);
+                    stmt.setInt(3, 2);//status não lida
+                    stmt.setInt(4, tipoNotificacao);
+                    stmt.executeUpdate();
+                } catch (SQLException ex) {
+                    Logger.getLogger(NotificacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    stmt.close();
+                    con.close();
+                }
+                break;
+            }
         }
     }
 
+    public int buscarIdUsrAnuncioNoti(int idAnuncio) throws SQLException {
+        stmt = con.prepareStatement(QUERY_ID_USR_ANUNCIO);
+        stmt.setInt(1, idAnuncio);
+        rs = stmt.executeQuery();
+        if (rs.next()) {
+           return rs.getInt("TB_USUARIO_NR_SEQ");
+        }
+        return -1;
+    }
+    
     public List<Notificacao> buscarTodasNotificacoes(int idUser) throws SQLException {
         ArrayList<Notificacao> listaNoti = new ArrayList<>();
 

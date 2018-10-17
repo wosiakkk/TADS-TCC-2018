@@ -8,8 +8,10 @@ package br.com.tads.tccpool.servlets;
 import br.com.tads.tccpool.beans.Comentario;
 import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.facade.ComentarioFacade;
+import br.com.tads.tccpool.facade.NotificacaoFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,7 +43,7 @@ public class ComentarioServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
@@ -75,8 +77,14 @@ public class ComentarioServlet extends HttpServlet {
                     } catch(NullPointerException | NumberFormatException ex) {
                         Logger.getLogger(ComentarioFacade.class.getName()).log(Level.INFO, null, ex);
                     }
-                    
+                                                     
                     String retorno = ComentarioFacade.insereComentario(comentario);
+                    
+                    //notificação
+                    int idUsrAnuncio = NotificacaoFacade.buscarIdUsrAnun(idAnuncio);
+                    NotificacaoFacade.inserirnotificacao(idUsario, idUsrAnuncio, 3);
+                    
+                    
                     //Escreve o retorno da execução na resposta da requisição e limpa o stream
                     out.write(retorno);
                     out.flush();
@@ -125,7 +133,11 @@ public class ComentarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ComentarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -139,7 +151,11 @@ public class ComentarioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ComentarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

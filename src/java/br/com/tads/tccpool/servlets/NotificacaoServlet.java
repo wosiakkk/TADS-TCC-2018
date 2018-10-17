@@ -91,6 +91,10 @@ public class NotificacaoServlet extends HttpServlet {
                                 link = "UserServlet?action=AMIZADE&acao=LISTARPEDIDOS&idUser=" + idUsr + "";
                             } else if (n.getTipoNot() == 2) {
                                 descNoti = "Seu pedido de amizade foi aceito por: ";
+                                link = "UserServlet?action=AMIZADE&acao=LISTARACEITOS&idUser=" + idUsr + "";
+                            } else if (n.getTipoNot() == 3) {
+                                descNoti = "Seu anúncio recebeu um comentário de: ";
+                                link = "AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr="+idUsr +"&status=2";
                             }
                             User u = new User();
                             u = UserFacade.buscarUsuario(n.getIdGerador());
