@@ -336,6 +336,7 @@ public class AnuncioServlet extends HttpServlet {
                     Imovel imovel = new Imovel();
                     imovel = AnuncioFacade.buscarImovelPorId(id);
                     session.setAttribute("imovelBuscado", imovel);
+                    request.setAttribute("idAnuncio", id);
                     rd = request.getRequestDispatcher("imoveisPendentes.jsp");
                     rd.forward(request, response);
                     break;
@@ -345,6 +346,7 @@ public class AnuncioServlet extends HttpServlet {
                     Movel m1 = new Movel();
                     m1 = AnuncioFacade.buscarMovelPorId(idM);
                     session.setAttribute("movelBuscado", m1);
+                    request.setAttribute("idAnuncio", idM);
                     rd = request.getRequestDispatcher("moveisPendentes.jsp");
                     rd.forward(request, response);
                     break;
@@ -354,6 +356,7 @@ public class AnuncioServlet extends HttpServlet {
                     Material mt = new Material();
                     mt = AnuncioFacade.buscarMaterialPorId(idMat);
                     session.setAttribute("matBuscado", mt);
+                    request.setAttribute("idAnuncio", idMat);
                     rd = request.getRequestDispatcher("materiaisPendentes.jsp");
                     rd.forward(request, response);
                     break;

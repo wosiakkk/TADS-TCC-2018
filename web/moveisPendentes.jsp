@@ -27,7 +27,7 @@
             </script>
         </div>            
         <div class="col-lg-9">
-            <h2>Avaliação do Anúncio de ID: ${movelBuscado.id} </h2>
+            <h2>Avaliação do Anúncio de ID: ${idAnuncio} </h2>
             <a href="escolhaPendente.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
             <hr> 
             <div class="card mt-4">
@@ -85,7 +85,7 @@
                 </div>
             </div>
             <hr>
-            <form class="form-horizontal"  action="AnuncioServlet?action=APROVAR&id=${movelBuscado.id}"  method="POST" role="form">
+            <form class="form-horizontal"  action="AnuncioServlet?action=APROVAR&id=${idAnuncio}"  method="POST" role="form">
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">Aprovar:</label>   
                     <label class="radio-inline"><input type="radio" name="optradio" value="sim">Sim</label>

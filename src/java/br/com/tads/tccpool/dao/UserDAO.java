@@ -5,6 +5,7 @@
  */
 package br.com.tads.tccpool.dao;
 
+import br.com.tads.tccpool.beans.Privacidade;
 import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.utils.ConnectionFactory;
 import br.com.tads.tccpool.utils.MD5;
@@ -23,6 +24,21 @@ import java.util.logging.Logger;
  */
 public class UserDAO {
 
+
+    private static final String QUERY_INSERT_PRIVACIDADE_USER = "INSERT INTO `tcc1`.`tb_privacidade`(`TB_USUARIO_NR_SEQ`,`PRIVACIDADE_TELEFONE`,`PRIVACIDADE_ENDERECO`,`PRIVACIDADE_DESCRICAO`,`PRIVACIDADE_INTERESSES`)VALUES(?,?,?,?,?);";
+    private static final String QUERY_UPDATE_PRIVACIDADE_USER = "UPDATE `tcc1`.`tb_privacidade` SET `PRIVACIDADE_TELEFONE` = ?,`PRIVACIDADE_ENDERECO` = ?,`PRIVACIDADE_DESCRICAO` = ?,`PRIVACIDADE_INTERESSES` = ? WHERE `ID_PRIVACIDADE` = ?;";
+    private static final String QUERY_SELECT_PRIVACIDADE_USER = "SELECT * FROM tcc1.tb_privacidade WHERE TB_USUARIO_NR_SEQ = ?;";
+    
+    private static final String QUERY_INSERT_ENDERECO_USER = "INSERT INTO `tcc1`.`tb_endereco`\n" +
+                                                            "(`NM_RUA`,\n" +
+                                                            "`NM_ESTADO`,\n" +
+                                                            "`NR_RUA`,\n" +
+                                                            "`NR_CEP`,\n" +
+                                                            "`DS_COMPLEMENTO`,\n" +
+                                                            "`NM_CIDADE`)\n" +
+                                                            "VALUES\n" +
+                                                            "(?,?,?,?,?,?)";
+
     private static final String QUERY_INSERT_ENDERECO_USER = "INSERT INTO `tcc1`.`tb_endereco`\n"
             + "(`NM_RUA`,\n"
             + "`NM_ESTADO`,\n"
@@ -32,6 +48,7 @@ public class UserDAO {
             + "`NM_CIDADE`)\n"
             + "VALUES\n"
             + "(?,?,?,?,?,?)";
+  
     private static final String QUERY_CONSULTA_ID_ENDERECO_USER = "SELECT CD_ENDERECO FROM tcc1.tb_usuario WHERE NR_SEQ = ?";
     private static final String QUERY_LOGIN = "SELECT NR_SEQ, DS_EMAIL, NM_NOME, TP_USUARIO, DS_FOTO, DS_SENHA FROM TB_USUARIO WHERE DS_EMAIL = ? AND DS_SENHA = ?";
     private static final String QUERY_LOGIN_GOOGLE = "SELECT NR_SEQ, NM_NOME, DS_EMAIL, DS_FOTO,TP_USUARIO FROM TB_USUARIO WHERE DS_EMAIL = ?";
@@ -847,4 +864,80 @@ public class UserDAO {
     //***************************************
     //***************************************
 
+    public boolean editarPrivacidade(Privacidade p) {
+
+        try {
+            int ret = 0;
+            int idPr = 0;
+            stmt = con.prepareStatement(QUERY_SELECT_PRIVACIDADE_USER);
+            stmt.setInt(1, p.getIdUser());
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                idPr = rs.getInt("ID_PRIVACIDADE");
+            }
+            if(idPr != 0){
+            stmt = con.prepareStatement(QUERY_UPDATE_PRIVACIDADE_USER);
+            stmt.setInt(1, p.getPrivacidadeTelefone());
+            stmt.setInt(2, p.getPrivacidadeEndereco());
+            stmt.setInt(3, p.getPrivacidadeDescricao());
+            stmt.setInt(4, p.getPrivacidadeInteresses());
+            stmt.setInt(5, idPr);
+            ret = stmt.executeUpdate();
+            if(ret == 2){
+                return false;
+            }
+            }else{
+                stmt = con.prepareStatement(QUERY_INSERT_PRIVACIDADE_USER);
+            stmt.setInt(1, p.getIdUser());
+            stmt.setInt(2, p.getPrivacidadeTelefone());
+            stmt.setInt(3, p.getPrivacidadeEndereco());
+            stmt.setInt(4, p.getPrivacidadeDescricao());
+            stmt.setInt(5, p.getPrivacidadeInteresses());
+            ret = stmt.executeUpdate();
+            if(ret == 2){
+                return false;
+            }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                con.close();
+                stmt.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return true;
+    }
+    
+    
+    public Privacidade buscarPrivacidade(int idUser) {
+        Privacidade p = new Privacidade();
+        try {
+            stmt = con.prepareStatement(QUERY_SELECT_PRIVACIDADE_USER);
+            stmt.setInt(1, idUser);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                p.setId(rs.getInt("ID_PRIVACIDADE"));
+                p.setIdUser(idUser);
+                p.setPrivacidadeDescricao(rs.getInt("PRIVACIDADE_DESCRICAO"));
+                p.setPrivacidadeEndereco(rs.getInt("PRIVACIDADE_ENDERECO"));
+                p.setPrivacidadeInteresses(rs.getInt("PRIVACIDADE_INTERESSES"));
+                p.setPrivacidadeTelefone(rs.getInt("PRIVACIDADE_TELEFONE"));
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            try {
+                con.close();
+                stmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return p;
+    }
 }
