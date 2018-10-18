@@ -39,4 +39,8 @@ public class NotificacaoFacade {
         NotificacaoDAO dao = new NotificacaoDAO();
         dao.excluirTodasNotificacoes(idUsr);
     }
+    public static int buscarIdUsrAnun(int id) throws SQLException{
+        NotificacaoDAO dao = new NotificacaoDAO();
+        return dao.buscarIdUsrAnuncioNoti(id);
+    }
 }

@@ -24,6 +24,7 @@ import java.util.logging.Logger;
  */
 public class UserDAO {
 
+
     private static final String QUERY_INSERT_PRIVACIDADE_USER = "INSERT INTO `tcc1`.`tb_privacidade`(`TB_USUARIO_NR_SEQ`,`PRIVACIDADE_TELEFONE`,`PRIVACIDADE_ENDERECO`,`PRIVACIDADE_DESCRICAO`,`PRIVACIDADE_INTERESSES`)VALUES(?,?,?,?,?);";
     private static final String QUERY_UPDATE_PRIVACIDADE_USER = "UPDATE `tcc1`.`tb_privacidade` SET `PRIVACIDADE_TELEFONE` = ?,`PRIVACIDADE_ENDERECO` = ?,`PRIVACIDADE_DESCRICAO` = ?,`PRIVACIDADE_INTERESSES` = ? WHERE `ID_PRIVACIDADE` = ?;";
     private static final String QUERY_SELECT_PRIVACIDADE_USER = "SELECT * FROM tcc1.tb_privacidade WHERE TB_USUARIO_NR_SEQ = ?;";
@@ -37,6 +38,17 @@ public class UserDAO {
                                                             "`NM_CIDADE`)\n" +
                                                             "VALUES\n" +
                                                             "(?,?,?,?,?,?)";
+
+    private static final String QUERY_INSERT_ENDERECO_USER = "INSERT INTO `tcc1`.`tb_endereco`\n"
+            + "(`NM_RUA`,\n"
+            + "`NM_ESTADO`,\n"
+            + "`NR_RUA`,\n"
+            + "`NR_CEP`,\n"
+            + "`DS_COMPLEMENTO`,\n"
+            + "`NM_CIDADE`)\n"
+            + "VALUES\n"
+            + "(?,?,?,?,?,?)";
+  
     private static final String QUERY_CONSULTA_ID_ENDERECO_USER = "SELECT CD_ENDERECO FROM tcc1.tb_usuario WHERE NR_SEQ = ?";
     private static final String QUERY_LOGIN = "SELECT NR_SEQ, DS_EMAIL, NM_NOME, TP_USUARIO, DS_FOTO, DS_SENHA FROM TB_USUARIO WHERE DS_EMAIL = ? AND DS_SENHA = ?";
     private static final String QUERY_LOGIN_GOOGLE = "SELECT NR_SEQ, NM_NOME, DS_EMAIL, DS_FOTO,TP_USUARIO FROM TB_USUARIO WHERE DS_EMAIL = ?";
@@ -162,6 +174,9 @@ public class UserDAO {
 
     private static final String query_nova_lista_bloqueados = "SELECT distinct tb_amizade.id_solicitado, tb_amizade.id_solicitante "
             + "from tb_amizade where (tb_amizade.id_solicitante_bloq = ? and tb_amizade.tb_status_amizade_NR_STATUS_AMIGO=3)";
+
+    private static final String QUERY_VERIFICAR_AMIZADE_EXISTENTE = "SELECT * FROM tcc1.tb_amizade WHERE (tb_amizade.tb_usuario_NR_SEQ = ? AND tb_amizade.tb_status_amizade_NR_STATUS_AMIGO = 2)\n"
+            + "AND (tb_amizade.id_solicitado = ? OR tb_amizade.id_solicitante =?)";
 
     //******************************
     // implementado apenas para finalizar a sprint da lista de amigos, pois os nomes do user podem ser iguais
@@ -404,41 +419,40 @@ public class UserDAO {
     public void editarUser(User u) {
 
         try {
-            
+
             int idEnd = 0;
             stmt = con.prepareStatement(QUERY_CONSULTA_ID_ENDERECO_USER);
             stmt.setInt(1, u.getId());
             rs = stmt.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 idEnd = rs.getInt("CD_ENDERECO");
             }
-            if(idEnd != 0){
-            stmt = con.prepareStatement(QUERY_EDIT_END);
-            stmt.setString(1, u.getLogradouro());
-            stmt.setString(2, u.getEstado());
-            stmt.setInt(3, u.getNumero());
-            stmt.setString(4, u.getCep());
-            stmt.setString(5, u.getComplemento());
-            stmt.setString(6, u.getCidade());
-            stmt.setInt(7, u.getCdEndereco());
-            stmt.executeUpdate();
-            }else{
+            if (idEnd != 0) {
+                stmt = con.prepareStatement(QUERY_EDIT_END);
+                stmt.setString(1, u.getLogradouro());
+                stmt.setString(2, u.getEstado());
+                stmt.setInt(3, u.getNumero());
+                stmt.setString(4, u.getCep());
+                stmt.setString(5, u.getComplemento());
+                stmt.setString(6, u.getCidade());
+                stmt.setInt(7, u.getCdEndereco());
+                stmt.executeUpdate();
+            } else {
                 stmt = con.prepareStatement(QUERY_INSERT_ENDERECO_USER);
-            stmt.setString(1, u.getLogradouro());
-            stmt.setString(2, u.getEstado());
-            stmt.setInt(3, u.getNumero());
-            stmt.setString(4, u.getCep());
-            stmt.setString(5, u.getComplemento());
-            stmt.setString(6, u.getCidade());
-            stmt.executeUpdate();
-            
+                stmt.setString(1, u.getLogradouro());
+                stmt.setString(2, u.getEstado());
+                stmt.setInt(3, u.getNumero());
+                stmt.setString(4, u.getCep());
+                stmt.setString(5, u.getComplemento());
+                stmt.setString(6, u.getCidade());
+                stmt.executeUpdate();
+
                 stmt = con.prepareStatement("SELECT LAST_INSERT_ID() AS ID");
                 rs = stmt.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     idEnd = rs.getInt("ID");
                 }
-                
-            
+
             }
 
             stmt = con.prepareStatement(QUERY_EDIT_USR);
@@ -448,10 +462,10 @@ public class UserDAO {
             stmt.setString(4, u.getCel());
             stmt.setString(5, u.getDescricao());
             stmt.setString(6, u.getInteresses());
-            if(u.getCdEndereco() != 0){
-            stmt.setInt(7, u.getCdEndereco());
-            }else{
-            stmt.setInt(7, idEnd);
+            if (u.getCdEndereco() != 0) {
+                stmt.setInt(7, u.getCdEndereco());
+            } else {
+                stmt.setInt(7, idEnd);
             }
             stmt.setInt(8, u.getId());
             stmt.executeUpdate();
@@ -570,19 +584,42 @@ public class UserDAO {
         return 0; //nenhuma ação de amizade
     }
 
-    public Boolean aceitarAmizade(int idSolicitante, int idSolicitado) {
-        Boolean v = false;
+    //verificar se já são amigos para evitar duplicidade
+    public Boolean verfAmizade(int idUsr, int idSolicitacao) {
         try {
-            stmt = con.prepareStatement(QUERY_ACEITAR_AMIZADE);
-            stmt.setInt(1, idSolicitado);
-            stmt.setInt(2, idSolicitante);
-            stmt.executeUpdate();
-            stmt.close();
-            con.close();
-            v = true;
+            stmt = con.prepareStatement(QUERY_VERIFICAR_AMIZADE_EXISTENTE);
+            stmt.setInt(1, idUsr);
+            stmt.setInt(2, idSolicitacao);
+            stmt.setInt(3, idSolicitacao);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return false;
+    }
+
+    public Boolean aceitarAmizade(int idSolicitante, int idSolicitado) {
+        Boolean v = false;
+        if ((verfAmizade(idSolicitante, idSolicitado))) {
+            return false;
+        } else {
+            try {
+                stmt = con.prepareStatement(QUERY_ACEITAR_AMIZADE);
+                stmt.setInt(1, idSolicitado);
+                stmt.setInt(2, idSolicitante);
+                stmt.executeUpdate();
+                stmt.close();
+                con.close();
+                v = true;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         return v;
     }
 
