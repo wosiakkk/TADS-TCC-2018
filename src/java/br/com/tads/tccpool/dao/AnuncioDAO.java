@@ -329,7 +329,7 @@ public class AnuncioDAO {
 
     public AnuncioDAO() {
         ConnectionFactory cf = new ConnectionFactory();
-        con = cf.getConnection();
+        this.con = cf.getConnection();
     }
 
     //método para fechar a conexão do bd
@@ -706,7 +706,7 @@ public class AnuncioDAO {
     }
 
     public List<Anuncio> buscarAnuncioAprovado() throws SQLException {
-        List<Anuncio> lista = new ArrayList<Anuncio>();
+        List<Anuncio> lista = new ArrayList<>();
         stmt = con.prepareStatement(QUERY_BUSCAR_ANUNCIOS_APROVADOS);
         rs = stmt.executeQuery();
         while (rs.next()) {
@@ -743,7 +743,7 @@ public class AnuncioDAO {
             anuncio.setIdAnuncio(rs.getInt("ID_ANUNCIO"));
             anuncio.setTitulo(rs.getString("DS_TITULO"));
             anuncio.setValor(rs.getFloat("NR_VALOR"));
-            anuncio.setDescricao(rs.getString("DS_DESCRICAO"));
+            anuncio.setDescricao(rs.getString("DS_ANUNCIO"));
             anuncio.setCategoria(rs.getString("DS_CATEGORIA"));
             anuncio.setCaminhoFoto(rs.getString("DS_CAMINHO"));
             lista.add(anuncio);
