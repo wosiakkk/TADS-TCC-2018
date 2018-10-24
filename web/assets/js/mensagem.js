@@ -24,6 +24,7 @@ $(document).ready(function(){
             dataType: 'html',
             success: function (resp) {
                 listarMensagens();
+                listarConversas();
             },
             error: function (resp) {
                 console.log(resp);
@@ -37,19 +38,10 @@ $(document).ready(function(){
 
 });
 
-//$('#conversaBox').ready(function() {
-//    //Busca as mensagens de uma conversa
-//    $('.conversa').click(function(){
-//        $('input[name=ID_CONVERSA]').val($(this).data('conversa'));
-//        listarMensagens();
-//    });
-//});
-
 function listarMensagens() {
 
     var dados = {
         action: "LIST_MENSAGEM",
-        //ID_CONVERSA: $('input[name=ID_CONVERSA]').val(),
         ID_ORIGEM: $('input[name=ID_ORIGEM]').val(),
         ID_DESTINO: $('input[name=ID_DESTINO').val()
     };

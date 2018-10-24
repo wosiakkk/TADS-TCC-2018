@@ -16,8 +16,12 @@
 <!-- Página com foto e as opções do perfil -->
 <%@include file="opcoes.jsp" %>
 
-<!--div class="col-lg-9">
-</div-->
+<!-- Script para dar destaque na opção navegada -->
+<script>
+    $(document).ready(function () {
+        $("#opVendas").addClass("highlight");
+    });
+</script>
 
 <div class="col-lg-7 col-md-7 col-xs-12">
     <h1>&Aacute;rea de Vendas</h1>
