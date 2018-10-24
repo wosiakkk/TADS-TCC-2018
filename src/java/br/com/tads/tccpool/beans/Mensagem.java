@@ -16,6 +16,7 @@ public class Mensagem implements Serializable {
     private String nmOrigem;
     private String nmDestino;
     private String fotoDestino;
+    private String fotoOrigem;
     private Calendar data;
     
     public Mensagem(){
@@ -93,7 +94,15 @@ public class Mensagem implements Serializable {
     public void setData(Calendar data) {
         this.data = data;
     }
-    
+
+    public String getFotoOrigem() {
+        return fotoOrigem;
+    }
+
+    public void setFotoOrigem(String fotoOrigem) {
+        this.fotoOrigem = fotoOrigem;
+    }
+        
     @Override
     public String toString(){
         return "idMensagem:" + String.valueOf(this.idMensagem) +

@@ -16,11 +16,13 @@
 <link href="assets/css/feed-style.css" rel="stylesheet">
 <script type="text/javascript" src="assets/js/mensagem.js"></script>
 
-<!--div class="col-3">
-    <h1>Mensagens</h1>
-    <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
-    <hr>
-</div-->
+<!-- Script para dar destaque na opção navegada -->
+<script>
+    $(document).ready(function () {
+        $("#opMsg").addClass("highlight");
+    });
+</script>
+
 <!-- Página com foto e as opções do perfil -->
 <%@include file="opcoes.jsp" %>
 
