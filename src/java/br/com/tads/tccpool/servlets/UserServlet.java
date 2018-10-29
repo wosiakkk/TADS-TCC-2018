@@ -566,17 +566,9 @@ public class UserServlet extends HttpServlet {
                     }catch(Exception e){
                         String erro = e.toString();
                     }
-
-                case "NOTIFICACAO":{
-                    String acao = request.getParameter("acao");
-                    switch(acao){
-                        case "CONTAGEM":{
-                            int idAjax = Integer.parseInt(request.getParameter("idAjax"));
-                            
-                            break;
-                        }
-                    }
-                    
+                    break;
+                
+            }
                     
                     
                     
@@ -590,10 +582,10 @@ public class UserServlet extends HttpServlet {
                     Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }*/
                    
-                    break;
-                }
+                    
+                
 
-            }
+            
         }
     }
 

@@ -39,15 +39,6 @@ public class UserDAO {
                                                             "VALUES\n" +
                                                             "(?,?,?,?,?,?)";
 
-    private static final String QUERY_INSERT_ENDERECO_USER = "INSERT INTO `tcc1`.`tb_endereco`\n"
-            + "(`NM_RUA`,\n"
-            + "`NM_ESTADO`,\n"
-            + "`NR_RUA`,\n"
-            + "`NR_CEP`,\n"
-            + "`DS_COMPLEMENTO`,\n"
-            + "`NM_CIDADE`)\n"
-            + "VALUES\n"
-            + "(?,?,?,?,?,?)";
   
     private static final String QUERY_CONSULTA_ID_ENDERECO_USER = "SELECT CD_ENDERECO FROM tcc1.tb_usuario WHERE NR_SEQ = ?";
     private static final String QUERY_LOGIN = "SELECT NR_SEQ, DS_EMAIL, NM_NOME, TP_USUARIO, DS_FOTO, DS_SENHA FROM TB_USUARIO WHERE DS_EMAIL = ? AND DS_SENHA = ?";
