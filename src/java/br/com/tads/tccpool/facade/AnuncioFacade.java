@@ -15,6 +15,7 @@ import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.dao.AnuncioDAO;
 import br.com.tads.tccpool.exception.AcessoBdException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,7 +90,7 @@ public class AnuncioFacade {
     public static String buscarAnuncioAprovado(FiltroAnuncio filtro) {
         AnuncioDAO dao = new AnuncioDAO();
         String HTMLResponse = "";
-        List<Anuncio> anunciosAprovados = null;
+        List<Anuncio> anunciosAprovados = new ArrayList<>();
         try {
             if (filtro.isFiltroAtivo()) {
                 anunciosAprovados = dao.filtrarAnuncio(filtro);
@@ -98,22 +99,27 @@ public class AnuncioFacade {
             }
             if (anunciosAprovados != null) {
                 
-                for (Anuncio anuncio : anunciosAprovados) {
-                    HTMLResponse += "<div class=\"col-lg-4 col-md-6 mb-4\">\n"
-                            + "    <div class=\"card h-100\">\n"
-                            + "        <a href=\"AnuncioServlet?action=EXIBIRANUNCIO&idAnuncio=" + anuncio.getIdAnuncio() + "\"><img class=\"card-img-top\" src=\"" + anuncio.getCaminhoFoto() + "\" alt=\"\"></a>\n"
-                            + "        <div class=\"card-body\">\n"
-                            + "            <h4 class=\"card-title\">\n"
-                            + "                <a href=\"AnuncioServlet?action=EXIBIRANUNCIO&idAnuncio=" + anuncio.getIdAnuncio() + "\">" + anuncio.getTitulo() + "</a>\n"
-                            + "            </h4>\n"
-                            + "            <h5>$" + String.valueOf(anuncio.getValor()) + "</h5>\n"
-                            + "            <p class=\"card-text\">" + anuncio.getDescricao() + "</p>\n"
-                            + "        </div>\n"
-                            + "        <div class=\"card-footer\">\n"
-                            + "            <a href=\"AnuncioServlet?action=EXIBIRANUNCIO&idAnuncio=" + anuncio.getIdAnuncio() + "\">veja mais</a>\n"
-                            + "        </div>\n"
-                            + "    </div>\n"
-                            + "</div>";
+                if(anunciosAprovados.size() > 0) {
+                    for (Anuncio anuncio : anunciosAprovados) {
+                        HTMLResponse += "<div class=\"col-lg-4 col-md-6 mb-4\">\n"
+                                + "    <div class=\"card h-100\">\n"
+                                + "        <a href=\"AnuncioServlet?action=EXIBIRANUNCIO&idAnuncio=" + anuncio.getIdAnuncio() + "\"><img class=\"card-img-top\" src=\"" + anuncio.getCaminhoFoto() + "\" alt=\"\"></a>\n"
+                                + "        <div class=\"card-body\">\n"
+                                + "            <h4 class=\"card-title\">\n"
+                                + "                <a href=\"AnuncioServlet?action=EXIBIRANUNCIO&idAnuncio=" + anuncio.getIdAnuncio() + "\">" + anuncio.getTitulo() + "</a>\n"
+                                + "            </h4>\n"
+                                + "            <h5>$" + String.valueOf(anuncio.getValor()) + "</h5>\n"
+                                + "            <p class=\"card-text\">" + anuncio.getDescricao() + "</p>\n"
+                                + "        </div>\n"
+                                + "        <div class=\"card-footer\">\n"
+                                + "            <a href=\"AnuncioServlet?action=EXIBIRANUNCIO&idAnuncio=" + anuncio.getIdAnuncio() + "\">veja mais</a>\n"
+                                + "        </div>\n"
+                                + "    </div>\n"
+                                + "</div>";
+                    }
+                }
+                else {
+                    HTMLResponse = "Não foram encontrados anúncios para esse filtro.";
                 }
             }
             else {

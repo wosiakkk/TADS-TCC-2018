@@ -6,6 +6,7 @@
 $(document).ready(function () {
     $('input[type=checkbox]').val('0');
     buscarAnunciosAprovados("#pageContent");
+    $('#petsField').hide();
 });
 
 $("#formFiltro").validate({
@@ -33,6 +34,14 @@ $("#formFiltro").validate({
     }
 });
 
+$('input#imovel').change(function () {
+    if(this.checked) {
+        $('#petsField').show();
+    } else {
+        $('#petsField').hide();
+    }
+});
+
 $('input[type=checkbox]').change(function () {
     if (this.checked) {
         $(this).val('1');
@@ -44,15 +53,8 @@ $('input[type=checkbox]').change(function () {
 $("#formFiltro").submit(function (event) {
     event.preventDefault();
 
-    /*var dados = {
-        imovel: $('input[name=imovel]').val(),
-        movel: $('input[name=movel]').val(),
-        material: $('input[name=material]').val(),
-        action: 'FILTROANUNCIO'
-    };*/
-
     $.ajax({
-        url: 'AnuncioServlet',
+        url: 'AnuncioServlet?action=FILTROANUNCIO',
         method: 'POST',
         data: $(this).serialize(),
         dataType: 'HTML',
@@ -64,4 +66,10 @@ $("#formFiltro").submit(function (event) {
             alert("Ocorreu um erro ao filtrar os anúcnios. Por favor, tente novamente mais tarde.");
         }
     });
+});
+
+$('#limparFiltros').click(function() {
+    $("#formFiltro").trigger('reset');
+    $('#petsField').hide();
+    $("#formFiltro").submit();
 });

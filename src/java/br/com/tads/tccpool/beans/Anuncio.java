@@ -7,6 +7,7 @@ package br.com.tads.tccpool.beans;
 
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -18,6 +19,8 @@ import java.util.List;
 
     private int idAnuncio;
     private int idUsuario;
+    private String nmUsuario;
+    private String dsFotoUsuario;
     private int idCategoria;
     private int IdImovel;
     private int IdMovel;
@@ -29,6 +32,7 @@ import java.util.List;
     private List<Foto> fotos;
     private String statusAnuncio;
     private String caminhoFoto;
+    private Calendar dtAnuncio = Calendar.getInstance();
 
     public String getCaminhoFoto() {
         return caminhoFoto;
@@ -37,8 +41,6 @@ import java.util.List;
     public void setCaminhoFoto(String caminhoFoto) {
         this.caminhoFoto = caminhoFoto;
     }
-    
-    
 
     public List<Foto> getFotos() {
         return fotos;
@@ -47,11 +49,6 @@ import java.util.List;
     public void setFotos(List<Foto> fotos) {
         this.fotos = fotos;
     }
-
-    
-    
-    
-    
 
     public Anuncio() {}
 
@@ -103,8 +100,6 @@ import java.util.List;
         this.categoria = categoria;
     }
 
-    
-
     public int getIdCategoria() {
         return idCategoria;
     }
@@ -144,6 +139,29 @@ import java.util.List;
     public void setStatusAnuncio(String statusAnuncio) {
         this.statusAnuncio = statusAnuncio;
     }
-    
+
+    public String getNmUsuario() {
+        return nmUsuario;
+    }
+
+    public void setNmUsuario(String nmUsuario) {
+        this.nmUsuario = nmUsuario;
+    }
+
+    public Calendar getDtAnuncio() {
+        return dtAnuncio;
+    }
+
+    public void setDtAnuncio(Calendar dtAnuncio) {
+        this.dtAnuncio = dtAnuncio;
+    }
+
+    public String getDsFotoUsuario() {
+        return dsFotoUsuario;
+    }
+
+    public void setDsFotoUsuario(String dsFotoUsuario) {
+        this.dsFotoUsuario = dsFotoUsuario;
+    }
     
 }

@@ -18,7 +18,7 @@
                 <a id="opVendas" class="list-group-item" href="vendas.jsp">Área de vendas</a>                      
                 <a id="opEdPerfil" class="list-group-item" href="UserServlet?action=SEARCH">Editar Perfil</a>
                 <a id="opRanuncio" class="list-group-item" href="escolhaAnuncio.jsp">Realizar um Anuncio</a>
-                <a class="list-group-item" href="mensagem.jsp">Mensagens</a>
+                <a id="opMsg" class="list-group-item" href="mensagem.jsp">Mensagens</a>
                 <a id="opPref" class="list-group-item" href="escolhaPreferencias.jsp">Preferências</a> 
                 <a id="opEst" class="list-group-item" href="gerarRelatorio.jsp">Estatísticas</a>
             </c:if>

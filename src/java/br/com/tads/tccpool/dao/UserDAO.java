@@ -28,7 +28,7 @@ public class UserDAO {
     private static final String QUERY_INSERT_PRIVACIDADE_USER = "INSERT INTO `tcc1`.`tb_privacidade`(`TB_USUARIO_NR_SEQ`,`PRIVACIDADE_TELEFONE`,`PRIVACIDADE_ENDERECO`,`PRIVACIDADE_DESCRICAO`,`PRIVACIDADE_INTERESSES`)VALUES(?,?,?,?,?);";
     private static final String QUERY_UPDATE_PRIVACIDADE_USER = "UPDATE `tcc1`.`tb_privacidade` SET `PRIVACIDADE_TELEFONE` = ?,`PRIVACIDADE_ENDERECO` = ?,`PRIVACIDADE_DESCRICAO` = ?,`PRIVACIDADE_INTERESSES` = ? WHERE `ID_PRIVACIDADE` = ?;";
     private static final String QUERY_SELECT_PRIVACIDADE_USER = "SELECT * FROM tcc1.tb_privacidade WHERE TB_USUARIO_NR_SEQ = ?;";
-    
+
     private static final String QUERY_INSERT_ENDERECO_USER = "INSERT INTO `tcc1`.`tb_endereco`\n" +
                                                             "(`NM_RUA`,\n" +
                                                             "`NM_ESTADO`,\n" +
@@ -39,7 +39,7 @@ public class UserDAO {
                                                             "VALUES\n" +
                                                             "(?,?,?,?,?,?)";
 
-  
+
     private static final String QUERY_CONSULTA_ID_ENDERECO_USER = "SELECT CD_ENDERECO FROM tcc1.tb_usuario WHERE NR_SEQ = ?";
     private static final String QUERY_LOGIN = "SELECT NR_SEQ, DS_EMAIL, NM_NOME, TP_USUARIO, DS_FOTO, DS_SENHA FROM TB_USUARIO WHERE DS_EMAIL = ? AND DS_SENHA = ?";
     private static final String QUERY_LOGIN_GOOGLE = "SELECT NR_SEQ, NM_NOME, DS_EMAIL, DS_FOTO,TP_USUARIO FROM TB_USUARIO WHERE DS_EMAIL = ?";
@@ -586,7 +586,7 @@ public class UserDAO {
             if (rs.next()) {
                 return true;
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -902,8 +902,8 @@ public class UserDAO {
         }
         return true;
     }
-    
-    
+
+
     public Privacidade buscarPrivacidade(int idUser) {
         Privacidade p = new Privacidade();
         try {

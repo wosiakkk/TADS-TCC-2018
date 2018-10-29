@@ -53,15 +53,28 @@ public class MensagemFacade {
     public static String listarConversas(Integer userLogado) {
         MensagemDAO mDAO = new MensagemDAO();
         ArrayList<Conversa> conversas;
-        String conversasFormatadas = "";
+        String conversasFormatadas = "",
+               fotoDestino = "",
+               nmDestino = "";
+        Integer idDestino = 0;
         try {
             conversas = mDAO.listarConversas(userLogado);
             for (Conversa conversa : conversas) {
-                conversasFormatadas += "<a class=\"list-group-item conversa\" data-conversa=\"" + conversa.getIdConversa() + "\" data-destino=\"" + conversa.getIdDestino() + "\" href=\"#\">"
+                if(conversa.getIdDestino().equals(userLogado)) {
+                    fotoDestino = conversa.getFotoOrigem();
+                    nmDestino = conversa.getNmOrigem();
+                    idDestino = conversa.getIdOrigem();
+                }
+                else {
+                    fotoDestino = conversa.getFotoDestino();
+                    nmDestino = conversa.getNmDestino();
+                    idDestino = conversa.getIdDestino();
+                }
+                conversasFormatadas += "<a class=\"list-group-item conversa\" data-conversa=\"" + conversa.getIdConversa() + "\" data-destino=\"" + idDestino + "\" href=\"#\">"
                                      + "    <div class=\"col-lg-2 col-2 user-img text-center\">\n"
-                                     + "        <img src=\"" + conversa.getFotoDestino() + "\" class=\"main-cmt-img\">\n"
+                                     + "        <img src=\"" + fotoDestino + "\" class=\"main-cmt-img\">\n"
                                      + "    </div>\n"
-                                     + "    <p>" + conversa.getNmDestino() + "</p>"
+                                     + "    <p>" + nmDestino + "</p>"
                                      + "</a>";
                 
             }
@@ -108,12 +121,12 @@ public class MensagemFacade {
             else {
                 HTML += "<div class=\"row col-md-12 col-lg-12 col-sm-12 p-1 pt-3 pr-4\">\n"
                       + "    <div class=\"col-lg-2 col-2 user-img text-center\">\n"
-                      + "        <img src=\"" + mensagem.getFotoDestino() + "\" class=\"main-cmt-img\">\n"
+                      + "        <img src=\"" + mensagem.getFotoOrigem() + "\" class=\"main-cmt-img\">\n"
                       + "    </div>\n"
                       + "    <div class=\"col-lg-10 col-8 bg-light rounded pb-1\">\n"
                       + "        <div class=\"row\">\n"
                       + "            <div class=\"col-lg-8 col-sm-12 col-6 border-bottom pr-0\">\n"
-                      + "                <i><p class=\"w-100 p-2 m-0\">" + mensagem.getNmOrigem() + "</p></i>\n"
+                      + "                <i><p class=\"w-100 p-2 m-0\">" + mensagem.getNmOrigem()+ "</p></i>\n"
                       + "            </div>\n"
                       + "            <div class=\"col-lg-4 col-sm-12 col-6 border-bottom\">\n"
                       + "                <p class=\"w-100 p-2 m-0\"><span class=\"float-right\"><i class=\"fa fa-clock-o mr-1\" aria-hidden=\"true\"></i>" + format.format(mensagem.getData().getTime()) + "</span></p>\n"
