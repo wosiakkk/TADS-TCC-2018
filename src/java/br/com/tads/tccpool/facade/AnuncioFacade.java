@@ -214,4 +214,19 @@ public class AnuncioFacade {
         AnuncioDAO adao = new AnuncioDAO();
         adao.excluiFotosAnuncio(excluir);
     }
+    
+    public static void inserirSeguidorAnuncio(int idAnuncio, int idSeguidor){
+        AnuncioDAO dao = new AnuncioDAO();
+        dao.inserirSeguidor(idAnuncio, idSeguidor);
+    }
+    
+    public static void removerSeguidorAnuncio(int idAnuncio, int idSeguidor){
+        AnuncioDAO dao = new AnuncioDAO();
+        dao.removerSeguidor(idAnuncio, idSeguidor);
+    }
+    
+    public static Boolean verifSeguidor(int idAnuncio, int idSeguidor){
+        AnuncioDAO dao = new AnuncioDAO();
+        return dao.verificarSeguidor(idAnuncio, idSeguidor);
+    }
 }

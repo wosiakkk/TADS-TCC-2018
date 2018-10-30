@@ -119,7 +119,7 @@ public class AnuncioServlet extends HttpServlet {
                                 if (item.getFieldName().equals("comple")) {
                                     im.setComplemento(item.getString());
                                 }
-                                
+
                             } else {
                                 Random rand = new Random();
                                 String nomeString = String.valueOf(rand.nextInt()) + ".jpg";
@@ -415,7 +415,7 @@ public class AnuncioServlet extends HttpServlet {
                 case "EXIBIRANUNCIO":
                     int idAnuncio = Integer.parseInt(request.getParameter("idAnuncio"));
                     int t = AnuncioFacade.verifcaTipoAnuncio(idAnuncio);
-                        if (t == 1) {
+                    if (t == 1) {
                         Imovel i = new Imovel();
                         i = AnuncioFacade.buscarImovelPorId(idAnuncio);
                         session.setAttribute("imovelExibir", i);
@@ -701,31 +701,31 @@ public class AnuncioServlet extends HttpServlet {
                     }
                     break;
                 case "FILTROANUNCIO":
-                    try {                        
+                    try {
                         FiltroAnuncio filtro = new FiltroAnuncio(request);
-                        
+
                         out.write(AnuncioFacade.buscarAnuncioAprovado(filtro));
                         out.flush();
                     } catch (Exception ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
-                    
-                    case "ALTERARFOTOSANUNCIO":
-                    try{
-                        
+
+                case "ALTERARFOTOSANUNCIO":
+                    try {
+
                         int idA = Integer.parseInt(request.getParameter("idAnuncio"));
                         Anuncio anun = AnuncioFacade.buscaAlteraFotosAnuncio(idA);
                         request.setAttribute("anuncio", anun);
                         request.getRequestDispatcher("alteraFotoAnuncio.jsp").forward(request, response);
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         request.setAttribute("erro", e.toString());
                         request.getRequestDispatcher("erro.jsp");
                     }
-                        break;
-                        
-                        case "UPDATEFOTOSANUNCIO":
-                        try{
+                    break;
+
+                case "UPDATEFOTOSANUNCIO":
+                    try {
                         List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
                         String nome = new String();
                         List<Foto> listaFotosNovas = new ArrayList<>();
@@ -747,16 +747,16 @@ public class AnuncioServlet extends HttpServlet {
                                 Random rand = new Random();
                                 String nomeString = String.valueOf(rand.nextInt()) + ".jpg";
                                 if (!item.getName().equals("")) {
-                                    if(item.getFieldName().equals("fotoNova")){
-                                    item.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
-                                    Foto f = new Foto();
-                                    f.setCaminho("img" + File.separator + nomeString);
-                                    f.setIdAnuncio(anunc.getIdAnuncio());
-                                    listaFotosNovas.add(f);
-                                    javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img") + File.separator + nomeString);
-                                    image.resize(850, 500);
-                                    image.saveAs(request.getServletContext().getRealPath("img") + File.separator + nomeString);
-                                    }else{
+                                    if (item.getFieldName().equals("fotoNova")) {
+                                        item.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
+                                        Foto f = new Foto();
+                                        f.setCaminho("img" + File.separator + nomeString);
+                                        f.setIdAnuncio(anunc.getIdAnuncio());
+                                        listaFotosNovas.add(f);
+                                        javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                        image.resize(850, 500);
+                                        image.saveAs(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                    } else {
                                         Foto f = new Foto();
                                         f.setIdFoto(Integer.parseInt(item.getFieldName()));
                                         item.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
@@ -770,46 +770,80 @@ public class AnuncioServlet extends HttpServlet {
                                 }
                             }
                         }
-                        if(!listaFotosNovas.isEmpty()){
+                        if (!listaFotosNovas.isEmpty()) {
                             AnuncioFacade.insereFotosAnuncio(listaFotosNovas);
                             AnuncioFacade.updateStatusAnuncio(anunc.getIdAnuncio(), 1);
-                        } 
-                        if(!listaFotosAlteradas.isEmpty()){
+                        }
+                        if (!listaFotosAlteradas.isEmpty()) {
                             AnuncioFacade.alteraFotosAnuncio(listaFotosAlteradas);
                             AnuncioFacade.updateStatusAnuncio(anunc.getIdAnuncio(), 1);
                         }
-                        if(excluir[0] != 0){
+                        if (excluir[0] != 0) {
                             AnuncioFacade.excluiFotosAnuncio(excluir);
                             AnuncioFacade.updateStatusAnuncio(anunc.getIdAnuncio(), 1);
                         }
                         int ann = AnuncioFacade.verifcaTipoAnuncio(anunc.getIdAnuncio());
-                switch (ann) {
-                    case 1:
-                        Imovel i = AnuncioFacade.buscarImovelPorId(anunc.getIdAnuncio());
-                        session.setAttribute("imovelExibir", i);
-                        session.removeAttribute("imovelAlterar");
-                        session.setAttribute("idExibirAnuncio", anunc.getIdAnuncio());
-                        break;
-                    case 2:
-                        Movel m = AnuncioFacade.buscarMovelPorId(anunc.getIdAnuncio());
-                        session.setAttribute("movelExibir", m);
-                        session.removeAttribute("movelAlterar");
-                        session.setAttribute("idExibirAnuncio", anunc.getIdAnuncio());
-                        break;
-                    case 3:
-                        Material mat = AnuncioFacade.buscarMaterialPorId(anunc.getIdAnuncio());
-                        session.setAttribute("materialExibir", mat);
-                        session.removeAttribute("materialAlterar");
-                        session.setAttribute("idExibirAnuncio", anunc.getIdAnuncio());
-                        break;
-                    default:
-                        break;
-                }
+                        switch (ann) {
+                            case 1:
+                                Imovel i = AnuncioFacade.buscarImovelPorId(anunc.getIdAnuncio());
+                                session.setAttribute("imovelExibir", i);
+                                session.removeAttribute("imovelAlterar");
+                                session.setAttribute("idExibirAnuncio", anunc.getIdAnuncio());
+                                break;
+                            case 2:
+                                Movel m = AnuncioFacade.buscarMovelPorId(anunc.getIdAnuncio());
+                                session.setAttribute("movelExibir", m);
+                                session.removeAttribute("movelAlterar");
+                                session.setAttribute("idExibirAnuncio", anunc.getIdAnuncio());
+                                break;
+                            case 3:
+                                Material mat = AnuncioFacade.buscarMaterialPorId(anunc.getIdAnuncio());
+                                session.setAttribute("materialExibir", mat);
+                                session.removeAttribute("materialAlterar");
+                                session.setAttribute("idExibirAnuncio", anunc.getIdAnuncio());
+                                break;
+                            default:
+                                break;
+                        }
                         request.getRequestDispatcher("anuncio.jsp").forward(request, response);
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         e.toString();
                     }
-                        break;
+                    break;
+
+                //case para add seguidor no anuncio
+                case "ADDSEGUIDOR": {
+                    
+                    int idAnuncioAjax = Integer.parseInt(request.getParameter("idAnuncioAjax"));
+                    int idUsrAjax = Integer.parseInt(request.getParameter("idSeguidorAjax"));
+                    
+                    AnuncioFacade.inserirSeguidorAnuncio(idAnuncioAjax,idUsrAjax);
+                    
+                    break;
+                }
+                //case para remover seguidor no anuncio
+                case "RMVSEGUIDOR": {
+                    
+                    int idAnuncioAjax = Integer.parseInt(request.getParameter("idAnuncioAjax"));
+                    int idUsrAjax = Integer.parseInt(request.getParameter("idSeguidorAjax"));
+                    
+                    AnuncioFacade.removerSeguidorAnuncio(idAnuncioAjax, idUsrAjax);
+                    
+                    break;
+                }
+                 case "VRFSEGUIDOR": {
+                    
+                    int idAnuncioAjax = Integer.parseInt(request.getParameter("idAnuncioAjax"));
+                    int idUsrAjax = Integer.parseInt(request.getParameter("idSeguidorAjax"));
+                    
+                    String resp = AnuncioFacade.verifSeguidor(idAnuncioAjax, idUsrAjax).toString();
+                    
+                    response.setContentType("text/plain");
+                    response.setCharacterEncoding("UTF-8");                         
+                    response.getWriter().write(resp);
+                    
+                    break;
+                }
             }
         }
     }

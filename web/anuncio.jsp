@@ -7,25 +7,29 @@ Author     : onurb
 <!-- Cabeçalho -->
 <%@include file="head.jsp" %>
 <link href="assets/css/feed-style.css" rel="stylesheet">
+<script src="assets\js\seguirAnuncio.js" type="text/javascript"></script>
 <script>
-function formatar(mascara, documento){
-  var i = documento.value.length;
-  var saida = mascara.substring(0,1);
-  var texto = mascara.substring(i)
-  
-  if (texto.substring(0,1) != saida){
-            documento.value += texto.substring(0,1);
-  }
-  
-}
+    function formatar(mascara, documento) {
+        var i = documento.value.length;
+        var saida = mascara.substring(0, 1);
+        var texto = mascara.substring(i)
 
-function numeros( campo )
-{
-    if ( isNaN( campo.value.substring(campo.value.length-1) ) )
-        campo.value = campo.value.substr( 0 , campo.value.length - 1 );
-}
+        if (texto.substring(0, 1) != saida) {
+            documento.value += texto.substring(0, 1);
+        }
+
+    }
+
+    function numeros(campo)
+    {
+        if (isNaN(campo.value.substring(campo.value.length - 1)))
+            campo.value = campo.value.substr(0, campo.value.length - 1);
+    }
 </script>
 
+<!-- Campos escondidos usados pelo ajax de seguir anúncio -->
+<input name="idAnuncioOculta" type="text" value="${idExibirAnuncio}" hidden>
+<input name="idUserOculta" type="text" value="${idUserSessao}" hidden>
 
 <!-- ############################# ALTERAR IMOVEL ################################ -->
 <!-- ############################# ALTERAR IMOVEL ################################ -->
@@ -84,11 +88,11 @@ function numeros( campo )
                             <span class="carousel-control-next-icon"></span>
                         </a>
                     </div>
-                    
+
                     <div class="col-md-12" align="center">
-                    <br><a href="AnuncioServlet?action=ALTERARFOTOSANUNCIO&idAnuncio=${idExibirAnuncio}" class="btn btn-block btn-dark" role="button">Alterar Fotos</a>
+                        <br><a href="AnuncioServlet?action=ALTERARFOTOSANUNCIO&idAnuncio=${idExibirAnuncio}" class="btn btn-block btn-dark" role="button">Alterar Fotos</a>
                     </div>
-                    
+
                     <form class="form"  action="AnuncioServlet"  method="POST" role="form">
                         <input type="hidden" name="action"  value="ALTERARANUNCIOID" >
                         <input type="hidden" name="idAnuncioImovel"  value="${imovelAlterar.id}" >
@@ -116,7 +120,7 @@ function numeros( campo )
                             <label for="descricao" class="col-sm-3 control-label">Descrição:</label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" rows="5" id="descricao" name="descricao">${imovelAlterar.descricao}</textarea>
-                                 
+
                                 <span class="help-block">Descreva seu anuncio</span>
                             </div>
                         </div>
@@ -124,7 +128,7 @@ function numeros( campo )
                             <label for="descricao" class="col-sm-3 control-label">O imóvel comporta quantas pessoas?</label>
                             <div class="col-sm-9">
                                 <input type="text" name="descricaoPessoas" id="descricao" value="${imovelAlterar.quantidade_pessoas}" class="form-control"  > 
-                                
+
                             </div>
                         </div>
                         <div class="form-group">
@@ -164,7 +168,7 @@ function numeros( campo )
                         <div class="form-group">
                             <label for="cep" class="col-sm-3 control-label">CEP:</label>
                             <div class="col-sm-9">
-                                <input class="form-control" name="cep" id="cep" type="text" maxlength="9" onkeyup="numeros( this )" OnKeyPress="formatar('#####-###', this)" value="${imovelAlterar.cep}">
+                                <input class="form-control" name="cep" id="cep" type="text" maxlength="9" onkeyup="numeros(this)" OnKeyPress="formatar('#####-###', this)" value="${imovelAlterar.cep}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -190,13 +194,13 @@ function numeros( campo )
                             <input type="submit" value="Alterar"  class="form-control btn-primary btn btn-outline-dark" />
                         </div>
                     </form>
-                        <div class="form-group col-md-12">
-                            <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
-                                <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
-                                <input type="hidden" name="status"  value="${imovelAlterar.status}" >
-                                <input type="submit" value="Cancelar"  class="form-control btn-primary btn btn-outline-dark" />
-                            </form>
-                        </div>
+                    <div class="form-group col-md-12">
+                        <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
+                            <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
+                            <input type="hidden" name="status"  value="${imovelAlterar.status}" >
+                            <input type="submit" value="Cancelar"  class="form-control btn-primary btn btn-outline-dark" />
+                        </form>
+                    </div>
                 </div><!-- /form -->
             </div>
         </div>
@@ -299,17 +303,20 @@ function numeros( campo )
                 <c:if test="${!empty(user)}">
                     <c:if test="${imovelExibir.idAnunciante == user.id}">
                         <c:if test="${imovelExibir.status != 5}">
-                        <br><div class="form-group">
-                            <form class="form-inline" action="AnuncioServlet" method="POST">
-                                <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 btn btn-outline-dark " />
-                                <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
-                                <c:if test="${imovelExibir.status == 2}">
-                                <input type="submit" value="Marcar Como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${imovelExibir.id}" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
-                                </c:if>
+                            <br><div class="form-group">
+                                <form class="form-inline" action="AnuncioServlet" method="POST">
+                                    <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 btn btn-outline-dark " />
+                                    <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
+                                    <c:if test="${imovelExibir.status == 2}">
+                                        <input type="submit" value="Marcar Como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${imovelExibir.id}" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
+                                    </c:if>
                                 </form>                          
-                        </div>                          
-                        </c:if>
+                            </div>                          
+                        </c:if>                    
                     </c:if>
+                    <c:if test="${imovelExibir.idAnunciante != user.id}">
+                        <input type="button" value="Seguir anúncio" id="seguirImovel" class=" btn btn-primary col-md-6 btn btn-outline-dark" readonly="true"/>
+                    </c:if>    
                 </c:if>
                 <div>
                     <%@include file="comentario.jsp" %>
@@ -407,15 +414,15 @@ function numeros( campo )
                 <c:if test="${!empty(user)}">
                     <c:if test="${movelExibir.idAnunciante == user.id}">
                         <c:if test="${movelExibir.status != 5}">
-                        <br><div class="form-group">
-                            <form class="form-inline" action="AnuncioServlet" method="POST">
-                                <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 " />
-                                <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4" />
-                                <c:if test="${movelExibir.status == 2}">
-                                <input type="submit" value="Marcar como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${movelExibir.id}" class="form-control btn btn-primary col-md-4" />
-                                </c:if>
+                            <br><div class="form-group">
+                                <form class="form-inline" action="AnuncioServlet" method="POST">
+                                    <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 " />
+                                    <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4" />
+                                    <c:if test="${movelExibir.status == 2}">
+                                        <input type="submit" value="Marcar como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${movelExibir.id}" class="form-control btn btn-primary col-md-4" />
+                                    </c:if>
                                 </form>
-                        </div>
+                            </div>
                         </c:if>
                     </c:if>
                 </c:if>
@@ -489,7 +496,7 @@ function numeros( campo )
                         </a>
                     </div>
                     <div class="col-md-12" align="center">
-                    <br><a href="AnuncioServlet?action=ALTERARFOTOSANUNCIO&idAnuncio=${idExibirAnuncio}" class="btn btn-block btn-dark" role="button">Alterar Fotos</a>
+                        <br><a href="AnuncioServlet?action=ALTERARFOTOSANUNCIO&idAnuncio=${idExibirAnuncio}" class="btn btn-block btn-dark" role="button">Alterar Fotos</a>
                     </div>
                     <form class="form"  action="AnuncioServlet"  method="POST" role="form">
                         <input type="hidden" name="action"  value="ALTERARANUNCIOID" >
@@ -541,7 +548,7 @@ function numeros( campo )
                         <div class="form-group">
                             <label for="cep" class="col-sm-3 control-label">CEP:</label>
                             <div class="col-sm-9">
-                                <input type="text" name="cep" id="cep" value="${movelAlterar.cep}" class="form-control" maxlength="9" onkeyup="numeros( this )" OnKeyPress="formatar('#####-###', this)" >
+                                <input type="text" name="cep" id="cep" value="${movelAlterar.cep}" class="form-control" maxlength="9" onkeyup="numeros(this)" OnKeyPress="formatar('#####-###', this)" >
                             </div>
                         </div>
                         <div class="form-group">
@@ -567,13 +574,13 @@ function numeros( campo )
                             <input type="submit" value="Alterar"  class="form-control btn-primary btn btn-outline-dark" />
                         </div>
                     </form>
-                        <div class="form-group col-md-12">
-                            <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
-                                <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
-                                <input type="hidden" name="status"  value="${movelAlterar.status}" >
-                                <input type="submit" value="Cancelar"  class="form-control btn-primary btn btn-outline-dark" />
-                            </form>
-                        </div>
+                    <div class="form-group col-md-12">
+                        <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
+                            <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
+                            <input type="hidden" name="status"  value="${movelAlterar.status}" >
+                            <input type="submit" value="Cancelar"  class="form-control btn-primary btn btn-outline-dark" />
+                        </form>
+                    </div>
                 </div><!-- /form -->
             </div>
         </div>
@@ -667,16 +674,16 @@ function numeros( campo )
                 <c:if test="${!empty(user)}">
                     <c:if test="${materialExibir.idAnunciante == user.id}">
                         <c:if test="${materialExibir.status != 5}">
-                        <br><div class="form-group">
-                            <form class="form-inline" action="AnuncioServlet" method="POST">
-                                <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 " />
-                                <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4" />
-                                <c:if test="${materialExibir.status == 2}">
-                                <input type="submit" value="Marcar Como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${materialExibir.id}" class="form-control btn btn-primary col-md-4" />
-                                </c:if>
+                            <br><div class="form-group">
+                                <form class="form-inline" action="AnuncioServlet" method="POST">
+                                    <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 " />
+                                    <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4" />
+                                    <c:if test="${materialExibir.status == 2}">
+                                        <input type="submit" value="Marcar Como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${materialExibir.id}" class="form-control btn btn-primary col-md-4" />
+                                    </c:if>
                                 </form>
-                        </div>
-                    </c:if>
+                            </div>
+                        </c:if>
                     </c:if>
                 </c:if>
                 <div>
@@ -748,11 +755,11 @@ function numeros( campo )
                             <span class="carousel-control-next-icon"></span>
                         </a>
                     </div>
-                    
+
                     <div class="col-md-12" align="center">
-                    <br><a href="AnuncioServlet?action=ALTERARFOTOSANUNCIO&idAnuncio=${idExibirAnuncio}" class="btn btn-block btn-dark" role="button">Alterar Fotos</a>
+                        <br><a href="AnuncioServlet?action=ALTERARFOTOSANUNCIO&idAnuncio=${idExibirAnuncio}" class="btn btn-block btn-dark" role="button">Alterar Fotos</a>
                     </div>
-                    
+
                     <form class="form"  action="AnuncioServlet"  method="POST" role="form">
                         <input type="hidden" name="action"  value="ALTERARANUNCIOID" >
                         <input type="hidden" name="idAnuncioMaterial"  value="${materialAlterar.id}" >
@@ -803,7 +810,7 @@ function numeros( campo )
                         <div class="form-group">
                             <label for="cep" class="col-sm-3 control-label">CEP:</label>
                             <div class="col-sm-9">
-                                <input type="text" name="cep" id="cep" value="${materialAlterar.cep}" class="form-control" maxlength="9" onkeyup="numeros( this )" OnKeyPress="formatar('#####-###', this)" >
+                                <input type="text" name="cep" id="cep" value="${materialAlterar.cep}" class="form-control" maxlength="9" onkeyup="numeros(this)" OnKeyPress="formatar('#####-###', this)" >
                             </div>
                         </div>
                         <div class="form-group">
@@ -829,13 +836,13 @@ function numeros( campo )
                             <input type="submit" value="Alterar"  class="form-control btn-primary btn btn-outline-dark" />
                         </div>
                     </form>
-                        <div class="form-group col-md-12">
-                            <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
-                                <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
-                                <input type="hidden" name="status"  value="${materialAlterar.status}" >
-                                <input type="submit" value="Cancelar"  class="form-control btn-primary btn btn-outline-dark" />
-                            </form>
-                        </div>
+                    <div class="form-group col-md-12">
+                        <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
+                            <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
+                            <input type="hidden" name="status"  value="${materialAlterar.status}" >
+                            <input type="submit" value="Cancelar"  class="form-control btn-primary btn btn-outline-dark" />
+                        </form>
+                    </div>
                 </div><!-- /form -->
             </div>
         </div>

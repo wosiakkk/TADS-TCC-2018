@@ -20,6 +20,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -322,7 +324,18 @@ public class AnuncioDAO {
     //query para retornar o id de um imovel de um anuncio
     private final String QUERY_RETORNO_ID_IMOVEL_POR_IDANUNCIO = "SELECT tb_anuncio.TB_IMOVEL_idTB_IMOVEL "
             + "from tb_anuncio where tb_anuncio.ID_ANUNCIO = ?";
-
+    
+    //insert para add seguidor em algum anúncio
+    private final String QUERY_INSERIR_SEGUIDOR ="INSERT INTO tb_seguidor_anuncio "
+            + "(tb_seguidor_anuncio.tb_anuncio_ID_ANUNCIO, tb_seguidor_anuncio.ID_SEGUIDOR)\n" +
+            " VALUES (?,?)";
+    
+    private final String QUERY_REMOVER_SEGUIDOR = "DELETE FROM tcc1.tb_seguidor_anuncio WHERE tb_seguidor_anuncio.ID_SEGUIDOR = ? "
+            + "AND tb_seguidor_anuncio.tb_anuncio_ID_ANUNCIO = ?";
+    
+    private final String QUERY_VERIFICAR_SEGUIDOR = "SELECT * FROM tcc1.tb_seguidor_anuncio WHERE "
+            + "tb_seguidor_anuncio.ID_SEGUIDOR = ? AND tb_seguidor_anuncio.tb_anuncio_ID_ANUNCIO = ?";
+    
     private Connection con = null;
     private PreparedStatement stmt = null;
     private ResultSet rs = null;
@@ -1133,6 +1146,46 @@ public class AnuncioDAO {
             }
         }
         
+    }
+    
+    public void inserirSeguidor(int idAnuncio, int idSeguidor){
+        con = new ConnectionFactory().getConnection();
+        try {
+            stmt = con.prepareStatement(QUERY_INSERIR_SEGUIDOR);
+            stmt.setInt(1, idAnuncio);
+            stmt.setInt(2, idSeguidor);
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void removerSeguidor(int idAnuncio, int idSeguidor){
+        con = new ConnectionFactory().getConnection();
+        try {
+            stmt = con.prepareStatement(QUERY_REMOVER_SEGUIDOR);
+            stmt.setInt(1, idSeguidor);
+            stmt.setInt(2, idAnuncio);
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public Boolean verificarSeguidor(int idAnuncio, int idSeguidor){
+         con = new ConnectionFactory().getConnection();
+        try {
+            stmt = con.prepareStatement(QUERY_VERIFICAR_SEGUIDOR);
+            stmt.setInt(1, idSeguidor);
+            stmt.setInt(2, idAnuncio);
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
     
 }
