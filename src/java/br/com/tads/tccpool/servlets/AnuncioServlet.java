@@ -16,6 +16,7 @@ import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.exception.AcessoBdException;
 import br.com.tads.tccpool.facade.AnuncioFacade;
 import br.com.tads.tccpool.facade.MainPageFacade;
+import br.com.tads.tccpool.facade.NotificacaoFacade;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -411,6 +412,19 @@ public class AnuncioServlet extends HttpServlet {
                     } catch (Exception e) {
                     }
                     break;
+                    
+               /* case "BUSCARANUNCIOSEGUIDOS":
+                    List<Categoria> listaCategoriaImovel = new ArrayList<Categoria>();
+                        listaCategoriaImovel = MainPageFacade.listaCategoriasImovel();
+                        session.setAttribute("listaCatImovelSeg", listaCategoriaImovel);
+                        List<Categoria> listaCategoriaMovel = new ArrayList<Categoria>();
+                        listaCategoriaMovel = MainPageFacade.listaCategoriasMovel();
+                        session.setAttribute("listaCatMovelSeg", listaCategoriaMovel);
+                        List<Categoria> listaCategoriaMaterial = new ArrayList<Categoria>();
+                        listaCategoriaMaterial = MainPageFacade.listaCategoriasMaterial();
+                        session.setAttribute("listaCatMaterialSeg", listaCategoriaMaterial);
+                        int idUserSeg = Integer.parseInt(request.getParameter("idUsr"));
+                    break;*/
 
                 case "EXIBIRANUNCIO":
                     int idAnuncio = Integer.parseInt(request.getParameter("idAnuncio"));
@@ -692,6 +706,16 @@ public class AnuncioServlet extends HttpServlet {
                         if (session.getAttribute("idExibirAnuncio") != null) {
                             int idAnuncioVenda = (int) session.getAttribute("idExibirAnuncio");
                             AnuncioFacade.updateStatusAnuncio(idAnuncioVenda, 5);
+                            
+                            //notificação de anúncio vendido **************///
+                            int usrAnunc = NotificacaoFacade.buscarIdUsrAnun(idAnuncioVenda);
+                            ArrayList<Integer> listaSeguidores = new ArrayList<Integer>();
+                            listaSeguidores = (ArrayList)AnuncioFacade.buscarSeguidoresAnuncio(idAnuncioVenda);
+                            for(int idSeg : listaSeguidores){
+                                NotificacaoFacade.inserirnotificacao(usrAnunc, idSeg, 4);
+                            }
+                            //////////*****************************/////////
+                            
                             User u = (User) session.getAttribute("user");
                             List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(u.getId(), 5);
                             session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);

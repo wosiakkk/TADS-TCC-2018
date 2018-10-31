@@ -95,6 +95,9 @@ public class NotificacaoServlet extends HttpServlet {
                             } else if (n.getTipoNot() == 3) {
                                 descNoti = "Seu anúncio recebeu um comentário de: ";
                                 link = "AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr="+idUsr +"&status=2";
+                            }else if (n.getTipoNot() == 4) {
+                                descNoti = "O anúncio que você estava seguindo foi vendido por: ";
+                                link = "AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr="+idUsr +"&status=2";
                             }
                             User u = new User();
                             u = UserFacade.buscarUsuario(n.getIdGerador());

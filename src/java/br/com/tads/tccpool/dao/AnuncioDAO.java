@@ -336,6 +336,9 @@ public class AnuncioDAO {
     private final String QUERY_VERIFICAR_SEGUIDOR = "SELECT * FROM tcc1.tb_seguidor_anuncio WHERE "
             + "tb_seguidor_anuncio.ID_SEGUIDOR = ? AND tb_seguidor_anuncio.tb_anuncio_ID_ANUNCIO = ?";
     
+    private final String QUERY_BUSCAR_SEGUIDORES = "SELECT tb_seguidor_anuncio.ID_SEGUIDOR "
+            + "FROM tb_seguidor_anuncio WHERE tb_seguidor_anuncio.tb_anuncio_ID_ANUNCIO = ?";
+    
     private Connection con = null;
     private PreparedStatement stmt = null;
     private ResultSet rs = null;
@@ -1186,6 +1189,23 @@ public class AnuncioDAO {
             Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+    
+    public List<Integer> buscarSeguidores(int idAnuncio){
+        ArrayList<Integer> lista = new ArrayList<Integer>();
+        con = new ConnectionFactory().getConnection();
+        try {
+            stmt = con.prepareStatement(QUERY_BUSCAR_SEGUIDORES);
+            stmt.setInt(1, idAnuncio);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                lista.add(rs.getInt("ID_SEGUIDOR"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return lista;
     }
     
 }

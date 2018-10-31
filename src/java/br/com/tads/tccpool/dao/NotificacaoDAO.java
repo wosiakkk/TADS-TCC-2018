@@ -133,6 +133,23 @@ public class NotificacaoDAO {
                 }
                 break;
             }
+            //notificação de anúncio vendido
+            case 4:{
+                try {
+                    stmt = con.prepareStatement(QUERY_INSERIR_NOTIFICACAO);
+                    stmt.setInt(1, gerador);
+                    stmt.setInt(2, receptor);
+                    stmt.setInt(3, 2);//status não lida
+                    stmt.setInt(4, tipoNotificacao);
+                    stmt.executeUpdate();
+                } catch (SQLException ex) {
+                    Logger.getLogger(NotificacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    stmt.close();
+                    con.close();
+                }
+                break;
+            }
         }
     }
 

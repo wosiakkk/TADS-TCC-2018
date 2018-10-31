@@ -9,15 +9,15 @@ $(document).ready(function() {
         },
         success: function (data) {
             if(data == 'true'){
-                $('#seguirImovel').val('Você está seguindo este anúncio');
+                $('.botaoSeguir').val('Você está seguindo este anúncio');
             }else{
-                 $('#seguirImovel').val('Seguir anúncio');
+                 $('.botaoSeguir').val('Seguir anúncio');
             }
         }
      });
      
-   $('#seguirImovel').click(function (){
-        if($('#seguirImovel').val() == "Seguir anúncio"){
+   $('.botaoSeguir').click(function (){
+        if($('.botaoSeguir').val() == "Seguir anúncio"){
             $.ajax({
                  method: 'post',
                  url: 'AnuncioServlet?action=ADDSEGUIDOR',
@@ -26,7 +26,7 @@ $(document).ready(function() {
                      idSeguidorAjax: $('input[name=idUserOculta]').val()
                  },
                  success: function (data) {
-                    $('#seguirImovel').val('Você está seguindo este anúncio');
+                    $('.botaoSeguir').val('Você está seguindo este anúncio');
                  }
              });
         }else{
@@ -38,7 +38,7 @@ $(document).ready(function() {
                      idSeguidorAjax: $('input[name=idUserOculta]').val()
                  },
                  success: function (data) {
-                    $('#seguirImovel').val('Seguir anúncio');
+                    $('.botaoSeguir').val('Seguir anúncio');
                  }
              });
         }

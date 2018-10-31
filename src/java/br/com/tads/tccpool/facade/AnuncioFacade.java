@@ -229,4 +229,9 @@ public class AnuncioFacade {
         AnuncioDAO dao = new AnuncioDAO();
         return dao.verificarSeguidor(idAnuncio, idSeguidor);
     }
+    
+    public static List<Integer> buscarSeguidoresAnuncio(int idAnuncio){
+        AnuncioDAO dao = new AnuncioDAO();
+        return dao.buscarSeguidores(idAnuncio);
+    }
 }

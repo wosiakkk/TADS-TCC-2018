@@ -315,7 +315,7 @@ Author     : onurb
                         </c:if>                    
                     </c:if>
                     <c:if test="${imovelExibir.idAnunciante != user.id}">
-                        <input type="button" value="Seguir anúncio" id="seguirImovel" class=" btn btn-primary col-md-6 btn btn-outline-dark" readonly="true"/>
+                        <input type="button" value="Seguir anúncio" id="seguirImovel" class=" btn btn-primary col-md-6 btn btn-outline-dark botaoSeguir" readonly="true"/>
                     </c:if>    
                 </c:if>
                 <div>
@@ -425,6 +425,9 @@ Author     : onurb
                             </div>
                         </c:if>
                     </c:if>
+                    <c:if test="${movelExibir.idAnunciante != user.id}">
+                        <input type="button" value="Seguir anúncio" id="seguirImovel" class=" btn btn-primary col-md-6 btn btn-outline-dark botaoSeguir" readonly="true"/>
+                    </c:if>  
                 </c:if>
                 <div>
                     <%@include file="comentario.jsp" %>
@@ -684,6 +687,9 @@ Author     : onurb
                                 </form>
                             </div>
                         </c:if>
+                    </c:if>
+                    <c:if test="${movelExibir.idAnunciante != user.id}">
+                        <input type="button" value="Seguir anúncio" id="seguirImovel" class=" btn btn-primary col-md-6 btn btn-outline-dark botaoSeguir" readonly="true"/>
                     </c:if>
                 </c:if>
                 <div>
