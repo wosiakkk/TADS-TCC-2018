@@ -195,7 +195,7 @@ Author     : onurb
                         </div>
                     </form>
                     <div class="form-group col-md-12">
-                        <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
+                        <form  action="AnuncioServlet" method="POST"  >
                             <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
                             <input type="hidden" name="status"  value="${imovelAlterar.status}" >
                             <input type="submit" value="Cancelar"  class="form-control btn-primary btn btn-outline-dark" />
@@ -578,7 +578,7 @@ Author     : onurb
                         </div>
                     </form>
                     <div class="form-group col-md-12">
-                        <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
+                        <form  action="AnuncioServlet" method="POST"  >
                             <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
                             <input type="hidden" name="status"  value="${movelAlterar.status}" >
                             <input type="submit" value="Cancelar"  class="form-control btn-primary btn btn-outline-dark" />
@@ -843,7 +843,7 @@ Author     : onurb
                         </div>
                     </form>
                     <div class="form-group col-md-12">
-                        <form  action="AnuncioServlet" method="POST" accept-charset="iso-8859-1" >
+                        <form  action="AnuncioServlet" method="POST"  >
                             <input type="hidden" name="action"  value="CANCELARALTERARANUNCIO" >
                             <input type="hidden" name="status"  value="${materialAlterar.status}" >
                             <input type="submit" value="Cancelar"  class="form-control btn-primary btn btn-outline-dark" />
