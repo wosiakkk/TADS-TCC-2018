@@ -1,19 +1,16 @@
-/*  
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package br.com.tads.tccpool.beans;
-
-import java.util.Enumeration;
-import javax.servlet.http.HttpServletRequest;
-
 /**
  *
  * @author Marcos
  */
-public class FiltroAnuncio {
+
+package br.com.tads.tccpool.beans;
+
+import java.io.Serializable;
+import java.util.Enumeration;
+import javax.servlet.http.HttpServletRequest;
+
+
+public class FiltroAnuncio implements Serializable {
     //Flag que sinaliza se o filtro deve ser aplicado na consulta
     private boolean filtroAtivo = false;
     private boolean movel = false;
