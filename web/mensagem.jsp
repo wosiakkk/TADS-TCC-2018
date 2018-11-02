@@ -27,7 +27,9 @@
 <%@include file="opcoes.jsp" %>
 
 <div class="col-md-7 col-lg-7 col-sm-12">
-
+    <h2>Suas mensagens:</h2>
+    <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+    <hr>
     <div id="respostaAjax" class="jumbotron row">
 
     </div>
@@ -46,6 +48,6 @@
 </div> <!-- fim .col-lg-9 -->
 <div class="col-md-2 col-lg-2 col-sm-12">
     <div id="conversaBox" class="list-group">
-        
+
     </div>
 </div>

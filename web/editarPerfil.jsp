@@ -16,33 +16,33 @@
 <%@include file="opcoes.jsp" %>
 
 <!-- Script para dar destaque na opção navegada -->
-<script>  
+<script>
     $(document).ready(function () {
-  $("#opPerfil").addClass("highlight");
-});
+        $("#opPerfil").addClass("highlight");
+    });
 </script>
 
 <script>
-function formatar(mascara, documento){
-  var i = documento.value.length;
-  var saida = mascara.substring(0,1);
-  var texto = mascara.substring(i)
-  
-  if (texto.substring(0,1) != saida){
-            documento.value += texto.substring(0,1);
-  }
-  
-}
+    function formatar(mascara, documento) {
+        var i = documento.value.length;
+        var saida = mascara.substring(0, 1);
+        var texto = mascara.substring(i)
 
-function numeros( campo )
-{
-    if ( isNaN( campo.value.substring(campo.value.length-1) ) )
-        campo.value = campo.value.substr( 0 , campo.value.length - 1 );
-}
+        if (texto.substring(0, 1) != saida) {
+            documento.value += texto.substring(0, 1);
+        }
+
+    }
+
+    function numeros(campo)
+    {
+        if (isNaN(campo.value.substring(campo.value.length - 1)))
+            campo.value = campo.value.substr(0, campo.value.length - 1);
+    }
 </script>
 
 <div class="col-8 menu-fixed-center">
-    <h1>Edite seu Perfil</h1>
+    <h1>Edite seu Perfil:</h1>
     <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
     <hr>
     <div class="container">
@@ -53,18 +53,18 @@ function numeros( campo )
                     <div  align="center">
                         <div class="text-center col-md-9">
                             <img src="${userSearch.getFoto()}" class="avatar img-circle" alt="avatar" style="width: 200px; height: 200px">
-                            <h6>Carregar uma foto nova...</h6>
+                            <h6>Carregar uma nova foto...</h6>
                             <input type="file" name="foto" id="foto" class="form-control">
                         </div>
                     </div>    
                     <hr>
-                    <h3>Informações do perfil</h3>
+                    <h3>Informações do Perfil</h3>
                     <hr>           
                     <input id="idUser" type="hidden" name="idUser" value="${userSearch.id}"/>
                     <input id="codEndereco" type="hidden" name="codEndereco" value="${userSearch.cdEndereco}"/>
                     <input id="fotoUser" type="hidden" name="fotoUser" value="${userSearch.getFoto()}"/>
                     <div class="form-group">
-                        
+
                         <div class="col-lg-12">
                             <label for="nome">Nome Completo:</label>
                             <input class="form-control" name="nome" id="nome" type="text" value="<c:out value="${userSearch.getNome()}"/>">
@@ -73,13 +73,13 @@ function numeros( campo )
                     <div class="form-group">                      
                         <div class="col-lg-9">
                             <label>Telefone Fixo:</label>
-                            <input class="form-control" name="telefone" id="telefone"  type="text" maxlength="12" onkeyup="numeros( this )" OnKeyPress="formatar('##-####-####', this)" value="<c:out value="${userSearch.tel}"/>">
+                            <input class="form-control" name="telefone" id="telefone"  type="text" maxlength="12" onkeyup="numeros(this)" OnKeyPress="formatar('##-####-####', this)" value="<c:out value="${userSearch.tel}"/>">
                         </div>
                     </div>
                     <div class="form-group">                       
                         <div class="col-lg-9">
                             <label>Celular:</label>
-                            <input class="form-control" name="celular" id="celular"  type="text" maxlength="13" onkeyup="numeros( this )" OnKeyPress="formatar('##-#####-####', this)" value="<c:out value="${userSearch.cel}"/>">
+                            <input class="form-control" name="celular" id="celular"  type="text" maxlength="13" onkeyup="numeros(this)" OnKeyPress="formatar('##-#####-####', this)" value="<c:out value="${userSearch.cel}"/>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -90,7 +90,7 @@ function numeros( campo )
                     </div>
                     <div class="form-group">
                         <div class="col-lg-12">
-                            <label for="interesses">Interesses ou qualquer outra coisa relacionada a perfil:</label>
+                            <label for="interesses">Seus interesses:</label>
                             <textarea class="form-control" rows="5" id="interesses" name="interesses" >${userSearch.interesses}</textarea>
                         </div>
                     </div>            
@@ -118,8 +118,8 @@ function numeros( campo )
                     </div>
                     <div class="form-group">                       
                         <div class="col-lg-9">
-                            <label>Cep:</label>
-                            <input class="form-control" name="cep" id="cep" maxlength="9" type="text" onkeyup="numeros( this )" OnKeyPress="formatar('#####-###', this)" value="<c:out value="${userSearch.CEP}"/>">
+                            <label>CEP:</label>
+                            <input class="form-control" name="cep" id="cep" maxlength="9" type="text" onkeyup="numeros(this)" OnKeyPress="formatar('#####-###', this)" value="<c:out value="${userSearch.CEP}"/>">
                         </div>
                     </div>
                     <div class="form-group">                       

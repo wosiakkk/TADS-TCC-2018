@@ -23,27 +23,27 @@
                 </div>
                 <div class="list-group">
                     <c:if test="${user.getTipoUsuario()== 1}">                  
-                        <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anuncios</a>
-                        <a id="opVendas" class="list-group-item" href="vendas.jsp">Área de vendas</a>
+                        <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anúncios</a>
+                        <a id="opVendas" class="list-group-item" href="vendas.jsp">Área de Vendas</a>
                         <a class="list-group-item" href="escolhaPreferencias.jsp">Preferências</a>
                     </c:if>
                     <c:if test="${user.getTipoUsuario()== 2}">
                         <a class="list-group-item" href="UserServlet?action=PERFIL&idUser=${user.getId()}">Perfil</a>
-                        <a class="list-group-item" href="escolhaMeusAnuncios.jsp">Meus anuncios</a> 
+                        <a class="list-group-item" href="escolhaMeusAnuncios.jsp">Meus Anúncios</a> 
                         <a class="list-group-item" href="escolhaAmigo.jsp">Meus Amigos</a>  
-                        <a class="list-group-item" href="vendas.jsp">Área de vendas</a>                      
+                        <a class="list-group-item" href="vendas.jsp">Área de Vendas</a>                      
                         <a class="list-group-item" href="UserServlet?action=SEARCH">Editar Perfil</a>
-                        <a class="list-group-item" href="escolhaAnuncio.jsp">Realizar um Anuncio</a>           
+                        <a class="list-group-item" href="escolhaAnuncio.jsp">Realizar um Anúncio</a>           
                         <a class="list-group-item" href="mensagem.jsp">Mensagens</a>
                         <a class="list-group-item" href="escolhaPreferencias.jsp">Preferências</a>
                         <a class="list-group-item" href="gerarRelatorio.jsp">Estatísticas</a>
                     </c:if>
                     <c:if test="${user.getTipoUsuario()== 3}">
                         <a class="list-group-item" href="cadastrarAdm.jsp">Cadastrar um Administrador</a>
-                        <a class="list-group-item" href="cadastrarModerador.jsp">Cadastrar um moderador</a>
-                        <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anuncios</a> 
+                        <a class="list-group-item" href="cadastrarModerador.jsp">Cadastrar um Moderador</a>
+                        <a class="list-group-item" href="escolhaPendente.jsp">Aprovar Anúncios</a> 
                         <a class="list-group-item" href="escolhaPreferencias.jsp">Preferências</a>
-                        <a id="opVendas" class="list-group-item" href="vendas.jsp">Área de vendas</a>
+                        <a id="opVendas" class="list-group-item" href="vendas.jsp">Área de Vendas</a>
                         <a class="list-group-item" href="gerarRelatorioAdm.jsp">Estatísticas</a>
                     </c:if>
                 </div>
