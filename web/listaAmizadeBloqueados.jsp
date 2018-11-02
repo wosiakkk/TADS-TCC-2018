@@ -28,7 +28,7 @@
         <!-- Usuário Comum -->
         <c:if test="${user.getTipoUsuario()== 2}">
             <div class="col-sm-12">
-                <h2>Seus Amigos: </h2>
+                <h2>Seus amigos bloqueados: </h2>
                 <a href="escolhaAmigo.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
                 <hr>
             </div>

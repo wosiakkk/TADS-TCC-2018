@@ -12,9 +12,9 @@
     </c:redirect>
 </c:if>
 <form class="form-horizontal"  action="UserServlet?action=ADD"  method="POST" role="form">
-    <h2>Cadastro de Anuncio:</h2>
+    <h2>Cadastro de Anúncio:</h2>
     <div class="form-group">
-        <label for="select" class="col-sm-3 control-label">Selecione a categoria do anuncio:</label>
+        <label for="select" class="col-sm-3 control-label">Selecione a categoria do anúncio:</label>
         <div class="col-sm-9">
             <c:set var="lista" value="${listaCat}"/>
             <select class="selectpicker" name="inst" id="select">

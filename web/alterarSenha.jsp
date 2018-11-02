@@ -29,11 +29,11 @@
 <c:if test="${not empty user.senha}">
     <div class="col-md-9 col-sm-9 col-xs-9 col-lg-9">
         <form id="formulario" class="form-horizontal"  action="UserServlet?action=ALTSENHA"  method="POST" role="form">
-            <h2>Alteração de senha.</h2>
+            <h2>Alteração de senha:</h2>
             <a href="escolhaPreferencias.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
             <hr>
             <div class="form-group">
-                <label for="senhaAtual" class="col-sm-3 control-label">Senha Atual</label>
+                <label for="senhaAtual" class="col-sm-3 control-label">Senha Atual:</label>
                 <div class="col-sm-9">
                     <input type="password" name="senhaAtual" id="senhaAtual" placeholder="Senha Atual" class="form-control">
                 </div>
@@ -43,13 +43,13 @@
 
             </div>
             <div class="form-group">
-                <label for="novaSenha" class="col-sm-3 control-label">Nova Senha</label>
+                <label for="novaSenha" class="col-sm-3 control-label">Nova Senha:</label>
                 <div class="col-sm-9">
                     <input type="password" name="novaSenha" id="novaSenha" placeholder="Nova Senha" class="form-control" required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="confsenha" class="col-sm-3 control-label">Confirmar nova senha</label>
+                <label for="confsenha" class="col-sm-3 control-label">Confirmar a nova senha:</label>
                 <div class="col-sm-9">
                     <input type="password" name="confsenha" id="confsenha" placeholder="Confirmar Senha" class="form-control" required>
                 </div>
