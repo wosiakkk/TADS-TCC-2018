@@ -55,6 +55,11 @@
                             <img class="d-block img-fluid" src="img\icones\negado.png">Rejeitados
                         </a>
                     </div>
+                    <div class="list-group-item">
+                        <a  href="AnuncioServlet?action=BUSCARANUNCIOSEGUIDOS">
+                            <img class="d-block img-fluid" src="img\icones\follow.png">Anúncios que você está seguindo
+                        </a>
+                    </div>
                 </div>
             </div>
         </c:if>

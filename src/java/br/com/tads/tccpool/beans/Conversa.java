@@ -16,6 +16,8 @@ import java.util.Calendar;
 public class Conversa implements Serializable {
     private Integer idConversa;
     private Integer idOrigem;
+    private String nmOrigem;
+    private String fotoOrigem;    
     private Integer idDestino;
     private String nmDestino;
     private String fotoDestino;
@@ -65,6 +67,22 @@ public class Conversa implements Serializable {
         this.idOrigem = idOrigem;
     }
 
+    public String getNmOrigem() {
+        return nmOrigem;
+    }
+
+    public void setNmOrigem(String nmOrigem) {
+        this.nmOrigem = nmOrigem;
+    }
+
+    public String getFotoOrigem() {
+        return fotoOrigem;
+    }
+
+    public void setFotoOrigem(String fotoOrigem) {
+        this.fotoOrigem = fotoOrigem;
+    }
+    
     public Calendar getDtInicio() {
         return dtInicio;
     }

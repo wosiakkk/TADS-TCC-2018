@@ -49,9 +49,10 @@
                 <small>Ou, se preferir pode criar uma conta, <a href="MainPageServlet?action=CLIENTE">clique aqui e cadastre-se</a>!</small>
             </div>
             <div class="col-sm"></div>
-        </div>
-    </div>
+        </div>       
+    </div> 
 </div>
+
 <!-- Script para chamar a API Goolge -->
 <script>
     function onSignIn(googleUser) {

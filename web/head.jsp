@@ -12,6 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset ="UTF-8">
         <meta name="google-signin-client_id" content="416664861929-ceaen1jvonlg3vecdhpmnks7029a2gnd.apps.googleusercontent.com">
         <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
         <link href="assets/css/shop-item.css" rel="stylesheet">

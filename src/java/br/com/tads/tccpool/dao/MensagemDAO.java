@@ -23,16 +23,10 @@ public class MensagemDAO {
     private PreparedStatement stmt = null;
     private ResultSet rs = null;
     private final String QUERY_INSERT = "{CALL INSERIR_MSG(?, ?, ?)}";
-    /*private final String QUERY_INSERT = "INSERT INTO\n" +
-                                        "  TB_MENSAGEM (\n" +
-                                        "    ID_ORIGEM,\n" +
-                                        "    ID_DESTINO,\n" +
-                                        "    DS_MSG\n" +
-                                        "  )\n" +
-                                        "VALUES (?, ?, ?);";*/
     private final String QUERY_SELECT = "SELECT\n" +
                                         "  TB_MENSAGEM.*,\n" +
                                         "  ORIGEM.NM_NOME AS NM_ORIGEM,\n" +
+                                        "  ORIGEM.DS_FOTO AS DS_FOTO_ORIGEM,\n" +
                                         "  DESTINO.NM_NOME AS NM_DESTINO,\n" +
                                         "  DESTINO.DS_FOTO AS DS_FOTO_DESTINO\n" +
                                         "FROM\n" +
@@ -46,18 +40,22 @@ public class MensagemDAO {
                                         "WHERE\n" +
                                         "  ID_ORIGEM IN (?, ?)\n" +
                                         "  AND ID_DESTINO IN (?, ?)\n" +
-                                        //"  AND TB_MENSAGEM.ID_CONVERSA = ?\n" +
                                         "ORDER BY DT_MSG ASC";
     private final String QUERY_LISTAR_CONVERSAS = "SELECT \n" +
                                                   "  TB_CONVERSA.*,\n" +
-                                                  "  TB_USUARIO.NR_SEQ AS ID_DESTINO,\n" +
-                                                  "  TB_USUARIO.NM_NOME AS NM_DESTINO,\n" +
-                                                  "  TB_USUARIO.DS_FOTO AS FOTO_DESTINO\n" +
+                                                  "  ORIGEM.NR_SEQ AS ID_ORIGEM,\n" +
+                                                  "  ORIGEM.NM_NOME AS NM_ORIGEM,\n" +
+                                                  "  ORIGEM.DS_FOTO AS FOTO_ORIGEM,\n" +
+                                                  "  DESTINO.NR_SEQ AS ID_DESTINO,\n" +
+                                                  "  DESTINO.NM_NOME AS NM_DESTINO,\n" +
+                                                  "  DESTINO.DS_FOTO AS FOTO_DESTINO\n" +
                                                   "FROM\n" +
-                                                  " TB_CONVERSA\n" +
-                                                  " LEFT JOIN TB_USUARIO ON TB_USUARIO.NR_SEQ = TB_CONVERSA.ID_USR_DESTINO\n" +
+                                                  "  TB_CONVERSA\n" +
+                                                  "  LEFT JOIN TB_USUARIO AS ORIGEM ON ORIGEM.NR_SEQ = TB_CONVERSA.ID_USR_ORIGEM AND ORIGEM.NR_SEQ != TB_CONVERSA.ID_USR_DESTINO\n" +
+                                                  "  LEFT JOIN TB_USUARIO AS DESTINO ON DESTINO.NR_SEQ = TB_CONVERSA.ID_USR_DESTINO AND DESTINO.NR_SEQ != TB_CONVERSA.ID_USR_ORIGEM\n" +
                                                   "WHERE\n" +
-                                                  "  TB_CONVERSA.ID_USR_ORIGEM = ?";
+                                                  "   TB_CONVERSA.ID_USR_ORIGEM = ?\n" +
+                                                  "OR TB_CONVERSA.ID_USR_DESTINO = ?";
     
     public MensagemDAO() {
         ConnectionFactory cf = new ConnectionFactory();
@@ -92,18 +90,23 @@ public class MensagemDAO {
             m.setNmOrigem(rs.getString("NM_ORIGEM"));
             m.setNmDestino(rs.getString("NM_DESTINO"));
             m.setFotoDestino(rs.getString("DS_FOTO_DESTINO"));
+            m.setFotoOrigem(rs.getString("DS_FOTO_ORIGEM"));
             m.getData().setTime(rs.getDate("DT_MSG"));
             
             mensagens.add(m);
         }
+        con.close();
+        stmt.close();
+        rs.close();
         
         return mensagens;
     }
     
     public ArrayList<Conversa> listarConversas(Integer userLogado) throws SQLException {
-        ArrayList<Conversa> lConversas = new ArrayList<Conversa>();
+        ArrayList<Conversa> lConversas = new ArrayList<>();
         stmt = con.prepareStatement(QUERY_LISTAR_CONVERSAS);
         stmt.setInt(1, userLogado);
+        stmt.setInt(2, userLogado);
         
         rs = stmt.executeQuery();
         
@@ -111,6 +114,8 @@ public class MensagemDAO {
             Conversa c = new Conversa();
             c.setIdConversa(rs.getInt("ID_CONVERSA"));
             c.setIdOrigem(rs.getInt("ID_USR_ORIGEM"));
+            c.setNmOrigem(rs.getString("NM_ORIGEM"));
+            c.setFotoOrigem(rs.getString("FOTO_ORIGEM"));
             c.setIdDestino(rs.getInt("ID_USR_DESTINO"));
             c.setNmDestino(rs.getString("NM_DESTINO"));
             c.setFotoDestino(rs.getString("FOTO_DESTINO"));
@@ -118,6 +123,10 @@ public class MensagemDAO {
             
             lConversas.add(c);
         }
+        
+        con.close();
+        stmt.close();
+        rs.close();
         
         return lConversas;
     }

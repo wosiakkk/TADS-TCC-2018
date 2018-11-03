@@ -95,6 +95,18 @@ public class NotificacaoServlet extends HttpServlet {
                             } else if (n.getTipoNot() == 3) {
                                 descNoti = "Seu anúncio recebeu um comentário de: ";
                                 link = "AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr="+idUsr +"&status=2";
+                            }else if (n.getTipoNot() == 4) {
+                                descNoti = "O anúncio que você estava seguindo foi vendido por: ";
+                                link = "escolhaMeusAnuncios.jsp";
+                            }else if (n.getTipoNot() == 5) {
+                                descNoti = "O seu Anúncio foi aprovado por: ";
+                                link = "escolhaMeusAnuncios.jsp";
+                            }else if (n.getTipoNot() == 6) {
+                                descNoti = "O seu Anúncio foi rejeitado por: ";
+                                link = "escolhaMeusAnuncios.jsp";
+                            }else if (n.getTipoNot() == 7) {
+                                descNoti = "Você recebeu uma mensagem de: ";
+                                link = "mensagem.jsp";
                             }
                             User u = new User();
                             u = UserFacade.buscarUsuario(n.getIdGerador());
@@ -132,6 +144,21 @@ public class NotificacaoServlet extends HttpServlet {
                                 link = "UserServlet?action=AMIZADE&acao=LISTARPEDIDOS&idUser=" + idUsr + "";
                             } else if (n.getTipoNot() == 2) {
                                 descNoti = "Seu pedido de amizade foi aceito por: ";
+                            }else if (n.getTipoNot() == 3) {
+                                descNoti = "Seu anúncio recebeu um comentário de: ";
+                                link = "AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr="+idUsr +"&status=2";
+                            }else if (n.getTipoNot() == 4) {
+                                descNoti = "O anúncio que você estava seguindo foi vendido por: ";
+                                link = "escolhaMeusAnuncios.jsp";
+                            }else if (n.getTipoNot() == 5) {
+                                descNoti = "O seu Anúncio foi aprovado por: ";
+                                link = "escolhaMeusAnuncios.jsp";
+                            }else if (n.getTipoNot() == 6) {
+                                descNoti = "O seu Anúncio foi rejeitado por: ";
+                                link = "escolhaMeusAnuncios.jsp";
+                            }else if (n.getTipoNot() == 7) {
+                                descNoti = "Você recebeu uma mensagem de: ";
+                                link = "mensagem.jsp";
                             }
                             User u = new User();
                             u = UserFacade.buscarUsuario(n.getIdGerador());
@@ -142,14 +169,14 @@ public class NotificacaoServlet extends HttpServlet {
                                     + " <img src=\"" + u.getFoto() + "\"  class=\"img-thumbnail\" width=\"50\" height=\"50\">\n"
                                     + " </div>\n"
                                     + " <div class=\"d-inline-block\">\n"
-                                    + "  <h5 class=\"card-title center\">" + descNoti + u.getNome() + "</h5> <a href=" + link + " class=\"btn btn-outline-dark\">Ver</a>"
-                                    + "<form action=\"NotificacaoServlet?action=EXCLUIR\"  method=\"POST\" role=\"form\"><input name=\"idNoti\" value=" + n.getId() + " hidden>"
-                                    + "<button class=\"btn btn-outline-dark\" type=\"submit\">Excluir</button></form><hr>"
+                                    + "  <h5 class=\"card-title center\">" + descNoti + u.getNome() + "</h5> "    
                                     + "</div>"
                                     + "<div>"
                                     + "<small><span>" + format.format(n.getData().getTime()) + "</span></small>"
                                     + "</div>"
-                                    + "</div>"
+                                    + "<form action=\"NotificacaoServlet?action=EXCLUIR\"  method=\"POST\" role=\"form\"><input name=\"idNoti\" value=" + n.getId() + " hidden>"
+                                    + "<hr><button class=\"btn btn-outline-dark\" type=\"submit\">Excluir</button></form><hr>"
+                                    + "</div>"                                  
                                     + "</div>";
                         }
                         response.setContentType("text/plain");

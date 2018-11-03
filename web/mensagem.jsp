@@ -16,16 +16,20 @@
 <link href="assets/css/feed-style.css" rel="stylesheet">
 <script type="text/javascript" src="assets/js/mensagem.js"></script>
 
-<!--div class="col-3">
-    <h1>Mensagens</h1>
-    <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
-    <hr>
-</div-->
+<!-- Script para dar destaque na opção navegada -->
+<script>
+    $(document).ready(function () {
+        $("#opMsg").addClass("highlight");
+    });
+</script>
+
 <!-- Página com foto e as opções do perfil -->
 <%@include file="opcoes.jsp" %>
 
 <div class="col-md-7 col-lg-7 col-sm-12">
-
+    <h2>Suas mensagens:</h2>
+    <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+    <hr>
     <div id="respostaAjax" class="jumbotron row">
 
     </div>
@@ -44,6 +48,6 @@
 </div> <!-- fim .col-lg-9 -->
 <div class="col-md-2 col-lg-2 col-sm-12">
     <div id="conversaBox" class="list-group">
-        
+
     </div>
 </div>

@@ -24,20 +24,9 @@ import java.util.logging.Logger;
  */
 public class UserDAO {
 
-
     private static final String QUERY_INSERT_PRIVACIDADE_USER = "INSERT INTO `tcc1`.`tb_privacidade`(`TB_USUARIO_NR_SEQ`,`PRIVACIDADE_TELEFONE`,`PRIVACIDADE_ENDERECO`,`PRIVACIDADE_DESCRICAO`,`PRIVACIDADE_INTERESSES`)VALUES(?,?,?,?,?);";
     private static final String QUERY_UPDATE_PRIVACIDADE_USER = "UPDATE `tcc1`.`tb_privacidade` SET `PRIVACIDADE_TELEFONE` = ?,`PRIVACIDADE_ENDERECO` = ?,`PRIVACIDADE_DESCRICAO` = ?,`PRIVACIDADE_INTERESSES` = ? WHERE `ID_PRIVACIDADE` = ?;";
     private static final String QUERY_SELECT_PRIVACIDADE_USER = "SELECT * FROM tcc1.tb_privacidade WHERE TB_USUARIO_NR_SEQ = ?;";
-    
-    private static final String QUERY_INSERT_ENDERECO_USER = "INSERT INTO `tcc1`.`tb_endereco`\n" +
-                                                            "(`NM_RUA`,\n" +
-                                                            "`NM_ESTADO`,\n" +
-                                                            "`NR_RUA`,\n" +
-                                                            "`NR_CEP`,\n" +
-                                                            "`DS_COMPLEMENTO`,\n" +
-                                                            "`NM_CIDADE`)\n" +
-                                                            "VALUES\n" +
-                                                            "(?,?,?,?,?,?)";
 
     private static final String QUERY_INSERT_ENDERECO_USER = "INSERT INTO `tcc1`.`tb_endereco`\n"
             + "(`NM_RUA`,\n"
@@ -48,7 +37,7 @@ public class UserDAO {
             + "`NM_CIDADE`)\n"
             + "VALUES\n"
             + "(?,?,?,?,?,?)";
-  
+
     private static final String QUERY_CONSULTA_ID_ENDERECO_USER = "SELECT CD_ENDERECO FROM tcc1.tb_usuario WHERE NR_SEQ = ?";
     private static final String QUERY_LOGIN = "SELECT NR_SEQ, DS_EMAIL, NM_NOME, TP_USUARIO, DS_FOTO, DS_SENHA FROM TB_USUARIO WHERE DS_EMAIL = ? AND DS_SENHA = ?";
     private static final String QUERY_LOGIN_GOOGLE = "SELECT NR_SEQ, NM_NOME, DS_EMAIL, DS_FOTO,TP_USUARIO FROM TB_USUARIO WHERE DS_EMAIL = ?";
@@ -312,71 +301,80 @@ public class UserDAO {
     }
 
     public User buscarUser(int idUser) {
-        try {
-            stmt = con.prepareStatement(QUERY_SELECT_USR);
-            stmt.setInt(1, idUser);
-            rs = stmt.executeQuery();
-            if (rs.next()) {
-                User u = new User();
-                u.setId(idUser);
-                //   u.setCpf(rs.getString("NR_CPF"));
-                if (rs.getString("NM_NOME") != null) {
-                    u.setNome(rs.getString("NM_NOME"));
-                }
-                if (rs.getString("DS_EMAIL") != null) {
-                    u.setEmail(rs.getString("DS_EMAIL"));
-                }
-                if (rs.getString("DS_SENHA") != null) {
-                    u.setSenha(rs.getString("DS_SENHA"));
-                }
-                if (rs.getString("NR_TELEFONE") != null) {
-                    u.setTel(rs.getString("NR_TELEFONE"));
-                }
-                if (rs.getString("NR_CELULAR") != null) {
-                    u.setCel(rs.getString("NR_CELULAR"));
-                }
-                if (rs.getString("NR_CEP") != null) {
-                    u.setCep(rs.getString("NR_CEP"));
-                }
-                u.setNumero(rs.getInt("NR_RUA"));
-                if (rs.getString("NM_RUA") != null) {
-                    u.setLogradouro(rs.getString("NM_RUA"));
-                }
-                if (rs.getString("DS_COMPLEMENTO") != null) {
-                    u.setComplemento(rs.getString("DS_COMPLEMENTO"));
-                }
-                if (rs.getString("NM_ESTADO") != null) {
-                    u.setEstado(rs.getString("NM_ESTADO"));
-                }
-                if (rs.getString("NM_CIDADE") != null) {
-                    u.setCidade(rs.getString("NM_CIDADE"));
-                }
-                //   u.setInstituicao(rs.getInt("CD_INST"));
-                u.setCdEndereco(rs.getInt("CD_ENDERECO"));
-                if (rs.getString("DS_FOTO") != null) {
-                    u.setFoto(rs.getString("DS_FOTO"));
-                }
-                if (rs.getString("DS_DESCRICAO_USER") != null) {
-                    u.setDescricao(rs.getString("DS_DESCRICAO_USER"));
-                }
-                if (rs.getString("DS_INTERESSES") != null) {
-                    u.setInteresses(rs.getString("DS_INTERESSES"));
-                }
 
-                return u;
-            } else {
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, e);
-            return null;
-        } finally {
+        if (idUser == 1 || idUser == 3) {
+            User mod = new User();
+            mod.setNome("Moderador");
+            mod.setFoto("img\\fotosPerfil\\mod.png");
+            return mod;
+        } else {
+
             try {
-                con.close();
-                stmt.close();
-                rs.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                stmt = con.prepareStatement(QUERY_SELECT_USR);
+                stmt.setInt(1, idUser);
+                rs = stmt.executeQuery();
+                if (rs.next()) {
+                    User u = new User();
+                    u.setId(idUser);
+                    //   u.setCpf(rs.getString("NR_CPF"));
+                    if (rs.getString("NM_NOME") != null) {
+                        u.setNome(rs.getString("NM_NOME"));
+                    }
+                    if (rs.getString("DS_EMAIL") != null) {
+                        u.setEmail(rs.getString("DS_EMAIL"));
+                    }
+                    if (rs.getString("DS_SENHA") != null) {
+                        u.setSenha(rs.getString("DS_SENHA"));
+                    }
+                    if (rs.getString("NR_TELEFONE") != null) {
+                        u.setTel(rs.getString("NR_TELEFONE"));
+                    }
+                    if (rs.getString("NR_CELULAR") != null) {
+                        u.setCel(rs.getString("NR_CELULAR"));
+                    }
+                    if (rs.getString("NR_CEP") != null) {
+                        u.setCep(rs.getString("NR_CEP"));
+                    }
+                    u.setNumero(rs.getInt("NR_RUA"));
+                    if (rs.getString("NM_RUA") != null) {
+                        u.setLogradouro(rs.getString("NM_RUA"));
+                    }
+                    if (rs.getString("DS_COMPLEMENTO") != null) {
+                        u.setComplemento(rs.getString("DS_COMPLEMENTO"));
+                    }
+                    if (rs.getString("NM_ESTADO") != null) {
+                        u.setEstado(rs.getString("NM_ESTADO"));
+                    }
+                    if (rs.getString("NM_CIDADE") != null) {
+                        u.setCidade(rs.getString("NM_CIDADE"));
+                    }
+                    //   u.setInstituicao(rs.getInt("CD_INST"));
+                    u.setCdEndereco(rs.getInt("CD_ENDERECO"));
+                    if (rs.getString("DS_FOTO") != null) {
+                        u.setFoto(rs.getString("DS_FOTO"));
+                    }
+                    if (rs.getString("DS_DESCRICAO_USER") != null) {
+                        u.setDescricao(rs.getString("DS_DESCRICAO_USER"));
+                    }
+                    if (rs.getString("DS_INTERESSES") != null) {
+                        u.setInteresses(rs.getString("DS_INTERESSES"));
+                    }
+
+                    return u;
+                } else {
+                    throw new SQLException();
+                }
+            } catch (SQLException e) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, e);
+                return null;
+            } finally {
+                try {
+                    con.close();
+                    stmt.close();
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -482,7 +480,7 @@ public class UserDAO {
         }
     }
 
-    public Boolean solicitarAmizade(int idSolicitante, int idSolicitado) {
+    public Boolean solicitarAmizade(int idSolicitante, int idSolicitado) throws SQLException {
         //alterando para o solicitante:
         try {
             stmt = con.prepareStatement(QUERY_SOLICITAR_AMIZADE);
@@ -498,11 +496,14 @@ public class UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        } finally {
+            con.close();
+            stmt.close();
         }
         return true;
     }
 
-    public Boolean solicitarAmizade2(int idSolicitante, int idSolicitado) {
+    public Boolean solicitarAmizade2(int idSolicitante, int idSolicitado) throws SQLException {
         //ALTERANDO PARA O SOLICITADO
         try {
             stmt = con.prepareStatement(QUERY_SOLICITAR_AMIZADE);
@@ -517,11 +518,14 @@ public class UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        } finally {
+            con.close();
+            stmt.close();
         }
         return true;
     }
 
-    public ArrayList buscarUsuariosDinamicamente(String s, int userLogado) {
+    public ArrayList buscarUsuariosDinamicamente(String s, int userLogado) throws SQLException {
         ArrayList usuariosAchados = new ArrayList();
 
         try {
@@ -537,11 +541,15 @@ public class UserDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.close();
+            stmt.close();
+            rs.close();
         }
         return usuariosAchados;
     }
 
-    public int checarAmizade(int idSessao, int idPerfil) {
+    public int checarAmizade(int idSessao, int idPerfil) throws SQLException {
 
         try {
             int statusAmizade;
@@ -579,13 +587,17 @@ public class UserDAO {
 
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.close();
+            stmt.close();
+            rs.close();
         }
 
         return 0; //nenhuma ação de amizade
     }
 
     //verificar se já são amigos para evitar duplicidade
-    public Boolean verfAmizade(int idUsr, int idSolicitacao) {
+    public Boolean verfAmizade(int idUsr, int idSolicitacao) throws SQLException {
         try {
             stmt = con.prepareStatement(QUERY_VERIFICAR_AMIZADE_EXISTENTE);
             stmt.setInt(1, idUsr);
@@ -595,14 +607,14 @@ public class UserDAO {
             if (rs.next()) {
                 return true;
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
         return false;
     }
 
-    public Boolean aceitarAmizade(int idSolicitante, int idSolicitado) {
+    public Boolean aceitarAmizade(int idSolicitante, int idSolicitado) throws SQLException {
         Boolean v = false;
         if ((verfAmizade(idSolicitante, idSolicitado))) {
             return false;
@@ -612,18 +624,19 @@ public class UserDAO {
                 stmt.setInt(1, idSolicitado);
                 stmt.setInt(2, idSolicitante);
                 stmt.executeUpdate();
-                stmt.close();
-                con.close();
                 v = true;
             } catch (SQLException ex) {
                 Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } finally {
+            con.close();
+            stmt.close();
+            rs.close();
         }
-
+        }
         return v;
     }
 
-    public Boolean rejeitarPedidoAmizade(int idSessaoSolicitado, int idSolicitante) {
+    public Boolean rejeitarPedidoAmizade(int idSessaoSolicitado, int idSolicitante) throws SQLException {
         Boolean verifica = false;
         try {
             stmt = con.prepareStatement(QUERY_REJEITAR_PEDIDO);
@@ -631,15 +644,16 @@ public class UserDAO {
             stmt.setInt(2, idSolicitante);
             stmt.executeUpdate();
             verifica = true;
-            stmt.close();
-            con.close();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.close();
+            stmt.close();
         }
         return verifica;
     }
 
-    public Boolean rejeitarBloquear(int idSessao, int idSolicitante) {
+    public Boolean rejeitarBloquear(int idSessao, int idSolicitante) throws SQLException {
         Boolean verifica = false;
         try {
             stmt = con.prepareStatement(QUERY_REJEITAR_E_BLOQUEAR);
@@ -650,15 +664,16 @@ public class UserDAO {
             stmt.setInt(5, idSolicitante);
             stmt.executeUpdate();
             verifica = true;
-            stmt.close();
-            con.close();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.close();
+            stmt.close();
         }
         return verifica;
     }
 
-    public Boolean desbloquearUsuario(int idSessao, int idDesbloqueio) {
+    public Boolean desbloquearUsuario(int idSessao, int idDesbloqueio) throws SQLException {
         Boolean verifica = false;
         try {
             stmt = con.prepareStatement(QUERY_DESBLOQUEAR_USUARIO);
@@ -668,15 +683,17 @@ public class UserDAO {
             stmt.setInt(4, idDesbloqueio);
             stmt.executeUpdate();
             verifica = true;
-            stmt.close();
-            con.close();
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.close();
+            stmt.close();
         }
         return verifica;
     }
 
-    public Boolean excluirAmizade(int idSessao, int idAmigo) {
+    public Boolean excluirAmizade(int idSessao, int idAmigo) throws SQLException {
         Boolean verifica = false;
         try {
             stmt = con.prepareStatement(QUERY_EXCLUIR_AMIZADE);
@@ -686,15 +703,16 @@ public class UserDAO {
             stmt.setInt(4, idAmigo);
             stmt.executeUpdate();
             verifica = true;
-            stmt.close();
-            con.close();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.close();
+            stmt.close();
         }
         return verifica;
     }
 
-    public List<User> gerarListaAmigosAceitos(int idUserLogado) {
+    public List<User> gerarListaAmigosAceitos(int idUserLogado) throws SQLException {
         ArrayList<Integer> listaIds = new ArrayList<>();
         ArrayList<User> listaUsers = new ArrayList<>();
         try {
@@ -723,11 +741,15 @@ public class UserDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.close();
+            stmt.close();
+            rs.close();
         }
         return listaUsers;
     }
 
-    public List<User> gerarListaDePedidosDeAmizade(int idUserLogado) {
+    public List<User> gerarListaDePedidosDeAmizade(int idUserLogado) throws SQLException {
         ArrayList<Integer> listaIds = new ArrayList<>();
         ArrayList<User> listaUsers = new ArrayList<>();
         try {
@@ -751,11 +773,15 @@ public class UserDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.close();
+            stmt.close();
+            rs.close();
         }
         return listaUsers;
     }
 
-    public List<User> gerarListaBloqueados(int idUserLogado) {
+    public List<User> gerarListaBloqueados(int idUserLogado) throws SQLException {
         ArrayList<Integer> listaIds = new ArrayList<>();
         ArrayList<User> listaUsers = new ArrayList<>();
         try {
@@ -781,10 +807,13 @@ public class UserDAO {
                     listaUsers.add(u);
                 }
             }
-            stmt.close();
-            con.close();
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.close();
+            stmt.close();
+            rs.close();
         }
         return listaUsers;
     }
@@ -792,7 +821,7 @@ public class UserDAO {
     //******************************
     // implementado apenas para finalizar a sprint da lista de amigos, pois os nomes do user podem ser iguais
     // futuramente a busca será aprimorada
-    public int buscarIdPorNome(String nome) {
+    public int buscarIdPorNome(String nome) throws SQLException {
         int id = -1;
         try {
             stmt = con.prepareStatement(QUERY_BUSCAR_ID_POR_NOME);
@@ -803,6 +832,10 @@ public class UserDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.close();
+            stmt.close();
+            rs.close();
         }
         return id;
     }
@@ -824,7 +857,7 @@ public class UserDAO {
         }
     }
 
-    public Boolean verificaSenha(String senhaPassada, int idSessao) {
+    public Boolean verificaSenha(String senhaPassada, int idSessao) throws SQLException {
         String senhaBuscada;
         String md5 = MD5.criptografar(senhaPassada);
         try {
@@ -844,11 +877,15 @@ public class UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
 
+        } finally {
+            con.close();
+            stmt.close();
+            rs.close();
         }
         return false;
     }
 
-    public Boolean alterarSenha(String novaSenha, int idSesao) {
+    public Boolean alterarSenha(String novaSenha, int idSesao) throws SQLException {
         String md5 = MD5.criptografar(novaSenha);
         try {
             stmt = con.prepareStatement(QUERY_UPDATE_SENHA);
@@ -858,6 +895,9 @@ public class UserDAO {
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.close();
+            stmt.close();
         }
         return false;
     }
@@ -872,31 +912,31 @@ public class UserDAO {
             stmt = con.prepareStatement(QUERY_SELECT_PRIVACIDADE_USER);
             stmt.setInt(1, p.getIdUser());
             rs = stmt.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 idPr = rs.getInt("ID_PRIVACIDADE");
             }
-            if(idPr != 0){
-            stmt = con.prepareStatement(QUERY_UPDATE_PRIVACIDADE_USER);
-            stmt.setInt(1, p.getPrivacidadeTelefone());
-            stmt.setInt(2, p.getPrivacidadeEndereco());
-            stmt.setInt(3, p.getPrivacidadeDescricao());
-            stmt.setInt(4, p.getPrivacidadeInteresses());
-            stmt.setInt(5, idPr);
-            ret = stmt.executeUpdate();
-            if(ret == 2){
-                return false;
-            }
-            }else{
+            if (idPr != 0) {
+                stmt = con.prepareStatement(QUERY_UPDATE_PRIVACIDADE_USER);
+                stmt.setInt(1, p.getPrivacidadeTelefone());
+                stmt.setInt(2, p.getPrivacidadeEndereco());
+                stmt.setInt(3, p.getPrivacidadeDescricao());
+                stmt.setInt(4, p.getPrivacidadeInteresses());
+                stmt.setInt(5, idPr);
+                ret = stmt.executeUpdate();
+                if (ret == 2) {
+                    return false;
+                }
+            } else {
                 stmt = con.prepareStatement(QUERY_INSERT_PRIVACIDADE_USER);
-            stmt.setInt(1, p.getIdUser());
-            stmt.setInt(2, p.getPrivacidadeTelefone());
-            stmt.setInt(3, p.getPrivacidadeEndereco());
-            stmt.setInt(4, p.getPrivacidadeDescricao());
-            stmt.setInt(5, p.getPrivacidadeInteresses());
-            ret = stmt.executeUpdate();
-            if(ret == 2){
-                return false;
-            }
+                stmt.setInt(1, p.getIdUser());
+                stmt.setInt(2, p.getPrivacidadeTelefone());
+                stmt.setInt(3, p.getPrivacidadeEndereco());
+                stmt.setInt(4, p.getPrivacidadeDescricao());
+                stmt.setInt(5, p.getPrivacidadeInteresses());
+                ret = stmt.executeUpdate();
+                if (ret == 2) {
+                    return false;
+                }
             }
 
         } catch (SQLException e) {
@@ -911,8 +951,7 @@ public class UserDAO {
         }
         return true;
     }
-    
-    
+
     public Privacidade buscarPrivacidade(int idUser) {
         Privacidade p = new Privacidade();
         try {

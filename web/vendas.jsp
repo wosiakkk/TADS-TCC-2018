@@ -13,16 +13,20 @@
 </c:if>
 <link href="assets/css/feed-style.css" rel="stylesheet">
 
-<div class="col-lg-12">
-    <h1>&Aacute;rea de Vendas</h1>
-    <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
-    <hr>
-</div>
-
 <!-- Página com foto e as opções do perfil -->
 <%@include file="opcoes.jsp" %>
 
+<!-- Script para dar destaque na opção navegada -->
+<script>
+    $(document).ready(function () {
+        $("#opVendas").addClass("highlight");
+    });
+</script>
+
 <div class="col-lg-7 col-md-7 col-xs-12">
+    <h1>&Aacute;rea de Vendas</h1>
+    <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+    <hr>
     <div id="pageContent" class="row">
 
     </div>
@@ -34,8 +38,8 @@
             <label for="ordem">Ordenar por:</label>
             <select id="ordenacao" name="ordenacao" class="form-control">
                 <option value="0"></option>
-                <option value="1">Maior valor</option>
-                <option value="2">Menor valor</option>
+                <option value="1">Menor valor</option>
+                <option value="2">Maior valor</option>
                 <option value="3">T&iacutetulo do an&uacutencio</option>
             </select>
         </div>
@@ -47,28 +51,34 @@
         </div>
         <div class="checkbox">
             <label>
-                <input id="movel" name="movel" type="checkbox" value="0" /> M&oacuteveis
+                <input id="movel" name="movel" type="checkbox" /> M&oacuteveis
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input id="imovel" name="imovel" type="checkbox" value="0" /> Im&oacuteveis
+                <input id="imovel" name="imovel" type="checkbox" /> Im&oacuteveis
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input id="material" name="material" type="checkbox" value="0" /> Materiais
+                <input id="material" name="material" type="checkbox" /> Materiais
             </label>
         </div>
-        <div class="checkbox">
+        <div id="petsField" class="checkbox">
             <label>
                 <input id="pets" name="pets" type="checkbox" /> Pets?
             </label>
-        </div> 
-        <input type="hidden" name="action" id="action" value="FILTROANUNCIO">
-        <button type="submit" class="btn btn-primary">
-            Filtrar
-        </button>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary form-control">
+                Filtrar
+            </button>
+        </div>
+        <div class="form-group">    
+            <button id="limparFiltros" type="button" class="btn btn-outline-dark form-control">
+                Limpar filtros
+            </button>
+        </div>
     </form>
 </div>
 

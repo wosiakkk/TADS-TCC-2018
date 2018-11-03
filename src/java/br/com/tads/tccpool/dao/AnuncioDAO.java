@@ -20,6 +20,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -322,14 +324,37 @@ public class AnuncioDAO {
     //query para retornar o id de um imovel de um anuncio
     private final String QUERY_RETORNO_ID_IMOVEL_POR_IDANUNCIO = "SELECT tb_anuncio.TB_IMOVEL_idTB_IMOVEL "
             + "from tb_anuncio where tb_anuncio.ID_ANUNCIO = ?";
-
+    
+    //insert para add seguidor em algum anúncio
+    private final String QUERY_INSERIR_SEGUIDOR ="INSERT INTO tb_seguidor_anuncio "
+            + "(tb_seguidor_anuncio.tb_anuncio_ID_ANUNCIO, tb_seguidor_anuncio.ID_SEGUIDOR)\n" +
+            " VALUES (?,?)";
+    
+    private final String QUERY_REMOVER_SEGUIDOR = "DELETE FROM tcc1.tb_seguidor_anuncio WHERE tb_seguidor_anuncio.ID_SEGUIDOR = ? "
+            + "AND tb_seguidor_anuncio.tb_anuncio_ID_ANUNCIO = ?";
+    
+    private final String QUERY_VERIFICAR_SEGUIDOR = "SELECT * FROM tcc1.tb_seguidor_anuncio WHERE "
+            + "tb_seguidor_anuncio.ID_SEGUIDOR = ? AND tb_seguidor_anuncio.tb_anuncio_ID_ANUNCIO = ?";
+    
+    private final String QUERY_BUSCAR_SEGUIDORES = "SELECT tb_seguidor_anuncio.ID_SEGUIDOR "
+            + "FROM tb_seguidor_anuncio WHERE tb_seguidor_anuncio.tb_anuncio_ID_ANUNCIO = ?";
+    
+    private final String QUERY_BUSCAR_ID_ANUNCIOS_SEGUIDOS = "SELECT tb_seguidor_anuncio.tb_anuncio_ID_ANUNCIO "
+            + "FROM tb_seguidor_anuncio WHERE tb_seguidor_anuncio.ID_SEGUIDOR = ?";
+    
+    private final String QUERY_GERAR_RESUMO_ANUNCIOS_SEGUIDOS = "SELECT tb_anuncio.ID_ANUNCIO, tb_anuncio.DS_DESCRICAO, tb_anuncio.TB_STATUS_ID_STATUS "
+            + "FROM tcc1.tb_anuncio WHERE tb_anuncio.ID_ANUNCIO = ?";
+    
+    
+    private final String QUERY_RETORNAR_ID_USER_POR_ID_ANUNCIO ="SELECT tb_anuncio.TB_USUARIO_NR_SEQ FROM tcc1.tb_anuncio WHERE tb_anuncio.ID_ANUNCIO = ?";
+    
     private Connection con = null;
     private PreparedStatement stmt = null;
     private ResultSet rs = null;
 
     public AnuncioDAO() {
         ConnectionFactory cf = new ConnectionFactory();
-        con = cf.getConnection();
+        this.con = cf.getConnection();
     }
 
     //método para fechar a conexão do bd
@@ -363,6 +388,9 @@ public class AnuncioDAO {
         while (rs.next()) {
             id = rs.getInt("id");
         }
+        con.close();
+        stmt.close();
+        rs.close();
         return id;
     }
 
@@ -547,6 +575,9 @@ public class AnuncioDAO {
             m.setComplemento(rs.getString("DS_COMPLEMENTO"));
             list.add(m);
         }
+        con.close();
+        stmt.close();
+        rs.close();
         return list;
     }
 
@@ -569,6 +600,9 @@ public class AnuncioDAO {
             ma.setComplemento(rs.getString("DS_COMPLEMENTO"));
             list.add(ma);
         }
+        con.close();
+        stmt.close();
+        rs.close();
         return list;
 
     }
@@ -706,7 +740,7 @@ public class AnuncioDAO {
     }
 
     public List<Anuncio> buscarAnuncioAprovado() throws SQLException {
-        List<Anuncio> lista = new ArrayList<Anuncio>();
+        List<Anuncio> lista = new ArrayList<>();
         stmt = con.prepareStatement(QUERY_BUSCAR_ANUNCIOS_APROVADOS);
         rs = stmt.executeQuery();
         while (rs.next()) {
@@ -743,7 +777,7 @@ public class AnuncioDAO {
             anuncio.setIdAnuncio(rs.getInt("ID_ANUNCIO"));
             anuncio.setTitulo(rs.getString("DS_TITULO"));
             anuncio.setValor(rs.getFloat("NR_VALOR"));
-            anuncio.setDescricao(rs.getString("DS_DESCRICAO"));
+            anuncio.setDescricao(rs.getString("DS_ANUNCIO"));
             anuncio.setCategoria(rs.getString("DS_CATEGORIA"));
             anuncio.setCaminhoFoto(rs.getString("DS_CAMINHO"));
             lista.add(anuncio);
@@ -1135,4 +1169,143 @@ public class AnuncioDAO {
         
     }
     
+    public void inserirSeguidor(int idAnuncio, int idSeguidor) throws SQLException{
+        con = new ConnectionFactory().getConnection();
+        try {
+            stmt = con.prepareStatement(QUERY_INSERIR_SEGUIDOR);
+            stmt.setInt(1, idAnuncio);
+            stmt.setInt(2, idSeguidor);
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            con.close();
+            stmt.close();     
+        }
+    }
+    
+    public void removerSeguidor(int idAnuncio, int idSeguidor) throws SQLException{
+        con = new ConnectionFactory().getConnection();
+        try {
+            stmt = con.prepareStatement(QUERY_REMOVER_SEGUIDOR);
+            stmt.setInt(1, idSeguidor);
+            stmt.setInt(2, idAnuncio);
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            con.close();
+            stmt.close();     
+        }
+    }
+    
+    public Boolean verificarSeguidor(int idAnuncio, int idSeguidor) throws SQLException{
+         con = new ConnectionFactory().getConnection();
+        try {
+            stmt = con.prepareStatement(QUERY_VERIFICAR_SEGUIDOR);
+            stmt.setInt(1, idSeguidor);
+            stmt.setInt(2, idAnuncio);
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            con.close();
+            stmt.close();   
+            rs.close();
+        }
+        return false;
+    }
+    
+    public List<Integer> buscarSeguidores(int idAnuncio) throws SQLException{
+        ArrayList<Integer> lista = new ArrayList<Integer>();
+        con = new ConnectionFactory().getConnection();
+        try {
+            stmt = con.prepareStatement(QUERY_BUSCAR_SEGUIDORES);
+            stmt.setInt(1, idAnuncio);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                lista.add(rs.getInt("ID_SEGUIDOR"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            con.close();
+            stmt.close();
+            rs.close();
+        }
+        
+        return lista;
+    }
+    
+    public List<Integer> buscarIdAnunciosSeguidos(int idUser) throws SQLException{
+        ArrayList<Integer> lista = new ArrayList<Integer>();
+        con = new ConnectionFactory().getConnection();
+        try {
+            stmt = con.prepareStatement(QUERY_BUSCAR_ID_ANUNCIOS_SEGUIDOS);
+            stmt.setInt(1, idUser);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+              lista.add(rs.getInt("tb_anuncio_ID_ANUNCIO"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            con.close();
+            stmt.close();
+            rs.close();
+        }
+        return lista;
+    }
+    
+    public Anuncio resumoAnunciosSeguidos(int id) throws SQLException{
+        Anuncio resumo = new Anuncio();
+        con = new ConnectionFactory().getConnection();
+        try {
+            stmt = con.prepareStatement(QUERY_GERAR_RESUMO_ANUNCIOS_SEGUIDOS);            
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                resumo.setIdAnuncio(rs.getInt("ID_ANUNCIO"));
+                resumo.setDescricao(rs.getString("DS_DESCRICAO"));
+                if(rs.getInt("TB_STATUS_ID_STATUS") == 2){
+                    resumo.setStatusAnuncio("Disponível para compra");
+                }else if(rs.getInt("TB_STATUS_ID_STATUS") == 5){
+                     resumo.setStatusAnuncio("Vendido");
+                }else{
+                    resumo.setStatusAnuncio("Erro");
+                }
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            con.close();
+            stmt.close();
+            rs.close();
+        }
+        return resumo;
+    }
+    
+    public int retornarIdDoAnunciante(int idAnuncio) throws SQLException{
+        con = new ConnectionFactory().getConnection();
+        int retorno=0;
+        try {
+            stmt = con.prepareStatement(QUERY_RETORNAR_ID_USER_POR_ID_ANUNCIO);
+            stmt.setInt(1, idAnuncio);
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                retorno = rs.getInt("TB_USUARIO_NR_SEQ");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            con.close();
+            stmt.close();
+            rs.close();
+        }
+        return retorno;
+    }
 }
