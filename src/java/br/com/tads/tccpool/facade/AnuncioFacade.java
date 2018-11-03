@@ -215,22 +215,22 @@ public class AnuncioFacade {
         adao.excluiFotosAnuncio(excluir);
     }
     
-    public static void inserirSeguidorAnuncio(int idAnuncio, int idSeguidor){
+    public static void inserirSeguidorAnuncio(int idAnuncio, int idSeguidor) throws SQLException{
         AnuncioDAO dao = new AnuncioDAO();
         dao.inserirSeguidor(idAnuncio, idSeguidor);
     }
     
-    public static void removerSeguidorAnuncio(int idAnuncio, int idSeguidor){
+    public static void removerSeguidorAnuncio(int idAnuncio, int idSeguidor) throws SQLException{
         AnuncioDAO dao = new AnuncioDAO();
         dao.removerSeguidor(idAnuncio, idSeguidor);
     }
     
-    public static Boolean verifSeguidor(int idAnuncio, int idSeguidor){
+    public static Boolean verifSeguidor(int idAnuncio, int idSeguidor) throws  SQLException{
         AnuncioDAO dao = new AnuncioDAO();
         return dao.verificarSeguidor(idAnuncio, idSeguidor);
     }
     
-    public static List<Integer> buscarSeguidoresAnuncio(int idAnuncio){
+    public static List<Integer> buscarSeguidoresAnuncio(int idAnuncio) throws SQLException{
         AnuncioDAO dao = new AnuncioDAO();
         return dao.buscarSeguidores(idAnuncio);
     }

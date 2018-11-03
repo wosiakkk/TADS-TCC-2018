@@ -106,7 +106,7 @@ public class NotificacaoDAO {
         rs = stmt.executeQuery();
         if (rs.next()) {
            return rs.getInt("TB_USUARIO_NR_SEQ");
-        }
+        }      
         return -1;
     }
     
@@ -177,11 +177,15 @@ public class NotificacaoDAO {
         stmt = con.prepareStatement(UPDATE_EXCLUIR_NOTIFICACAO);
         stmt.setInt(1, idNoti);
         stmt.executeUpdate();
+        con.close();
+        stmt.close();
     }
 
     public void excluirTodasNotificacoes(int idUsr) throws SQLException {
         stmt = con.prepareStatement(UPDATE_EXCLUIR_TODAS_NOTIFICACOES);
         stmt.setInt(1, idUsr);
         stmt.executeUpdate();
+        con.close();
+        stmt.close();
     }
 }

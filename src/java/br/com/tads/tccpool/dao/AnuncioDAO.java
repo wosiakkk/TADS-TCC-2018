@@ -388,6 +388,9 @@ public class AnuncioDAO {
         while (rs.next()) {
             id = rs.getInt("id");
         }
+        con.close();
+        stmt.close();
+        rs.close();
         return id;
     }
 
@@ -572,6 +575,9 @@ public class AnuncioDAO {
             m.setComplemento(rs.getString("DS_COMPLEMENTO"));
             list.add(m);
         }
+        con.close();
+        stmt.close();
+        rs.close();
         return list;
     }
 
@@ -594,6 +600,9 @@ public class AnuncioDAO {
             ma.setComplemento(rs.getString("DS_COMPLEMENTO"));
             list.add(ma);
         }
+        con.close();
+        stmt.close();
+        rs.close();
         return list;
 
     }
@@ -1160,7 +1169,7 @@ public class AnuncioDAO {
         
     }
     
-    public void inserirSeguidor(int idAnuncio, int idSeguidor){
+    public void inserirSeguidor(int idAnuncio, int idSeguidor) throws SQLException{
         con = new ConnectionFactory().getConnection();
         try {
             stmt = con.prepareStatement(QUERY_INSERIR_SEGUIDOR);
@@ -1169,10 +1178,13 @@ public class AnuncioDAO {
             stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            con.close();
+            stmt.close();     
         }
     }
     
-    public void removerSeguidor(int idAnuncio, int idSeguidor){
+    public void removerSeguidor(int idAnuncio, int idSeguidor) throws SQLException{
         con = new ConnectionFactory().getConnection();
         try {
             stmt = con.prepareStatement(QUERY_REMOVER_SEGUIDOR);
@@ -1181,10 +1193,13 @@ public class AnuncioDAO {
             stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            con.close();
+            stmt.close();     
         }
     }
     
-    public Boolean verificarSeguidor(int idAnuncio, int idSeguidor){
+    public Boolean verificarSeguidor(int idAnuncio, int idSeguidor) throws SQLException{
          con = new ConnectionFactory().getConnection();
         try {
             stmt = con.prepareStatement(QUERY_VERIFICAR_SEGUIDOR);
@@ -1196,11 +1211,15 @@ public class AnuncioDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            con.close();
+            stmt.close();   
+            rs.close();
         }
         return false;
     }
     
-    public List<Integer> buscarSeguidores(int idAnuncio){
+    public List<Integer> buscarSeguidores(int idAnuncio) throws SQLException{
         ArrayList<Integer> lista = new ArrayList<Integer>();
         con = new ConnectionFactory().getConnection();
         try {
@@ -1212,6 +1231,10 @@ public class AnuncioDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(AnuncioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            con.close();
+            stmt.close();
+            rs.close();
         }
         
         return lista;

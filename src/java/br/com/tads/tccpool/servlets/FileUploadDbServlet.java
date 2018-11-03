@@ -18,6 +18,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -153,7 +155,7 @@ public class FileUploadDbServlet extends HttpServlet {
                     try {
                         conn.close();
                     } catch (SQLException ex) {
-                        //silent
+                        Logger.getLogger(FileUploadDbServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 // sets the message in request scope

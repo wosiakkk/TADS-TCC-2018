@@ -95,6 +95,9 @@ public class MensagemDAO {
             
             mensagens.add(m);
         }
+        con.close();
+        stmt.close();
+        rs.close();
         
         return mensagens;
     }
@@ -120,6 +123,10 @@ public class MensagemDAO {
             
             lConversas.add(c);
         }
+        
+        con.close();
+        stmt.close();
+        rs.close();
         
         return lConversas;
     }

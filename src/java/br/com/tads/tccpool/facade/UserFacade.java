@@ -102,12 +102,12 @@ public class UserFacade {
         }
     }
 
-    public static Boolean verificaSenha(String senhaPasada, int idSessao) {
+    public static Boolean verificaSenha(String senhaPasada, int idSessao) throws SQLException{
         UserDAO dao = new UserDAO();
         return dao.verificaSenha(senhaPasada, idSessao);
     }
 
-    public static Boolean alterarSenha(String novaSenha, int idSessao) {
+    public static Boolean alterarSenha(String novaSenha, int idSessao) throws SQLException{
         UserDAO dao = new UserDAO();
         return dao.alterarSenha(novaSenha, idSessao);
     }
@@ -134,7 +134,7 @@ public class UserFacade {
         return u;
     }
 
-    public static Boolean solicitarAmizade(int idSolicitante, int idSolicitado) {
+    public static Boolean solicitarAmizade(int idSolicitante, int idSolicitado) throws SQLException{
         UserDAO dao = new UserDAO();
         if (dao.solicitarAmizade(idSolicitante, idSolicitado)) {
             return true;
@@ -143,7 +143,7 @@ public class UserFacade {
         }
     }
 
-    public static Boolean solicitarAmizade2(int idSolicitante, int idSolicitado) {
+    public static Boolean solicitarAmizade2(int idSolicitante, int idSolicitado) throws SQLException {
         UserDAO dao = new UserDAO();
         if (dao.solicitarAmizade2(idSolicitante, idSolicitado)) {
             return true;
@@ -152,47 +152,47 @@ public class UserFacade {
         }
     }
 
-    public static int checandoAmizade(int idSessao, int idPerfil) {
+    public static int checandoAmizade(int idSessao, int idPerfil) throws SQLException{
         UserDAO dao = new UserDAO();
         return dao.checarAmizade(idSessao, idPerfil);
     }
 
-    public static Boolean aceitarAmizade(int idSolicitante, int idSolicitado) {
+    public static Boolean aceitarAmizade(int idSolicitante, int idSolicitado)throws SQLException {
         UserDAO dao = new UserDAO();
         return dao.aceitarAmizade(idSolicitado, idSolicitante);
     }
 
-    public static Boolean excluirAmizade(int idSessao, int idAmigo) {
+    public static Boolean excluirAmizade(int idSessao, int idAmigo)throws SQLException {
         UserDAO dao = new UserDAO();
         return dao.excluirAmizade(idSessao, idAmigo);
     }
 
-    public static List<User> listaDeAmigos(int idSessao) {
+    public static List<User> listaDeAmigos(int idSessao) throws SQLException{
         UserDAO dao = new UserDAO();
         return dao.gerarListaAmigosAceitos(idSessao);
     }
 
-    public static List<User> listaDeAmigosPendentes(int idSessao) {
+    public static List<User> listaDeAmigosPendentes(int idSessao) throws SQLException{
         UserDAO dao = new UserDAO();
         return dao.gerarListaDePedidosDeAmizade(idSessao);
     }
 
-    public static List<User> listaDeAmigosBloqueados(int idSessao) {
+    public static List<User> listaDeAmigosBloqueados(int idSessao)throws SQLException {
         UserDAO dao = new UserDAO();
         return dao.gerarListaBloqueados(idSessao);
     }
 
-    public static Boolean rejeitarAmizade(int idSessao, int idSolicitante) {
+    public static Boolean rejeitarAmizade(int idSessao, int idSolicitante) throws SQLException{
         UserDAO dao = new UserDAO();
         return dao.rejeitarPedidoAmizade(idSessao, idSolicitante);
     }
 
-    public static Boolean rejeitarBloquear(int idSessao, int idSolicitante) {
+    public static Boolean rejeitarBloquear(int idSessao, int idSolicitante) throws SQLException{
         UserDAO dao = new UserDAO();
         return dao.rejeitarBloquear(idSessao, idSolicitante);
     }
 
-    public static Boolean desbloquearUsuario(int idSessao, int idDesbloqueio) {
+    public static Boolean desbloquearUsuario(int idSessao, int idDesbloqueio)throws SQLException {
         UserDAO dao = new UserDAO();
         return dao.desbloquearUsuario(idSessao, idDesbloqueio);
     }
@@ -200,7 +200,7 @@ public class UserFacade {
     //******************************
     // implementado apenas para finalizar a sprint da lista de amigos, pois os nomes do user podem ser iguais
     // futuramente a busca será aprimorada
-    public static int buscarIdPorNomeDoUsuario(String nome) {
+    public static int buscarIdPorNomeDoUsuario(String nome) throws SQLException {
         UserDAO dao = new UserDAO();
         return dao.buscarIdPorNome(nome);
     }

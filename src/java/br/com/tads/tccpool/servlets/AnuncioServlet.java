@@ -420,6 +420,7 @@ public class AnuncioServlet extends HttpServlet {
                         rd = request.getRequestDispatcher("resumo.jsp");
                         rd.forward(request, response);
                     } catch (Exception e) {
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
                     
@@ -506,6 +507,7 @@ public class AnuncioServlet extends HttpServlet {
                         rd = request.getRequestDispatcher("resumo.jsp");
                         rd.forward(request, response);
                     } catch (Exception e) {
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
 
@@ -543,6 +545,7 @@ public class AnuncioServlet extends HttpServlet {
                         rd = request.getRequestDispatcher("anuncio.jsp");
                         rd.forward(request, response);
                     } catch (Exception e) {
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
 
@@ -695,7 +698,7 @@ public class AnuncioServlet extends HttpServlet {
                         rd = request.getRequestDispatcher("anuncio.jsp");
                         rd.forward(request, response);
                     } catch (Exception e) {
-
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
 
@@ -709,6 +712,7 @@ public class AnuncioServlet extends HttpServlet {
                         session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                         request.getRequestDispatcher("resumo.jsp").forward(request, response);
                     } catch (Exception e) {
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
 
@@ -733,6 +737,7 @@ public class AnuncioServlet extends HttpServlet {
                             request.getRequestDispatcher("resumo.jsp").forward(request, response);
                         }
                     } catch (Exception e) {
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
                 case "FILTROANUNCIO":
@@ -842,7 +847,7 @@ public class AnuncioServlet extends HttpServlet {
                         }
                         request.getRequestDispatcher("anuncio.jsp").forward(request, response);
                     } catch (Exception e) {
-                        e.toString();
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
 
