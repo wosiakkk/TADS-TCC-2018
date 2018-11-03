@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -210,7 +211,7 @@ public class UserServlet extends HttpServlet {
                                     alterar.setCdEndereco(Integer.parseInt(item.getString()));
                                 }
                                 if (item.getFieldName().equals("nome")) {
-                                    alterar.setNome(item.getString());
+                                    alterar.setNome(new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item.getFieldName().equals("telefone")) {
                                     alterar.setTel(item.getString());
@@ -219,28 +220,28 @@ public class UserServlet extends HttpServlet {
                                     alterar.setCel(item.getString());
                                 }
                                 if (item.getFieldName().equals("logradouro")) {
-                                    alterar.setLogradouro(item.getString());
+                                    alterar.setLogradouro(new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item.getFieldName().equals("numero")) {
                                     alterar.setNumero(Integer.parseInt(item.getString()));
                                 }
                                 if (item.getFieldName().equals("complemento")) {
-                                    alterar.setComplemento(item.getString());
+                                    alterar.setComplemento(new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item.getFieldName().equals("cep")) {
                                     alterar.setCEP(item.getString());
                                 }
                                 if (item.getFieldName().equals("cidade")) {
-                                    alterar.setCidade(item.getString());
+                                    alterar.setCidade(new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item.getFieldName().equals("estado")) {
-                                    alterar.setEstado(item.getString());
+                                    alterar.setEstado(new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item.getFieldName().equals("descricao")) {
-                                    alterar.setDescricao(item.getString());
+                                    alterar.setDescricao(new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item.getFieldName().equals("interesses")) {
-                                    alterar.setInteresses(item.getString());
+                                    alterar.setInteresses(new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item.getFieldName().equals("fotoUser")) {
                                     if (!item.getString().equals("") && alterar.getFoto() == null) {

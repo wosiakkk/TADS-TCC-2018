@@ -39,7 +39,7 @@
                 <hr>
             </div>
                 <c:if test="${fn:length(ListaAunciosDoUusario) == 0}">
-                    <h3>Você não possui anúncios nesta categoria.</h3>
+                    <h3>Não existem anúncios nesta categoria.</h3>
                 </c:if>
 
             <div class="jumbotron col-sm-12" >

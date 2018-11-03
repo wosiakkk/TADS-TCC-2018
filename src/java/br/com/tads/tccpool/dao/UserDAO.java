@@ -304,6 +304,7 @@ public class UserDAO {
 
         if (idUser == 1 || idUser == 3) {
             User mod = new User();
+            mod.setId(idUser);
             mod.setNome("Moderador");
             mod.setFoto("img\\fotosPerfil\\mod.png");
             return mod;
