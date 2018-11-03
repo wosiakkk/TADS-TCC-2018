@@ -371,6 +371,11 @@ public class AnuncioServlet extends HttpServlet {
                         session.removeAttribute("mensagemAcaoTipo");
                         session.setAttribute("mensagemAcao", "O anúncio foi aprovado!");
                         session.setAttribute("mensagemAcaoTipo", 8);
+                        
+                        // notificação
+                        int anunciante = AnuncioFacade.retornoIdAunciante(idImv);
+                        NotificacaoFacade.inserirnotificacao(1, anunciante, 5);
+                        
                         RequestDispatcher rdi = request.getRequestDispatcher("infoAcao.jsp");
                         rdi.forward(request, response);
                     } else {
@@ -378,6 +383,11 @@ public class AnuncioServlet extends HttpServlet {
                         session.removeAttribute("mensagemAcaoTipo");
                         session.setAttribute("mensagemAcao", "O anúncio foi rejeitado!");
                         session.setAttribute("mensagemAcaoTipo", 8);
+                        
+                        // notificação
+                        int anunciante = AnuncioFacade.retornoIdAunciante(idImv);
+                        NotificacaoFacade.inserirnotificacao(1, anunciante, 6);
+                        
                         RequestDispatcher rdi = request.getRequestDispatcher("infoAcao.jsp");
                         rdi.forward(request, response);
                     }
@@ -410,21 +420,23 @@ public class AnuncioServlet extends HttpServlet {
                         rd = request.getRequestDispatcher("resumo.jsp");
                         rd.forward(request, response);
                     } catch (Exception e) {
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
                     
-               /* case "BUSCARANUNCIOSEGUIDOS":
-                    List<Categoria> listaCategoriaImovel = new ArrayList<Categoria>();
-                        listaCategoriaImovel = MainPageFacade.listaCategoriasImovel();
-                        session.setAttribute("listaCatImovelSeg", listaCategoriaImovel);
-                        List<Categoria> listaCategoriaMovel = new ArrayList<Categoria>();
-                        listaCategoriaMovel = MainPageFacade.listaCategoriasMovel();
-                        session.setAttribute("listaCatMovelSeg", listaCategoriaMovel);
-                        List<Categoria> listaCategoriaMaterial = new ArrayList<Categoria>();
-                        listaCategoriaMaterial = MainPageFacade.listaCategoriasMaterial();
-                        session.setAttribute("listaCatMaterialSeg", listaCategoriaMaterial);
-                        int idUserSeg = Integer.parseInt(request.getParameter("idUsr"));
-                    break;*/
+                case "BUSCARANUNCIOSEGUIDOS":
+                    
+                    List<Integer> listaIdsAnuncios = new ArrayList<Integer>();
+                    int idS = Integer.parseInt(session.getAttribute("idUserSessao").toString());
+                    listaIdsAnuncios = AnuncioFacade.buscarIdsAnunciosSeguidos(idS);                  
+                    List<Anuncio> listaAnuciosSeguidos = new ArrayList<Anuncio>();
+                    for(int idLista : listaIdsAnuncios){
+                       listaAnuciosSeguidos.add(AnuncioFacade.resumoAnuncios(idLista));
+                    }
+                    session.setAttribute("listaResumoAnuncios", listaAnuciosSeguidos);
+                    rd = request.getRequestDispatcher("anunciosSeguidos.jsp");
+                        rd.forward(request, response);
+                    break;
 
                 case "EXIBIRANUNCIO":
                     int idAnuncio = Integer.parseInt(request.getParameter("idAnuncio"));
@@ -495,6 +507,7 @@ public class AnuncioServlet extends HttpServlet {
                         rd = request.getRequestDispatcher("resumo.jsp");
                         rd.forward(request, response);
                     } catch (Exception e) {
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
 
@@ -532,6 +545,7 @@ public class AnuncioServlet extends HttpServlet {
                         rd = request.getRequestDispatcher("anuncio.jsp");
                         rd.forward(request, response);
                     } catch (Exception e) {
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
 
@@ -684,7 +698,7 @@ public class AnuncioServlet extends HttpServlet {
                         rd = request.getRequestDispatcher("anuncio.jsp");
                         rd.forward(request, response);
                     } catch (Exception e) {
-
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
 
@@ -698,6 +712,7 @@ public class AnuncioServlet extends HttpServlet {
                         session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
                         request.getRequestDispatcher("resumo.jsp").forward(request, response);
                     } catch (Exception e) {
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
 
@@ -722,6 +737,7 @@ public class AnuncioServlet extends HttpServlet {
                             request.getRequestDispatcher("resumo.jsp").forward(request, response);
                         }
                     } catch (Exception e) {
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
                 case "FILTROANUNCIO":
@@ -831,7 +847,7 @@ public class AnuncioServlet extends HttpServlet {
                         }
                         request.getRequestDispatcher("anuncio.jsp").forward(request, response);
                     } catch (Exception e) {
-                        e.toString();
+                        Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     break;
 

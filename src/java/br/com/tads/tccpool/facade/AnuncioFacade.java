@@ -215,23 +215,38 @@ public class AnuncioFacade {
         adao.excluiFotosAnuncio(excluir);
     }
     
-    public static void inserirSeguidorAnuncio(int idAnuncio, int idSeguidor){
+    public static void inserirSeguidorAnuncio(int idAnuncio, int idSeguidor) throws SQLException{
         AnuncioDAO dao = new AnuncioDAO();
         dao.inserirSeguidor(idAnuncio, idSeguidor);
     }
     
-    public static void removerSeguidorAnuncio(int idAnuncio, int idSeguidor){
+    public static void removerSeguidorAnuncio(int idAnuncio, int idSeguidor) throws SQLException{
         AnuncioDAO dao = new AnuncioDAO();
         dao.removerSeguidor(idAnuncio, idSeguidor);
     }
     
-    public static Boolean verifSeguidor(int idAnuncio, int idSeguidor){
+    public static Boolean verifSeguidor(int idAnuncio, int idSeguidor) throws  SQLException{
         AnuncioDAO dao = new AnuncioDAO();
         return dao.verificarSeguidor(idAnuncio, idSeguidor);
     }
     
-    public static List<Integer> buscarSeguidoresAnuncio(int idAnuncio){
+    public static List<Integer> buscarSeguidoresAnuncio(int idAnuncio) throws SQLException{
         AnuncioDAO dao = new AnuncioDAO();
         return dao.buscarSeguidores(idAnuncio);
+    }
+    
+    public static List<Integer> buscarIdsAnunciosSeguidos(int idUser) throws SQLException{
+        AnuncioDAO dao = new AnuncioDAO();
+        return dao.buscarIdAnunciosSeguidos(idUser);
+    }
+    
+    public static Anuncio resumoAnuncios(int idAnuncio) throws SQLException{
+        AnuncioDAO dao = new AnuncioDAO();
+        return dao.resumoAnunciosSeguidos(idAnuncio);
+    }
+    
+    public static int retornoIdAunciante(int idAnuncio) throws SQLException{
+        AnuncioDAO dao = new AnuncioDAO();
+        return dao.retornarIdDoAnunciante(idAnuncio);
     }
 }

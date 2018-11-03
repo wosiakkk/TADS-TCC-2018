@@ -34,7 +34,35 @@
                 <a class="btn btn-outline-dark" href="#"> Gerar </a> 
             </div>          
             <hr>
-        </form> <!-- ./form -->
+        </form><!-- ./form -->
+        
+                        <div class="form-group">
+                <form id="formulario" class="form-horizontal"  action="GeradorRelatorio?action=TodosUser"  method="POST" role="form">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" style="width:200px" class="btn btn-outline-dark">Todos os anúncios</button>
+            </div>
+      </form> <!-- ./form -->
+      <form id="formulario" class="form-horizontal"  action="GeradorRelatorio?action=AprovadosUser"  method="POST" role="form">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" style="width:200px" class="btn btn-outline-dark">Anúncios Aprovados</button>
+            </div>
+      </form> <!-- ./form -->
+      <form id="formulario" class="form-horizontal"  action="GeradorRelatorio?action=PendentesUser"  method="POST" role="form">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" style="width:200px" class="btn btn-outline-dark">Anúncios Pendentes</button>
+            </div>
+      </form> <!-- ./form -->
+            <form id="formulario" class="form-horizontal"  action="GeradorRelatorio?action=RejeitadosUser"  method="POST" role="form">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" style="width:200px" class="btn btn-outline-dark">Anúncios Negados</button>
+            </div>
+      </form> <!-- ./form -->
+                  <form id="formulario" class="form-horizontal"  action="GeradorRelatorio?action=VendidosUser"  method="POST" role="form">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" style="width:200px" class="btn btn-outline-dark">Itens Vendidos</button>
+            </div>
+      </form> <!-- ./form -->
+ </div>
     </div>
     <script type="text/javascript" src="assets\js\validarTrocaSenha.js"></script>
 </c:if>
@@ -43,4 +71,4 @@
 </div> <!-- ./row -->
 </div> <!-- ./container -->
 </body>
-</html>   
+</html>  

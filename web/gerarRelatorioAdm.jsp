@@ -26,15 +26,43 @@
 
 <c:if test="${user.getTipoUsuario()== 3}">
     <div class="col-md-9 col-sm-9 col-xs-9 col-lg-9">
-        <form id="formulario" class="form-horizontal"  action="UserServlet?action=ALTSENHA"  method="POST" role="form">
+        <form id="formulario" class="form-horizontal" role="form">
             <h2>Estatísticas de todos os anúncios do Mercadão do Aluno.</h2>
             <a href="home.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
-            <hr>         
+            <hr>    
+            </form>
+        
+                <div class="form-group">
+                <form id="formulario" class="form-horizontal"  action="GeradorRelatorio?action=TodosAdm"  method="POST" role="form">
             <div class="col-sm-9 col-sm-offset-3">
-                <a class="btn btn-outline-dark" href="#"> Gerar </a> 
-            </div>          
-            <hr>
-        </form> <!-- ./form -->
+                <button type="submit" style="width:200px" class="btn btn-outline-dark">Todos os anúncios</button>
+            </div>
+      </form> <!-- ./form -->
+      <form id="formulario" class="form-horizontal"  action="GeradorRelatorio?action=AprovadosAdm"  method="POST" role="form">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" style="width:200px" class="btn btn-outline-dark">Anúncios Aprovados</button>
+            </div>
+      </form> <!-- ./form -->
+      <form id="formulario" class="form-horizontal"  action="GeradorRelatorio?action=PendentesAdm"  method="POST" role="form">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" style="width:200px" class="btn btn-outline-dark">Anúncios Pendentes</button>
+            </div>
+      </form> <!-- ./form -->
+            <form id="formulario" class="form-horizontal"  action="GeradorRelatorio?action=RejeitadosAdm"  method="POST" role="form">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" style="width:200px" class="btn btn-outline-dark">Anúncios Negados</button>
+            </div>
+      </form> <!-- ./form -->
+                  <form id="formulario" class="form-horizontal"  action="GeradorRelatorio?action=VendidosAdm"  method="POST" role="form">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" style="width:200px" class="btn btn-outline-dark">Itens Vendidos</button>
+            </div>
+      </form> <!-- ./form -->
+ </div>
+        
+        
+        
+        
     </div>
     <script type="text/javascript" src="assets\js\validarTrocaSenha.js"></script>
 </c:if>

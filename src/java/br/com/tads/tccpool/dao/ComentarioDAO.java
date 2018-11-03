@@ -74,6 +74,7 @@ public class ComentarioDAO {
         stmt.setInt(3, comentario.getIdOrigem());
         stmt.setInt(4, comentario.getIdPai());
         
+        //NESSA ESTRUTURA NÃO HÁ COMO FECHAR A CONEXÃO ?
         return stmt.executeUpdate();
     }
     
@@ -97,7 +98,7 @@ public class ComentarioDAO {
             
             comentarios.add(c);
         }
-        
+              
         return comentarios;
     }
     
@@ -133,7 +134,7 @@ public class ComentarioDAO {
             
             comentarios.add(c);
         }
-        
+              
         return comentarios;
     }
     
