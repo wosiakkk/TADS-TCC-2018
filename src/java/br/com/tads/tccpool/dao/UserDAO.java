@@ -303,6 +303,14 @@ public class UserDAO {
     }
 
     public User buscarUser(int idUser) {
+        
+        if(idUser == 1 || idUser == 3){
+            User mod = new User();
+            mod.setNome("Moderador");
+            mod.setFoto("img\\fotosPerfil\\mod.png");
+            return mod;
+        }else{
+        
         try {
             stmt = con.prepareStatement(QUERY_SELECT_USR);
             stmt.setInt(1, idUser);
@@ -369,6 +377,7 @@ public class UserDAO {
             } catch (SQLException ex) {
                 Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
         }
     }
 

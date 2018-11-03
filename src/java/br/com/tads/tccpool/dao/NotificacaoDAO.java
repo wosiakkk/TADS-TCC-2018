@@ -81,9 +81,7 @@ public class NotificacaoDAO {
     }
 
     public void inserirNoticacao(int gerador, int receptor, int tipoNotificacao) throws SQLException {
-        switch (tipoNotificacao) {
-            //pedido de amizade
-            case 1: {
+                            
                 try {
                     stmt = con.prepareStatement(QUERY_INSERIR_NOTIFICACAO);
                     stmt.setInt(1, gerador);
@@ -97,60 +95,9 @@ public class NotificacaoDAO {
                     stmt.close();
                     con.close();
                 }
-                break;
-            }
-            //amizade aceita
-            case 2: {
-                try {
-                    stmt = con.prepareStatement(QUERY_INSERIR_NOTIFICACAO);
-                    stmt.setInt(1, gerador);
-                    stmt.setInt(2, receptor);
-                    stmt.setInt(3, 2);//status não lida
-                    stmt.setInt(4, tipoNotificacao);
-                    stmt.executeUpdate();
-                } catch (SQLException ex) {
-                    Logger.getLogger(NotificacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    stmt.close();
-                    con.close();
-                }
-                break;
-            }
-            //notificação comentário de anúncio
-            case 3:{
-               try {
-                    stmt = con.prepareStatement(QUERY_INSERIR_NOTIFICACAO);
-                    stmt.setInt(1, gerador);
-                    stmt.setInt(2, receptor);
-                    stmt.setInt(3, 2);//status não lida
-                    stmt.setInt(4, tipoNotificacao);
-                    stmt.executeUpdate();
-                } catch (SQLException ex) {
-                    Logger.getLogger(NotificacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    stmt.close();
-                    con.close();
-                }
-                break;
-            }
-            //notificação de anúncio vendido
-            case 4:{
-                try {
-                    stmt = con.prepareStatement(QUERY_INSERIR_NOTIFICACAO);
-                    stmt.setInt(1, gerador);
-                    stmt.setInt(2, receptor);
-                    stmt.setInt(3, 2);//status não lida
-                    stmt.setInt(4, tipoNotificacao);
-                    stmt.executeUpdate();
-                } catch (SQLException ex) {
-                    Logger.getLogger(NotificacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    stmt.close();
-                    con.close();
-                }
-                break;
-            }
-        }
+            
+           
+        
     }
 
     public int buscarIdUsrAnuncioNoti(int idAnuncio) throws SQLException {

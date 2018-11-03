@@ -234,4 +234,19 @@ public class AnuncioFacade {
         AnuncioDAO dao = new AnuncioDAO();
         return dao.buscarSeguidores(idAnuncio);
     }
+    
+    public static List<Integer> buscarIdsAnunciosSeguidos(int idUser) throws SQLException{
+        AnuncioDAO dao = new AnuncioDAO();
+        return dao.buscarIdAnunciosSeguidos(idUser);
+    }
+    
+    public static Anuncio resumoAnuncios(int idAnuncio) throws SQLException{
+        AnuncioDAO dao = new AnuncioDAO();
+        return dao.resumoAnunciosSeguidos(idAnuncio);
+    }
+    
+    public static int retornoIdAunciante(int idAnuncio) throws SQLException{
+        AnuncioDAO dao = new AnuncioDAO();
+        return dao.retornarIdDoAnunciante(idAnuncio);
+    }
 }
