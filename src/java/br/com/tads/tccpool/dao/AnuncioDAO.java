@@ -29,6 +29,9 @@ import java.util.logging.Logger;
  */
 public class AnuncioDAO {
 
+    private static final String QUERY_DELETE_COMENTARIO_ANUNCIO = "DELETE FROM tb_comentario WHERE TB_ANUNCIO_ID_ANUNCIO = ?";
+    private static final String QUERY_DELETE_SEGUIDOR_ANUNCIO = "delete from tb_seguidor_anuncio where tb_anuncio_ID_ANUNCIO = ?";
+
     private final static String QUERY_BUSCA_FOTOS_ANUNCIO = "SELECT ID_FOTO, DS_CAMINHO FROM tcc1.tb_fotos WHERE TB_ANUNCIO_ID_ANUNCIO = ?";
     private final static String QUERY_UPDATE_FOTOS_ANUNCIO = "UPDATE tcc1.tb_fotos SET DS_CAMINHO = ? WHERE ID_FOTO = ?";
     private final static String QUERY_INSERT_FOTOS_ANUNCIO = "INSERT INTO tcc1.tb_fotos (TB_ANUNCIO_ID_ANUNCIO, DS_CAMINHO) VALUES (?,?)";
@@ -869,6 +872,12 @@ public class AnuncioDAO {
         stmt = con.prepareStatement(QUERY_DELETE_FOTOS_ANUNCIO);
         stmt.setInt(1, idAnuncio);
         stmt.executeUpdate();
+        stmt = con.prepareStatement(QUERY_DELETE_COMENTARIO_ANUNCIO);
+        stmt.setInt(1, idAnuncio);
+        stmt.executeUpdate();
+        stmt = con.prepareStatement(QUERY_DELETE_SEGUIDOR_ANUNCIO);
+        stmt.setInt(1, idAnuncio);
+        stmt.executeUpdate();
         stmt = con.prepareStatement(QUERY_DELETE_ANUNCIO);
         stmt.setInt(1, idAnuncio);
         stmt.executeUpdate();
@@ -883,6 +892,12 @@ public class AnuncioDAO {
         stmt = con.prepareStatement(QUERY_DELETE_FOTOS_ANUNCIO);
         stmt.setInt(1, idAnuncio);
         stmt.executeUpdate();
+        stmt = con.prepareStatement(QUERY_DELETE_COMENTARIO_ANUNCIO);
+        stmt.setInt(1, idAnuncio);
+        stmt.executeUpdate();
+        stmt = con.prepareStatement(QUERY_DELETE_SEGUIDOR_ANUNCIO);
+        stmt.setInt(1, idAnuncio);
+        stmt.executeUpdate();
         stmt = con.prepareStatement(QUERY_DELETE_ANUNCIO);
         stmt.setInt(1, idAnuncio);
         stmt.executeUpdate();
@@ -895,6 +910,12 @@ public class AnuncioDAO {
 
     public void deletarAnuncioImovel(int idAnuncio, Imovel i) throws SQLException {
         stmt = con.prepareStatement(QUERY_DELETE_FOTOS_ANUNCIO);
+        stmt.setInt(1, idAnuncio);
+        stmt.executeUpdate();
+        stmt = con.prepareStatement(QUERY_DELETE_COMENTARIO_ANUNCIO);
+        stmt.setInt(1, idAnuncio);
+        stmt.executeUpdate();
+        stmt = con.prepareStatement(QUERY_DELETE_SEGUIDOR_ANUNCIO);
         stmt.setInt(1, idAnuncio);
         stmt.executeUpdate();
         stmt = con.prepareStatement(QUERY_DELETE_ANUNCIO);
