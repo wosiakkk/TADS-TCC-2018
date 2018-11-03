@@ -20,6 +20,7 @@ import br.com.tads.tccpool.facade.NotificacaoFacade;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,10 +89,10 @@ public class AnuncioServlet extends HttpServlet {
                                     im.setTipo(Integer.parseInt(item.getString()));
                                 }
                                 if (item.getFieldName().equals("titulo")) {
-                                    im.setTitulo(item.getString());
+                                    im.setTitulo(new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item.getFieldName().equals("descricao")) {
-                                    im.setDescricao(item.getString());
+                                    im.setDescricao(new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item.getFieldName().equals("quantidade")) {
                                     im.setQuantidade_pessoas(Integer.parseInt(item.getString()));
@@ -103,7 +104,7 @@ public class AnuncioServlet extends HttpServlet {
                                     im.setPreco(Float.parseFloat(item.getString()));
                                 }
                                 if (item.getFieldName().equals("rua")) {
-                                    im.setRua(item.getString());
+                                    im.setRua(new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item.getFieldName().equals("num")) {
                                     im.setNumero(Integer.parseInt(item.getString()));
@@ -112,13 +113,13 @@ public class AnuncioServlet extends HttpServlet {
                                     im.setCep(item.getString());
                                 }
                                 if (item.getFieldName().equals("cidade")) {
-                                    im.setCidade(item.getString());
+                                    im.setCidade(new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item.getFieldName().equals("estado")) {
-                                    im.setEstado(item.getString());
+                                    im.setEstado(new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item.getFieldName().equals("comple")) {
-                                    im.setComplemento(item.getString());
+                                    im.setComplemento(new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
 
                             } else {
@@ -170,10 +171,10 @@ public class AnuncioServlet extends HttpServlet {
                         for (FileItem item2 : multiparts2) {
                             if (item2.isFormField()) {
                                 if (item2.getFieldName().equals("titulo")) {
-                                    movel.setTitulo(item2.getString());
+                                    movel.setTitulo(new String(item2.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item2.getFieldName().equals("descricao")) {
-                                    movel.setDescricao(item2.getString());
+                                    movel.setDescricao(new String(item2.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item2.getFieldName().equals("valor")) {
                                     movel.setPreco(Float.parseFloat(item2.getString()));
@@ -182,7 +183,7 @@ public class AnuncioServlet extends HttpServlet {
                                     movel.setTipo(Integer.parseInt(item2.getString()));
                                 }
                                 if (item2.getFieldName().equals("rua")) {
-                                    movel.setRua(item2.getString());
+                                    movel.setRua(new String(item2.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item2.getFieldName().equals("num")) {
                                     movel.setNumero(Integer.parseInt(item2.getString()));
@@ -191,13 +192,13 @@ public class AnuncioServlet extends HttpServlet {
                                     movel.setCep(item2.getString());
                                 }
                                 if (item2.getFieldName().equals("cidade")) {
-                                    movel.setCidade(item2.getString());
+                                    movel.setCidade(new String(item2.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item2.getFieldName().equals("estado")) {
-                                    movel.setEstado(item2.getString());
+                                    movel.setEstado(new String(item2.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item2.getFieldName().equals("comple")) {
-                                    movel.setComplemento(item2.getString());
+                                    movel.setComplemento(new String(item2.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                             } else {
                                 Random rand = new Random();
@@ -247,10 +248,10 @@ public class AnuncioServlet extends HttpServlet {
                         for (FileItem item2 : multiparts2) {
                             if (item2.isFormField()) {
                                 if (item2.getFieldName().equals("titulo")) {
-                                    material.setTitulo(item2.getString());
+                                    material.setTitulo(new String(item2.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item2.getFieldName().equals("descricao")) {
-                                    material.setDescricao(item2.getString());
+                                    material.setDescricao(new String(item2.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item2.getFieldName().equals("valor")) {
                                     material.setPreco(Float.parseFloat(item2.getString()));
@@ -259,7 +260,7 @@ public class AnuncioServlet extends HttpServlet {
                                     material.setTipo(Integer.parseInt(item2.getString()));
                                 }
                                 if (item2.getFieldName().equals("rua")) {
-                                    material.setRua(item2.getString());
+                                    material.setRua(new String(item2.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item2.getFieldName().equals("num")) {
                                     material.setNumero(Integer.parseInt(item2.getString()));
@@ -268,13 +269,13 @@ public class AnuncioServlet extends HttpServlet {
                                     material.setCep(item2.getString());
                                 }
                                 if (item2.getFieldName().equals("cidade")) {
-                                    material.setCidade(item2.getString());
+                                    material.setCidade(new String(item2.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item2.getFieldName().equals("estado")) {
-                                    material.setEstado(item2.getString());
+                                    material.setEstado(new String(item2.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                                 if (item2.getFieldName().equals("comple")) {
-                                    material.setComplemento(item2.getString());
+                                    material.setComplemento(new String(item2.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                                 }
                             } else {
                                 Random rand = new Random();

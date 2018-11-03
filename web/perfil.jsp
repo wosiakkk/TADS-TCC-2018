@@ -25,7 +25,7 @@
                 <img class="d-block img-fluid rounded-circle" style="width: 200px; height: 200px" src="${perfil.getFoto()}"><hr>
                 <c:if test="${perfil.id != user.id}">
 
-                    <br><a href="AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr=${perfil.id}" class="btn btn-outline-dark">Ver Anúncios</a>                       
+                    <br><a href="AnuncioServlet?action=BUSCAANUNCIOUSER&idUsr=${perfil.id}&status=2" class="btn btn-outline-dark">Ver Anúncios</a>                       
                     <c:if test="${amizade == 0}">
                         <a class="btn btn-outline-dark" href="mensagem.jsp?idDestino=${perfil.id}"> Enviar Mensagens</a> 
                         <a class="btn btn-outline-dark" href="UserServlet?action=AMIZADE&idSolicitante=${user.id}&idSolicitado=${perfil.id}&acao=SOLICITAR"> Enviar Pedido de Amizade</a>
