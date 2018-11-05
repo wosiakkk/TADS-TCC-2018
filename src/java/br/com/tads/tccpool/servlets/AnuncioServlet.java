@@ -69,7 +69,7 @@ public class AnuncioServlet extends HttpServlet {
                 rd.forward(request, response);
             }
             RequestDispatcher rd;
-
+String caminho = (String)session.getAttribute("caminho");
             switch (action) {
                 case "ADDIMV":
                     Imovel im = new Imovel();
@@ -126,12 +126,12 @@ public class AnuncioServlet extends HttpServlet {
                                 Random rand = new Random();
                                 String nomeString = String.valueOf(rand.nextInt()) + ".jpg";
                                 if (!item.getName().equals("")) {
-                                    item.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
+                                    item.write(new File(caminho + "img" + File.separator + nomeString));
                                     caminhoImovel = "img" + File.separator + nomeString;
                                     listImovel.add(caminhoImovel);
-                                    javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                    javaxt.io.Image image = new javaxt.io.Image(caminho + "img" + File.separator + nomeString);
                                     image.resize(850, 500);
-                                    image.saveAs(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                    image.saveAs(caminho + "img" + File.separator + nomeString);
                                 }
                             }
                         }
@@ -204,12 +204,12 @@ public class AnuncioServlet extends HttpServlet {
                                 Random rand = new Random();
                                 String nomeString = String.valueOf(-1 * (rand.nextInt())) + ".jpg";
                                 if (!item2.getName().equals("")) {
-                                    item2.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
+                                    item2.write(new File(caminho + "img" + File.separator + nomeString));
                                     caminhomovel = "img" + File.separator + nomeString;
                                     lista.add(caminhomovel);
-                                    javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                    javaxt.io.Image image = new javaxt.io.Image(caminho + "img" + File.separator + nomeString);
                                     image.resize(850, 500);
-                                    image.saveAs(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                    image.saveAs(caminho + "img" + File.separator + nomeString);
                                 }
                             }
                         }
@@ -281,12 +281,12 @@ public class AnuncioServlet extends HttpServlet {
                                 Random rand = new Random();
                                 String nomeString = String.valueOf(-1 * (rand.nextInt())) + ".jpg";
                                 if (!item2.getName().equals("")) {
-                                    item2.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
+                                    item2.write(new File(caminho + "img" + File.separator + nomeString));
                                     caminhomaterial = "img" + File.separator + nomeString;
                                     listaMaterial.add(caminhomaterial);
-                                    javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                    javaxt.io.Image image = new javaxt.io.Image(caminho + "img" + File.separator + nomeString);
                                     image.resize(850, 500);
-                                    image.saveAs(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                    image.saveAs(caminho + "img" + File.separator + nomeString);
                                 }
                             }
                         }
@@ -789,24 +789,24 @@ public class AnuncioServlet extends HttpServlet {
                                 String nomeString = String.valueOf(rand.nextInt()) + ".jpg";
                                 if (!item.getName().equals("")) {
                                     if (item.getFieldName().equals("fotoNova")) {
-                                        item.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
+                                        item.write(new File(caminho + "img" + File.separator + nomeString));
                                         Foto f = new Foto();
                                         f.setCaminho("img" + File.separator + nomeString);
                                         f.setIdAnuncio(anunc.getIdAnuncio());
                                         listaFotosNovas.add(f);
-                                        javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                        javaxt.io.Image image = new javaxt.io.Image(caminho + "img" + File.separator + nomeString);
                                         image.resize(850, 500);
-                                        image.saveAs(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                        image.saveAs(caminho + "img" + File.separator + nomeString);
                                     } else {
                                         Foto f = new Foto();
                                         f.setIdFoto(Integer.parseInt(item.getFieldName()));
-                                        item.write(new File(request.getServletContext().getRealPath("img") + File.separator + nomeString));
+                                        item.write(new File(caminho + "img" + File.separator + nomeString));
                                         f.setCaminho("img" + File.separator + nomeString);
                                         f.setIdAnuncio(anunc.getIdAnuncio());
                                         listaFotosAlteradas.add(f);
-                                        javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                        javaxt.io.Image image = new javaxt.io.Image(caminho + "img" + File.separator + nomeString);
                                         image.resize(850, 500);
-                                        image.saveAs(request.getServletContext().getRealPath("img") + File.separator + nomeString);
+                                        image.saveAs(caminho + "img" + File.separator + nomeString);
                                     }
                                 }
                             }
@@ -846,7 +846,13 @@ public class AnuncioServlet extends HttpServlet {
                             default:
                                 break;
                         }
-                        request.getRequestDispatcher("anuncio.jsp").forward(request, response);
+                       // request.getRequestDispatcher("anuncio.jsp").forward(request, response);
+                        session.removeAttribute("mensagemAcao");
+                        session.removeAttribute("mensagemAcaoTipo");
+                        session.setAttribute("mensagemAcao", "Anuncio Alterado.");
+                        session.setAttribute("mensagemAcaoTipo", 11);
+                        RequestDispatcher rdi = request.getRequestDispatcher("infoAcao.jsp");
+                        rdi.forward(request, response);
                     } catch (Exception e) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, e);
                     }

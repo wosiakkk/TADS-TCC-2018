@@ -65,7 +65,10 @@
     </c:if>
     <!-- 10 = notificação -->
     <c:if test="${mensagemAcaoTipo == 10}">
-        <a href="home.jsp">Voltar para o Home</a> ou <a href="notificacoes.jsp">voltar paraNotificações</a>
+        <a href="home.jsp">Voltar para o Home</a> ou <a href="notificacoes.jsp">voltar para Notificações</a>
+    </c:if>
+    <c:if test="${mensagemAcaoTipo == 11}">
+        <a href="home.jsp">Voltar para o Home</a> ou <a href="escolhaMeusAnuncios.jsp">voltar para Meus Anúncios</a>
     </c:if>
     
     <div class="panel panel-body">
