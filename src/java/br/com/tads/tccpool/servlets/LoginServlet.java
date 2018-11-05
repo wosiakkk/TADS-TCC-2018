@@ -9,6 +9,7 @@ import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.exception.AcessoBdException;
 import br.com.tads.tccpool.facade.LoginFacade;
 import br.com.tads.tccpool.utils.MD5;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
@@ -61,11 +62,18 @@ public class LoginServlet extends HttpServlet {
                     //se houver algum retorno
                     if(u != null){
                         HttpSession session = request.getSession();
+                        for(String caminho : u.getCaminhos()){
+                            boolean cam = new File(caminho).canWrite();
+                            if(cam){
+                                session.setAttribute("caminho", caminho);
+                            }
+                        }
                         //este dado na sessão indica que o usuário está logado
                         session.setAttribute("user", u);
                         session.setAttribute("idUserSessao", u.getId());
                         //redireciona para a página inicial
                         request.setAttribute("title", "Home");
+                        
                         RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
                         rd.forward(request, response);
                     }else{

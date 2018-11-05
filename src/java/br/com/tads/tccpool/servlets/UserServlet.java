@@ -67,6 +67,7 @@ public class UserServlet extends HttpServlet {
                 request.setAttribute("msg", "Faça login para acessar esta página!");
                 rd.forward(request, response);
             }
+            String caminho = (String)session.getAttribute("caminho");
             User u = new User();
             switch (action) {
                 case "ADD": {
@@ -252,12 +253,12 @@ public class UserServlet extends HttpServlet {
                                 Random rand = new Random();
                                 String nomeString = String.valueOf(rand.nextInt()) + ".jpg";
                                 if (!item.getName().equals("")) {
-                                    item.write(new File(request.getServletContext().getRealPath("img/fotosPerfil") + File.separator + nomeString));
-                                    caminhoFoto = "img/fotosPerfil" + File.separator + nomeString;
+                                    item.write(new File(caminho + "img\\fotosPerfil" + File.separator + nomeString));
+                                    caminhoFoto = "img\\fotosPerfil" + File.separator + nomeString;
                                     alterar.setFoto(caminhoFoto);
-                                    javaxt.io.Image image = new javaxt.io.Image(request.getServletContext().getRealPath("img/fotosPerfil") + File.separator + nomeString);
+                                    javaxt.io.Image image = new javaxt.io.Image(caminho + "img\\fotosPerfil" + File.separator + nomeString);
                                     image.resize(200, 200);
-                                    image.saveAs(request.getServletContext().getRealPath("img/fotosPerfil") + File.separator + nomeString);
+                                    image.saveAs(caminho + "img\\fotosPerfil" + File.separator + nomeString);
                                 }
                             }
                         }

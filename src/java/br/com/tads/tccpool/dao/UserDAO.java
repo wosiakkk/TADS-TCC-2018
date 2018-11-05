@@ -24,6 +24,7 @@ import java.util.logging.Logger;
  */
 public class UserDAO {
 
+    private static final String QUERY_CONSULTA_CAMINHO_USUARIO = "SELECT caminho, nome_usuario FROM tcc1.tb_caminho_usuario;";
     private static final String QUERY_INSERT_PRIVACIDADE_USER = "INSERT INTO `tcc1`.`tb_privacidade`(`TB_USUARIO_NR_SEQ`,`PRIVACIDADE_TELEFONE`,`PRIVACIDADE_ENDERECO`,`PRIVACIDADE_DESCRICAO`,`PRIVACIDADE_INTERESSES`)VALUES(?,?,?,?,?);";
     private static final String QUERY_UPDATE_PRIVACIDADE_USER = "UPDATE `tcc1`.`tb_privacidade` SET `PRIVACIDADE_TELEFONE` = ?,`PRIVACIDADE_ENDERECO` = ?,`PRIVACIDADE_DESCRICAO` = ?,`PRIVACIDADE_INTERESSES` = ? WHERE `ID_PRIVACIDADE` = ?;";
     private static final String QUERY_SELECT_PRIVACIDADE_USER = "SELECT * FROM tcc1.tb_privacidade WHERE TB_USUARIO_NR_SEQ = ?;";
@@ -272,6 +273,7 @@ public class UserDAO {
      * @throws SQLException
      */
     public User verificaLogin(String login, String senha) throws SQLException {
+        List<String> lista = new ArrayList<>();
         User u = null;
         try {
             stmt = con.prepareStatement(QUERY_LOGIN);
@@ -288,6 +290,13 @@ public class UserDAO {
                 u.setTipoUsuario(rs.getInt("TP_USUARIO"));
                 u.setSenha(rs.getString("DS_SENHA"));
             }
+            stmt = con.prepareStatement(QUERY_CONSULTA_CAMINHO_USUARIO);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                String caminho = rs.getString("caminho");
+                lista.add(caminho);
+            }
+            u.setCaminhos(lista);
 
         } catch (SQLException e) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, e);

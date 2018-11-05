@@ -6,6 +6,7 @@
 package br.com.tads.tccpool.beans;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -30,7 +31,17 @@ public class User implements Serializable {
     private String complemento; //Complemento do endereço do usuário
     private String cidade;      //Nome da cidade do usuário
     private String estado;      //Nome do estado do usuário
+    List<String> caminhos;      //Caminhos diretório usuarios para fotos
 
+    public List<String> getCaminhos() {
+        return caminhos;
+    }
+
+    public void setCaminhos(List<String> caminhos) {
+        this.caminhos = caminhos;
+    }
+
+    
     public int getId() {
         return id;
     }
