@@ -405,6 +405,10 @@ String caminho = (String)session.getAttribute("caminho");
 
                 case "BUSCAANUNCIOUSER":
                     try {
+                        String nomeAnunciante = new String();
+                        if(request.getParameter("nome") != null && !request.getParameter("nome").equals("")){
+                            nomeAnunciante = request.getParameter("nome");
+                        }
                         List<Categoria> listaCategoriaImovel = new ArrayList<Categoria>();
                         listaCategoriaImovel = MainPageFacade.listaCategoriasImovel();
                         session.setAttribute("listaCatImovel", listaCategoriaImovel);
@@ -418,6 +422,10 @@ String caminho = (String)session.getAttribute("caminho");
                         int statusAnuncio = Integer.parseInt(request.getParameter("status"));
                         List<Anuncio> aunciosDoUsuario = AnuncioFacade.buscarAnuncioDoUsuario(idUser, statusAnuncio);
                         session.setAttribute("ListaAunciosDoUusario", aunciosDoUsuario);
+                        User u = (User)session.getAttribute("user");
+                        if(u.getId() != idUser){
+                            request.setAttribute("nomeAnunciante", nomeAnunciante);
+                        }
                         rd = request.getRequestDispatcher("resumo.jsp");
                         rd.forward(request, response);
                     } catch (Exception e) {
