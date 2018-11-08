@@ -27,7 +27,14 @@
         <!-- Usuário Comum -->
         <c:if test="${user.getTipoUsuario()== 2}">
             <div class="col-sm-12">
-                <h2>Anúncios de ${user.nome}: </h2>
+                <c:choose>
+                    <c:when test="${requestScope.nomeAnunciante != null}">
+                        <h2>Anúncios de ${nomeAnunciante}: </h2>
+                    </c:when>
+                    <c:otherwise>
+                        <h2>Anúncios de ${user.nome}: </h2>
+                    </c:otherwise>
+                </c:choose>
                 <a href="escolhaMeusAnuncios.jsp"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
                 <hr>
             </div>
