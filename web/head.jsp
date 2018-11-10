@@ -124,16 +124,9 @@
 
                         </li>
                         <li class="nav-item">
-                            <c:choose>
-                                <c:when test="${user != null}">
-                                    <c:if test="${user.getTipoUsuario()== 2}">
-                                        <a class="nav-link" href="MainPageServlet?action=ANUNCIO">Anunciar</a>
-                                    </c:if>
-                                </c:when>
-                                <c:otherwise>
-                                    <a class="nav-link" href="MainPageServlet?action=CLIENTE">Cadastrar</a>
-                                </c:otherwise>
-                            </c:choose>
+                            <c:if test="${user == null}">
+                                <a class="nav-link" href="MainPageServlet?action=CLIENTE">Cadastrar</a>
+                            </c:if>
                         </li>
                     </ul>
                 </div>

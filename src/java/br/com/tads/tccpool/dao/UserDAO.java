@@ -296,7 +296,8 @@ public class UserDAO {
                 String caminho = rs.getString("caminho");
                 lista.add(caminho);
             }
-            u.setCaminhos(lista);
+            if(u!=null)
+                u.setCaminhos(lista);
 
         } catch (SQLException e) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, e);

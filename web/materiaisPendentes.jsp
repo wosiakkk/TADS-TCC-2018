@@ -89,7 +89,7 @@
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">Aprovar:</label>   
                     <label class="radio-inline"><input type="radio" name="optradio" value="sim">Sim</label>
-                    <label class="radio-inline"><input type="radio" name="optradio" value="nao">Não</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" checked value="nao">Não</label>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-9 col-sm-offset-3">

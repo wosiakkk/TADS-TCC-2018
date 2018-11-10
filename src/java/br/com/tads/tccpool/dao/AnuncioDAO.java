@@ -771,7 +771,7 @@ public class AnuncioDAO {
         stmt.setBoolean(4, filtro.isPets());
         stmt.setDouble(5, filtro.getMinValor());
         stmt.setDouble(6, filtro.getMaxValor());   
-        stmt.setString(7, String.valueOf(filtro.getOrdenacao()));
+        stmt.setInt(7, filtro.getOrdenacao());
         
         rs = stmt.executeQuery();
         

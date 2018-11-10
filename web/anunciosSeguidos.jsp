@@ -66,7 +66,7 @@
                 <c:otherwise>
                     <div class="card">   
                         <div class="card-body">
-                            <h4 class="card-title">Você não tem amigos ):</h4>
+                            <h4 class="card-title">Você não está seguindo nenhum anúncio.</h4>
                         </div>
                     </div>
                 </c:otherwise>

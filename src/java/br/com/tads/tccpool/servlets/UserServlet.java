@@ -259,6 +259,7 @@ public class UserServlet extends HttpServlet {
                                     javaxt.io.Image image = new javaxt.io.Image(caminho + "img\\fotosPerfil" + File.separator + nomeString);
                                     image.resize(200, 200);
                                     image.saveAs(caminho + "img\\fotosPerfil" + File.separator + nomeString);
+                                    image.saveAs(request.getServletContext().getRealPath("img\\fotosPerfil") + File.separator + nomeString);
                                 }
                             }
                         }
@@ -275,8 +276,6 @@ public class UserServlet extends HttpServlet {
                             us.setFoto(alterar.getFoto());
                             us.setNome(alterar.getNome());
                             session.setAttribute("user", us);
-                        } else {
-
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(AnuncioServlet.class.getName()).log(Level.SEVERE, null, ex);
