@@ -41,8 +41,8 @@ public class RedirecionamentoBusca extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession();
             //Validação de acesso
+            HttpSession session = request.getSession();
             if(session == null) {
                 RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                 request.setAttribute("title", "Inicio");
@@ -50,20 +50,29 @@ public class RedirecionamentoBusca extends HttpServlet {
                 rd.forward(request, response);
             }
             
-            String teste = request.getParameter("search");
-            int idSearch = Integer.parseInt(request.getParameter("idSearch"));
+            //Tratamento para parâmetro vazio
+            int idSearch = Integer.parseInt(
+                    "".equals((String)request.getParameter("idSearch")) ? "0" : request.getParameter("idSearch")
+            );
             
             if(idSearch > 0) {
                 int idSessao =(int) session.getAttribute("idUserSessao");
+                //Recupera o perfil do uusário buscado
                 User perfilBusca = new User();
-               // perfilBusca = UserFacade.geraPerfilUser(idSearch);
                 perfilBusca = UserFacade.buscarUsuario(idSearch);
+                
+                //Verifica amizade entre usuário buscado e usuário logado
                 int amizade = UserFacade.checandoAmizade(idSessao, idSearch);
+                
+                //Grava os dados na sessão
                 session.setAttribute("perfil", perfilBusca);
                 session.setAttribute("amizade", amizade);
+                
+                //Verifica preferências de privacidade do usuário buscado e grava na resquisição
                 Privacidade pri = UserFacade.buscarPrivacidade(idSearch);
-                    request.setAttribute("privacidade", pri);
-
+                request.setAttribute("privacidade", pri);
+                
+                //Redireciona para página de perfil
                 RequestDispatcher rd1 = request.getRequestDispatcher("perfil.jsp");
                 rd1.forward(request, response);
             }

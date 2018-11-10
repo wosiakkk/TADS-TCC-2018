@@ -1,3 +1,14 @@
+$(document).ready(function () {
+    //Validação da busca de usuário
+    $("#formBuscaUser").submit(function(event){
+        if($("#search").val() === "") {
+            event.preventDefault();
+            alert("Informe algum nome de usuário para buscar.");
+        }
+    });
+});
+    
+//Requisição para buscar usuários
 $(function () {
     $("#search").autocomplete({
         appendTo: "#anchor",
@@ -27,13 +38,12 @@ $(function () {
                         newArray[i] = newObject;
                         i++;
                     });
-                    if(values.length > 0) {
+                    if (values.length > 0) {
                         response(newArray);
-                    }
-                    else {
+                    } else {
                         response(new Array("Nenhum usuário encontrado."));
                     }
-                        
+
                 }
             });
         },
