@@ -11,7 +11,10 @@ import br.com.tads.tccpool.facade.UserFacade;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,24 +45,31 @@ public class SearchController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             HttpSession session = request.getSession();
+            //Validação de acesso
+            if(session == null) {
+                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                request.setAttribute("title", "Inicio");
+                request.setAttribute("msg", "Faça login para acessar esta página!");
+                rd.forward(request, response);
+            }
+            
             User userLogado = (User)session.getAttribute("user");
             
             String text = request.getParameter("term");
-            System.out.println("Hello from Get Method: " + text);
-            UserDAO userDAO = new UserDAO();
+            
             try {
+                //Busca os usuários cadastros no banco de dados
+                UserDAO userDAO = new UserDAO();
                 ArrayList<User> users = userDAO.buscarUsuariosDinamicamente(text, userLogado.getId());
-                for (User user : users) {
-                    System.out.println(user.getNome());
-                }
-
+                
+                //Converte o array em uma string JSON
                 String searchResult = new Gson().toJson(users);
+                
+                //Imprime resultado na respota da requisição HTTP
+                out.write(searchResult);
 
-                PrintWriter writer = response.getWriter();
-                writer.write(searchResult);
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (SQLException | NullPointerException ex) {
+                Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

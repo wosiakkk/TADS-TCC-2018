@@ -96,7 +96,7 @@
                 <div class="instruction">
                     <div class="search-container">
                         <div class="ui-widget">
-                            <form class="form"  action="RedirecionamentoBusca"  method="POST" role="form">
+                            <form id="formBuscaUser" class="form" action="RedirecionamentoBusca" method="POST" role="form">
                                 <input id="idSearch" name="idSearch" type="hidden" value="">
                                 <input type="text" id="search" name="search" class="search form-control" placeholder="Procure aqui"/>
                                 <div id="anchor" class="col-md-12"></div>
