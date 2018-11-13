@@ -58,6 +58,8 @@ public class UserServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+                                request.setCharacterEncoding("UTF-8");
+
             HttpSession session = request.getSession();
             String action = request.getParameter("action");
             //Validação de acesso
