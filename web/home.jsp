@@ -75,11 +75,8 @@
                     <div id="loaderTimeline" class="center">
                         <img src="img/icones/loader.gif"/>
                     </div>
-                    <div class="timeline">
-                        <!-- Timeline header -->
-                        <div class="timeline-header">
-                            <div class="timeline-header-title bg-dark">Recentes</div>
-                        </div>
+                    <div id="timeline_container">
+                        
                     </div>
                     <!--===================================================-->
                     <!-- End Timeline -->
