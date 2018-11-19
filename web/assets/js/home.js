@@ -4,7 +4,7 @@
  */
 
 $(document).ready(function(){
-    $('.timeline').hide();
+    $('#timeline_container').hide();
     
     $.ajax({
         url: "TimelineServlet?action=TIMELINE",
@@ -12,13 +12,13 @@ $(document).ready(function(){
         dataType: "HTML",
         success: function (resp) {
             $('#loaderTimeline').hide();
-            $('.timeline').append(resp);
-            $('.timeline').show();
+            $('#timeline_container').append(resp);
+            $('#timeline_container').show();
         },
         error: function (resp) {
             $('#loaderTimeline').hide();
-            $('.timeline').html(resp);
-            $('.timeline').show();
+            $('#timeline_container').html(resp);
+            $('#timeline_container').show();
         }
     });
 });

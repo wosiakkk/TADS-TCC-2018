@@ -31,7 +31,7 @@ public class TimelineFacade {
                 timelineFormatado = HTMLTimeline(timeline);
             }
             else {
-                timelineFormatado = "Não foram encontrados anúncios de amigos seus ou dentro de suas preferências. Verifique a <a href=\"vendas.jsp\">Área de vendas</a> clicando no item ao lado.";
+                timelineFormatado = "Não foram encontrados anúncios de seus amigos. Verifique a <a href=\"vendas.jsp\">Área de vendas</a> clicando no item ao lado.";
             }
         }
         catch (Exception ex) {
@@ -45,7 +45,11 @@ public class TimelineFacade {
     private static String HTMLTimeline(ArrayList<Anuncio> anuncios) {
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         NumberFormat numberFmt = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        String timelineEntry = "";
+        String timelineEntry = "<div class=\"timeline\">\n" +
+                               "  <!-- Timeline header -->\n" +
+                               "  <div class=\"timeline-header\">\n" +
+                               "      <div class=\"timeline-header-title bg-dark\">Recentes</div>\n" +
+                               "  </div>";
         
         for (Anuncio timeline : anuncios) {
             String fotoUser = timeline.getDsFotoUsuario() == null ? "img/fotosPerfil/default.jpg" : timeline.getDsFotoUsuario();
@@ -74,6 +78,6 @@ public class TimelineFacade {
                            + "</div>";
         }
         
-        return timelineEntry;
+        return timelineEntry + "</div>";
     }
 }
