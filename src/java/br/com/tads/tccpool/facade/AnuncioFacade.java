@@ -108,7 +108,7 @@ public class AnuncioFacade {
                                 + "            <h4 class=\"card-title\">\n"
                                 + "                <a href=\"AnuncioServlet?action=EXIBIRANUNCIO&idAnuncio=" + anuncio.getIdAnuncio() + "\">" + anuncio.getTitulo() + "</a>\n"
                                 + "            </h4>\n"
-                                + "            <h5>$" + String.valueOf(anuncio.getValor()) + "</h5>\n"
+                                + "            <h5>R$" + String.valueOf(anuncio.getValor()) + "</h5>\n"
                                 + "            <p class=\"card-text\">" + anuncio.getDescricao() + "</p>\n"
                                 + "        </div>\n"
                                 + "        <div class=\"card-footer\">\n"
