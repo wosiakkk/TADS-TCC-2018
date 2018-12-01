@@ -15,6 +15,7 @@ import br.com.tads.tccpool.beans.User;
 import br.com.tads.tccpool.dao.AnuncioDAO;
 import br.com.tads.tccpool.exception.AcessoBdException;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -89,6 +90,7 @@ public class AnuncioFacade {
 
     public static String buscarAnuncioAprovado(FiltroAnuncio filtro) {
         AnuncioDAO dao = new AnuncioDAO();
+        NumberFormat nFormat = NumberFormat.getCurrencyInstance();
         String HTMLResponse = "";
         List<Anuncio> anunciosAprovados = new ArrayList<>();
         try {
@@ -108,7 +110,7 @@ public class AnuncioFacade {
                                 + "            <h4 class=\"card-title\">\n"
                                 + "                <a href=\"AnuncioServlet?action=EXIBIRANUNCIO&idAnuncio=" + anuncio.getIdAnuncio() + "\">" + anuncio.getTitulo() + "</a>\n"
                                 + "            </h4>\n"
-                                + "            <h5>$" + String.valueOf(anuncio.getValor()) + "</h5>\n"
+                                + "            <h5>" + nFormat.format(anuncio.getValor()) + "</h5>\n"
                                 + "            <p class=\"card-text\">" + anuncio.getDescricao() + "</p>\n"
                                 + "        </div>\n"
                                 + "        <div class=\"card-footer\">\n"

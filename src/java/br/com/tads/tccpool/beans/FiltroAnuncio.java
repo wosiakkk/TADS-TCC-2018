@@ -54,7 +54,7 @@ public class FiltroAnuncio implements Serializable {
                 this.minValor = request.getParameter("minValor").length() == 0 ? this.minValor : Double.parseDouble(request.getParameter("minValor"));
             
             if("ordenacao".equals(paramName))
-                this.ordenacao = Integer.parseInt(request.getParameter("ordenacao"));
+                this.ordenacao = "0".equals(request.getParameter("ordenacao")) ? this.ordenacao : Integer.parseInt(request.getParameter("ordenacao"));
         }
     }
 

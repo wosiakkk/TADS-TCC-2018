@@ -305,7 +305,7 @@ Author     : onurb
                         <c:if test="${imovelExibir.status != 5}">
                             <br><div class="form-group">
                                 <form class="form-inline" action="AnuncioServlet" method="POST">
-                                    <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 btn btn-outline-dark " />
+                                    <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
                                     <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
                                     <c:if test="${imovelExibir.status == 2}">
                                         <input type="submit" value="Marcar Como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${imovelExibir.id}" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
@@ -315,7 +315,12 @@ Author     : onurb
                         </c:if>                    
                     </c:if>
                     <c:if test="${imovelExibir.idAnunciante != user.id}">
-                        <input type="button" value="Seguir anúncio" id="seguirImovel" class=" btn btn-primary col-md-6 btn btn-outline-dark botaoSeguir" readonly="true"/>
+                        <input type="button" value="Seguir anúncio" id="seguirImovel" class=" btn btn-primary col-md-4 btn btn-outline-dark botaoSeguir" readonly="true"/>
+                        <a href="UserServlet?action=PERFIL&idUser=${imovelExibir.idAnunciante}">
+                            <button type="button" value="Ver Perfil do Anunciante" id="perfilAnunciante" class=" btn btn-md col-md-4 btn-outline-dark botaoSeguir" readonly="true">
+                                Ver Perfil do Anunciante
+                            </button>
+                        </a>
                     </c:if>    
                 </c:if>
                 <div>
@@ -416,10 +421,10 @@ Author     : onurb
                         <c:if test="${movelExibir.status != 5}">
                             <br><div class="form-group">
                                 <form class="form-inline" action="AnuncioServlet" method="POST">
-                                    <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 " />
-                                    <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4" />
+                                    <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
+                                    <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
                                     <c:if test="${movelExibir.status == 2}">
-                                        <input type="submit" value="Marcar como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${movelExibir.id}" class="form-control btn btn-primary col-md-4" />
+                                        <input type="submit" value="Marcar como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${movelExibir.id}" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
                                     </c:if>
                                 </form>
                             </div>
@@ -427,6 +432,11 @@ Author     : onurb
                     </c:if>
                     <c:if test="${movelExibir.idAnunciante != user.id}">
                         <input type="button" value="Seguir anúncio" id="seguirImovel" class=" btn btn-primary col-md-6 btn btn-outline-dark botaoSeguir" readonly="true"/>
+                        <a href="UserServlet?action=PERFIL&idUser=${movelExibir.idAnunciante}">
+                            <button type="button" value="Ver Perfil do Anunciante" id="perfilAnunciante" class=" btn btn-md col-md-4 btn-outline-dark botaoSeguir" readonly="true">
+                                Ver Perfil do Anunciante
+                            </button>
+                        </a>
                     </c:if>  
                 </c:if>
                 <div>
@@ -679,17 +689,22 @@ Author     : onurb
                         <c:if test="${materialExibir.status != 5}">
                             <br><div class="form-group">
                                 <form class="form-inline" action="AnuncioServlet" method="POST">
-                                    <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 " />
-                                    <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4" />
+                                    <input type="submit" value="Alterar" formaction="AnuncioServlet?action=ALTERARANUNCIO" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
+                                    <input type="submit" value="Excluir" formaction="AnuncioServlet?action=EXCLUIRANUNCIO" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
                                     <c:if test="${materialExibir.status == 2}">
-                                        <input type="submit" value="Marcar Como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${materialExibir.id}" class="form-control btn btn-primary col-md-4" />
+                                        <input type="submit" value="Marcar Como Vendido" formaction="AnuncioServlet?action=INFORMARVENDAANUNCIO&idAnuncio=${materialExibir.id}" class="form-control btn btn-primary col-md-4 btn btn-outline-dark" />
                                     </c:if>
                                 </form>
                             </div>
                         </c:if>
                     </c:if>
-                    <c:if test="${movelExibir.idAnunciante != user.id}">
+                    <c:if test="${materialExibir.idAnunciante != user.id}">
                         <input type="button" value="Seguir anúncio" id="seguirImovel" class=" btn btn-primary col-md-6 btn btn-outline-dark botaoSeguir" readonly="true"/>
+                        <a href="UserServlet?action=PERFIL&idUser=${materialExibir.idAnunciante}">
+                            <button type="button" value="Ver Perfil do Anunciante" id="perfilAnunciante" class=" btn btn-md col-md-4 btn-outline-dark botaoSeguir" readonly="true">
+                                Ver Perfil do Anunciante
+                            </button>
+                        </a>
                     </c:if>
                 </c:if>
                 <div>

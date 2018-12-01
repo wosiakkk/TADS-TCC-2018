@@ -569,10 +569,10 @@ String caminho = (String)session.getAttribute("caminho");
                                 i.setTipo(Integer.parseInt(request.getParameter("tipo")));
                             }
                             if (request.getParameter("titulo") != null && !request.getParameter("titulo").equals("")) {
-                                i.setTitulo(request.getParameter("titulo"));
+                                i.setTitulo(new String(request.getParameter("titulo").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("descricao") != null && !request.getParameter("descricao").equals("")) {
-                                i.setDescricao(request.getParameter("descricao"));
+                                i.setDescricao(new String(request.getParameter("descricao").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("descricaoPet") != null && !request.getParameter("descricaoPet").equals("")) {
                                 i.setBoolean_pet(Integer.parseInt(request.getParameter("descricaoPet")));
@@ -584,22 +584,22 @@ String caminho = (String)session.getAttribute("caminho");
                                 i.setPreco(Float.parseFloat(request.getParameter("valor")));
                             }
                             if (request.getParameter("rua") != null && !request.getParameter("rua").equals("")) {
-                                i.setRua(request.getParameter("rua"));
+                                i.setRua(new String(request.getParameter("rua").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("num") != null && !request.getParameter("num").equals("")) {
                                 i.setNumero(Integer.parseInt(request.getParameter("num")));
                             }
                             if (request.getParameter("cep") != null && !request.getParameter("cep").equals("")) {
-                                i.setCep(request.getParameter("cep"));
+                                i.setCep(new String(request.getParameter("cep").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("cidade") != null && !request.getParameter("cidade").equals("")) {
-                                i.setCidade(request.getParameter("cidade"));
+                                i.setCidade(new String(request.getParameter("cidade").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("estado") != null && !request.getParameter("estado").equals("")) {
-                                i.setEstado(request.getParameter("estado"));
+                                i.setEstado(new String(request.getParameter("estado").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("comple") != null && !request.getParameter("comple").equals("")) {
-                                i.setComplemento(request.getParameter("comple"));
+                                i.setComplemento(new String(request.getParameter("comple").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             } else {
                                 i.setComplemento("  ");
                             }
@@ -617,10 +617,10 @@ String caminho = (String)session.getAttribute("caminho");
                                 m.setId(Integer.parseInt(request.getParameter("idAnuncioMovel")));
                             }
                             if (request.getParameter("titulo") != null && !request.getParameter("titulo").equals("")) {
-                                m.setTitulo(request.getParameter("titulo"));
+                                m.setTitulo(new String(request.getParameter("titulo").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("descricao") != null && !request.getParameter("descricao").equals("")) {
-                                m.setDescricao(request.getParameter("descricao"));
+                                m.setDescricao(new String(request.getParameter("descricao").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("tipo") != null && !request.getParameter("tipo").equals("")) {
                                 m.setTipo(Integer.parseInt(request.getParameter("tipo")));
@@ -629,22 +629,22 @@ String caminho = (String)session.getAttribute("caminho");
                                 m.setPreco(Float.parseFloat(request.getParameter("valor")));
                             }
                             if (request.getParameter("rua") != null && !request.getParameter("rua").equals("")) {
-                                m.setRua(request.getParameter("rua"));
+                                m.setRua(new String(request.getParameter("rua").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("num") != null && !request.getParameter("num").equals("")) {
                                 m.setNumero(Integer.parseInt(request.getParameter("num")));
                             }
                             if (request.getParameter("cep") != null && !request.getParameter("cep").equals("")) {
-                                m.setCep(request.getParameter("cep"));
+                                m.setCep(new String(request.getParameter("cep").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("cidade") != null && !request.getParameter("cidade").equals("")) {
-                                m.setCidade(request.getParameter("cidade"));
+                                m.setCidade(new String(request.getParameter("cidade").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("estado") != null && !request.getParameter("estado").equals("")) {
-                                m.setEstado(request.getParameter("estado"));
+                                m.setEstado(new String(request.getParameter("estado").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("comple") != null && !request.getParameter("comple").equals("")) {
-                                m.setComplemento(request.getParameter("comple"));
+                                m.setComplemento(new String(request.getParameter("comple").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             } else {
                                 m.setComplemento("  ");
                             }
@@ -664,10 +664,10 @@ String caminho = (String)session.getAttribute("caminho");
                             }
 
                             if (request.getParameter("titulo") != null && !request.getParameter("titulo").equals("")) {
-                                m.setTitulo(request.getParameter("titulo"));
+                                m.setTitulo(new String(request.getParameter("titulo").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("descricao") != null && !request.getParameter("descricao").equals("")) {
-                                m.setDescricao(request.getParameter("descricao"));
+                                m.setDescricao(new String(request.getParameter("descricao").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
 
                             if (request.getParameter("tipo") != null && !request.getParameter("tipo").equals("")) {
@@ -678,22 +678,22 @@ String caminho = (String)session.getAttribute("caminho");
                                 m.setPreco(Float.parseFloat(request.getParameter("valor")));
                             }
                             if (request.getParameter("rua") != null && !request.getParameter("rua").equals("")) {
-                                m.setRua(request.getParameter("rua"));
+                                m.setRua(new String(request.getParameter("rua").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("num") != null && !request.getParameter("num").equals("")) {
                                 m.setNumero(Integer.parseInt(request.getParameter("num")));
                             }
                             if (request.getParameter("cep") != null && !request.getParameter("cep").equals("")) {
-                                m.setCep(request.getParameter("cep"));
+                                m.setCep(new String(request.getParameter("cep").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("cidade") != null && !request.getParameter("cidade").equals("")) {
-                                m.setCidade(request.getParameter("cidade"));
+                                m.setCidade(new String(request.getParameter("cidade").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("estado") != null && !request.getParameter("estado").equals("")) {
-                                m.setEstado(request.getParameter("estado"));
+                                m.setEstado(new String(request.getParameter("estado").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             }
                             if (request.getParameter("comple") != null && !request.getParameter("comple").equals("")) {
-                                m.setComplemento(request.getParameter("comple"));
+                                m.setComplemento(new String(request.getParameter("comple").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                             } else {
                                 m.setComplemento("  ");
                             }
