@@ -1,8 +1,7 @@
-::::::::::::::::::::::::::::::::::::::::::::::::
-:: Mercadão do Aluno                          
-::                                                                              
-::       Instruções para instalação do sistema                
-::                                                             
+# Mercadão do Aluno   
+
+     Instruções para instalação do sistema                
+                                                            
 
 
 1. Instalar Java SE Development Kit (JDK) v8_131
