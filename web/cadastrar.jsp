@@ -7,7 +7,7 @@
 <!-- Cabeçalho -->
 <%@include file="head.jsp" %>  
 
-
+<script type="text/javascript" src="assets\js\validarCadastro.js"></script>
     <div class="col-sm-6">
         <form id="formulario" class="form-horizontal"  action="UserServlet?action=ADD"  method="POST" role="form">       
             <h2>Cadastro de usuário</h2>
@@ -51,7 +51,7 @@
 </div
 
 
-<script type="text/javascript" src="assets\js\validarCadastro.js"></script>
+
 
 <!-- Rodapé -->
 </div>

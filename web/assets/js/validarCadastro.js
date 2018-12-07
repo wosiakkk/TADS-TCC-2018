@@ -38,7 +38,7 @@ $(document).ready(function(){
       confsenha: {
         required: "O campo confirmação de senha é obrigatório.",
         equalTo: "O campo confirmação de senha deve ser identico ao campo senha."
-      },     
+      }     
     }
   });
 });
